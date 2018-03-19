@@ -28,14 +28,14 @@ public class Console {
     printCurrentCommand();
   }
 
-  private void printCurrentCommand() {
+  void printCurrentCommand() {
     fill(255);
     textSize(20);
     textAlign(LEFT);
     text(currentCommand, x + 10, y + h - 10);
   }
 
-  private void printCommands() {
+  void printCommands() {
     fill(255);
     textSize(20);
     textAlign(LEFT);
