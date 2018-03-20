@@ -2,6 +2,8 @@ public class Console {
   private final static int BOX_RONDING = 7;
   private final static int DELETE_KEY_CODE = 127;
   private final static int ENTER_KEY_CODE = 10;
+  private final static int BASIC_ASCII_LOWER_LIMIT = 32;
+  private final static int BASIC_ASCII_UPPER_LIMIT = 126;
   private final static float INPUT_BOX_HEIGHT_PERCENTAGE = 0.1;
 
   private int x, y;
@@ -58,9 +60,22 @@ public class Console {
     fill(0);
     textSize(18);
     textAlign(LEFT);
-    text(textInput, x + globalPadding, y + h - globalPadding);
+    text(getTrimmedInputText(textInput), x + globalPadding, y + h - globalPadding);
     drawBlinkingInputCursor();
   }
+
+  String getTrimmedInputText(String textInput) {
+    String trimmedTextInput = "";
+    char[] textInputCharArray = textInput.toCharArray();
+    for (int i = textInputCharArray.length - 1; i >= 0; i--) {
+      if (textWidth(trimmedTextInput) + textWidth(textInputCharArray[i]) < w - globalPadding * 2) {
+        trimmedTextInput = textInputCharArray[i] + trimmedTextInput;
+      } else {
+        break;
+      }
+    }
+    return trimmedTextInput;
+  };
 
   void drawBlinkingInputCursor() {
     if (!isFocused) {
@@ -68,13 +83,14 @@ public class Console {
     }
     stroke(0);
     if (frameCount % 60 < 30) {
-      float cursorX = x + textWidth(textInput) + globalPadding;
+      float cursorX = min(x + w - globalPadding, x + textWidth(textInput) + globalPadding);
       line(cursorX, y + h - 30, cursorX, y + h - 10);
     }
   }
 
   void write(String text) {
     splitCommandBasedOnConsoleWidth(new Command(text, false));
+    lastVariableName = "";
   }
 
   void splitCommandBasedOnConsoleWidth(Command command) {
@@ -110,7 +126,7 @@ public class Console {
       textInput = textInput.substring(0, textInput.length() - 1);
     } else if ((int) key == ENTER_KEY_CODE) {
       handleConsoleInput();
-    } else if ((int) key != DELETE_KEY_CODE) {
+    } else if ((int) key >= BASIC_ASCII_LOWER_LIMIT && (int) key <= BASIC_ASCII_UPPER_LIMIT) {
       byte b = (byte) key;
       char ch = (char) b;
       textInput += ch;
@@ -118,7 +134,6 @@ public class Console {
   }
 
   void handleMousePressed() {
-    print("mouse!");
     if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
       isFocused = true;
     } else {
@@ -131,7 +146,6 @@ public class Console {
     dict.put(lastVariableName, textInput);
     consoleInputEvent.onConsoleInput(lastVariableName, textInput);
     textInput = "";
-    lastVariableName = "";
   }
 
   void setConsoleInputEvent(ConsoleInputEvent consoleInputEvent) {
@@ -147,14 +161,13 @@ public class Console {
   }
 
   private class Command {
+    public String text;
+    public boolean isInput;
 
     Command(String text, boolean isInput) {
       this.text = text;
       this.isInput = isInput;
     }
-
-    public String text;
-    public boolean isInput;
   }
 
   private class Line {
