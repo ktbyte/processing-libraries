@@ -2,11 +2,14 @@ Console console;
 
 void setup() {
   size(800, 600);
-  console = new Console(100, 100, 600, 400, color(0));
+  console = new Console(100, 100, 500, 400);
+  console.setInputTextColor(color(255,10,100));
+  console.setOutputTextColor(color(130,90, 190));
   console.write("Hello there! What's your name?");
   console.readInput("name");
-  console.addConsoleEvent(new ConsoleEvent() {
-    public void onConsoleInput(String variable, String value) {
+  console.setConsoleInputEvent(new ConsoleInputEvent() {
+  
+    void onConsoleInput(String variable, String value) {
       if (variable.equals("name")) {
         console.write("Nice to meet you " + value + "!");
         console.write("How old are you?");
@@ -15,8 +18,8 @@ void setup() {
         console.write(value + "...  nice!");
       }
     }
-  }
-  );
+    
+  });
 }
 
 void draw() {
