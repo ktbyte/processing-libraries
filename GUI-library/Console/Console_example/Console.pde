@@ -13,8 +13,9 @@ public class Console {
   private int inputBoxHeight;
   private HashMap<String, String> dict;
   private ConsoleInputEvent consoleInputEvent;
-  private String currentVariableName;
+  private String lastVariableName;
   private int globalPadding;
+  private boolean isFocused;
 
   public Console(int x, int y, int w, int h) {
     this.inputTextColor = color(255);
@@ -62,6 +63,9 @@ public class Console {
   }
 
   void drawBlinkingInputCursor() {
+    if (!isFocused) {
+      return;
+    }
     stroke(0);
     if (frameCount % 60 < 30) {
       float cursorX = x + textWidth(textInput) + globalPadding;
@@ -74,7 +78,6 @@ public class Console {
   }
 
   void splitCommandBasedOnConsoleWidth(Command command) {
-    println(command.text);
     Line line = new Line();
     textSize(18);
     String[] wordsFromCommand = split(command.text, " ");
@@ -95,10 +98,13 @@ public class Console {
   }
 
   void readInput(String name) {
-    this.currentVariableName = name;
+    this.lastVariableName = name;
   }
 
   void handleKeyboardInput() {
+    if (!isFocused) {
+      return;
+    }
     // temporary using the DELETE key (127) instead of backspace since the browser(Chrome) is using the BACKSPACE as a hotkey
     if ((int) key == DELETE_KEY_CODE && textInput.length() > 0) {
       textInput = textInput.substring(0, textInput.length() - 1);
@@ -111,11 +117,21 @@ public class Console {
     }
   }
 
+  void handleMousePressed() {
+    print("mouse!");
+    if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
+      isFocused = true;
+    } else {
+      isFocused = false;
+    }
+  }
+
   void handleConsoleInput() {
     splitCommandBasedOnConsoleWidth(new Command(textInput, true));
-    dict.put(currentVariableName, textInput);
-    consoleInputEvent.onConsoleInput(currentVariableName, textInput);
+    dict.put(lastVariableName, textInput);
+    consoleInputEvent.onConsoleInput(lastVariableName, textInput);
     textInput = "";
+    lastVariableName = "";
   }
 
   void setConsoleInputEvent(ConsoleInputEvent consoleInputEvent) {

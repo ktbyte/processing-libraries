@@ -9,7 +9,7 @@ void setup() {
   console.readInput("name");
   console.setConsoleInputEvent(new ConsoleInputEvent() {
   
-    void onConsoleInput(String variable, String value) {
+    public void onConsoleInput(String variable, String value) {
       if (variable.equals("name")) {
         console.write("Nice to meet you " + value + "!");
         console.write("How old are you?");
@@ -29,4 +29,8 @@ void draw() {
 
 void keyTyped() {
   console.handleKeyboardInput();
+}
+
+void mousePressed() {
+  console.handleMousePressed();
 }
