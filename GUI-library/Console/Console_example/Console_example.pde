@@ -30,7 +30,7 @@ int number = 3;
 // ### Number-Game Example ###
 void setup() {
   size(800, 600);
-  console = new Console(100, 100, 600, 400);
+  console = new Console(50, 50, 600, 400);
   console.setInputTextColor(color(255, 10, 100));
   console.setOutputTextColor(color(130, 90, 190));
   console.write("I'm thinking of a number between 0 and 9. Try to guess!");
@@ -40,6 +40,7 @@ void setup() {
 
     public void onConsoleInput(String variable, String value) {
       if (variable.equals("number")) {
+        // using custom getInteger() method since using Processing's "int(...)" fails when Java code is compiling
         if (getInteger(value) < number) {
           console.write("Too small. Try again!");
           console.readInput("number");
@@ -69,6 +70,7 @@ void mousePressed() {
 }
 
 int getInteger(String value) {
+  // TODO - make this method also work with negative numbers
   int number = 0;
   for (char ch : value.toCharArray()) {
     if ((byte) ch >= 48 && (byte) ch <= 57) {

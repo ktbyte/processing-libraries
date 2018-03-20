@@ -1,9 +1,9 @@
 public class Console {
-  private final static int BOX_RONDING = 7;
-  private final static int DELETE_KEY_CODE = 127;
-  private final static int ENTER_KEY_CODE = 10;
+  private final static int DELETE_ASCII_CODE = 127;
+  private final static int ENTER_ASCII_CODE = 10;
   private final static int BASIC_ASCII_LOWER_LIMIT = 32;
   private final static int BASIC_ASCII_UPPER_LIMIT = 126;
+  private final static int BOX_RONDING = 7;
   private final static float INPUT_BOX_HEIGHT_PERCENTAGE = 0.1;
 
   private int x, y;
@@ -18,6 +18,9 @@ public class Console {
   private String lastVariableName;
   private int globalPadding;
   private boolean isFocused;
+  private float textSize;
+  private int maxLinesToDisplay;
+  private float textHeight;
 
   public Console(int x, int y, int w, int h) {
     this.inputTextColor = color(255);
@@ -31,6 +34,20 @@ public class Console {
     this.lines = new ArrayList();
     this.dict = new HashMap<String, String>();
     this.textInput = "";
+    computeDefaultAttributes();
+  }
+
+  void computeDefaultAttributes() {
+    if (h < 400) {
+      this.textSize = 18;
+    } else if (h < 900) {
+      this.textSize = 22;
+    } else {
+      this.textSize = 24;
+    }
+    textSize(this.textSize);
+    this.textHeight = textAscent() + textDescent();
+    maxLinesToDisplay = (int) ((0.9 * h) / (textHeight + 20));
   }
 
   void drawConsole() {
@@ -43,13 +60,13 @@ public class Console {
     fill(0);
     noStroke();
     rect(x, y, w, h - inputBoxHeight, BOX_RONDING, BOX_RONDING, 0, 0);
-    textSize(18);
+    textSize(textSize);
     textAlign(LEFT);
-    int commandsIndexLimit = lines.size() > 10 ? lines.size() - 10 : 0; 
+    int commandsIndexLimit = lines.size() > maxLinesToDisplay ? lines.size() - maxLinesToDisplay : 0; 
     for (int i = commandsIndexLimit, j=0; i < lines.size(); i++, j++) {
       stroke(lines.get(i).textColor);
       fill(lines.get(i).textColor);
-      text(lines.get(i).text, x + globalPadding, 18 + y + j * 20 + globalPadding);
+      text(lines.get(i).text, x + globalPadding, 18 + y + j * (textHeight + 5) + globalPadding);
     }
   }
 
@@ -58,9 +75,9 @@ public class Console {
     noStroke();
     rect(x, y + h - inputBoxHeight, w, inputBoxHeight, 0, 0, BOX_RONDING, BOX_RONDING);
     fill(0);
-    textSize(18);
+    textSize(textSize);
     textAlign(LEFT);
-    text(getTrimmedInputText(textInput), x + globalPadding, y + h - globalPadding);
+    text(getTrimmedInputText(textInput), x + globalPadding, y + h - inputBoxHeight/2 + textHeight/2);
     drawBlinkingInputCursor();
   }
 
@@ -84,7 +101,7 @@ public class Console {
     stroke(0);
     if (frameCount % 60 < 30) {
       float cursorX = min(x + w - globalPadding, x + textWidth(textInput) + globalPadding);
-      line(cursorX, y + h - 30, cursorX, y + h - 10);
+      line(cursorX, y + h - inputBoxHeight + 10, cursorX, y + h - 10);
     }
   }
 
@@ -95,7 +112,7 @@ public class Console {
 
   void splitCommandBasedOnConsoleWidth(Command command) {
     Line line = new Line();
-    textSize(18);
+    textSize(textSize);
     String[] wordsFromCommand = split(command.text, " ");
     for (int i=0; i < wordsFromCommand.length; i++) {
       if (textWidth(line.text + " ") + textWidth(wordsFromCommand[i]) < w) {
@@ -122,9 +139,9 @@ public class Console {
       return;
     }
     // temporary using the DELETE key (127) instead of backspace since the browser(Chrome) is using the BACKSPACE as a hotkey
-    if ((int) key == DELETE_KEY_CODE && textInput.length() > 0) {
+    if ((int) key == DELETE_ASCII_CODE && textInput.length() > 0) {
       textInput = textInput.substring(0, textInput.length() - 1);
-    } else if ((int) key == ENTER_KEY_CODE) {
+    } else if ((int) key == ENTER_ASCII_CODE) {
       handleConsoleInput();
     } else if ((int) key >= BASIC_ASCII_LOWER_LIMIT && (int) key <= BASIC_ASCII_UPPER_LIMIT) {
       byte b = (byte) key;
