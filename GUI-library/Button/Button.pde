@@ -1,59 +1,61 @@
-KTGUI ktgui;
-
 Button btn;
+color bg;
 
 /************************************************************************************************
  *
  ************************************************************************************************/
 void setup() {
   size(400, 400);
-  ktgui = new KTGUI();
+  noSmooth();
+  
   btn = new Button(100, 100, 200, 100);
   btn.addListener(new ButtonListener() {
-    public void onPressed() {
-      println("The button was pressed!!!");
+    void onPressed() {
+      bg = color(random(0, 255),random(0, 255),random(0, 255));
     }
   }
   );
 }
 
-
-/************************************************************************************************
- *
- ************************************************************************************************/
+//-----------------------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------------------
 void draw() {
-  background(225);
-  ktgui.drawDrawables();
+  background(bg);
+  btn.draw();
+  fill(0);
+  text(mouseX + ", " + mouseY, 10, 20);
+  text("btn.isPointInside=" + str(btn.isPointInside(mouseX, mouseY)), 10, 30);
+  text("btn.isHovered=" + str(btn.isHovered), 10, 40);
+  text("btn.isPressed=" + str(btn.isPressed), 10, 50);
 }
 
-
-/************************************************************************************************
- *
- ************************************************************************************************/
+//-----------------------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------------------
 void mouseMoved() {
-  ktgui.processMouseHovered();
+  btn.processMouseHovered(mouseX, mouseY);
 }
 
-
-/************************************************************************************************
- *
- ************************************************************************************************/
+//-----------------------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------------------
 void mousePressed() {
-  ktgui.processMousePressed();
+  btn.processMousePressed(mouseX, mouseY);
 }
 
-
-/************************************************************************************************
- *
- ************************************************************************************************/
+//-----------------------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------------------
 void mouseReleased() {
-  ktgui.processMouseReleased();
+  btn.processMouseReleased();
 }
+
 
 //**********************************************************************************************
 //
 //**********************************************************************************************
-interface ButtonListener {
+public interface ButtonListener {
   void onPressed();
 }
 
@@ -61,14 +63,14 @@ interface ButtonListener {
 //**********************************************************************************************
 //
 //**********************************************************************************************
-class Button implements Pressable, Drawable, Hoverable {
-  boolean isPressed, isHovered;
-  int x, y, width, height;
-  color HOVERED = color(100, 100, 200, 250);
-  color PRESSED = color(250, 50, 50);
-  color PASSIVE = color(100);
-  ArrayList<ButtonListener> listeners = new ArrayList<ButtonListener>();
-  
+class Button {
+  private boolean isPressed, isHovered;
+  private int x, y, width, height;
+  private ButtonListener btnListener;
+  private color HOVERED = color(100, 100, 200, 250);
+  private color PRESSED = color(250, 50, 50);
+  private color PASSIVE = color(100);
+
   //---------------------------------------------------------------------------------------
   //
   //---------------------------------------------------------------------------------------
@@ -77,9 +79,6 @@ class Button implements Pressable, Drawable, Hoverable {
     this.y = y;
     this.width = width;
     this.height = height;
-    ktgui.pressables.add(this);
-    ktgui.hoverables.add(this);
-    ktgui.drawables.add(this);
   }
 
   //---------------------------------------------------------------------------------------
@@ -131,10 +130,9 @@ class Button implements Pressable, Drawable, Hoverable {
   void processMouseHovered(int x, int y) {
     if (isPointInside(x, y)) {
       isHovered = true;
-    }else{
+    } else {
       isHovered = false;
     }
-
   }
 
   //---------------------------------------------------------------------------------------
@@ -143,7 +141,7 @@ class Button implements Pressable, Drawable, Hoverable {
   void processMousePressed(int x, int y) {
     if (isPointInside(x, y)) {
       isPressed = true;
-      notifyListeners();
+      btnListener.onPressed();
     }
   }
 
@@ -157,91 +155,16 @@ class Button implements Pressable, Drawable, Hoverable {
   //---------------------------------------------------------------------------------------
   //
   //---------------------------------------------------------------------------------------
-  void notifyListeners() {
-    for (ButtonListener listener : listeners) {
-      listener.onPressed();
-    }
-  }
-
-  //---------------------------------------------------------------------------------------
-  //
-  //---------------------------------------------------------------------------------------
   void addListener(ButtonListener listener) {
-    listeners.add(listener);
+    btnListener = listener;
   }
-
-}
-
-//**********************************************************************************************
-//
-//**********************************************************************************************
-class KTGUI {
-  ArrayList<Pressable> pressables = new ArrayList<Pressable>();
-  ArrayList<Hoverable> hoverables = new ArrayList<Hoverable>();
-  ArrayList<Drawable> drawables = new ArrayList<Drawable>();
-
+  
+  
   //---------------------------------------------------------------------------------------
   //
   //---------------------------------------------------------------------------------------
-  void drawDrawables() {
-    for (Drawable drawable : drawables) {
-      drawable.draw();
-    }
+  void test(){
+    println("Test!");
   }
 
-  //---------------------------------------------------------------------------------------
-  //
-  //---------------------------------------------------------------------------------------
-  void processMouseHovered() {
-    for (Hoverable hoverable : ktgui.hoverables) {
-      hoverable.processMouseHovered(mouseX, mouseY);
-    }
-  }
-
-  //---------------------------------------------------------------------------------------
-  //
-  //---------------------------------------------------------------------------------------
-  void processMousePressed() {
-    for (Pressable pressable : ktgui.pressables) {
-      pressable.processMousePressed(mouseX, mouseY);
-    }
-  }
-
-  //---------------------------------------------------------------------------------------
-  //
-  //---------------------------------------------------------------------------------------
-  void processMouseReleased() {
-    for (Pressable pressable : ktgui.pressables) {
-      pressable.processMouseReleased();
-    }
-  }
 }
-
-
-
-//**********************************************************************************************
-//
-//**********************************************************************************************
-interface Pressable {
-  void processMousePressed(int x, int y);
-  void processMouseReleased();
-}
-
-
-
-//**********************************************************************************************
-//
-//**********************************************************************************************
-interface Hoverable {
-  void processMouseHovered(int x, int y);
-}
-
-
-
-//**********************************************************************************************
-//
-//**********************************************************************************************
-interface Drawable {
-  void draw();
-}
-
