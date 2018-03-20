@@ -10,6 +10,7 @@ void setup() {
   
   btn = new Button(100, 100, 200, 100);
   btn.addListener(new ButtonListener() {
+    //public void onPressed() {  // <--- use this if you want to run this code inside the Processing IDE
     void onPressed() {
       bg = color(random(0, 255),random(0, 255),random(0, 255));
       println("Call 'println()' iside the anonymous class method.");           //doesn't work !!!
