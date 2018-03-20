@@ -12,6 +12,7 @@ void setup() {
   btn.addListener(new ButtonListener() {
     void onPressed() {
       bg = color(random(0, 255),random(0, 255),random(0, 255));
+      println("Call 'println()' iside the anonymous class method.");           //doesn't work !!!
     }
   }
   );
@@ -142,6 +143,7 @@ class Button {
     if (isPointInside(x, y)) {
       isPressed = true;
       btnListener.onPressed();
+      println("Call 'println()' outside the anonymous class method.");  //doesn't work !!!
     }
   }
 
@@ -159,12 +161,4 @@ class Button {
     btnListener = listener;
   }
   
-  
-  //---------------------------------------------------------------------------------------
-  //
-  //---------------------------------------------------------------------------------------
-  void test(){
-    println("Test!");
-  }
-
 }
