@@ -8,6 +8,7 @@ public class Console {
   private HashMap<String, String> dict;
   private ConsoleEvent consoleEvent;
   private String currentVariableName;
+  private int globalPadding;
 
   public Console(int x, int y, int w, int h, color c) {
     this.x = x;
@@ -15,6 +16,7 @@ public class Console {
     this.w = w;
     this.h = h;
     this.c = c;
+    this.globalPadding = 10;
     this.inputBoxHeight = (int) (0.1 * h);
     this.lines = new ArrayList();
     this.dict = new HashMap<String, String>();
@@ -37,7 +39,15 @@ public class Console {
     fill(255);
     textSize(18);
     textAlign(LEFT);
-    text(currentCommand, x + 10, y + h - 10);
+    text(currentCommand, x + globalPadding, y + h - globalPadding);
+    drawBlinkingInputCursor();
+  }
+  
+  void drawBlinkingInputCursor() {
+      if (frameCount % 60 < 30) {
+        float cursorX = x + textWidth(currentCommand) + globalPadding;
+        line(cursorX, y + h - 30, cursorX, y + h - 10);
+    }
   }
 
   void printCommands() {
@@ -46,7 +56,7 @@ public class Console {
     textAlign(LEFT);
     int commandsIndexLimit = lines.size() > 10 ? lines.size() - 10 : 0; 
     for (int i = commandsIndexLimit, j=0; i < lines.size(); i++, j++) {
-      text(lines.get(i), x, 18 + y + j * 20);
+      text(lines.get(i), x + globalPadding, 18 + y + j * 20 + globalPadding);
     }
   }
 
@@ -82,7 +92,7 @@ public class Console {
     if ((int) key == 127 && currentCommand.length() > 0) {
       currentCommand = currentCommand.substring(0, currentCommand.length() - 1);
     } else if ((int) key == 10) {
-      lines.add(currentCommand);
+      splitCommandBasedOnConsoleWidth(currentCommand);
       dict.put(currentVariableName, currentCommand);
       consoleEvent.onConsoleInput(currentVariableName, currentCommand);
       currentCommand = "";

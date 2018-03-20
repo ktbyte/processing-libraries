@@ -12,7 +12,7 @@ void setup() {
         console.write("How old are you?");
         console.readInput("age");
       } else if (variable.equals("age")) {
-        console.write("So it seems I am older!");
+        console.write(value + "...  nice!");
       }
     }
   }
@@ -20,6 +20,7 @@ void setup() {
 }
 
 void draw() {
+  background(144);
   console.drawConsole();
 }
 
