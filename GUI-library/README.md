@@ -2,10 +2,14 @@
 
 This library consists of several easy-to-use GUI elements and is designed to work with both the Processing and KTByte coder environments.
 
+## Contents
+  * [Console](#console)
+  * [Button](#button)
+
 The library consists of the following elements:
 
-1) Button
-
-2) Console
+## <a name="#console"></a> Console
 
 This element acts as a Command-line interface, accepting user input and handling custom responses. 
+
+## <a name="#button"></a> Button
