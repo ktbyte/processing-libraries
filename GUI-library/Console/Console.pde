@@ -25,6 +25,7 @@ public class Console {
   private float textHeight;
   private ArrowButton upBtn;
   private ArrowButton downBtn;
+  private float scrollBarMaxHeight;
 
   public Console(int x, int y, int w, int h) {
     this.inputTextColor = color(255);
@@ -51,7 +52,12 @@ public class Console {
     }
     textSize(this.textSize);
     this.textHeight = textAscent() + textDescent();
-    this.maxLinesToDisplay = (int) ((0.9 * h - globalPadding * 2) / (textHeight + 5));
+    this.maxLinesToDisplay = computeMaxLinesToDisplay();
+    this.scrollBarMaxHeight = h - inputBoxHeight - SCROLL_BAR_WIDTH * 2;
+  }
+
+  int computeMaxLinesToDisplay() {
+    return (int) ((0.9 * h - globalPadding * 2) / (textHeight + 2));
   }
 
   void drawConsole() {
@@ -85,6 +91,21 @@ public class Console {
     rect(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, h - inputBoxHeight, 0, BOX_RONDING, 0, 0);
     upBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, 0, 0, BOX_RONDING, 0, 0);
     downBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y + h - inputBoxHeight - 20, SCROLL_BAR_WIDTH, 2);
+    fill(120);
+    
+    float scrollBarHeight = scrollBarMaxHeight;
+    if (lines.size() > maxLinesToDisplay) {
+      scrollBarHeight = max(25, ((float) maxLinesToDisplay/lines.size()) * scrollBarMaxHeight);
+    }
+    int consoleScrollableLines = lines.size() - maxLinesToDisplay;
+    float trackScrollArea = h - inputBoxHeight - SCROLL_BAR_WIDTH * 2 - scrollBarHeight;
+    float scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea;
+    if (lines.size() > maxLinesToDisplay) {
+    scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea - (-lineScrollOffset * ((float) trackScrollArea/consoleScrollableLines));
+    }
+    rectMode(CORNER);
+    rect(x + w - SCROLL_BAR_WIDTH, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
+    
     upBtn.drawButton();
     downBtn.drawButton();
   }
@@ -133,10 +154,12 @@ public class Console {
     Line line = new Line();
     textSize(textSize);
     String[] wordsFromCommand = split(command.text, " ");
-    for (int i=0; i < wordsFromCommand.length; i++) {
+    int i = 0;
+    while (i < wordsFromCommand.length) {
       if (textWidth(line.text + " ") + textWidth(wordsFromCommand[i]) < w - SCROLL_BAR_WIDTH) {
         line.text += wordsFromCommand[i] + " ";
         line.textColor = (command.isInput ? inputTextColor : outputTextColor);
+        i++;
       } else {
         lines.add(line);
         line = new Line();
@@ -208,7 +231,7 @@ public class Console {
   void setTextSize(float textSize) {
     this.textSize = textSize;
     this.textHeight = textAscent() + textDescent();
-    this.maxLinesToDisplay = (int) ((0.9 * h - globalPadding * 2) / (textHeight + 2));
+    this.maxLinesToDisplay = computeMaxLinesToDisplay();
   }
 
   private class ArrowButton {
@@ -266,6 +289,7 @@ public class Console {
     }
 
     void drawButton() {
+      rectMode(CORNER);
       noStroke();
       fill(80);
       rect(this.x, this.y, s, s, r1, r2, r3, r4);
