@@ -4,6 +4,7 @@ public class Console {
   private final static int BASIC_ASCII_LOWER_LIMIT = 32;
   private final static int BASIC_ASCII_UPPER_LIMIT = 126;
   private final static int BOX_RONDING = 7;
+  private final static int SCROLL_BAR_WIDTH = 20;
   private final static float INPUT_BOX_HEIGHT_PERCENTAGE = 0.1;
 
   private int x, y;
@@ -17,10 +18,13 @@ public class Console {
   private ConsoleInputEvent consoleInputEvent;
   private String lastVariableName;
   private int globalPadding;
+  private int lineScrollOffset;
   private boolean isFocused;
   private float textSize;
   private int maxLinesToDisplay;
   private float textHeight;
+  private ArrowButton upBtn;
+  private ArrowButton downBtn;
 
   public Console(int x, int y, int w, int h) {
     this.inputTextColor = color(255);
@@ -47,27 +51,42 @@ public class Console {
     }
     textSize(this.textSize);
     this.textHeight = textAscent() + textDescent();
-    maxLinesToDisplay = (int) ((0.9 * h) / (textHeight + 20));
+    this.maxLinesToDisplay = (int) ((0.9 * h - globalPadding * 2) / (textHeight + 5));
   }
 
   void drawConsole() {
+    pushStyle();
     drawConsoleTextBox();
     drawInputBox();
+    drawScrollBar();
+    popStyle();
   }
 
   void drawConsoleTextBox() {
     rectMode(CORNER);
     fill(0);
     noStroke();
-    rect(x, y, w, h - inputBoxHeight, BOX_RONDING, BOX_RONDING, 0, 0);
+    rect(x, y, w - SCROLL_BAR_WIDTH, h - inputBoxHeight, BOX_RONDING, 0, 0, 0);
     textSize(textSize);
-    textAlign(LEFT);
-    int commandsIndexLimit = lines.size() > maxLinesToDisplay ? lines.size() - maxLinesToDisplay : 0; 
-    for (int i = commandsIndexLimit, j=0; i < lines.size(); i++, j++) {
+    textAlign(LEFT, TOP);    
+    int consoleStartLine = max(0, lines.size() - maxLinesToDisplay + lineScrollOffset);
+    int consoleEndLine = min(lines.size(), consoleStartLine + maxLinesToDisplay);
+
+    for (int i = consoleStartLine, j=0; i < consoleEndLine; i++, j++) {
       stroke(lines.get(i).textColor);
       fill(lines.get(i).textColor);
-      text(lines.get(i).text, x + globalPadding, 18 + y + j * (textHeight + 5) + globalPadding);
+      text(lines.get(i).text, x + globalPadding, y + j * (textHeight + 2) + globalPadding);
     }
+  }
+
+  void drawScrollBar() {
+    noStroke();
+    fill(50);
+    rect(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, h - inputBoxHeight, 0, BOX_RONDING, 0, 0);
+    upBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, 0, 0, BOX_RONDING, 0, 0);
+    downBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y + h - inputBoxHeight - 20, SCROLL_BAR_WIDTH, 2);
+    upBtn.drawButton();
+    downBtn.drawButton();
   }
 
   void drawInputBox() {
@@ -76,8 +95,8 @@ public class Console {
     rect(x, y + h - inputBoxHeight, w, inputBoxHeight, 0, 0, BOX_RONDING, BOX_RONDING);
     fill(0);
     textSize(textSize);
-    textAlign(LEFT);
-    text(getTrimmedInputText(textInput), x + globalPadding, y + h - inputBoxHeight/2 + textHeight/2);
+    textAlign(LEFT, CENTER);
+    text(getTrimmedInputText(textInput), x + globalPadding, y + 0.9 * h + inputBoxHeight/2);
     drawBlinkingInputCursor();
   }
 
@@ -115,7 +134,7 @@ public class Console {
     textSize(textSize);
     String[] wordsFromCommand = split(command.text, " ");
     for (int i=0; i < wordsFromCommand.length; i++) {
-      if (textWidth(line.text + " ") + textWidth(wordsFromCommand[i]) < w) {
+      if (textWidth(line.text + " ") + textWidth(wordsFromCommand[i]) < w - SCROLL_BAR_WIDTH) {
         line.text += wordsFromCommand[i] + " ";
         line.textColor = (command.isInput ? inputTextColor : outputTextColor);
       } else {
@@ -156,6 +175,15 @@ public class Console {
     } else {
       isFocused = false;
     }
+    if (upBtn.isPressed(mouseX, mouseY)) {
+      if (-lineScrollOffset < lines.size() - maxLinesToDisplay) {
+        lineScrollOffset--;
+      }
+    } else if (downBtn.isPressed(mouseX, mouseY)) {
+      if (lineScrollOffset < 0) {
+        lineScrollOffset++;
+      }
+    }
   }
 
   void handleConsoleInput() {
@@ -175,6 +203,89 @@ public class Console {
 
   void setOutputTextColor(color outputTextColor) {
     this.outputTextColor = outputTextColor;
+  }
+
+  void setTextSize(float textSize) {
+    this.textSize = textSize;
+    this.textHeight = textAscent() + textDescent();
+    this.maxLinesToDisplay = (int) ((0.9 * h - globalPadding * 2) / (textHeight + 2));
+  }
+
+  private class ArrowButton {
+    private int x, y, s;
+    private int r1, r2, r3, r4; // box-roundings
+    private Point p1, p2, p3;
+
+    // TODO - try to use an enum insted of ints
+    public int orientation; // int from 0-3, clockwise
+
+    ArrowButton(int x, int y, int s, int o) {
+      this.x = x;
+      this.y = y;
+      this.s = s;
+      this.orientation = o;
+      computeArrowEndPoints();
+    }
+
+    ArrowButton(int x, int y, int s, int o, int r1, int r2, int r3, int r4) {
+      this.x = x;
+      this.y = y;
+      this.s = s;
+      this.orientation = o;
+      this.r1 = r1;
+      this.r2 = r2;
+      this.r3 = r3;
+      this.r4 = r4;
+      computeArrowEndPoints();
+    }
+
+    void computeArrowEndPoints() {
+      switch (orientation) {
+      case 0: // UP
+        this.p1 = new Point(x + 0.2 * s, y + 0.8 * s);
+        this.p2 = new Point(x + 0.8 * s, y + 0.8 * s);
+        this.p3 = new Point(x + 0.5 * s, y + 0.2 * s);
+        break;
+      case 1: // RIGHT
+        this.p1 = new Point(x + 0.2 * s, y + 0.2 * s);
+        this.p2 = new Point(x + 0.2 * s, y + 0.8 * s);
+        this.p3 = new Point(x + 0.8 * s, y + 0.5 * s);
+        break;
+      case 2: // DOWN
+        this.p1 = new Point(x + 0.2 * s, y + 0.2 * s);
+        this.p2 = new Point(x + 0.8 * s, y + 0.2 * s);
+        this.p3 = new Point(x + 0.5 * s, y + 0.8 * s);
+        break;
+      case 3: // LEFT
+        this.p1 = new Point(x + 0.8 * s, y + 0.2 * s);
+        this.p2 = new Point(x + 0.8 * s, y + 0.8 * s);
+        this.p3 = new Point(x + 0.2 * s, y + 0.5 * s);
+        break;
+      default:
+      }
+    }
+
+    void drawButton() {
+      noStroke();
+      fill(80);
+      rect(this.x, this.y, s, s, r1, r2, r3, r4);
+      stroke(200);
+      line(p1.x, p1.y, p3.x, p3.y);
+      line(p2.x, p2.y, p3.x, p3.y);
+    }
+
+    boolean isPressed(float mx, float my) {
+      return (mx > this.x && mx < this.x + s && my > this.y && my < this.y + s);
+    }
+  }
+
+  private class Point {
+    public float x, y;
+
+    Point(float x, float y) {
+      this.x = x;
+      this.y = y;
+    }
   }
 
   private class Command {
