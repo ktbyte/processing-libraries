@@ -1,6 +1,6 @@
 # GUI library
 
-This library consists of several easy-to-use GUI elements and is designed to work with both the Processing and KTByte coder environments.
+This library consists of several easy-to-use GUI elements and is designed to work with both the Processing and [KTByte coder](https://www.ktbyte.com/coder) environments.
 
 ## Contents
   * [Console](#console)
