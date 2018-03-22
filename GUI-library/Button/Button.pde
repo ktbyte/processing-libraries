@@ -1,5 +1,6 @@
-Button btn;
 color bg;
+Button btn;
+
 
 /************************************************************************************************
  *
@@ -30,6 +31,24 @@ void draw() {
   text("btn.isPointInside=" + str(btn.isPointInside(mouseX, mouseY)), 10, 30);
   text("btn.isHovered=" + str(btn.isHovered), 10, 40);
   text("btn.isPressed=" + str(btn.isPressed), 10, 50);
+  
+  tickle();
+}
+
+//-----------------------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------------------
+void tickle(){
+  if(btn.isPressed){
+    pushMatrix();
+    translate(width/2 + random(-5, 5), height*0.75 + random(-5, 5));
+    pushStyle();
+    textSize(36);
+    textAlign(CENTER, CENTER);
+    text("TICKLE", 0, 0);
+    popStyle();
+    popMatrix();
+  }
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -71,7 +90,7 @@ class Button {
   private ButtonListener btnListener;
   private color HOVERED = color(100, 100, 200, 250);
   private color PRESSED = color(250, 50, 50);
-  private color PASSIVE = color(100);
+  private color PASSIVE = color(180);
 
   //---------------------------------------------------------------------------------------
   //
@@ -93,7 +112,7 @@ class Button {
       stroke(50, 200, 50);
       fill(HOVERED);
     } else {
-      strokeWeight(1);
+      strokeWeight(2);
       stroke(50, 50, 200);
       fill(PASSIVE);
     }
@@ -103,7 +122,7 @@ class Button {
     pushMatrix();
     translate(x, y);
     rectMode(CORNER);
-    rect(0, 0, this.width, this.height);
+    rect(0, 0, this.width, this.height, 10);
     popMatrix();
     popStyle();
 
