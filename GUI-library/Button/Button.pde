@@ -1,6 +1,4 @@
-color bg;
 Button btn;
-
 
 /************************************************************************************************
  *
@@ -10,21 +8,13 @@ void setup() {
   noSmooth();
   
   btn = new Button(100, 100, 200, 100);
-  btn.addListener(new ButtonListener() {
-    //public void onPressed() {  // <--- use this if you want to run this code inside the Processing IDE
-    void onPressed() {
-      bg = color(random(0, 255),random(0, 255),random(0, 255));
-      println("Call 'println()' iside the anonymous class method.");           //doesn't work !!!
-    }
-  }
-  );
 }
 
 //-----------------------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------------------
 void draw() {
-  background(bg);
+  background(220);
   btn.draw();
   fill(0);
   text(mouseX + ", " + mouseY, 10, 20);
@@ -73,12 +63,6 @@ void mouseReleased() {
 }
 
 
-//**********************************************************************************************
-//
-//**********************************************************************************************
-public interface ButtonListener {
-  void onPressed();
-}
 
 
 //**********************************************************************************************
@@ -87,7 +71,6 @@ public interface ButtonListener {
 class Button {
   private boolean isPressed, isHovered;
   private int x, y, width, height;
-  private ButtonListener btnListener;
   private color HOVERED = color(100, 100, 200, 250);
   private color PRESSED = color(250, 50, 50);
   private color PASSIVE = color(180);
@@ -162,8 +145,6 @@ class Button {
   void processMousePressed(int x, int y) {
     if (isPointInside(x, y)) {
       isPressed = true;
-      btnListener.onPressed();
-      println("Call 'println()' outside the anonymous class method.");  //doesn't work !!!
     }
   }
 
@@ -174,11 +155,5 @@ class Button {
     isPressed = false;
   }
 
-  //---------------------------------------------------------------------------------------
-  //
-  //---------------------------------------------------------------------------------------
-  void addListener(ButtonListener listener) {
-    btnListener = listener;
-  }
   
 }
