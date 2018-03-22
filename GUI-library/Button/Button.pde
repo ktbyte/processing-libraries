@@ -89,6 +89,8 @@ class Button {
   //
   //---------------------------------------------------------------------------------------
   void draw() {
+    pushMatrix();
+    translate(x, y);
     pushStyle();
     if (isHovered) {
       strokeWeight(5);
@@ -102,10 +104,13 @@ class Button {
     if (isPressed) {
       fill(PRESSED);
     }
-    pushMatrix();
-    translate(x, y);
     rectMode(CORNER);
     rect(0, 0, this.width, this.height, 10);
+
+    fill(0);
+    textSize(20);
+    textAlign(CENTER, CENTER);
+    text("Press and hold me", this.width/2, this.height/2);
     popMatrix();
     popStyle();
 
