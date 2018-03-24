@@ -46,14 +46,14 @@ void tickle(){
 //
 //-----------------------------------------------------------------------------------------------
 void mouseMoved() {
-  btn.processMouseHovered(mouseX, mouseY);
+  btn.processMouseHovered();
 }
 
 //-----------------------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------------------
 void mousePressed() {
-  btn.processMousePressed(mouseX, mouseY);
+  btn.processMousePressed();
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -138,8 +138,8 @@ class Button {
   //---------------------------------------------------------------------------------------
   //
   //---------------------------------------------------------------------------------------
-  void processMouseHovered(int x, int y) {
-    if (isPointInside(x, y)) {
+  void processMouseHovered() {
+    if (isPointInside(mouseX, mouseY)) {
       isHovered = true;
     } else {
       isHovered = false;
@@ -149,8 +149,8 @@ class Button {
   //---------------------------------------------------------------------------------------
   //
   //---------------------------------------------------------------------------------------
-  void processMousePressed(int x, int y) {
-    if (isPointInside(x, y)) {
+  void processMousePressed() {
+    if (isPointInside(mouseX, mouseY)) {
       isPressed = true;
     }
   }
