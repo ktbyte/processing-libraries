@@ -8,6 +8,7 @@ void setup() {
   noSmooth();
   
   btn = new Button(100, 100, 200, 100);
+  btn.setTitle("Press and hold me");
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -74,7 +75,8 @@ class Button {
   private color HOVERED = color(100, 100, 200, 250);
   private color PRESSED = color(250, 50, 50);
   private color PASSIVE = color(180);
-
+  private String title;
+  
   //---------------------------------------------------------------------------------------
   //
   //---------------------------------------------------------------------------------------
@@ -110,7 +112,7 @@ class Button {
     fill(0);
     textSize(20);
     textAlign(CENTER, CENTER);
-    text("Press and hold me", this.width/2, this.height/2);
+    text(title, this.width/2, this.height/2);
     popMatrix();
     popStyle();
 
@@ -160,5 +162,10 @@ class Button {
     isPressed = false;
   }
 
-  
+  //---------------------------------------------------------------------------------------
+  //
+  //---------------------------------------------------------------------------------------
+  void setTitle(String title){
+    this.title = title;
+  }
 }
