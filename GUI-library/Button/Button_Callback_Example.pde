@@ -12,6 +12,7 @@ void setup() {
   frameRate(25);
   
   btn = new Button(100, 100, 200, 100);
+  btn.setTitle("Press and hold me!");
   
   btn.addListener(new ButtonListener() {
     void onPressed() {
@@ -127,6 +128,7 @@ public class Button {
   private color HOVERED = color(100, 100, 200, 250);
   private color PRESSED = color(250, 50, 50);
   private color PASSIVE = color(180);
+  private String title;
 
   //---------------------------------------------------------------------------------------
   //
@@ -160,11 +162,9 @@ public class Button {
     translate(x, y);
     rectMode(CORNER);
     rect(0, 0, this.width, this.height, 10);
-    popMatrix();
-    popStyle();
-
-    pushStyle();
-    pushMatrix();
+    fill(0);
+    textAlign(CENTER, CENTER);
+    text(title, this.width/2, this.height/2);
     popMatrix();
     popStyle();
   }
@@ -220,5 +220,11 @@ public class Button {
   void addListener(ButtonListener listener) {
     btnListeners.add(listener);
   }
-  
+
+  //---------------------------------------------------------------------------------------
+  //
+  //---------------------------------------------------------------------------------------
+  void setTitle(String title){
+    this.title = title;
+  }
 }
