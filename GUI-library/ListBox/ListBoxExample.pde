@@ -18,7 +18,7 @@ void setup(){
   btn = new Button(width - 150, 100, 100, 40);
   btn.addListener(new ButtonListener() {
     void onPressed(){
-      listBox.addItem("Z" + listBox.items.size() - 5);
+      listBox.addItem("Z" + listBox.items.size());
     }
   });
   btn.setTitle("Add Z");
