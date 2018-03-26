@@ -31,6 +31,7 @@ void draw() {
 }
 
 public class TextBox {
+  private final static int BACKSPACE_ASCII_CODE = 8;
   private final static int ENTER_ASCII_CODE = 10;
   private final static int BASIC_ASCII_LOWER_LIMIT = 32;
   private final static int BASIC_ASCII_UPPER_LIMIT = 126;
@@ -110,20 +111,16 @@ public class TextBox {
       return;
     }
 
-    if (key == CODED) {
-      // temporary using the LEFT key instead of backspace since the browser(Chrome) is using the BACKSPACE as a hotkey
-      if (keyCode == LEFT && textInput.length() > 0) {
+    if ((int) key == BACKSPACE_ASCII_CODE) {
         textInput = textInput.substring(0, textInput.length() - 1);
-      }
-    } else {
-      if ((int) key == ENTER_ASCII_CODE) {
-        keyEventListener.onEnterKey();
-        this.isFocused = false;
-      } else if ((int) key >= BASIC_ASCII_LOWER_LIMIT && (int) key <= BASIC_ASCII_UPPER_LIMIT) {
-        byte b = (byte) key;
-        char ch = (char) b;
-        textInput += ch;
-      }
+    }
+    if ((int) key == ENTER_ASCII_CODE) {
+    keyEventListener.onEnterKey();
+    this.isFocused = false;
+    } else if ((int) key >= BASIC_ASCII_LOWER_LIMIT && (int) key <= BASIC_ASCII_UPPER_LIMIT) {
+    byte b = (byte) key;
+    char ch = (char) b;
+    textInput += ch;
     }
   }
 

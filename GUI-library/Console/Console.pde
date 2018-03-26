@@ -1,5 +1,5 @@
 public class Console {
-  private final static int DELETE_ASCII_CODE = 127;
+  private final static int BACKSPACE_ASCII_CODE = 8;
   private final static int ENTER_ASCII_CODE = 10;
   private final static int BASIC_ASCII_LOWER_LIMIT = 32;
   private final static int BASIC_ASCII_UPPER_LIMIT = 126;
@@ -15,7 +15,7 @@ public class Console {
   private String textInput;
   private int inputBoxHeight;
   private HashMap<String, String> dict;
-  private ConsoleInputEvent consoleInputEvent;
+  private ConsoleInputListener consoleInputListener;
   private String lastVariableName;
   private int globalPadding;
   private int lineScrollOffset;
@@ -97,7 +97,7 @@ public class Console {
     upBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, 0, 0, BOX_RONDING, 0, 0);
     downBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y + h - inputBoxHeight - 20, SCROLL_BAR_WIDTH, 2);
     fill(120);
-    
+
     float scrollBarHeight = scrollBarMaxHeight;
     if (lines.size() > maxLinesToDisplay) {
       scrollBarHeight = max(25, ((float) maxLinesToDisplay/lines.size()) * scrollBarMaxHeight);
@@ -106,11 +106,11 @@ public class Console {
     float trackScrollArea = h - inputBoxHeight - SCROLL_BAR_WIDTH * 2 - scrollBarHeight;
     float scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea;
     if (lines.size() > maxLinesToDisplay) {
-    scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea - (-lineScrollOffset * ((float) trackScrollArea/consoleScrollableLines));
+      scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea - (-lineScrollOffset * ((float) trackScrollArea/consoleScrollableLines));
     }
     rectMode(CORNER);
     rect(x + w - SCROLL_BAR_WIDTH, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
-    
+
     upBtn.drawButton();
     downBtn.drawButton();
   }
@@ -180,25 +180,24 @@ public class Console {
   void readInput(String name) {
     this.lastVariableName = name;
   }
-  
+
   void mouseEvent(MouseEvent e) {
-      if (e.getAction() == MouseEvent.PRESS) {
-          mousePressed();
-      }
-  }
-  
-  void keyEvent(KeyEvent e) {
-      if (e.getAction() == KeyEvent.TYPE) {
-          keyTyped();
-      }
+    if (e.getAction() == MouseEvent.PRESS) {
+      mousePressed();
+    }
   }
 
-  void keyTyped() {
+  void keyEvent(KeyEvent e) {
+    if (e.getAction() == KeyEvent.PRESS) {
+      keyPressed();
+    }
+  }
+
+  void keyPressed() {
     if (!isFocused) {
       return;
     }
-    // temporary using the DELETE key (127) instead of backspace since the browser(Chrome) is using the BACKSPACE as a hotkey
-    if ((int) key == DELETE_ASCII_CODE && textInput.length() > 0) {
+    if ((int) key == BACKSPACE_ASCII_CODE && textInput.length() > 0) {
       textInput = textInput.substring(0, textInput.length() - 1);
     } else if ((int) key == ENTER_ASCII_CODE) {
       handleConsoleInput();
@@ -229,12 +228,12 @@ public class Console {
   void handleConsoleInput() {
     splitCommandBasedOnConsoleWidth(new Command(textInput, true));
     dict.put(lastVariableName, textInput);
-    consoleInputEvent.onConsoleInput(lastVariableName, textInput);
+    consoleInputListener.onConsoleInput(lastVariableName, textInput);
     textInput = "";
   }
 
-  void setConsoleInputEvent(ConsoleInputEvent consoleInputEvent) {
-    this.consoleInputEvent = consoleInputEvent;
+  void setConsoleInputListener(ConsoleInputListener consoleInputListener) {
+    this.consoleInputListener = consoleInputListener;
   }
 
   void setInputTextColor(color inputTextColor) {
@@ -349,6 +348,15 @@ public class Console {
   }
 }
 
-public interface ConsoleInputEvent {
-  void onConsoleInput(String variable, String value);
+abstract class ConsoleInputListener {
+
+  abstract void onConsoleInput(String variable, String value);
+
+  /* 
+   * Method used as a workaround, so that the println statements from the onConsoleInput() method 
+   * will work in the KYByte coder
+   */
+  void println(String text) {
+    PApplet.println(text);
+  };
 }

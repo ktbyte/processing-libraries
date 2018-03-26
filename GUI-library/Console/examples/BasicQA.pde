@@ -28,7 +28,7 @@ void setup() {
         }
      }
     }
-	
+  
  }
  );
 }
@@ -38,7 +38,7 @@ void draw() {
 }
 
 public class Console {
-  private final static int DELETE_ASCII_CODE = 127;
+  private final static int BACKSPACE_ASCII_CODE = 8;
   private final static int ENTER_ASCII_CODE = 10;
   private final static int BASIC_ASCII_LOWER_LIMIT = 32;
   private final static int BASIC_ASCII_UPPER_LIMIT = 126;
@@ -227,17 +227,16 @@ public class Console {
   }
 
   void keyEvent(KeyEvent e) {
-    if (e.getAction() == KeyEvent.TYPE) {
-      keyTyped();
+    if (e.getAction() == KeyEvent.PRESS) {
+      keyPressed();
     }
   }
 
-  void keyTyped() {
+  void keyPressed() {
     if (!isFocused) {
       return;
     }
-    // temporary using the DELETE key (127) instead of backspace since the browser(Chrome) is using the BACKSPACE as a hotkey
-    if ((int) key == DELETE_ASCII_CODE && textInput.length() > 0) {
+    if ((int) key == BACKSPACE_ASCII_CODE && textInput.length() > 0) {
       textInput = textInput.substring(0, textInput.length() - 1);
     } else if ((int) key == ENTER_ASCII_CODE) {
       handleConsoleInput();
