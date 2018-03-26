@@ -2,12 +2,12 @@ Console console;
 
 void setup() {
  size(800, 600);
- console = new Console(100, 100, 600, 400);
+ console = new Console(this, 100, 100, 600, 400);
  console.setInputTextColor(color(255, 10, 100));
  console.setOutputTextColor(color(130, 90, 190));
  console.write("Hello there! What's your name?");
  console.readInput("name");
- console.setConsoleInputEvent(new ConsoleInputEvent() {
+ console.setConsoleInputListener(new ConsoleInputListener() {
 
     // use the "public" modifier for the onConsoleInput method in order to work in Processing
     void onConsoleInput(String variable, String value) {
@@ -35,28 +35,6 @@ void setup() {
 
 void draw() {
   background(144);
-  console.drawConsole();
-}
-
-void keyTyped() {
-  console.handleKeyboardInput();
-}
-
-void mousePressed() {
-  console.handleMousePressed();
-}
-
-int getInteger(String value) {
-  // TODO - make this method also work with negative numbers
-  int number = 0;
-  for (char ch : value.toCharArray()) {
-    if ((byte) ch >= 48 && (byte) ch <= 57) {
-      number = number*10 + (byte) ch - 48;
-    } else {
-      break;
-    }
-  }
-  return number;
 }
 
 public class Console {
@@ -76,7 +54,7 @@ public class Console {
   private String textInput;
   private int inputBoxHeight;
   private HashMap<String, String> dict;
-  private ConsoleInputEvent consoleInputEvent;
+  private ConsoleInputListener consoleInputListener;
   private String lastVariableName;
   private int globalPadding;
   private int lineScrollOffset;
@@ -87,8 +65,13 @@ public class Console {
   private ArrowButton upBtn;
   private ArrowButton downBtn;
   private float scrollBarMaxHeight;
+  private PApplet pap;
 
-  public Console(int x, int y, int w, int h) {
+  public Console(PApplet pap, int x, int y, int w, int h) {
+    this.pap = pap;
+    this.pap.registerMethod("draw", this);
+    this.pap.registerMethod("mouseEvent", this);
+    this.pap.registerMethod("keyEvent", this);
     this.inputTextColor = color(255);
     this.outputTextColor = color(170);
     this.x = x;
@@ -121,7 +104,7 @@ public class Console {
     return (int) ((0.9 * h - globalPadding * 2) / (textHeight + 2));
   }
 
-  void drawConsole() {
+  void draw() {
     pushStyle();
     drawConsoleTextBox();
     drawInputBox();
@@ -153,7 +136,7 @@ public class Console {
     upBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, 0, 0, BOX_RONDING, 0, 0);
     downBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y + h - inputBoxHeight - 20, SCROLL_BAR_WIDTH, 2);
     fill(120);
-    
+
     float scrollBarHeight = scrollBarMaxHeight;
     if (lines.size() > maxLinesToDisplay) {
       scrollBarHeight = max(25, ((float) maxLinesToDisplay/lines.size()) * scrollBarMaxHeight);
@@ -162,11 +145,11 @@ public class Console {
     float trackScrollArea = h - inputBoxHeight - SCROLL_BAR_WIDTH * 2 - scrollBarHeight;
     float scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea;
     if (lines.size() > maxLinesToDisplay) {
-    scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea - (-lineScrollOffset * ((float) trackScrollArea/consoleScrollableLines));
+      scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea - (-lineScrollOffset * ((float) trackScrollArea/consoleScrollableLines));
     }
     rectMode(CORNER);
     rect(x + w - SCROLL_BAR_WIDTH, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
-    
+
     upBtn.drawButton();
     downBtn.drawButton();
   }
@@ -237,7 +220,19 @@ public class Console {
     this.lastVariableName = name;
   }
 
-  void handleKeyboardInput() {
+  void mouseEvent(MouseEvent e) {
+    if (e.getAction() == MouseEvent.PRESS) {
+      mousePressed();
+    }
+  }
+
+  void keyEvent(KeyEvent e) {
+    if (e.getAction() == KeyEvent.TYPE) {
+      keyTyped();
+    }
+  }
+
+  void keyTyped() {
     if (!isFocused) {
       return;
     }
@@ -253,7 +248,7 @@ public class Console {
     }
   }
 
-  void handleMousePressed() {
+  void mousePressed() {
     if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
       isFocused = true;
     } else {
@@ -273,12 +268,12 @@ public class Console {
   void handleConsoleInput() {
     splitCommandBasedOnConsoleWidth(new Command(textInput, true));
     dict.put(lastVariableName, textInput);
-    consoleInputEvent.onConsoleInput(lastVariableName, textInput);
+    consoleInputListener.onConsoleInput(lastVariableName, textInput);
     textInput = "";
   }
 
-  void setConsoleInputEvent(ConsoleInputEvent consoleInputEvent) {
-    this.consoleInputEvent = consoleInputEvent;
+  void setConsoleInputListener(ConsoleInputListener consoleInputListener) {
+    this.consoleInputListener = consoleInputListener;
   }
 
   void setInputTextColor(color inputTextColor) {
@@ -393,7 +388,15 @@ public class Console {
   }
 }
 
-public interface ConsoleInputEvent {
-  void onConsoleInput(String variable, String value);
-}
+abstract class ConsoleInputListener {
 
+  abstract void onConsoleInput(String variable, String value);
+
+  /* 
+   * Method used as a workaround, so that the println statements from the onConsoleInput() method 
+   * will work in the KYByte coder
+   */
+  void println(String text) {
+    PApplet.println(text);
+  };
+}

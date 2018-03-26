@@ -26,8 +26,13 @@ public class Console {
   private ArrowButton upBtn;
   private ArrowButton downBtn;
   private float scrollBarMaxHeight;
+  private PApplet pap;
 
-  public Console(int x, int y, int w, int h) {
+  public Console(PApplet pap, int x, int y, int w, int h) {
+    this.pap = pap;
+    this.pap.registerMethod("draw", this);
+    this.pap.registerMethod("mouseEvent", this);
+    this.pap.registerMethod("keyEvent", this);
     this.inputTextColor = color(255);
     this.outputTextColor = color(170);
     this.x = x;
@@ -60,7 +65,7 @@ public class Console {
     return (int) ((0.9 * h - globalPadding * 2) / (textHeight + 2));
   }
 
-  void drawConsole() {
+  void draw() {
     pushStyle();
     drawConsoleTextBox();
     drawInputBox();
@@ -175,8 +180,20 @@ public class Console {
   void readInput(String name) {
     this.lastVariableName = name;
   }
+  
+  void mouseEvent(MouseEvent e) {
+      if (e.getAction() == MouseEvent.PRESS) {
+          mousePressed();
+      }
+  }
+  
+  void keyEvent(KeyEvent e) {
+      if (e.getAction() == KeyEvent.TYPE) {
+          keyTyped();
+      }
+  }
 
-  void handleKeyboardInput() {
+  void keyTyped() {
     if (!isFocused) {
       return;
     }
@@ -192,7 +209,7 @@ public class Console {
     }
   }
 
-  void handleMousePressed() {
+  void mousePressed() {
     if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
       isFocused = true;
     } else {

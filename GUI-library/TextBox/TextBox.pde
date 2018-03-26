@@ -1,4 +1,4 @@
-class TextBox {
+public class TextBox {
   private final static int ENTER_ASCII_CODE = 10;
   private final static int BASIC_ASCII_LOWER_LIMIT = 32;
   private final static int BASIC_ASCII_UPPER_LIMIT = 126;
@@ -11,8 +11,13 @@ class TextBox {
   private float textHeight;
   private KeyEventListener keyEventListener;
   private float padding;
+  private PApplet pap;
 
-  public TextBox(int x, int y, int w, int h) {
+  public TextBox(PApplet pap, int x, int y, int w, int h) {
+    this.pap = pap;
+    this.pap.registerMethod("draw", this);
+    this.pap.registerMethod("mouseEvent", this);
+    this.pap.registerMethod("keyEvent", this);
     this.x = x;
     this.y = y;
     this.w = w;
@@ -20,18 +25,12 @@ class TextBox {
     this.textSize = 18;
     computeDefaultAttributes();
   }
-
-  public TextBox(int x, int y, int w, int h, int r1, int r2, int r3, int r4) {
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
+  
+  void setBorderRoundings(int r1, int r2, int r3, int r4) {
     this.r1 = r1;
     this.r2 = r2;
     this.r3 = r3;
     this.r4 = r4;
-    this.textSize = 18;
-    computeDefaultAttributes();
   }
 
   void computeDefaultAttributes() {
@@ -49,7 +48,7 @@ class TextBox {
     }
   }
 
-  void drawTextBox() {
+  void draw() {
     pushStyle();
     fill(255);
     noStroke();
@@ -62,7 +61,19 @@ class TextBox {
     popStyle();
   }
 
-  void handleKeyPress() {
+  void mouseEvent(MouseEvent e) {
+    if (e.getAction() == MouseEvent.PRESS) {
+      this.mousePressed();
+    }
+  }
+
+  void keyEvent(KeyEvent e) {
+    if (e.getAction() == KeyEvent.PRESS) {
+      this.keyPressed();
+    }
+  }
+
+  void keyPressed() {
     if (!isFocused) {
       return;
     }
@@ -84,7 +95,7 @@ class TextBox {
     }
   }
 
-  void handleMousePressed() {
+  void mousePressed() {
     if (this.isInside()) {
       this.isFocused = true;
     } else {
@@ -147,13 +158,13 @@ class TextBox {
 }
 
 abstract class KeyEventListener {
-  
+
   abstract void onEnterKey();
-  
+
   /* 
-  * Method used as a workaround, so that the println statements from the onEnterKey() method 
-  * will work in the KYByte coder
-  */
+   * Method used as a workaround, so that the println statements from the onEnterKey() method 
+   * will work in the KYByte coder
+   */
   void println(String text) {
     PApplet.println(text);
   };
