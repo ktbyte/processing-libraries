@@ -98,6 +98,7 @@ class Slider {
     this.height = height;
     this.sr = sr;
     this.er = er;
+    update();
   }
 
   //-----------------------------------------------------------------------------------------------
@@ -114,7 +115,7 @@ class Slider {
     rect(0, 0, pos, this.height);
     fill(0);
     textAlign(LEFT, CENTER);
-    text(str(pos), 10, height/2);
+    text(str(value), 10, height/2);
     popStyle();
     popMatrix();
   }
