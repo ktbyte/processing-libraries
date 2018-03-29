@@ -130,7 +130,7 @@ One can find the full list of these methods [here](https://github.com/processing
 
 
 
-[Back to the table of contents](#contents)
+[Back to the table of contents](#table-of-contents)
 
 ---
 
@@ -187,7 +187,7 @@ void **onConsoleInput(String variable, String name)** - *this method will be cal
 
 
 
-[Back to the table of contents](#contents)
+[Back to the table of contents](#table-of-contents)
 
 ---
 
@@ -195,7 +195,7 @@ void **onConsoleInput(String variable, String name)** - *this method will be cal
 
 
 
-[Back to the table of contents](#contents)
+[Back to the table of contents](#table-of-contents)
 
 ---
 
@@ -271,7 +271,7 @@ void draw() {
 
 
 
-[Back to the table of contents](#contents)
+[Back to the table of contents](#table-of-contents)
 
 ---
 
@@ -279,7 +279,7 @@ void draw() {
 
 
 
-[Back to the table of contents](#contents)
+[Back to the table of contents](#table-of-contents)
 
 ---
 
@@ -323,7 +323,7 @@ void **onEnterKey()** - *This method will be called after each press of the ENTE
 
 
 
-[Back to the table of contents](#contents)
+[Back to the table of contents](#table-of-contents)
 
 ---
 
@@ -335,6 +335,6 @@ As was already mentioned in the [Example of the Button that uses the callback me
 2. Calls to the methods which reacts to the `mouse` and `keyboard` events and calculate if the particular GUI component should changed its state.
 3. Calls to the methods which notify all the objects that must react to the GUI components state change.
 
-[Back to the table of contents](#contents)
+[Back to the table of contents](#table-of-contents)
 
 ---
