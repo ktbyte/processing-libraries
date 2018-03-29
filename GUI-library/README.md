@@ -40,9 +40,9 @@ void **write(String text)** - *displays some text in the console*
 
 void **readInput(String name)** - *used to indicate that the next console's input value will be matched with the given variable name.*
 
-void **setInputTextColor(Color color)** - *sets the display color of the input text*
+void **setInputTextColor(color inputTextColor)** - *sets the display color of the input text*
 
-void **setOutputTextColor(Color color)** - *sets the display color of the text which was registered using the **void write(String text)** method*
+void **setOutputTextColor(color outputTextColor)** - *sets the display color of the text which was registered using the **void write(String text)** method*
 
 void **setTextSize(float textSize)** - *changes the text size of the console's text to the given value*
 
@@ -54,7 +54,7 @@ String **getValue(String name)** - *returns the stored input value for a given v
 
 ###### ConsoleInputListener:
 
-void **onConsoleInput(Strin variable, String name)** - *this method will be called after each console input*
+void **onConsoleInput(String variable, String name)** - *this method will be called after each console input*
 
 
 
