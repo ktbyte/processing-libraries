@@ -4,8 +4,14 @@ This library consists of several easy-to-use GUI elements and is designed to wor
 
 ## Contents
   * [Elements](#elements)
-     * [Console](#console)
      * [Button](#button)
+     * [Console](#console)
+     * [ListBox](#list-box)
+     * [RadioInput](#radio-input)
+     * [Slider](#slider)
+     * [TextBox](#text-box)
+
+
 
 The library consists of the following elements:
 
