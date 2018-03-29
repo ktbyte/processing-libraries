@@ -12,9 +12,6 @@ This library consists of several easy-to-use GUI elements and is designed to wor
      * [TextBox](#text-box)
 
 
-
-The library consists of the following elements:
-
 ## <a name="elements"></a> Elements
 
 ### <a name="button"></a> Button
