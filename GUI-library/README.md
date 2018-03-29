@@ -30,7 +30,7 @@ There are three examples available:
  - [Example of the Button that uses the callback method](#example-2) 
  - [Example of the Button that uses the callback method and is part of the 'library'](#example-3)
 
-#### Example 1 
+#### Example 1
 
 The [first example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/Button/Button_Without_Callback.pde) shows how to use the _Button_ directly, without the callback function. This means that at any given moment the user should check the state (if it is 'pressed' or 'released' at that moment) of the _Button_ himself. In this example, the state of the _Button_ is checked inside the 'tickle()' method. In its turn, this method is called inside the 'draw()' method. 
 
@@ -51,11 +51,59 @@ void tickle(){
   }
 }
 ```
-Making this check inside the 'draw()' method ensures that no state change would be missed. The advantage of this approach is simplicity of the design. The drawback of this approach is the redundancy - if there are a lot of GUI elements present in the code then it will put the extensive load on the processor.
+Making this check inside the 'draw()' method ensures that no state change would be missed. The advantage of this approach is simplicity of the design. The drawback of this approach is the redundancy - if there are a lot of GUI elements present in the code then it will put the extensive load on the processor. Moreover, in case there are lot of GUI components in the code the logic that handles the checking of all these components became very complex and hard to manage. The better approach is to use the [callback methods](#example-2) - these are the methods that will be executed automatically when the GUI component event is triggered.
 
 #### Example 2
 
-The [second example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/Button/Button_Callback_Example.pde) shows the use of the callback method.
+The [second example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/Button/Button_Callback_Example.pde) shows the use of the callback method. The callback method is executed when the particular event has happened (in our case, the Button object triggers the `onPressed()`event when the user presses the button with the mouse. 
+
+The code of this example has the following differences with the previous example:
+
+- The Button class now has an additional field of type `ArrayList`. This field stores all the instances of the objects that implements the `ButtonListener` interface:
+```java
+ArrayList<ButtonListener> btnListeners;
+```
+- The 'main' code now has an additional `public interface ButtonListener`: 
+```java
+public interface ButtonListener {
+  void onPressed();
+}
+```
+- The Button class now has additional `void addListener(ButtonListener listener)` method that is intended to register and store all the object that must be notified when the particular event has happened:
+```java
+  void addListener(ButtonListener listener) {
+    btnListeners.add(listener);
+  }
+```
+- `The void processMousePressed()` method now has additional code that traverses through all the instances of the objects stored in `ArrayList<ButtonListener> btnListeners` and fire the `void onPressed()` method for each of these objects. This way we can 'notify' any amount of objects that 'listen' the given event (the user has pressed the Button with the mouse) and awaits when this event would happen.
+```java
+  void processMousePressed() {
+    if (isPointInside(mouseX, mouseY)) {
+      ...
+      // notify listeners
+      for(ButtonListener listener: btnListeners){
+        listener.onPressed();
+      }
+    }
+  }
+```
+
+The most convenient feature of this approach is that it is not necessary to create a variable somewhere to store the object that 'reacts' to the given event. Instead, we can create (instantiate) an anonymous object that implements the `interface ButtonListener`. We can still add the wanted 'behavior/reaction' on the event inside the implemented method. Here is an example how to do the described above:
+
+```java
+  btn = new Button(100, 100, 200, 100);  // instantiate the Button object
+  
+  btn.addListener(new ButtonListener() { // instantiate the anonymous object that implements the ButtonListener interface
+    void onPressed() {                   // implement the method that reacts to the given event
+      bg = color(random(0, 255),random(0, 255),random(0, 255));
+      doTickle = doTickle ? false : true;
+    }
+  });
+```
+
+
+
+
 
 #### Example 3
 
