@@ -61,5 +61,5 @@ void **onConsoleInput(String variable, String name)** - *this method will be cal
 
 
 ###### Note:
-- all value entered in the console will be persisted as strings
+- all console's inputs will be persisted as strings
 ### <a name="#button"></a> Button
