@@ -36,7 +36,7 @@ void setup() {
 
 ###### Console:
 
-**Console(PApplet pap, int x, int y, int width, int height)** - this construct a new Console object within the current context(PApplet), starting from the x and y coordinates, having a given width and height
+**Console(PApplet pap, int x, int y, int width, int height)** - this constructs a new Console object within the current context (PApplet), starting from the x and y coordinates, having a given width and height
 
 void **write(String text)** - *displays some text in the console*
 
