@@ -36,24 +36,25 @@ void setup() {
 
 ###### Console:
 
-**void write(String text)** - *displays some text in the console*
+void **write(String text)** - *displays some text in the console*
 
-**void readInput(String name)** - *used to indicate that the next console's input value will be matched with the given variable name.*
+void **readInput(String name)** - *used to indicate that the next console's input value will be matched with the given variable name.*
 
-**void setInputTextColor(Color color)** - *sets the display color of the input text*
+void **setInputTextColor(Color color)** - *sets the display color of the input text*
 
-**void setOutputTextColor(Color color)** - *sets the display color of the text which was registered using the **void write(String text)** method*
+void **setOutputTextColor(Color color)** - *sets the display color of the text which was registered using the **void write(String text)** method*
 
-**void setTextSize(float textSize)** - *changes the text size of the console's text to the given value*
+void **setTextSize(float textSize)** - *changes the text size of the console's text to the given value*
 
-**void setConsoleInputListener(ConsoleInputListener consoleInputListener)** - *sets a listener which will trigger a callback function when an input is entered in the console*
+void **setConsoleInputListener(ConsoleInputListener consoleInputListener)** - *sets a listener which will trigger a callback function when an input is entered in the console*
 
-**String getValue(String name)** - *returns the stored input value for a given variable name*
+String **getValue(String name)** - *returns the stored input value for a given variable name*
+
 
 
 ###### ConsoleInputListener:
 
-**onConsoleInput(Strin variable, String name)** - *this method will be called after each console input*
+void **onConsoleInput(Strin variable, String name)** - *this method will be called after each console input*
 
 
 
