@@ -21,7 +21,7 @@ This library consists of several easy-to-use GUI elements and is designed to wor
 This element acts as a Command-line interface, accepting user input and handling custom responses. 
 
 Example:
-```
+```java
 Console console;
 
 void setup() {
@@ -75,7 +75,7 @@ void **onConsoleInput(String variable, String name)** - *this method will be cal
 
 This element consists of a list of options which are mutually exclusive. An option can be activated by pressing on its corresponding bullet. Only one of the radio buttons is considered active at one time.
 
-```
+```java
 RadioInput ri;
 
 void setup() {
@@ -130,7 +130,7 @@ void **onMousePressed()** - *This method will be called after each mouse press*
 
 This element is a rectangle input in which text can be entered if the box is focused.
 
-```
+```java
 TextBox textBox;
 
 void setup() {
