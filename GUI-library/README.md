@@ -33,27 +33,30 @@ void setup() {
     }
 }
 ```
-Console:
 
-**void write(String text)** - displays some text in the console
+###### Console:
 
-**void readInput(String name)** - used to indicate that the next console's input value will be matched with the given variable name.
+**void write(String text)** - *displays some text in the console*
 
-**void setInputTextColor(Color color)** - sets the display color of the input text
+**void readInput(String name)** - *used to indicate that the next console's input value will be matched with the given variable name.*
 
-**void setOutputTextColor(Color color)** - sets the display color of the text which was registered using the **write(text)** method
+**void setInputTextColor(Color color)** - *sets the display color of the input text*
 
-**void setTextSize(float textSize)** - changes the text size of the console's text to the given value
+**void setOutputTextColor(Color color)** - *sets the display color of the text which was registered using the **void write(String text)** method*
 
-**void setConsoleInputListener(ConsoleInputListener consoleInputListener)** - sets a listener which will trigger a callback function when an input is entered in the console
+**void setTextSize(float textSize)** - *changes the text size of the console's text to the given value*
 
-**String getValue(String name)** - returns the stored input value for a given variable name
+**void setConsoleInputListener(ConsoleInputListener consoleInputListener)** - *sets a listener which will trigger a callback function when an input is entered in the console*
 
-ConsoleInputListener:
-
-**onConsoleInput(Strin variable, String name)** - this method will be called after each console input
+**String getValue(String name)** - *returns the stored input value for a given variable name*
 
 
-Note:
+###### ConsoleInputListener:
+
+**onConsoleInput(Strin variable, String name)** - *this method will be called after each console input*
+
+
+
+###### Note:
 - all value entered in the console will be persisted as strings
 ### <a name="#button"></a> Button
