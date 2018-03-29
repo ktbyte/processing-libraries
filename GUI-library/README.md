@@ -1,18 +1,12 @@
 # GUI library
 
+## Table of contents
+
+[TOC]
+
+## Introduction
+
 This library consists of several easy-to-use GUI elements and is designed to work with both the Processing and [KTByte coder](https://www.ktbyte.com/coder) environments.
-
-## Contents
-  * [Components](#components)
-     * [Button](#button)
-     * [Console](#console)
-     * [ListBox](#listbox)
-     * [RadioInput](#radioinput)
-     * [Slider](#slider)
-     * [TextBox](#textbox)
-
-
-### Components
 
 ### Button
 
@@ -101,13 +95,18 @@ The most convenient feature of this approach is that it is not necessary to crea
   });
 ```
 
-
-
-
-
 #### Example 3
 
-The [third example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/KTGUI/KTGUI_Button_KTByte_Example.pde) shows the use of the Button class as a part of library.
+The [third example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/KTGUI/KTGUI_Button_KTByte_Example.pde) shows the use of the Button class as a part of library. The main drawback of the two previous examples is that in order to make them 'live' (draw the shape of each GUI component on the canvas, react on the mouse and keyboard events) we must write the code inside the native Processing's methods - `setup()`, `draw()`, `mousePressed()`, `mouseRelease()` etc. This makes us to mix the 'main' logic of our application with the 'GUI' logic, which is not the best approach. Instead, in order to separate the two types of the said codes, we can use the ability of the Processing library to 'register' some of its 'specific' methods in the external class. After that, these methods will be executed at a particular moments of the 'main' code execution allowing to 'synchronize' the execution of the 'main' code with the execution of the particular methods of the external class. (More detailed information is [here](https://github.com/processing/processing/wiki/Library-Basics#library-methods)).
+
+One can find the full list of these methods [here](https://github.com/processing/processing/wiki/Library-Basics#library-methods). We will register' in the external class and use for separating the code only the following three methods:
+
+- `public void draw()` Method that's called at the end of draw().
+
+- `public void mouseEvent(MouseEvent e)` Called when a mouse event occurs in the parent applet. Drawing is allowed because mouse events are queued, unless the sketch has called noLoop().
+
+- `public void keyEvent(KeyEvent e)` Called when a key event occurs in the parent applet. Drawing is allowed because key events are queued, unless the sketch has called noLoop().
+
 
 
 
@@ -303,6 +302,18 @@ void **setBorderRounding(int r1, int r2, int r3, int r4)** - *Sets the rounding 
 void **onEnterKey()** - *This method will be called after each press of the ENTER/RETURN key*
 
 
+
+[Back to the table of contents](#contents)
+
+---
+
+### KTGUI Library
+
+As was already mentioned in the [Example of the Button that uses the callback method and is part of the 'library'](#example-3), the KTGUI Library is a class that is specifically designed to provide the ability to separate the 'main' code of the application from the 'GUI' related code. And, by 'GUI' related code we understand the:
+
+1. Calls to the methods which drawing the shape of each GUI component inside the Processing's `draw()` method.
+2. Calls to the methods which reacts to the `mouse` and `keyboard` events and calculate if the particular GUI component should changed its state.
+3. Calls to the methods which notify all the objects that must react to the GUI components state change.
 
 [Back to the table of contents](#contents)
 
