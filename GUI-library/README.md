@@ -15,11 +15,11 @@ This library consists of several easy-to-use GUI elements and is designed to wor
 
 The library consists of the following elements:
 
-## <a name="#elements"></a> Elements
+## <a name="elements"></a> Elements
 
-### <a name="#button"></a> Button
+### <a name="button"></a> Button
 
-### <a name="#console"></a> Console
+### <a name="console"></a> Console
 
 This element acts as a Command-line interface, accepting user input and handling custom responses. 
 
@@ -72,9 +72,9 @@ void **onConsoleInput(String variable, String name)** - *this method will be cal
 - all console's inputs will be persisted as strings
 - text can be entered only of the Console element is focused (a click on the Console will make it focused). 
 
-### <a name="#list-box"></a> ListBox
+### <a name="list-box"></a> ListBox
 
-### <a name="#radio-input"></a> RadioInput
+### <a name="radio-input"></a> RadioInput
 
 This element consists of a list of options which are mutually exclusive. An option can be activated by pressing on its corresponding bullet. Only one of the radio buttons is considered active at one time.
 
@@ -127,9 +127,9 @@ void **onMousePressed()** - *This method will be called after each mouse press*
 
 - Any activation of a button will automatically deactivate all the other buttons.
 
-### <a name="#slider"></a> Slider
+### <a name="slider"></a> Slider
 
-### <a name="#text-box"></a> TextBox
+### <a name="text-box"></a> TextBox
 
 This element is a rectangle input in which text can be entered if the box is focused.
 
