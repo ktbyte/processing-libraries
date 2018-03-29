@@ -46,15 +46,15 @@ public class TextBox {
   private float padding;
   private PApplet pap;
 
-  public TextBox(PApplet pap, int x, int y, int w, int h) {
+  public TextBox(PApplet pap, int x, int y, int width, int height) {
     this.pap = pap;
     this.pap.registerMethod("draw", this);
     this.pap.registerMethod("mouseEvent", this);
     this.pap.registerMethod("keyEvent", this);
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
+    this.w = width;
+    this.h = height;
     this.textSize = 18;
     computeDefaultAttributes();
   }
