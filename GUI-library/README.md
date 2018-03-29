@@ -3,7 +3,7 @@
 This library consists of several easy-to-use GUI elements and is designed to work with both the Processing and [KTByte coder](https://www.ktbyte.com/coder) environments.
 
 ## Contents
-  * [Elements](#elements)
+  * [Components](#components)
      * [Button](#button)
      * [Console](#console)
      * [ListBox](#listbox)
@@ -12,7 +12,7 @@ This library consists of several easy-to-use GUI elements and is designed to wor
      * [TextBox](#textbox)
 
 
-## Elements
+### Components
 
 ### Button
 
@@ -60,6 +60,10 @@ The [second example](https://github.com/ktbyte/processing-libraries/blob/master/
 #### Example 3
 
 The [third example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/KTGUI/KTGUI_Button_KTByte_Example.pde) shows the use of the Button class as a part of library.
+
+
+
+[Back to the table of contents](#contents)
 
 ---
 
@@ -114,9 +118,17 @@ void **onConsoleInput(String variable, String name)** - *this method will be cal
 - all console's inputs will be persisted as strings
 - text can be entered only of the Console element is focused (a click on the Console will make it focused). 
 
+
+
+[Back to the table of contents](#contents)
+
 ---
 
 ### ListBox
+
+
+
+[Back to the table of contents](#contents)
 
 ---
 
@@ -145,9 +157,7 @@ void draw() {
 
 ```
 ### Methods of RadioInput class:
-`RadioInput(PApplet pap, int x, int y)`  
-
-This construncts the RadioInput object within the current context (PApplet), starting from the x and y coordinates. The width and height of this GUI element are computed based on: number of items, text size, the length of the option's text. 
+`RadioInput(PApplet pap, int x, int y)`  This construncts the RadioInput object within the current context (PApplet), starting from the x and y coordinates. The width and height of this GUI element are computed based on: number of items, text size, the length of the option's text. 
 
 
 
@@ -192,9 +202,17 @@ This construncts the RadioInput object within the current context (PApplet), sta
 
 - Any activation of a button will automatically deactivate all the other buttons.
 
+
+
+[Back to the table of contents](#contents)
+
 ---
 
 ### Slider
+
+
+
+[Back to the table of contents](#contents)
 
 ---
 
@@ -235,3 +253,9 @@ void **setBorderRounding(int r1, int r2, int r3, int r4)** - *Sets the rounding 
 #### Methods of KeyEventListener class
 
 void **onEnterKey()** - *This method will be called after each press of the ENTER/RETURN key*
+
+
+
+[Back to the table of contents](#contents)
+
+---
