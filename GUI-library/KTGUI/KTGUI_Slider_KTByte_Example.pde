@@ -33,6 +33,7 @@ void setup() {
         btn.setTitle("Dragged");
         btn.posx += mouseX - pmouseX;
         btn.posy += mouseY - pmouseY;
+        println("Button dragged!");
       } else {
         btn.setTitle("The Button");
       }
@@ -64,7 +65,8 @@ void setup() {
       slider.setTitle(slider.isPressed ? "Dragged" : "The Slider");
       if (slider.isPressed) {
         int sliderValue = (int)slider.getValue();
-        btn.posx = sliderValue;
+        int mappedBtnPosition = (int) map(sliderValue, slider.sr, slider.er, 0, width - btn.width);
+        btn.posx = mappedBtnPosition;
       }
     }
   }
@@ -96,6 +98,12 @@ abstract class KTGUIEventAdapter {
   void onKeyReleased() {
   }
   void onKeyPressed() {
+  }
+  void println(String text){
+    PApplet.println(text);
+  }
+  float map(float value, float sin, float ein, float sout, float eout){
+    return PApplet.map(value,  sin,  ein,  sout, eout);
   }
 }
 
