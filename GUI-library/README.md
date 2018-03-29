@@ -63,8 +63,6 @@ The [third example](https://github.com/ktbyte/processing-libraries/blob/master/G
 
 ---
 
-
-
 ### Console
 
 This element acts as a Command-line interface, accepting user input and handling custom responses. 
@@ -146,29 +144,48 @@ void draw() {
 }
 
 ```
-### RadioInput:
+### Methods of RadioInput class:
+`RadioInput(PApplet pap, int x, int y)`  
 
-**RadioInput(PApplet pap, int x, int y)** - This construncts the RadioInput object within the current context (PApplet), starting from the x and y coordinates. The width and height of this GUI element are computed based on: number of items, text size, the length of the option's text.
+This construncts the RadioInput object within the current context (PApplet), starting from the x and y coordinates. The width and height of this GUI element are computed based on: number of items, text size, the length of the option's text. 
 
-void **addRadioButton(String option, String value)** - *Adds a new radio button. The displayed text is the **value** String, while the **option** parameters is used as an unique indentifier.*
 
-void **addRadioButton(String option, String value, boolean isActive)** - *Adds a new radio button and makes it active/inactive. The displayed text is the **value** String, while the **option** parameters is used as an unique indentifier.*
 
-void **setActiveButtons(String option)** - *Activates the button which have the given **option**. This method will ignore any call with an invalid option.*
+`void addRadioButton(String option, String value)` Adds a new radio button. The displayed text is the **value** String, while the **option** parameters is used as an unique identifier.
 
-void **setTextSize(int textSize)** - *Changes the size of the options' text to the given value.*
 
-void **setDisplayBackground(boolean displayBackground)** - *Sets the flag for displaying the background of the RadioInput element.*
 
-void **setBulletColor(color bulletColor)** - *Sets the color of the bullet point.s*
+`void addRadioButton(String option, String value, boolean isActive)` Adds a new radio button and makes it active/inactive. The displayed text is the **value** String, while the **option** parameters is used as an unique identifier.
 
-void **setTextColor(color textColor)** - *Sets the text color of the options.*
 
-String **getActiveValue()** - *Returns the active value of the RadioInput if it exits, otherwise returns null.*
 
-#### ConsoleInputListener:
+`void setActiveButtons(String option)` Activates the button which have the given **option**. This method will ignore any call with an invalid option.
 
-void **onMousePressed()** - *This method will be called after each mouse press*
+
+
+`void setTextSize(int textSize)` Changes the size of the options' text to the given value.
+
+
+
+`void setDisplayBackground(boolean displayBackground)`  Sets the flag for displaying the background of the RadioInput element.
+
+
+
+`void setBulletColor(color bulletColor)` Sets the color of the bullet points.
+
+
+
+`void setTextColor(color textColor)` Sets the text color of the options.
+
+
+
+`String getActiveValue()` Returns the active value of the RadioInput object if it exits, otherwise returns null.
+
+
+
+#### Methods of ConsoleInputListener class:
+
+`void onMousePressed()` - This method will be called after each mouse press.
 
 
 #### Note:
