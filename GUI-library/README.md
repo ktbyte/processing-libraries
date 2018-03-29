@@ -2,7 +2,27 @@
 
 ## Table of contents
 
-[TOC]
+- [GUI library](#gui-library)
+  * [Table of contents](#table-of-contents)
+  * [Introduction](#introduction)
+    + [Button](#button)
+      - [Example 1](#example-1)
+      - [Example 2](#example-2)
+      - [Example 3](#example-3)
+    + [Console](#console)
+      - [Methods of Console class](#methods-of-console-class)
+      - [Methods of ConsoleInputListener class](#methods-of-consoleinputlistener-class)
+      - [Note](#note)
+    + [ListBox](#listbox)
+    + [RadioInput](#radioinput)
+    + [Methods of RadioInput class](#methods-of-radioinput-class)
+      - [Methods of ConsoleInputListener class](#methods-of-consoleinputlistener-class)
+      - [Note](#note)
+    + [Slider](#slider)
+    + [TextBox](#textbox)
+      - [Methods of TextBox class](#methods-of-textbox-class)
+      - [Methods of KeyEventListener class](#methods-of-keyeventlistener-class)
+    + [KTGUI Library](#ktgui-library)
 
 ## Introduction
 
