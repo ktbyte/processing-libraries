@@ -105,10 +105,13 @@ public interface ButtonListener {
 The most convenient feature of this approach is that it is not necessary to create a variable somewhere to store the object that 'reacts' to the given event. Instead, we can create (instantiate) an anonymous object that implements the `interface ButtonListener`. We can still add the wanted 'behavior/reaction' on the event inside the implemented method. Here is an example how to do the described above:
 
 ```java
-  btn = new Button(100, 100, 200, 100);  // instantiate the Button object
+  // instantiate the Button object
+  btn = new Button(100, 100, 200, 100);  
   
-  btn.addListener(new ButtonListener() { // instantiate the anonymous object that implements the ButtonListener interface
-    void onPressed() {                   // implement the method that reacts to the given event
+  // instantiate the anonymous object that implements the ButtonListener interface
+  btn.addListener(new ButtonListener() { 
+    // implement the method that reacts on the given event
+    void onPressed() {                   
       bg = color(random(0, 255),random(0, 255),random(0, 255));
       doTickle = doTickle ? false : true;
     }
@@ -117,16 +120,9 @@ The most convenient feature of this approach is that it is not necessary to crea
 
 #### Example 3
 
-The [third example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/KTGUI/KTGUI_Button_KTByte_Example.pde) shows the use of the Button class as a part of library. The main drawback of the two previous examples is that in order to make them 'live' (draw the shape of each GUI component on the canvas, react on the mouse and keyboard events) we must write the code inside the native Processing's methods - `setup()`, `draw()`, `mousePressed()`, `mouseRelease()` etc. This makes us to mix the 'main' logic of our application with the 'GUI' logic, which is not the best approach. Instead, in order to separate the two types of the said codes, we can use the ability of the Processing library to 'register' some of its 'specific' methods in the external class. After that, these methods will be executed at a particular moments of the 'main' code execution allowing to 'synchronize' the execution of the 'main' code with the execution of the particular methods of the external class. (More detailed information is [here](https://github.com/processing/processing/wiki/Library-Basics#library-methods)).
+The [third example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/KTGUI/KTGUI_Button_KTByte_Example.pde) shows the use of the Button class as a part of library. The main drawback of the two previous examples is that in order to make them 'live' (draw the shape of each GUI component on the canvas, react on the mouse and keyboard events) we must write the code inside the native Processing's methods - `setup()`, `draw()`, `mousePressed()`, `mouseRelease()` etc. This makes us to mix the 'main' logic of our application with the 'GUI' logic, which is not the best approach. Instead, we can use the 'library' [approach](#ktgui-library). Using this approach, the single 'library' object is created. And then, each GUI component is created by calling the particular factory method of the 'library' class. 
 
-One can find the full list of these methods [here](https://github.com/processing/processing/wiki/Library-Basics#library-methods). We will register' in the external class and use for separating the code only the following three methods:
-
-- `public void draw()` Method that's called at the end of draw().
-
-- `public void mouseEvent(MouseEvent e)` Called when a mouse event occurs in the parent applet. Drawing is allowed because mouse events are queued, unless the sketch has called noLoop().
-
-- `public void keyEvent(KeyEvent e)` Called when a key event occurs in the parent applet. Drawing is allowed because key events are queued, unless the sketch has called noLoop().
-
+Here is an example:
 
 
 
@@ -329,11 +325,248 @@ void **onEnterKey()** - *This method will be called after each press of the ENTE
 
 ### KTGUI Library
 
-As was already mentioned in the [Example of the Button that uses the callback method and is part of the 'library'](#example-3), the KTGUI Library is a class that is specifically designed to provide the ability to separate the 'main' code of the application from the 'GUI' related code. And, by 'GUI' related code we understand the:
+As was already mentioned in the [Example of the Button that uses the callback method and is part of the 'library'](#example-3), the KTGUI Library is a class that is specifically designed to provide the ability to separate the 'main' code of the application from the 'GUI' related code. 
 
-1. Calls to the methods which drawing the shape of each GUI component inside the Processing's `draw()` method.
-2. Calls to the methods which reacts to the `mouse` and `keyboard` events and calculate if the particular GUI component should changed its state.
-3. Calls to the methods which notify all the objects that must react to the GUI components state change.
+#### The concept of 'main' and 'GUI' related code separation 
+
+In order to separate the two types of the said codes, we can use the ability of the Processing library to 'register' some of its 'specific' methods in the external class. To register the 'specific' methods in the external class, the *PApplet* uses the `registerMethod(String methodName, PApplet parentPApplet)` method. After these methods were being registered, they will be executed at a particular moments of the 'main' code execution allowing to 'synchronize' the execution of the 'main' code with the execution of the particular methods of the external class. (More detailed information can be found in the Processing's documentation [here](https://github.com/processing/processing/wiki/Library-Basics#library-methods)).
+
+The full list of these 'specific' methods can be found [here](https://github.com/processing/processing/wiki/Library-Basics#library-methods). We will register in the external class and use for separating the code __*only the following three methods*__:
+
+- `public void draw()` Method that's called at the end of  the *PApplet's* `draw()` method.
+- `public void mouseEvent(MouseEvent e)` Method that's called when a mouse event occurs in the parent *PApplet*. Drawing inside this method is allowed because mouse events are queued, unless the sketch has called `noLoop()`.
+- `public void keyEvent(KeyEvent e)` Method that's called when a key event occurs in the parent *PApplet.* Drawing is allowed because key events are queued, unless the sketch has called `noLoop()`.
+
+
+#### The implementation of 'main' and 'GUI' related code separation 
+
+The 'separation' is achieved by the following:
+
+1. KTGUI has the reference to the parent *PApplet* object called `pa`. 
+
+   ```java
+   public class KTGUI {
+     PApplet pa;
+     ...
+   }
+   ```
+
+   During the creation of the *KTGUI* object, one must insert the reference to the parent _PApplet_ object as argument of the *KTGUI* constructor, like shown below:
+   ```java
+   // The 'main' Processing's code
+
+   KTGUI ktgui;
+
+   void setup() {
+     size(600, 600);
+     // instance of the KTGUI class
+     ktgui = new KTGUI(this);  // 'this' is a reference to the parent PApplet object
+   }
+
+   void draw() {
+     ...
+   }
+   ```
+
+
+2. In order to be able to be managed (stored and processed) uniformly (as objects of the same type), all of the GUI components must extend the `abstract class Controller`. Therefore, for convenience, we will call the 'library' GUI components as ___Controllers___. 
+
+3. KTGUI stores the references to all the _controllers_ in a special field called `controllers`. The type of this field is `List<Controller>`. 
+
+   ```java
+   public class KTGUI {
+     ...
+     List<Controller> controllers;
+     ...
+   }
+   ```
+
+   ​
+
+4. KTGUI class uses the [_factory_](https://en.wikipedia.org/wiki/Factory_method_pattern) methods to create the instances of all the 'library' GUI components. During the _controller_ creation, the factory method automatically adds the reference to the newly created GUI component to the `controllers` list. 
+
+   ```java
+   // an example of factory method that returns the instance of the Button GUI component
+   Button createButton(int x, int y, int w, int h) {
+     Button btn = new Button(x, y, w, h);
+     registerController(btn);
+     return btn;
+   }
+   ```
+
+   For this, the `registerController(Controller controller)` method is used:
+
+   ```java
+   void registerController(Controller controller) {
+     controllers.add(controller);
+   }
+   ```
+
+   ​
+
+
+5. An `abstract class KTGUIEventAdapter` is used for that each particular Object can have it's own set of 'event-related' behaviors for each type of event and each type of `Controller`. 
+
+   ```java
+   abstract class KTGUIEventAdapter {
+     void onMousePressed() {
+     }
+     void onMouseReleased() {
+     }
+     void onMouseMoved() {
+     }
+     void onMouseDragged() {
+     }
+     void onKeyReleased() {
+     }
+     void onKeyPressed() {
+     }
+   }
+   ```
+
+   Each `Controller` has a field of type `ArrayList<KTGUIEventAdapter>` to store the list of the objects that wants to react on the events of this particular `Controller`. To add the particular object to the list of the list of the objects that wants to react on the events this particular `Controller` one should use the `void addEventAdapters(KTGUIEventAdapter adapter)` method:
+
+   ```java
+   public abstract class Controller {
+     ...
+     ArrayList<KTGUIEventAdapter> adapters;
+     ...
+     void addEventAdapters(KTGUIEventAdapter adapter) {
+       adapters.add(adapter);
+     }
+     ...
+   }
+   ```
+
+   The `KTGUIEventAdapter` can be anonymous or concrete.
+
+   Here is an example of the anonymous adapter registered to the Button. This adapter will react for the particular event when this particular *Button* will have the `pressed` state. As a reaction, this adapter will set the *Title* of this particular Button to have the text "Pressed":
+
+   ```java
+   KTGUI ktgui;
+   Button btn;
+
+   void setup() {
+     size(600, 600);
+
+     // instance of the KTGUI class
+     ktgui = new KTGUI(this);
+
+     // instance of the KTGUI 'Button' component
+     btn = ktgui.createButton(width/2 - 100, 50, 100*2, 40);
+     btn.addEventAdapters(new KTGUIEventAdapter() {
+       // we can override only those callback methods which we really need
+       void onMousePressed() {
+         btn.setTitle(btn.isPressed ? "Pressed" : "The Button");
+       }
+     }
+     );
+   }
+   ```
+
+   ​
+
+6. The constructor of the *KTGUI* class uses the *PApplet's* method `registerMethod(String methodName, PApplet parentPApplet)` to register the three (mentioned above) methods of the *PApplet* as a dedicated *KTGUI* methods which are intended to be called when the `mouse`, `keyboard` and `draw` related events of the parent *PApplet's* object are happened. 
+
+   ```java
+   public class KTGUI {
+     ...
+     public KTGUI(PApplet pa) {
+       this.pa = pa;                               // store the reference to the parent PApplet
+       this.pa.registerMethod("draw", this);       // register special 'draw' method
+       this.pa.registerMethod("mouseEvent", this); // register special 'mouse' method
+       this.pa.registerMethod("keyEvent", this);   // register special 'keyboard' method
+     }
+     ...
+   }
+   ```
+
+   ​
+
+7. The calls to the methods which draw the shape of each GUI component are done automatically and outside the Processing's `draw()` method.
+
+   ```java
+   public class KTGUI {
+     ...
+     // this method has been registered in the KTGUI constructor and is called each time 
+     // the parent PApplet's object 'draw()' method execution is finished  
+     void draw() {                                
+       // iterate through all the controllers
+       for (Controller controller : controllers) { 
+         // draw each controller
+         controller.draw();                        
+       }
+     }
+     ...
+   }
+   ```
+
+   ​
+
+8. Calls to the methods which react to the `mouse` and `keyboard` events of the parent *PApplet* object are done outside the Processing's `mouseClicked()`, `mouseReleased()`, `keyPressed()`, `keyReleased()` and other `mouse` and `keyboard` related methods.
+
+   ```java
+   public class KTGUI {
+     
+     ...
+       
+     // this method has been registered in the KTGUI constructor and is called each time 
+     // the parent PApplet's object 'mouse' related event has happened
+     void mouseEvent(MouseEvent e) {
+       switch (e.getAction()) {
+       case MouseEvent.PRESS:
+         this.mousePressed();
+         break;
+       case MouseEvent.RELEASE:
+         this.mouseReleased();
+         break;
+       case MouseEvent.DRAG:
+         this.mouseDragged();  ///--------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>---------
+         break;
+       case MouseEvent.MOVE:
+         this.mouseMoved();
+         break;
+     }
+
+     // this method has been registered in the KTGUI constructor and is called each time 
+     // the parent PApplet's object 'keyboard' related event has happened
+     void keyEvent(KeyEvent e) {
+       switch (e.getAction()) {
+       case KeyEvent.PRESS:
+         this.keyPressed();
+         break;
+       case KeyEvent.RELEASE:
+         this.keyReleased();
+         break;
+     }
+       
+     ...
+     
+     // This is an example of one of the KTGUI methods that are called to force all
+     // the controllers to call the methods that must be executed when the particular 
+     // event has happened in the parent PApplet. 
+     // This particular method is called when the 'mouseDragged' event has happened in the 
+     // parent PApplet. As seen, this method iterates through all the controllers stored
+     // in the list and calls the 'processMouseDragged()' method. 
+     void mouseDragged() {  ///---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<---------
+       //println("Dragged!");
+       for (Controller controller : controllers) {
+         controller.processMouseDragged();
+       }
+     }
+   }
+   ```
+
+   ​
+
+9. Calls to the methods which notify all the objects that must react on the GUI component events are executed automatically and outside the Processing's native (`draw()` ,`mouseClicked()`, `mouseReleased()`, `keyPressed()`, `keyReleased()` and other) methods. This is done using the `KTGUIEventAdapter`  class (see p.5 above). For this, when the event is happened in the parent _PApplet_, and when this event is 'redirected' to all the _controllers_ using _registered_ methods, each controller iterates through all the available _adapters_ he has and calls the particular _adapter's_ callback method. I.e. if the input event was `mouseDragged` then the _adapter's_ `onMouseDragged()` callback method will be called.
+
+   ​
+
+
+
+
+
 
 [Back to the table of contents](#table-of-contents)
 
