@@ -115,6 +115,15 @@ abstract class KTGUIEventAdapter {
  * One should always overridde the 'draw' method.
  *********************************************************************************************************************/
 public abstract class Controller {
+  String title;
+  ArrayList<KTGUIEventAdapter> adapters;
+
+  void setTitle(String title) {
+    this.title = title;
+  }
+  void addEventAdapters(KTGUIEventAdapter adapter) {
+    adapters.add(adapter);
+  }
   void draw() {
   }
   void processMouseMoved() {
@@ -141,11 +150,8 @@ class Slider extends Controller {
   int sr, er;             // start and end of range
   int pos;                // 'real' slider position 
   float value;            // 'mapped' slider position
-  String title;
 
   boolean isPressed, isHovered;
-
-  ArrayList<KTGUIEventAdapter> adapters;
 
   color BG_PASSIVE_COLOR = #0000B4;      // color(180), background 'passive' color
   color BG_HOVERED_COLOR = #0000DC;      // color(220), background 'hovered' color
@@ -193,13 +199,6 @@ class Slider extends Controller {
   //-----------------------------------------------------------------------------------------------
   //
   //-----------------------------------------------------------------------------------------------
-  void addEventAdapters(KTGUIEventAdapter adapter) {
-    adapters.add(adapter);
-  }
-
-  //-----------------------------------------------------------------------------------------------
-  //
-  //-----------------------------------------------------------------------------------------------
   boolean isPointInside(int ptx, int pty) {
     boolean isInside = false;
     if (ptx > this.posx  && ptx < this.posx + this.width) {
@@ -208,13 +207,6 @@ class Slider extends Controller {
       }
     }
     return isInside;
-  }
-
-  //-----------------------------------------------------------------------------------------------
-  //
-  //-----------------------------------------------------------------------------------------------
-  void setTitle(String title) {
-    this.title = title;
   }
 
   //-----------------------------------------------------------------------------------------------
@@ -338,8 +330,6 @@ class Button extends Controller {
   int width, height;
   boolean isPressed, isHovered;
 
-  ArrayList<KTGUIEventAdapter> adapters;
-
   Button(int posx, int posy, int width, int height) {
     this.posx = posx;
     this.posy = posy;
@@ -347,14 +337,6 @@ class Button extends Controller {
     this.height = height;
     title = "Button";
     adapters = new ArrayList<KTGUIEventAdapter>();
-  }
-
-  void addEventAdapters(KTGUIEventAdapter adapter) {
-    adapters.add(adapter);
-  }
-
-  void setTitle(String title) {
-    this.title = title;
   }
 
   void draw() {
