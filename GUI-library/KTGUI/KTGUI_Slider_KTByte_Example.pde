@@ -197,7 +197,7 @@ class Slider extends Controller {
   }
 
   //-----------------------------------------------------------------------------------------------
-  //
+  // calculate if the point is inside (over) the slider
   //-----------------------------------------------------------------------------------------------
   boolean isPointInside(int ptx, int pty) {
     boolean isInside = false;
@@ -210,50 +210,49 @@ class Slider extends Controller {
   }
 
   //-----------------------------------------------------------------------------------------------
-  //
+  // get the value of the slider
   //-----------------------------------------------------------------------------------------------
   float getValue() {
     return value;
   }
 
   //-----------------------------------------------------------------------------------------------
-  //
+  // set the value of th slider
   //-----------------------------------------------------------------------------------------------
   void setValue(float value) {
     this.value = value;
   }
 
   //-----------------------------------------------------------------------------------------------
-  //
+  // get the handle position
   //-----------------------------------------------------------------------------------------------
   int getPosition() {
     return pos;
   }
 
   //-----------------------------------------------------------------------------------------------
-  //
+  // set the handle position
   //-----------------------------------------------------------------------------------------------
   void setPosition(int pos) {
     this.pos = pos;
   }
 
   //-----------------------------------------------------------------------------------------------
-  //
+  // call this to recalculate the position of the handle based on the current value of the slider
   //-----------------------------------------------------------------------------------------------
   void updateHandlePositionFromMouse() {
     pos = constrain(mouseX - posx, 0, this.width);
   }
 
   //-----------------------------------------------------------------------------------------------
-  //
+  // call this to recalculate the value of the slider (within the defined range) based on the
+  // current handle position
   //-----------------------------------------------------------------------------------------------
   void updateValueFromHandlePosition() {
     value = map(pos, 0, this.width, sr, er);
   }
 
-  //-----------------------------------------------------------------------------------------------
   // process mouseMoved event received from PApplet
-  //-----------------------------------------------------------------------------------------------
   void processMouseMoved() {
     if (isPointInside(mouseX, mouseY)) {
       isHovered = true;
@@ -266,9 +265,7 @@ class Slider extends Controller {
     }
   }
 
-  //-----------------------------------------------------------------------------------------------
   // process mousePressed event received from PApplet
-  //-----------------------------------------------------------------------------------------------
   void processMousePressed() {
     if (isHovered) {
       isPressed = true;
@@ -286,9 +283,7 @@ class Slider extends Controller {
     }
   }
 
-  //-----------------------------------------------------------------------------------------------
   // process mouseReleased event received from PApplet
-  //-----------------------------------------------------------------------------------------------
   void processMouseReleased() {
     isPressed = false;
     if (isHovered) {
@@ -298,9 +293,7 @@ class Slider extends Controller {
     }
   }
 
-  //-----------------------------------------------------------------------------------------------
   // process mouseDragged event received from PApplet
-  //-----------------------------------------------------------------------------------------------
   void processMouseDragged() {
     if (isPressed) {
       updateHandlePositionFromMouse();
