@@ -184,7 +184,29 @@ public class Console {
   void mouseEvent(MouseEvent e) {
     if (e.getAction() == MouseEvent.PRESS) {
       mousePressed();
+    } else if (e.getAction() == MouseEvent.WHEEL) {
+      mouseWheel(e);
     }
+  }
+  
+    // used by processing.js
+  void mouseScrolled(int mouseWheelDelta) {
+    if (!this.isFocused) {
+        return;
+    }
+    if (mouseWheelDelta < 0) {
+      if (-lineScrollOffset < lines.size() - maxLinesToDisplay) {
+        lineScrollOffset--;
+      }
+    } else if (mouseWheelDelta > 0) {
+      if (lineScrollOffset < 0) {
+        lineScrollOffset++;
+      }
+    }
+  }
+  
+  void mouseWheel(MouseEvent e) {
+    mouseScrolled(e.getCount());
   }
 
   void keyEvent(KeyEvent e) {

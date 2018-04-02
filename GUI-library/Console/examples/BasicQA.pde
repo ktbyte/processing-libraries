@@ -1,36 +1,35 @@
 Console console;
 
 void setup() {
- size(800, 600);
- console = new Console(this, 100, 100, 600, 400);
- console.setInputTextColor(color(255, 10, 100));
- console.setOutputTextColor(color(130, 90, 190));
- console.write("Hello there! What's your name?");
- console.readInput("name");
- console.setConsoleInputListener(new ConsoleInputListener() {
+  size(800, 600);
+  console = new Console(this, 100, 100, 600, 400);
+  console.setInputTextColor(color(255, 10, 100));
+  console.setOutputTextColor(color(130, 90, 190));
+  console.write("Hello there! What's your name?");
+  console.readInput("name");
+  console.setConsoleInputListener(new ConsoleInputListener() {
 
     // use the "public" modifier for the onConsoleInput method in order to work in Processing
     public void onConsoleInput(String variable, String value) {
-     if (variable.equals("name")) {
+      if (variable.equals("name")) {
         console.write("Nice to meet you " + value + "!");
         console.write("How old are you?");
         console.readInput("age");
-     } else if (variable.equals("age")) {
+      } else if (variable.equals("age")) {
         console.write(value + "...  nice! !");
         console.write("Boy or girl?");
         console.readInput("gender");
-     } else if (variable.equals("gender")) {
+      } else if (variable.equals("gender")) {
         if (value.equals("boy") || value.equals("girl")) {
-            console.write("Cool..");
+          console.write("Cool..");
         } else {
-            console.write("Please answer my question! Choose from: boy or girl.");
-            console.readInput("gender"); 
+          console.write("Please answer my question! Choose from: boy or girl.");
+          console.readInput("gender");
         }
-     }
+      }
     }
-  
- }
- );
+  }
+  );
 }
 
 void draw() {
@@ -223,7 +222,29 @@ public class Console {
   void mouseEvent(MouseEvent e) {
     if (e.getAction() == MouseEvent.PRESS) {
       mousePressed();
+    } else if (e.getAction() == MouseEvent.WHEEL) {
+      mouseWheel(e);
     }
+  }
+  
+    // used by processing.js
+  void mouseScrolled(int mouseWheelDelta) {
+    if (!this.isFocused) {
+        return;
+    }
+    if (mouseWheelDelta < 0) {
+      if (-lineScrollOffset < lines.size() - maxLinesToDisplay) {
+        lineScrollOffset--;
+      }
+    } else if (mouseWheelDelta > 0) {
+      if (lineScrollOffset < 0) {
+        lineScrollOffset++;
+      }
+    }
+  }
+  
+  void mouseWheel(MouseEvent e) {
+    mouseScrolled(e.getCount());
   }
 
   void keyEvent(KeyEvent e) {

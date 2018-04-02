@@ -13,7 +13,7 @@ void setup() {
   console.setConsoleInputListener(new ConsoleInputListener() {
 
     // use the "public" modifier for the onConsoleInput method in order to work in Processing
-    void onConsoleInput(String variable, String value) {
+    public void onConsoleInput(String variable, String value) {
       if (variable.equals("number")) {
         try {
           if (Integer.parseInt(value) < number) {
@@ -60,7 +60,7 @@ public class Console {
   private int globalPadding;
   private int lineScrollOffset;
   private boolean isFocused;
-  private float textSize;
+  private int textSize;
   private int maxLinesToDisplay;
   private float textHeight;
   private ArrowButton upBtn;
@@ -68,7 +68,7 @@ public class Console {
   private float scrollBarMaxHeight;
   private PApplet pap;
 
-  public Console(PApplet pap, int x, int y, int w, int h) {
+  public Console(PApplet pap, int x, int y, int width, int height) {
     this.pap = pap;
     this.pap.registerMethod("draw", this);
     this.pap.registerMethod("mouseEvent", this);
@@ -77,8 +77,8 @@ public class Console {
     this.outputTextColor = color(170);
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
+    this.w = width;
+    this.h = height;
     this.globalPadding = 10;
     this.inputBoxHeight = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
     this.lines = new ArrayList();
@@ -224,7 +224,29 @@ public class Console {
   void mouseEvent(MouseEvent e) {
     if (e.getAction() == MouseEvent.PRESS) {
       mousePressed();
+    } else if (e.getAction() == MouseEvent.WHEEL) {
+      mouseWheel(e);
     }
+  }
+  
+    // used by processing.js
+  void mouseScrolled(int mouseWheelDelta) {
+    if (!this.isFocused) {
+        return;
+    }
+    if (mouseWheelDelta < 0) {
+      if (-lineScrollOffset < lines.size() - maxLinesToDisplay) {
+        lineScrollOffset--;
+      }
+    } else if (mouseWheelDelta > 0) {
+      if (lineScrollOffset < 0) {
+        lineScrollOffset++;
+      }
+    }
+  }
+  
+  void mouseWheel(MouseEvent e) {
+    mouseScrolled(e.getCount());
   }
 
   void keyEvent(KeyEvent e) {
@@ -284,7 +306,7 @@ public class Console {
     this.outputTextColor = outputTextColor;
   }
 
-  void setTextSize(float textSize) {
+  void setTextSize(int textSize) {
     this.textSize = textSize;
     this.textHeight = textAscent() + textDescent();
     this.maxLinesToDisplay = computeMaxLinesToDisplay();
