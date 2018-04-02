@@ -17,6 +17,9 @@ public class BasicLibrary {
     this.pa.registerMethod("draw", this);
     this.pa.registerMethod("mouseEvent", this);
     this.pa.registerMethod("keyEvent", this);
+    this.pa.registerMethod("pre", this);
+    this.pa.registerMethod("post", this);
+
   }
 
   void draw() {
@@ -56,6 +59,14 @@ public class BasicLibrary {
           this.keyTyped();
           break;
       }
+  }
+  
+  void pre() {
+    println("PRE: before draw!");
+  }
+  
+  void post() {
+    println("POST: after draw!");
   }
   
   void mouseClicked() {
