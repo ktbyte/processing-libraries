@@ -10,7 +10,7 @@ void setup() {
   console.setConsoleInputListener(new ConsoleInputListener() {
 
     // use the "public" modifier for the onConsoleInput method in order to work in Processing
-    public void onConsoleInput(String variable, String value) {
+    void onConsoleInput(String variable, String value) {
       if (variable.equals("name")) {
         console.write("Nice to meet you " + value + "!");
         console.write("How old are you?");
