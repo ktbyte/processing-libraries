@@ -1,7 +1,7 @@
 import ddf.minim.*;
 
-Minim minim = new Minim(this);
 AudioLibJS audioLibJS;
+Minim minim;
 
 public interface AudioLibJS {
   void loadSound(String name);
@@ -26,6 +26,7 @@ public class KTAudioController {
   public KTAudioController(PApplet pap) {
     this.pap = pap;
     if (pap.javaVersionName != null) {
+      minim = new Minim(this.pap);
       this.isReady = true;
     } else {
       // Waiting for the javascript binding
@@ -106,7 +107,6 @@ public class KTSound {
 }
 
 String getPathName(String name) {
-  //println(name.substring(0, getLastIndexOf(name, '.')));
   return name.substring(0, getLastIndexOf(name, '.'));
 }
 
@@ -116,6 +116,5 @@ int getLastIndexOf(String str, char ch) {
       return i;
     }
   }
-  println((char)ch);
   return -1;
 }
