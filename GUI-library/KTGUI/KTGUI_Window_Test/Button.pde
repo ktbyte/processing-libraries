@@ -31,9 +31,9 @@ class Button extends Controller {
     translate(posx, posy);
     pushStyle();
     rectMode(CORNER);
-    if (isHovered) {
+    if (isHovered && !isPressed) {
       fill(KTGUI.COLOR_HOVERED);
-    } else if (isPressed) {
+    } else if (isHovered && isPressed) {
       fill(KTGUI.COLOR_PRESSED);
     } else {
       fill(KTGUI.COLOR_PASSIVE);
@@ -90,4 +90,3 @@ class Button extends Controller {
     return isInside;
   }
 }
-

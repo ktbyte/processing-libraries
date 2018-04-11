@@ -36,7 +36,7 @@ public class KTGUI {
 
   final static color COLOR_HOVERED = #3232FF;
   final static color COLOR_PASSIVE = #3232A8;
-  final static color COLOR_PRESSED = #32C832;
+  final static color COLOR_PRESSED = #66C832;
 
   //-------------------------------------------------------------------------------------------------------------------
   // The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
