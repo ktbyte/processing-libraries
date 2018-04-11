@@ -6,9 +6,9 @@
   * [Table of contents](#table-of-contents)
   * [Introduction](#introduction)
     + [Button](#button)
-      - [Example 1](#example-1)
-      - [Example 2](#example-2)
-      - [Example 3](#example-3)
+      - [Button example 1](#button-example-1)
+      - [Button example 2](#button-example-2)
+      - [Button example 3](#button-example-3)
     + [Console](#console)
       - [Methods of Console class](#methods-of-console-class)
       - [Methods of ConsoleInputListener class](#methods-of-consoleinputlistener-class)
@@ -19,10 +19,17 @@
       - [Methods of ConsoleInputListener class](#methods-of-consoleinputlistener-class)
       - [Note](#note)
     + [Slider](#slider)
+      - [What is it and how to use it interactively:](#what-is-it-and-how-to-use-it-interactively)
+      - [How to program it:](#how-to-program-it)
+        * [Slider example 1](#slider-example-1)
+        * [Slider example 2](#slider-example-2)
     + [TextBox](#textbox)
       - [Methods of TextBox class](#methods-of-textbox-class)
       - [Methods of KeyEventListener class](#methods-of-keyeventlistener-class)
     + [KTGUI Library](#ktgui-library)
+      - [The concept of 'main' and 'GUI' related code separation](#the-concept-of-main-and-gui-related-code-separation)
+      - [The implementation of 'main' and 'GUI' related code separation](#the-implementation-of-main-and-gui-related-code-separation)
+      
 
 ## Introduction
 
@@ -30,7 +37,7 @@ This library consists of several easy-to-use GUI elements and is designed to wor
 
 ### Button
 
-This GUI element acts as a button. The Button reacts if the user clicks on it with the mouse or if the user hovers the cursor over the Button. One could set the initial location (of the upper left corner) of the button and its size (width and height) during the creation. To do that, one should just put the appropriate values as arguments of the constructor method:
+This GUI component acts as a button. The Button reacts if the user clicks on it with the mouse or if the user hovers the cursor over the Button. One could set the initial location (of the upper left corner) of the button and its size (width and height) during the creation. To do that, one should just put the appropriate values as arguments of the constructor method:
 
 ```java
   // create the button
@@ -40,11 +47,11 @@ This GUI element acts as a button. The Button reacts if the user clicks on it wi
 ```
 There are three examples available:
 
- - [Example of the Button that does not use the callback method](#example-1)
- - [Example of the Button that uses the callback method](#example-2) 
- - [Example of the Button that uses the callback method and is part of the 'library'](#example-3)
+1. [Example of the Button that does not use the callback method](#button-example-1)
+2. [Example of the Button that uses the callback method](#button-example-2) 
+3. [Example of the Button that uses the callback method and is part of the 'library'](#button-example-3)
 
-#### Example 1
+#### Button example 1
 
 The [first example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/Button/Button_Without_Callback.pde) shows how to use the _Button_ directly, without the callback function. This means that at any given moment the user should check the state (if it is 'pressed' or 'released' at that moment) of the _Button_ himself. In this example, the state of the _Button_ is checked inside the 'tickle()' method. In its turn, this method is called inside the 'draw()' method. 
 
@@ -67,7 +74,7 @@ void tickle(){
 ```
 Making this check inside the 'draw()' method ensures that no state change would be missed. The advantage of this approach is simplicity of the design. The drawback of this approach is the redundancy - if there are a lot of GUI elements present in the code then it will put the extensive load on the processor. Moreover, in case there are lot of GUI components in the code the logic that handles the checking of all these components became very complex and hard to manage. The better approach is to use the [callback methods](#example-2) - these are the methods that will be executed automatically when the GUI component event is triggered.
 
-#### Example 2
+#### Button example 2
 
 The [second example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/Button/Button_Callback_Example.pde) shows the use of the callback method. The callback method is executed when the particular event has happened (in our case, the Button object triggers the `onPressed()`event when the user presses the button with the mouse. 
 
@@ -118,7 +125,7 @@ The most convenient feature of this approach is that it is not necessary to crea
   });
 ```
 
-#### Example 3
+#### Button example 3
 
 The [third example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/KTGUI/KTGUI_Button_KTByte_Example.pde) shows the use of the Button class as a part of the library. The main drawback of the two previous examples is that in order to make them 'live' (draw the shape of each GUI component on the canvas, react on the mouse and keyboard events) we must write the code inside the native Processing's methods - `setup()`, `draw()`, `mousePressed()`, `mouseRelease()` etc. This makes us to mix the 'main' logic of our application with the 'GUI' logic, which is not the best approach. Instead, we can use the 'library' [approach](#ktgui-library). Using this approach, the single 'library' object is created in the 'main' code. And then, the needed GUI components are created by calling the particular factory method of the 'library' class. 
 
@@ -142,7 +149,7 @@ void setup() {
     public void onMousePressed() {
       println("Callback message: The Button was pressed!");
     }
-  }
+  });
 }
                        
 ```
@@ -296,7 +303,113 @@ void draw() {
 
 ### Slider
 
+#### What is it and how to use it interactively:
 
+The *Slider* is a GUI component that is intended to dynamically change (adjust) and show (display) some value within some range. 
+
+In KTGUI library, the outer shape of the *Slider* is represented as a horizontal bar (rectangle). The long side of the bar works like as a scale and the full length of this side represents the full range of the value to be adjusted. In some other GUI libraries, the current value of the slider is changed/displayed using the 'handle' that points to the particular location on the long side of the 'scale' and can be dragged using the mouse. In KTGUI library, the slider's handle is not showed. Instead, **the current value of the slider is represented by filling the internal area of the slider's outer shape with another rectangle** that has the same height, but different length. In order to visually indicate the current value of the slider this internal rectangle has different, much brighter color comparing to the background color of the outer shape. 
+
+For convenience, the lower boundary of the slider's range (_the minimum value_) matches the leftmost side of the slider's shape while the upper boundary of the slider's range (_the maximum value_) matches the rightmost side of the slider shape. 
+
+To change the current value of the slider one should press or drag the mouse button inside the slider. The length of the internal rectangle will change immediately showing the new adjusted value withing the range.
+
+#### How to program it:
+
+There are two examples:
+
+1. [Example of the Slider that don't use the callback method and is not a part of the library](#slider-example-1)
+2. [Example of the Slider that uses the callback method and is a part of the library](#slider-example-2)
+
+##### Slider example 1
+
+The [first example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/Slider/Slider_example/Slider_example.pde) shows how to use the _Slider_ directly, without the callback function. In order to create the instance of the _Slider_ one should create the variable of type _Slider_ and make an instance of it:
+
+```java
+Slider slider;
+//--------------------------------------------------------------------------------------------
+//
+//--------------------------------------------------------------------------------------------
+void setup() {
+  size(400, 400);
+  // create an instance of the Slider		
+  slider = new Slider(100, 200, 200, 20, 0, 1000);
+}
+```
+
+The constructor has the following form:
+
+**_Slider**_(int _**x**_, int _**y**_, int _**width**_, int _**height**_, int _**sr**_, int _**er**_)
+
+where
+
+```int x, int y``` - are the desired location of the upper-left corner of the _Slider_
+
+```int width, int height``` - are the width and height of the _Slider_ shape
+
+```int sr, int er``` - is the __start__ and __end__ value of the _Slider_ range
+
+Using the _Slider_ without the callback function means that at any given moment the user should update the view of the _Slider's_ shape and check its value himself. As seen in the example below, both these actions could be handled inside the ```draw()``` method. The value of the _Slider_ is used then to interactively change the horizontal position of the vertical line continuously drawn on the canvas. 
+
+```java
+//--------------------------------------------------------------------------------------------
+//
+//--------------------------------------------------------------------------------------------
+void draw() {
+  ...
+  // display the updated shape of the slider
+  slider.draw();
+  // map the slider's value from its range to the width of the canvas
+  float linePos = map(slider.getValue(), slider.sr, slider.er, 0, width);
+  // use the slider's value to interactively change the position of vertical line
+  line(linePos, 0, linePos, height);
+}
+```
+
+
+
+##### Slider example 2
+
+The [second example](https://github.com/ktbyte/processing-libraries/blob/master/GUI-library/KTGUI/KTGUI_Slider_KTByte_Example/KTGUI_Slider_KTByte_Example.pde) shows the use of the _Slider_ class as a part of the library. The main advantage of using this approach is that in order to make it to be 'interactive' (update and draw the shape on the canvas, react on the mouse events) we don't need no more to write the code inside the native Processing's methods - `setup()`, `draw()`, `mousePressed()`, `mouseRelease()` etc. Instead, the library class handles all these actions. 
+
+First, the needed GUI component (here, the _Slider_) is created by calling the particular factory method of the 'library' class. Here is an example of instantiating the object of _Slider_ class using the [KTGUI library](#ktgui-library) factory method:
+
+```java
+KTGUI ktgui;
+Slider slider;
+//--------------------------------------------------------------------------------------------
+//
+//--------------------------------------------------------------------------------------------
+void setup() {
+  ...
+  // instance of the KTGUI class
+  ktgui = new KTGUI(this);
+  // instance of the 'Button' GUI component created using the factory method of the KTGUI class
+  slider = ktgui.createSlider(width/2 - 200, 150, 200*2, 40, 0, width - btn.width);
+  ...  
+}
+                       
+```
+
+As explained in the the KTGUI library [example](#ktgui-library), the KTGUI library class automatically calls the ```draw()``` method of the _Slider_ class at the end of every _Processing.js_ frame. This way the shape of the _Slider_ object is updated automatically.
+
+The practical use of _Slider_ is related to the moments in time when the user changes the slider value. In order to 'attach' some wanted behavior to this _Slider_ event one must do the following:
+
+1. Create the class (or use existing one) that extends the ```KTGUIEventAdapter``` class. 
+2. Override the particular method of the ```KTGUIEventAdapter``` class. Below is an example that shows how to react on the event when the user presses the mouse button while the cursor is inside the _Slider_ shape (here we create the anonymous class that extends the ```KTGUIEventAdapter``` class):
+
+```java
+  slider.addEventAdapters(new KTGUIEventAdapter() {
+  // we can override only those callback methods which we really need
+  void onMousePressed() {
+    slider.setTitle(slider.isPressed ? "Pressed" : "The Slider");
+    if (slider.isPressed) {
+      int sliderValue = (int)slider.getValue();
+      btn.posx = sliderValue;
+    }
+  });
+```
+
+The other types of behaviors can be implemented the same way. 
 
 [Back to the table of contents](#table-of-contents)
 
