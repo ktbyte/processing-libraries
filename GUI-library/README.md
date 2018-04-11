@@ -6,9 +6,9 @@
   * [Table of contents](#table-of-contents)
   * [Introduction](#introduction)
     + [Button](#button)
-      - [Example 1](#example-1)
-      - [Example 2](#example-2)
-      - [Example 3](#example-3)
+      - [Button example 1](#button-example-1)
+      - [Button example 2](#button-example-2)
+      - [Button example 3](#button-example-3)
     + [Console](#console)
       - [Methods of Console class](#methods-of-console-class)
       - [Methods of ConsoleInputListener class](#methods-of-consoleinputlistener-class)
@@ -19,10 +19,17 @@
       - [Methods of ConsoleInputListener class](#methods-of-consoleinputlistener-class)
       - [Note](#note)
     + [Slider](#slider)
+      - [What is it and how to use it interactively:](#what-is-it-and-how-to-use-it-interactively)
+      - [How to program it:](#how-to-program-it)
+        * [Slider example 1](#slider-example-1)
+        * [Slider example 2](#slider-example-2)
     + [TextBox](#textbox)
       - [Methods of TextBox class](#methods-of-textbox-class)
       - [Methods of KeyEventListener class](#methods-of-keyeventlistener-class)
     + [KTGUI Library](#ktgui-library)
+      - [The concept of 'main' and 'GUI' related code separation](#the-concept-of-main-and-gui-related-code-separation)
+      - [The implementation of 'main' and 'GUI' related code separation](#the-implementation-of-main-and-gui-related-code-separation)
+      
 
 ## Introduction
 
