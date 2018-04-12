@@ -7,7 +7,8 @@
  *********************************************************************************************************************/
 public abstract class Controller {
   String title;
-
+  Window window;
+  
   public void draw() {
   }
   public void processMouseMoved() {
@@ -22,7 +23,10 @@ public abstract class Controller {
   }
   public void processKeyReleased() {
   }
-  void setTitle(String title) {
+  public void setParentWindow(Window window){
+    this.window = window;
+  }
+ void setTitle(String title) {
     this.title = title;
   }
 }

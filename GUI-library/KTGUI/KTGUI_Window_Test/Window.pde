@@ -29,7 +29,8 @@ class Window extends Controller {
   String title = "A window.";
   int posx, posy, w, h;
   PApplet parent;
-  
+  PGraphics pgraphics;
+    
   Window(int posx, int posy, int w, int h){
     this.posx = posx;
     this.posy = posy;
@@ -39,10 +40,13 @@ class Window extends Controller {
   
   void attachController(Controller controller){
     controllers.add(controller);
+    controller.setParentWindow(this);
   }
 
   void attachControllers(ArrayList<Controller> controllers){
-    controllers.addAll(controllers);
+    for(Controller controller: controllers){
+      attachController(controller);
+    }
   }
   
   void draw(){
