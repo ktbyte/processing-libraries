@@ -358,7 +358,7 @@ class Button extends Controller {
     fill(255);
     textAlign(CENTER, CENTER);
     textSize(14);
-    text("The Button", w*0.5, h*0.5);
+    text(title, w*0.5, h*0.5);
     popStyle();
     popMatrix();
   }
