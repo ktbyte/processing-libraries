@@ -5,19 +5,18 @@
  * The object of this class can be 'Pressed', 'Hovered', 'Released' and 'Dragged'.
  *********************************************************************************************************************/
 class Button extends Controller {
-  int posx, posy;
-  int width, height;
   boolean isPressed, isHovered;
 
   ArrayList<KTGUIEventAdapter> adapters;
 
-  Button(int posx, int posy, int width, int height) {
+  Button(int posx, int posy, int w, int h) {
     this.posx = posx;
     this.posy = posy;
-    this.width = width;
-    this.height = height;
+    this.w = w;
+    this.h = h;
     title = "Button";
     adapters = new ArrayList<KTGUIEventAdapter>();
+    pg = createGraphics(w + 1, h + 1);
   }
 
   void addEventAdapters(KTGUIEventAdapter adapter) {
@@ -25,25 +24,42 @@ class Button extends Controller {
   }
 
   void draw() {
-    
-    pushMatrix();
-    translate(posx, posy);
-    pushStyle();
-    rectMode(CORNER);
-    if (isHovered && !isPressed) {
-      fill(ktgui.COLOR_FG_HOVERED);
-    } else if (isHovered && isPressed) {
-      fill(ktgui.COLOR_FG_PRESSED);
+    if (parentWindow != null) {
+      pg.beginDraw();
+      pg.rectMode(CORNER);
+      if (isHovered && !isPressed) {
+        pg.fill(ktgui.COLOR_FG_HOVERED);
+      } else if (isHovered && isPressed) {
+        pg.fill(ktgui.COLOR_FG_PRESSED);
+      } else {
+        pg.fill(ktgui.COLOR_FG_PASSIVE);
+      }
+      pg.rect(0, 0, w, h);
+      pg.fill(255);
+      pg.textAlign(CENTER, CENTER);
+      pg.textSize(14);
+      pg.text(title, w*0.5, h*0.5);
+      pg.endDraw();
     } else {
-      fill(ktgui.COLOR_FG_PASSIVE);
+      pushMatrix();
+      translate(posx, posy);
+      pushStyle();
+      rectMode(CORNER);
+      if (isHovered && !isPressed) {
+        fill(ktgui.COLOR_FG_HOVERED);
+      } else if (isHovered && isPressed) {
+        fill(ktgui.COLOR_FG_PRESSED);
+      } else {
+        fill(ktgui.COLOR_FG_PASSIVE);
+      }
+      rect(0, 0, w, h);
+      fill(255);
+      textAlign(CENTER, CENTER);
+      textSize(14);
+      text(title, w*0.5, h*0.5);
+      popStyle();
+      popMatrix();
     }
-    rect(0, 0, this.width, this.height);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(14);
-    text(title, this.width/2, this.height/2);
-    popStyle();
-    popMatrix();
   }
 
   // process mouseMoved event received from PApplet
@@ -56,9 +72,11 @@ class Button extends Controller {
 
   // process mousePressed event received from PApplet
   void processMousePressed() {
-    isPressed = isHovered;
-    for (KTGUIEventAdapter adapter : adapters) {
-      adapter.onMousePressed();
+    if (isHovered) {
+      isPressed = true;
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMousePressed();
+      }
     }
   }
 
@@ -74,15 +92,17 @@ class Button extends Controller {
 
   // process mouseDragged event received from PApplet
   void processMouseDragged() {
-    for (KTGUIEventAdapter adapter : adapters) {
-      adapter.onMouseDragged();
+    if (isPressed) {
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMouseDragged();
+      }
     }
   }
 
   boolean isPointInside(int x, int y) {
     boolean isInside = false;
-    if (x > posx && x < posx + this.width) {
-      if (y > posy && y < posy + this.height) {
+    if (x > parentWindow.posx + posx && x < parentWindow.posx + posx + w) {
+      if (y > parentWindow.posy + posy && y < parentWindow.posy + posy + h) {
         isInside = true;
       }
     }

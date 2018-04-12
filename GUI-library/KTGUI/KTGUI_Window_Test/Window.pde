@@ -35,7 +35,7 @@ class Window extends Controller {
 
   String title = "Window title bar. Drag it!";
   int posx, posy, w, h;
-  PApplet parent;
+
   PGraphics pg;
 
   boolean isTitleBarHovered, isTitleBarPressed;  
@@ -50,55 +50,57 @@ class Window extends Controller {
   }
 
   void updateSize(int wdth, int hght) {
-    pg = createGraphics(wdth, hght);
+    pg = createGraphics(wdth + 1, hght + 1);
   }
   void draw() {
-    drawContents();
     drawTitleBar();
     drawBorder();
+    updateControllers();
+    image(pg, posx, posy);
   }
 
   void drawTitleBar() {
-    // drawBar
-    pushMatrix();
-    translate(posx, posy);
-    pushStyle();
-    rectMode(CORNER);
-    fill(180);
-    stroke(15);
-    strokeWeight(1);
-    rect(0, 0, w, TITLE_BAR_HEIGHT);
-    fill(25);
-    textAlign(LEFT, CENTER);
-    textSize(TITLE_BAR_HEIGHT*0.75);
-    text(title, 10, TITLE_BAR_HEIGHT*0.5 - 2);
-    popStyle();
-    popMatrix();
+    // drawBar and title
+    pg.beginDraw();
+    pg.background(200, 200);
+    pg.rectMode(CORNER);
+    pg.fill(180);
+    pg.stroke(15);
+    pg.strokeWeight(1);
+    pg.rect(0, 0, w, TITLE_BAR_HEIGHT);
+    pg.fill(25);
+    pg.textAlign(LEFT, CENTER);
+    pg.textSize(TITLE_BAR_HEIGHT*0.65);
+    pg.text(title, 10, TITLE_BAR_HEIGHT*0.5);
+    pg.endDraw();
 
     // drawButtons (minimize, maximize, close)
-    // drawTitle
   }
 
   void drawBorder() {
     // change thickness depending on the user-mouse behavior
-    pushMatrix();
-    translate(posx, posy);
-    pushStyle();
-    stroke(0);
-    strokeWeight(1);
-    fill(220);
-    rectMode(CORNER);
-    rect(0, TITLE_BAR_HEIGHT, w, h - TITLE_BAR_HEIGHT);
-    popStyle();
-    popMatrix();
+    pg.beginDraw();
+    pg.stroke(0);
+    pg.strokeWeight(1);
+    pg.noFill();
+    pg.rectMode(CORNER);
+    pg.rect(0, TITLE_BAR_HEIGHT, w, h - TITLE_BAR_HEIGHT);
+    pg.endDraw();
   }
 
-  void drawContents() {
+  void updateControllers() {
+    for (Controller controller : controllers) {
+      pg.beginDraw();
+      pg.image(controller.getGraphics(), controller.getPosX(), controller.getPosY());
+      pg.endDraw();
+    }
   }
 
   void attachController(Controller controller) {
-    controllers.add(controller);
-    controller.setParentWindow(this);
+    if (!controllers.contains(controller)) {
+      controllers.add(controller);
+      controller.setParentWindow(this);
+    }
   }
 
   void attachControllers(ArrayList<Controller> controllers) {

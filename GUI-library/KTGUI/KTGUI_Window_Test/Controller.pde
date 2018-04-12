@@ -7,7 +7,10 @@
  *********************************************************************************************************************/
 public abstract class Controller {
   String title;
-  Window parentWindow;
+  int posx, posy, w, h;
+
+  Window parentWindow = null;
+  PGraphics pg;
   
   public void draw() {
   }
@@ -23,10 +26,26 @@ public abstract class Controller {
   }
   public void processKeyReleased() {
   }
-  public void setParentWindow(Window window){
+  public void setParentWindow(Window window) {
     this.parentWindow = window;
   }
- void setTitle(String title) {
+  void setTitle(String title) {
     this.title = title;
+  }
+
+  PGraphics getGraphics() {
+    return pg;
+  }
+  int getPosX(){
+    return posx;
+  }
+  int getPosY(){
+    return posy;
+  }
+  void setPosX(int posx){
+    this.posx = posx;
+  }
+  void setPosY(int posy){
+    this.posy = posy;
   }
 }
