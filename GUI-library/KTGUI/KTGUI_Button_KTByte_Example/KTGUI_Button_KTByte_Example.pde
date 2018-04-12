@@ -5,13 +5,13 @@ Button btn;
  *
  *********************************************************************************************************************/
 void setup() {
-  size(300, 300);
+  size(600, 600);
 
   // instance of the KTGUI class
   ktgui = new KTGUI(this);
 
   // instance of the KTGUI 'Button' component
-  btn = ktgui.createButton(width/2 - 75, 50, 150, 40);
+  btn = ktgui.createButton(300 - 75, 50, 150, 40);
   btn.setTitle("The Button");
   btn.addEventAdapters(new KTGUIEventAdapter() {
     // we can override only those callback methods which we really need
@@ -50,7 +50,7 @@ void draw() {
   pushStyle();
   textAlign(CENTER, CENTER);
   textSize(24);
-  text("Drag the button!", width/2, height/2);
+  text("Drag the button!", 300, 300);
   popStyle();
 }
 
@@ -70,6 +70,12 @@ abstract class KTGUIEventAdapter {
   }
   void onKeyPressed() {
   }
+  void println(String text){
+    PApplet.println(text);
+  }
+  float map(float value, float sin, float ein, float sout, float eout){
+    return PApplet.map(value,  sin,  ein,  sout, eout);
+  }
 }
 
 /**********************************************************************************************************************
@@ -80,6 +86,15 @@ abstract class KTGUIEventAdapter {
  * One should always overridde the 'draw' method.
  *********************************************************************************************************************/
 public abstract class Controller {
+  String title;
+  ArrayList<KTGUIEventAdapter> adapters;
+
+  void setTitle(String title) {
+    this.title = title;
+  }
+  void addEventAdapters(KTGUIEventAdapter adapter) {
+    adapters.add(adapter);
+  }
   void draw() {
   }
   void processMouseMoved() {
@@ -97,6 +112,7 @@ public abstract class Controller {
 }
 
 
+
 /**********************************************************************************************************************
  * This is an example of the KTGUI component (controller).
  * This class extends the 'Controller' class.
@@ -104,32 +120,18 @@ public abstract class Controller {
  * The object of this class can be 'Pressed', 'Hovered', 'Released' and 'Dragged'.
  *********************************************************************************************************************/
 class Button extends Controller {
-  color COLOR_HOVERED = #3232FF;
-  color COLOR_PASSIVE = #3232A8;
-  color COLOR_PRESSED = #32C832;
-    
-  String title;
-  int posx, posy;
-  int width, height;
-  boolean isPressed, isHovered;
-  
-  ArrayList<KTGUIEventAdapter> adapters;
 
-  Button(int posx, int posy, int width, int height) {
+  String title;
+  int posx, posy, w, h;
+  boolean isPressed, isHovered;
+
+  Button(int posx, int posy, int w, int h) {
     this.posx = posx;
     this.posy = posy;
-    this.width = width;
-    this.height = height;
-    title = "Button";
+    this.w = w;
+    this.h = h;
+    this.title = "Button";
     adapters = new ArrayList<KTGUIEventAdapter>();
-  }
-
-  void addEventAdapters(KTGUIEventAdapter adapter) {
-    adapters.add(adapter);
-  }
-
-  void setTitle(String title) {
-    this.title = title;
   }
 
   void draw() {
@@ -137,18 +139,18 @@ class Button extends Controller {
     translate(posx, posy);
     pushStyle();
     rectMode(CORNER);
-    if (isHovered) {
-      fill(COLOR_HOVERED);
-    } else if (isPressed) {
-      fill(COLOR_PRESSED);
+    if (isHovered && !isPressed) {
+      fill(ktgui.COLOR_FG_HOVERED);
+    } else if (isHovered && isPressed) {
+      fill(ktgui.COLOR_FG_PRESSED);
     } else {
-      fill(COLOR_PASSIVE);
+      fill(ktgui.COLOR_FG_PASSIVE);
     }
-    rect(0, 0, this.width, this.height);
+    rect(0, 0, w, h);
     fill(255);
     textAlign(CENTER, CENTER);
     textSize(14);
-    text(title, this.width/2, this.height/2);
+    text("The Button", w*0.5, h*0.5);
     popStyle();
     popMatrix();
   }
@@ -172,8 +174,10 @@ class Button extends Controller {
   // process mouseReleased event received from PApplet
   void processMouseReleased() {
     isPressed = false;
-    for (KTGUIEventAdapter adapter : adapters) {
-      adapter.onMouseReleased();
+    if (isHovered) {
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMouseReleased();
+      }
     }
   }
 
@@ -186,14 +190,15 @@ class Button extends Controller {
 
   boolean isPointInside(int x, int y) {
     boolean isInside = false;
-    if (x > posx && x < posx + this.width) {
-      if (y > posy && y < posy + this.height) {
+    if (x > posx && x < posx + w) {
+      if (y > posy && y < posy + h) {
         isInside = true;
       }
     }
     return isInside;
   }
 }
+
 
 /**********************************************************************************************************************
  * This class is used to 'transfer' the 'draw', 'mouse' and 'keyboard' events from PApplet to KTGUI components 
@@ -209,9 +214,13 @@ public class KTGUI {
   PApplet pa;
   List<Controller> controllers;
 
-  color COLOR_HOVERED = #3232FF;
-  color COLOR_PASSIVE = #3232A8;
-  color COLOR_PRESSED = #32C832;
+  color COLOR_FG_HOVERED = color(10, 150, 10); 
+  color COLOR_FG_PRESSED = color(10, 200, 10);
+  color COLOR_FG_PASSIVE = color(10, 10, 200); 
+  color COLOR_BG_HOVERED = color(100); 
+  color COLOR_BG_PASSIVE = color(100); 
+  color COLOR_BG_PRESSED = color(200);
+
 
   //-------------------------------------------------------------------------------------------------------------------
   // The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
@@ -249,7 +258,8 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void registerController(Controller controller) {
     controllers.add(controller);
-    println("Controller:" + controller + " has been registered!");
+    //println("Controller:" + controller + " has been registered!");
+    //println("Controller:" + controller.getClass().getCanonicalName() + " has been registered!");
   }
 
   //-------------------------------------------------------------------------------------------------------------------
