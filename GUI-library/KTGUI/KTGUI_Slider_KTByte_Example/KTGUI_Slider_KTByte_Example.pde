@@ -12,7 +12,7 @@ void setup() {
   ktgui = new KTGUI(this);
 
   // instance of the KTGUI 'Button' component
-  btn = ktgui.createButton(width/2 - 100, 50, 100*2, 40);
+  btn = ktgui.createButton(300 - 100, 50, 100*2, 40);
   btn.setTitle("The Button");
   btn.addEventAdapters(new KTGUIEventAdapter() {
     // we can override only those callback methods which we really need
@@ -41,7 +41,7 @@ void setup() {
   }
   );
 
-  slider = ktgui.createSlider(width/2 - 200, 150, 200*2, 40, 0, width - btn.width);
+  slider = ktgui.createSlider(300 - 200, 150, 200*2, 40, 0, width - btn.w);
   slider.setTitle("The Slider");
   slider.addEventAdapters(new KTGUIEventAdapter() {
     // we can override only those callback methods which we really need
@@ -65,7 +65,7 @@ void setup() {
       slider.setTitle(slider.isPressed ? "Dragged" : "The Slider");
       if (slider.isPressed) {
         int sliderValue = (int)slider.getValue();
-        int mappedBtnPosition = (int) map(sliderValue, slider.sr, slider.er, 0, width - btn.width);
+        int mappedBtnPosition = (int) map(sliderValue, slider.sr, slider.er, 0, width - btn.w);
         btn.posx = mappedBtnPosition;
       }
     }
@@ -79,7 +79,9 @@ void draw() {
   pushStyle();
   textAlign(CENTER, CENTER);
   textSize(24);
-  text("Drag the button!", width/2, height/2);
+  text("Drag the button to change its position!", 300, 300);
+  text("Drage the slider to change its value!", 300, 340);
+  text("The button position also depends on the slider value.", 300, 380);
   popStyle();
 }
 
@@ -145,27 +147,22 @@ public abstract class Controller {
  *
  ************************************************************************************************/
 class Slider extends Controller {
-  int posx, posy;               // corner location
-  int width, height;      // width and height   
+  int posx, posy;         // upper left corner location
+  int w, h;               // width and height   
   int sr, er;             // start and end of range
   int pos;                // 'real' slider position 
   float value;            // 'mapped' slider position
 
   boolean isPressed, isHovered;
 
-  color BG_PASSIVE_COLOR = #0000B4;      // color(180), background 'passive' color
-  color BG_HOVERED_COLOR = #0000DC;      // color(220), background 'hovered' color
-  color FG_PASSIVE_COLOR = #32B432;      // color(50, 180, 50), foreground 'passive' color
-  color FG_HOVERED_COLOR = #32DC32;      // color(50, 220, 50), foreground 'hovered' color
-
   //-----------------------------------------------------------------------------------------------
   //
   //-----------------------------------------------------------------------------------------------
-  Slider(int posx, int posy, int width, int height, int sr, int er) {
+  Slider(int posx, int posy, int w, int h, int sr, int er) {
     this.posx = posx;
     this.posy = posy;
-    this.width = width;
-    this.height = height;
+    this.w = w;
+    this.h = h;
     this.sr = sr;
     this.er = er;
     title = "The Slider";
@@ -181,15 +178,32 @@ class Slider extends Controller {
     pushMatrix();
     translate(posx, posy);
     pushStyle();
-    fill(isHovered ? BG_HOVERED_COLOR : BG_PASSIVE_COLOR);
+    if(isHovered){
+      fill(ktgui.COLOR_BG_HOVERED);
+    } else {
+      fill(ktgui.COLOR_BG_PASSIVE);
+    }
     rectMode(CORNER);
-    rect(0, 0, this.width, this.height);
-    fill(isHovered ? FG_HOVERED_COLOR : FG_PASSIVE_COLOR);
-    rect(0, 0, pos, this.height);
+    rect(0, 0, w, h);
+
+    if (isHovered && !isPressed) {
+      fill(ktgui.COLOR_FG_HOVERED);
+    } else if (isHovered && isPressed) {
+      fill(ktgui.COLOR_FG_PRESSED);
+    } else {
+      fill(ktgui.COLOR_FG_PASSIVE);
+    }
+    rect(0, 0, pos, h);
+    popStyle();
+    popMatrix();
+
+    pushMatrix();
+    translate(posx, posy);
+    pushStyle();
     fill(255);
     textSize(14);
     textAlign(LEFT, CENTER);
-    text(str(value), 10, height/2);
+    text(str((int)value), 10, h*0.5);
     textAlign(LEFT, BOTTOM);
     text(title, 10, -2);
     popStyle();
@@ -201,8 +215,8 @@ class Slider extends Controller {
   //-----------------------------------------------------------------------------------------------
   boolean isPointInside(int ptx, int pty) {
     boolean isInside = false;
-    if (ptx > this.posx  && ptx < this.posx + this.width) {
-      if (pty > this.posy && pty < this.posy + this.height ) {
+    if (ptx > posx  && ptx < posx + w) {
+      if (pty > posy && pty < posy + h ) {
         isInside = true;
       }
     }
@@ -241,7 +255,7 @@ class Slider extends Controller {
   // call this to recalculate the position of the handle based on the current value of the slider
   //-----------------------------------------------------------------------------------------------
   void updateHandlePositionFromMouse() {
-    pos = constrain(mouseX - posx, 0, this.width);
+    pos = constrain(mouseX - posx, 0, w);
   }
 
   //-----------------------------------------------------------------------------------------------
@@ -249,7 +263,7 @@ class Slider extends Controller {
   // current handle position
   //-----------------------------------------------------------------------------------------------
   void updateValueFromHandlePosition() {
-    value = map(pos, 0, this.width, sr, er);
+    value = map(pos, 0, w, sr, er);
   }
 
   // process mouseMoved event received from PApplet
@@ -314,21 +328,17 @@ class Slider extends Controller {
  * The object of this class can be 'Pressed', 'Hovered', 'Released' and 'Dragged'.
  *********************************************************************************************************************/
 class Button extends Controller {
-  color COLOR_HOVERED = #3232FF;
-  color COLOR_PASSIVE = #3232A8;
-  color COLOR_PRESSED = #32C832;
 
   String title;
-  int posx, posy;
-  int width, height;
+  int posx, posy, w, h;
   boolean isPressed, isHovered;
 
-  Button(int posx, int posy, int width, int height) {
+  Button(int posx, int posy, int w, int h) {
     this.posx = posx;
     this.posy = posy;
-    this.width = width;
-    this.height = height;
-    title = "Button";
+    this.w = w;
+    this.h = h;
+    this.title = "Button";
     adapters = new ArrayList<KTGUIEventAdapter>();
   }
 
@@ -337,18 +347,18 @@ class Button extends Controller {
     translate(posx, posy);
     pushStyle();
     rectMode(CORNER);
-    if (isHovered) {
-      fill(COLOR_HOVERED);
-    } else if (isPressed) {
-      fill(COLOR_PRESSED);
+    if (isHovered && !isPressed) {
+      fill(ktgui.COLOR_FG_HOVERED);
+    } else if (isHovered && isPressed) {
+      fill(ktgui.COLOR_FG_PRESSED);
     } else {
-      fill(COLOR_PASSIVE);
+      fill(ktgui.COLOR_FG_PASSIVE);
     }
-    rect(0, 0, this.width, this.height);
+    rect(0, 0, w, h);
     fill(255);
     textAlign(CENTER, CENTER);
     textSize(14);
-    text(title, this.width/2, this.height/2);
+    text("The Button", w*0.5, h*0.5);
     popStyle();
     popMatrix();
   }
@@ -388,8 +398,8 @@ class Button extends Controller {
 
   boolean isPointInside(int x, int y) {
     boolean isInside = false;
-    if (x > posx && x < posx + this.width) {
-      if (y > posy && y < posy + this.height) {
+    if (x > posx && x < posx + w) {
+      if (y > posy && y < posy + h) {
         isInside = true;
       }
     }
@@ -410,6 +420,14 @@ class Button extends Controller {
 public class KTGUI {
   PApplet pa;
   List<Controller> controllers;
+
+  color COLOR_FG_HOVERED = color(10, 150, 10); 
+  color COLOR_FG_PRESSED = color(10, 200, 10);
+  color COLOR_FG_PASSIVE = color(10, 10, 200); 
+  color COLOR_BG_HOVERED = color(100); 
+  color COLOR_BG_PASSIVE = color(100); 
+  color COLOR_BG_PRESSED = color(200);
+
 
   //-------------------------------------------------------------------------------------------------------------------
   // The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
