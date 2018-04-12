@@ -8,7 +8,7 @@ Window window;
 void setup(){
   size(600, 400);
 	ktgui = new KTGUI(this);
-	btn = ktgui.createButton(width/2 - 75, 50, 150, 40);
+	btn = ktgui.createButton(width-200, height-100, 150, 40);
 	
 	btn.addEventAdapters(new KTGUIEventAdapter() {
 	  public void onMousePressed() {
@@ -16,12 +16,12 @@ void setup(){
 		}	
 	});
 
-  window = new Window(0, 0, 300, 200);
+  window = ktgui.createWindow(10, 10, 300, 200);
 }
 
 /**********************************************************************************************************************
  * 
  *********************************************************************************************************************/
 void draw(){
-  background(220);
+  background(170, 220, 170);
 }

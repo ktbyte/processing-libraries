@@ -23,54 +23,136 @@
 // Of course, we need to register all the 'child' components. Use the ArrayList for this.
 
 class Window extends Controller {
-  int BAR_HEIGHT = 20;
-  
+  int TITLE_BAR_HEIGHT = 20;
+  int MENU_BAR_HEIGHT = 20;
+
+  // Border border;
+  // TitleBar titleBar;
+  // MenuBar menuBar;
+
   ArrayList<Controller> controllers = new ArrayList<Controller>();
-  String title = "A window.";
+  ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
+
+  String title = "Window title bar. Drag it!";
   int posx, posy, w, h;
   PApplet parent;
-  PGraphics pgraphics;
-    
-  Window(int posx, int posy, int w, int h){
+  PGraphics pg;
+
+  boolean isTitleBarHovered, isTitleBarPressed;  
+  boolean isBorderHovered, isBorderPressed;  
+
+  Window(int posx, int posy, int w, int h) {
     this.posx = posx;
     this.posy = posy;
     this.w = w;
     this.h = h;
-  }
-  
-  void attachController(Controller controller){
-    controllers.add(controller);
-    controller.setParentWindow(this);
+    updateSize(w, h);
   }
 
-  void attachControllers(ArrayList<Controller> controllers){
-    for(Controller controller: controllers){
-      attachController(controller);
-    }
+  void updateSize(int wdth, int hght) {
+    pg = createGraphics(wdth, hght);
   }
-  
-  void draw(){
+  void draw() {
+    drawContents();
     drawTitleBar();
     drawBorder();
-    drawContents();
-  }
-  
-  void drawTitleBar(){
-    // drawBar
-    // drawButtons (minimize, maximize, close)
-    // drawTitle 
   }
 
-  void drawBorder(){
+  void drawTitleBar() {
+    // drawBar
+    pushMatrix();
+    translate(posx, posy);
+    pushStyle();
+    rectMode(CORNER);
+    fill(180);
+    stroke(15);
+    strokeWeight(1);
+    rect(0, 0, w, TITLE_BAR_HEIGHT);
+    fill(25);
+    textAlign(LEFT, CENTER);
+    textSize(TITLE_BAR_HEIGHT*0.75);
+    text(title, 10, TITLE_BAR_HEIGHT*0.5 - 2);
+    popStyle();
+    popMatrix();
+
+    // drawButtons (minimize, maximize, close)
+    // drawTitle
+  }
+
+  void drawBorder() {
     // change thickness depending on the user-mouse behavior
     pushMatrix();
     translate(posx, posy);
     pushStyle();
-    stroke(255);
+    stroke(0);
+    strokeWeight(1);
+    fill(220);
+    rectMode(CORNER);
+    rect(0, TITLE_BAR_HEIGHT, w, h - TITLE_BAR_HEIGHT);
     popStyle();
     popMatrix();
   }
-  
-  void drawContents(){
+
+  void drawContents() {
+  }
+
+  void attachController(Controller controller) {
+    controllers.add(controller);
+    controller.setParentWindow(this);
+  }
+
+  void attachControllers(ArrayList<Controller> controllers) {
+    for (Controller controller : controllers) {
+      attachController(controller);
+    }
+  }
+
+  // process mouseMoved event received from PApplet
+  void processMouseMoved() {
+    isTitleBarHovered = isPointInsideTitleBar(mouseX, mouseY) ? true : false;
+    for (KTGUIEventAdapter adapter : adapters) {
+      adapter.onMouseMoved();
+    }
+  }
+
+  // process mousePressed event received from PApplet
+  void processMousePressed() {
+    if (isTitleBarHovered) {
+      isTitleBarPressed = true;
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMousePressed();
+      }
+    }
+  }
+
+  // process mouseReleased event received from PApplet
+  void processMouseReleased() {
+    isTitleBarPressed = false;
+    if (isTitleBarHovered) {
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMouseReleased();
+      }
+    }
+  }
+
+  // process mouseDragged event received from PApplet
+  void processMouseDragged() {
+    if (isTitleBarPressed) {
+      posx += mouseX - pmouseX;
+      posy += mouseY - pmouseY;
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMouseDragged();
+      }
+    }
+  }
+
+  boolean isPointInsideTitleBar(int x, int y) {
+    boolean isInside = false;
+    if (x > posx && x < posx + this.w) {
+      if (y > posy && y < posy + this.h) {
+        isInside = true;
+      }
+    }
+    return isInside;
   }
 }

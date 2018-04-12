@@ -12,11 +12,6 @@ class Slider extends Controller {
 
   ArrayList<KTGUIEventAdapter> adapters;
 
-  color BG_PASSIVE_COLOR = color(180);          // background 'passive' color
-  color BG_HOVERED_COLOR = color(220);          // background 'hovered' color
-  color FG_PASSIVE_COLOR = color(50, 180, 50); // foreground 'passive' color
-  color FG_HOVERED_COLOR = color(50, 220, 50); // foreground 'hovered' color
-
   //-----------------------------------------------------------------------------------------------
   //
   //-----------------------------------------------------------------------------------------------
@@ -40,10 +35,10 @@ class Slider extends Controller {
     pushMatrix();
     translate(posx, posy);
     pushStyle();
-    fill(isHovered ? BG_HOVERED_COLOR : BG_PASSIVE_COLOR);
+    fill(isHovered ? ktgui.COLOR_BG_HOVERED : ktgui.COLOR_BG_PASSIVE);
     rectMode(CORNER);
     rect(0, 0, this.width, this.height);
-    fill(isHovered ? FG_HOVERED_COLOR : FG_PASSIVE_COLOR);
+    fill(isHovered ? ktgui.COLOR_FG_HOVERED : ktgui.COLOR_FG_HOVERED);
     rect(0, 0, pos, this.height);
     fill(0);
     textAlign(LEFT, CENTER);

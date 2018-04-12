@@ -31,11 +31,11 @@ class Button extends Controller {
     pushStyle();
     rectMode(CORNER);
     if (isHovered && !isPressed) {
-      fill(KTGUI.COLOR_HOVERED);
+      fill(ktgui.COLOR_FG_HOVERED);
     } else if (isHovered && isPressed) {
-      fill(KTGUI.COLOR_PRESSED);
+      fill(ktgui.COLOR_FG_PRESSED);
     } else {
-      fill(KTGUI.COLOR_PASSIVE);
+      fill(ktgui.COLOR_FG_PASSIVE);
     }
     rect(0, 0, this.width, this.height);
     fill(255);

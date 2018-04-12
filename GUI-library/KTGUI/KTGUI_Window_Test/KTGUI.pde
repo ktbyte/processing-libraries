@@ -16,7 +16,7 @@ abstract class KTGUIEventAdapter {
   void onKeyReleased() {
   }
   void onKeyPressed() {
-  }
+	}
 }
 
 
@@ -34,9 +34,12 @@ public class KTGUI {
   PApplet pa;
   List<Controller> controllers;
 
-  final static color COLOR_HOVERED = #3232FF;
-  final static color COLOR_PASSIVE = #3232A8;
-  final static color COLOR_PRESSED = #66C832;
+  color COLOR_FG_HOVERED = color(10, 150, 10); 
+  color COLOR_FG_PRESSED = color(10, 200, 10);
+  color COLOR_FG_PASSIVE = color(100, 100, 200); 
+  color COLOR_BG_HOVERED = color(100); 
+  color COLOR_BG_PASSIVE = color(100); 
+  color COLOR_BG_PRESSED = color(200);
 
   //-------------------------------------------------------------------------------------------------------------------
   // The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
