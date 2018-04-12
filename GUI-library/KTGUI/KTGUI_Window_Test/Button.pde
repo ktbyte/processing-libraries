@@ -8,7 +8,6 @@ class Button extends Controller {
   int posx, posy;
   int width, height;
   boolean isPressed, isHovered;
-  KTGUI parent;
 
   ArrayList<KTGUIEventAdapter> adapters;
 
@@ -26,6 +25,7 @@ class Button extends Controller {
   }
 
   void draw() {
+    
     pushMatrix();
     translate(posx, posy);
     pushStyle();
@@ -44,7 +44,6 @@ class Button extends Controller {
     text(title, this.width/2, this.height/2);
     popStyle();
     popMatrix();
-    
   }
 
   // process mouseMoved event received from PApplet

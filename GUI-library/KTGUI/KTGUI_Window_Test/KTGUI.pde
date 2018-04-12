@@ -79,6 +79,15 @@ public class KTGUI {
   }
 
   //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'factory' method
+  //-------------------------------------------------------------------------------------------------------------------
+  Window createWindow(int x, int y, int w, int h) {
+    Window window = new Window(x, y, w, h);
+    registerController(window);
+    return window;
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
   // This method is used to automatically register each KTGUI component (controller) created by factory method
   //-------------------------------------------------------------------------------------------------------------------
   void registerController(Controller controller) {

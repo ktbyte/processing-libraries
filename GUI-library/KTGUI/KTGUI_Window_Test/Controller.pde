@@ -7,7 +7,7 @@
  *********************************************************************************************************************/
 public abstract class Controller {
   String title;
-  Window window;
+  Window parentWindow;
   
   public void draw() {
   }
@@ -24,7 +24,7 @@ public abstract class Controller {
   public void processKeyReleased() {
   }
   public void setParentWindow(Window window){
-    this.window = window;
+    this.parentWindow = window;
   }
  void setTitle(String title) {
     this.title = title;
