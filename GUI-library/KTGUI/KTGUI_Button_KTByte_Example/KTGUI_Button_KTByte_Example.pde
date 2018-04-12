@@ -150,7 +150,7 @@ class Button extends Controller {
     fill(255);
     textAlign(CENTER, CENTER);
     textSize(14);
-    text("The Button", w*0.5, h*0.5);
+    text(this.title, w*0.5, h*0.5);
     popStyle();
     popMatrix();
   }
@@ -165,8 +165,8 @@ class Button extends Controller {
 
   // process mousePressed event received from PApplet
   void processMousePressed() {
-    if(isPointInside(mouseX, mouseY)){
-      isPressed = isHovered;
+    if(isHovered){
+      isPressed = true;
       for (KTGUIEventAdapter adapter : adapters) {
         adapter.onMousePressed();
       }
