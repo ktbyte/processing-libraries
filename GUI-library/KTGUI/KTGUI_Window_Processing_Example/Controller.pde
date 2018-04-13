@@ -12,6 +12,8 @@ public abstract class Controller {
   Window parentWindow = null;
   PGraphics pg;
   
+  public void updateGraphics() {
+  }
   public void draw() {
   }
   public void processMouseMoved() {

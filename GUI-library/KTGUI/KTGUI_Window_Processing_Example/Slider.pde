@@ -59,13 +59,18 @@ class Slider extends Controller {
   //-----------------------------------------------------------------------------------------------
   //
   //-----------------------------------------------------------------------------------------------
-  boolean isPointInside(int ptx, int pty) {
+  boolean isPointInside(int x, int y) {
     boolean isInside = false;
-    if (ptx > this.posx  && ptx < this.posx + this.width) {
-      if (pty > this.posy && pty < this.posy + this.height ) {
+    
+    int px = (parentWindow == null) ? 0 : parentWindow.posx;
+    int py = (parentWindow == null) ? 0 : parentWindow.posy;
+
+    if (x > px + posx && x < px + posx + w) {
+      if (y > py + posy && y < py + posy + h) {
         isInside = true;
       }
     }
+    
     return isInside;
   }
 

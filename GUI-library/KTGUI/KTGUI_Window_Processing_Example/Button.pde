@@ -23,42 +23,27 @@ class Button extends Controller {
     adapters.add(adapter);
   }
 
-  void draw() {
-    if (parentWindow != null) {
-      pg.beginDraw();
-      pg.rectMode(CORNER);
-      if (isHovered && !isPressed) {
-        pg.fill(ktgui.COLOR_FG_HOVERED);
-      } else if (isHovered && isPressed) {
-        pg.fill(ktgui.COLOR_FG_PRESSED);
-      } else {
-        pg.fill(ktgui.COLOR_FG_PASSIVE);
-      }
-      pg.rect(0, 0, w, h);
-      pg.fill(255);
-      pg.textAlign(CENTER, CENTER);
-      pg.textSize(14);
-      pg.text(title, w*0.5, h*0.5);
-      pg.endDraw();
+  void updateGraphics() {
+    pg.beginDraw();
+    pg.rectMode(CORNER);
+    if (isHovered && !isPressed) {
+      pg.fill(ktgui.COLOR_FG_HOVERED);
+    } else if (isHovered && isPressed) {
+      pg.fill(ktgui.COLOR_FG_PRESSED);
     } else {
-      pushMatrix();
-      translate(posx, posy);
-      pushStyle();
-      rectMode(CORNER);
-      if (isHovered && !isPressed) {
-        fill(ktgui.COLOR_FG_HOVERED);
-      } else if (isHovered && isPressed) {
-        fill(ktgui.COLOR_FG_PRESSED);
-      } else {
-        fill(ktgui.COLOR_FG_PASSIVE);
-      }
-      rect(0, 0, w, h);
-      fill(255);
-      textAlign(CENTER, CENTER);
-      textSize(14);
-      text(title, w*0.5, h*0.5);
-      popStyle();
-      popMatrix();
+      pg.fill(ktgui.COLOR_FG_PASSIVE);
+    }
+    pg.rect(0, 0, w, h);
+    pg.fill(255);
+    pg.textAlign(CENTER, CENTER);
+    pg.textSize(14);
+    pg.text(title, w*0.5, h*0.5);
+    pg.endDraw();
+  }
+
+  void draw() {
+    if (parentWindow == null) {
+      image(pg, posx, posy);
     }
   }
 
@@ -101,7 +86,7 @@ class Button extends Controller {
 
   boolean isPointInside(int x, int y) {
     boolean isInside = false;
-    
+
     int px = (parentWindow == null) ? 0 : parentWindow.posx;
     int py = (parentWindow == null) ? 0 : parentWindow.posy;
 

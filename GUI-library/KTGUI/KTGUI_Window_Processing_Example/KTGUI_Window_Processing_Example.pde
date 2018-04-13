@@ -18,9 +18,6 @@ void setup() {
       println("Callback message: The DefaultButton was pressed!");
       ktgui.stateManager.goToState(1);
     }  
-    public void onMouseReleased() {
-      println("Callback message: The DefaultButton was released!");
-    }
   }
   );
   
@@ -29,9 +26,10 @@ void setup() {
 
 
   nextStateBtn = ktgui.createButton(110, 110, 100, 50);
-  nextStateBtn.setTitle("Next state");
+  nextStateBtn.setTitle("NextState");
   nextStateBtn.addEventAdapters(new KTGUIEventAdapter() {
     public void onMousePressed() {
+      println("Callback message: The Nex-State-Button was pressed!");
       ktgui.stateManager.goToState(s2);
     }
   }

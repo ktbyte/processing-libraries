@@ -18,6 +18,7 @@ public class State {
 
   void draw() {
     for (Controller controller : controllers) {
+      controller.updateGraphics();
       controller.draw();
     }
   }
@@ -27,12 +28,4 @@ public class State {
       controllers.add(controller);
     }
   }
-
-  //void addToContext(String key, Object obj) {
-  //  context.put(key, obj);
-  //}
-
-  //Object getFromContext(String key) {
-  //  return context.get(key);
-  //}
 }
