@@ -32,8 +32,7 @@ abstract class KTGUIEventAdapter {
  *********************************************************************************************************************/
 public class KTGUI {
   PApplet pa;
-  List<State> states;
-  State activeState;
+  StateManager stateManager;
 
   color COLOR_FG_HOVERED = color(10, 150, 10); 
   color COLOR_FG_PRESSED = color(10, 200, 10);
@@ -52,54 +51,40 @@ public class KTGUI {
     this.pa.registerMethod("mouseEvent", this);
     this.pa.registerMethod("keyEvent", this);
 
-    states = new ArrayList<State>();
+    stateManager = new StateManager();
   }
 
   //-------------------------------------------------------------------------------------------------------------------
   // Transfer 'draw' event from PApplet to KTGUI components
   //-------------------------------------------------------------------------------------------------------------------
   void draw() {
-    activeState.draw();
+    stateManager.activeState.draw();
   }
 
   //-------------------------------------------------------------------------------------------------------------------
   // This is a 'factory' method
   //-------------------------------------------------------------------------------------------------------------------
-  State createState(String name) {
-    State state = new State(name);
-    states.add(state);
-    activeState = state;
-    return state;
-  }
-
-  void goToState(State state) {
-    activeState = state;
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'factory' method
-  //-------------------------------------------------------------------------------------------------------------------
-  Button createButton(State state, int x, int y, int w, int h) {
+  Button createButton(int x, int y, int w, int h) {
     Button btn = new Button(x, y, w, h);
-    state.attachController(btn);
+    stateManager.activeState.attachController(btn);
     return btn;
   }
 
   //-------------------------------------------------------------------------------------------------------------------
   // This is a 'factory' method
   //-------------------------------------------------------------------------------------------------------------------
-  Slider createSlider(State state, int x, int y, int w, int h, int s, int e) {
+  Slider createSlider(int x, int y, int w, int h, int s, int e) {
     Slider slider = new Slider(x, y, w, h, s, e);
-    state.attachController(slider);
+    stateManager.activeState.attachController(slider);
     return slider;
   }
 
   //-------------------------------------------------------------------------------------------------------------------
   // This is a 'factory' method
   //-------------------------------------------------------------------------------------------------------------------
-  Window createWindow(State state, int x, int y, int w, int h) {
+  Window createWindow(int x, int y, int w, int h) {
     Window window = new Window(x, y, w, h);
-    state.attachController(window);
+    stateManager.activeState.attachController(window);
     return window;
   }
 
@@ -142,7 +127,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void mouseDragged() {
     //println("Dragged!");
-    for (Controller controller : activeState.controllers) {
+    for (Controller controller : stateManager.activeState.controllers) {
       controller.processMouseDragged();
     }
   }
@@ -152,7 +137,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void mousePressed() {
     //println("Press at: " + mouseX + " " + mouseY);
-    for (Controller controller : activeState.controllers) {
+    for (Controller controller : stateManager.activeState.controllers) {
       controller.processMousePressed();
     }
   }
@@ -162,7 +147,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void mouseReleased() {
     //println("Release at: " + mouseX + " " + mouseY);
-    for (Controller controller : activeState.controllers) {
+    for (Controller controller : stateManager.activeState.controllers) {
       controller.processMouseReleased();
     }
   }
@@ -172,7 +157,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void mouseMoved() {
     //println("Moved!");
-    for (Controller controller : activeState.controllers) {
+    for (Controller controller : stateManager.activeState.controllers) {
       controller.processMouseMoved();
     }
   }
@@ -182,7 +167,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void keyPressed() {
     //println("Pressed key: " + keyCode);
-    for (Controller controller : activeState.controllers) {
+    for (Controller controller : stateManager.activeState.controllers) {
       controller.processKeyPressed();
     }
   }
@@ -192,7 +177,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void keyReleased() {
     //println("Released key: " + keyCode);
-    for (Controller controller : activeState.controllers) {
+    for (Controller controller : stateManager.activeState.controllers) {
       controller.processKeyReleased();
     }
   }

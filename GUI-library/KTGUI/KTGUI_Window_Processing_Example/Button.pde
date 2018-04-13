@@ -60,7 +60,6 @@ class Button extends Controller {
       popStyle();
       popMatrix();
     }
-
   }
 
   // process mouseMoved event received from PApplet
@@ -102,11 +101,16 @@ class Button extends Controller {
 
   boolean isPointInside(int x, int y) {
     boolean isInside = false;
-    if (x > parentWindow.posx + posx && x < parentWindow.posx + posx + w) {
-      if (y > parentWindow.posy + posy && y < parentWindow.posy + posy + h) {
+    
+    int px = (parentWindow == null) ? 0 : parentWindow.posx;
+    int py = (parentWindow == null) ? 0 : parentWindow.posy;
+
+    if (x > px + posx && x < px + posx + w) {
+      if (y > py + posy && y < py + posy + h) {
         isInside = true;
       }
     }
+
     return isInside;
   }
 }

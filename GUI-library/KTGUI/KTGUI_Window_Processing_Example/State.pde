@@ -28,11 +28,11 @@ public class State {
     }
   }
 
-  void addToContext(String key, Object obj) {
-    context.put(key, obj);
-  }
+  //void addToContext(String key, Object obj) {
+  //  context.put(key, obj);
+  //}
 
-  Object getFromContext(String key) {
-    return context.get(key);
-  }
+  //Object getFromContext(String key) {
+  //  return context.get(key);
+  //}
 }
