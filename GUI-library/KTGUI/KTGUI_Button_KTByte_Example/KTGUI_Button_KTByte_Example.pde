@@ -16,12 +16,12 @@ void setup() {
   btn.addEventAdapters(new KTGUIEventAdapter() {
     // we can override only those callback methods which we really need
     void onMousePressed() {
-    //   PApplet.println("MousePressedEvent message from Callback!");
+      println("MousePressedEvent message from Callback!");
       btn.setTitle(btn.isPressed ? "Pressed" : "The Button");
     }
     // we can override only those callback methods which we really need
     void onMouseReleased() {
-    //   PApplet.println("MouseReleasedEvent message from Callback!");
+      println("MouseReleasedEvent message from Callback!");
       btn.setTitle(btn.isPressed ? "The Button" : "Released");
     }
     // we can override only those callback methods which we really need
@@ -150,7 +150,7 @@ class Button extends Controller {
     fill(255);
     textAlign(CENTER, CENTER);
     textSize(14);
-    text("The Button", w*0.5, h*0.5);
+    text(this.title, w*0.5, h*0.5);
     popStyle();
     popMatrix();
   }
@@ -165,18 +165,22 @@ class Button extends Controller {
 
   // process mousePressed event received from PApplet
   void processMousePressed() {
-    isPressed = isHovered;
-    for (KTGUIEventAdapter adapter : adapters) {
-      adapter.onMousePressed();
+    if(isHovered){
+      isPressed = true;
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMousePressed();
+      }
     }
   }
 
   // process mouseReleased event received from PApplet
   void processMouseReleased() {
-    isPressed = false;
-    if (isHovered) {
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseReleased();
+    if(isPressed){
+      isPressed = false;
+      if (isHovered) {
+        for (KTGUIEventAdapter adapter : adapters) {
+          adapter.onMouseReleased();
+        }
       }
     }
   }
