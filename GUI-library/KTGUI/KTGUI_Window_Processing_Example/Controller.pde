@@ -7,11 +7,12 @@
  *********************************************************************************************************************/
 public abstract class Controller {
   String title;
-  int posx, posy, w, h;
-
+  int posx, posy, w, h;  
+  boolean isPressed, isHovered;
+  ArrayList<KTGUIEventAdapter> adapters;
   Window parentWindow = null;
   PGraphics pg;
-  
+
   public void updateGraphics() {
   }
   public void draw() {
@@ -34,20 +35,19 @@ public abstract class Controller {
   void setTitle(String title) {
     this.title = title;
   }
-
   PGraphics getGraphics() {
     return pg;
   }
-  int getPosX(){
+  int getPosX() {
     return posx;
   }
-  int getPosY(){
+  int getPosY() {
     return posy;
   }
-  void setPosX(int posx){
+  void setPosX(int posx) {
     this.posx = posx;
   }
-  void setPosY(int posy){
+  void setPosY(int posy) {
     this.posy = posy;
   }
 }

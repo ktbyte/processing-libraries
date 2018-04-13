@@ -7,8 +7,6 @@
 class Button extends Controller {
   boolean isPressed, isHovered;
 
-  ArrayList<KTGUIEventAdapter> adapters;
-
   Button(int posx, int posy, int w, int h) {
     this.posx = posx;
     this.posy = posy;

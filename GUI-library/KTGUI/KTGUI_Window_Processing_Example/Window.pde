@@ -59,7 +59,7 @@ class Window extends Controller {
     updateControllers();
     image(pg, posx, posy);
   }
-  
+
   void drawChildrenControllers() {
     for (Controller controller : controllers) {
       controller.draw();
@@ -83,7 +83,7 @@ class Window extends Controller {
 
     // drawButtons (minimize, maximize, close)
   }
-  
+
   void addEventAdapter(KTGUIEventAdapter adapter) {
     adapters.add(adapter);
   }
@@ -108,6 +108,10 @@ class Window extends Controller {
   }
 
   void attachController(Controller controller) {
+    if (controller.parentWindow != null) {
+      controller.parentWindow.controllers.remove(controller); // reset parentWindow
+    }
+ 
     if (!controllers.contains(controller)) {
       controllers.add(controller);
       controller.setParentWindow(this);

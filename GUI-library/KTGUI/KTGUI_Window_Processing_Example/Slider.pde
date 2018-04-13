@@ -2,15 +2,9 @@
  *
  ************************************************************************************************/
 class Slider extends Controller {
-  int posx, posy;               // corner location
-  int width, height;      // width and height   
   int sr, er;             // start and end of range
   int pos;                // 'real' slider position 
   float value;            // 'mapped' slider position
-
-  boolean isPressed, isHovered;
-
-  ArrayList<KTGUIEventAdapter> adapters;
 
   //-----------------------------------------------------------------------------------------------
   //
@@ -18,8 +12,8 @@ class Slider extends Controller {
   Slider(int posx, int posy, int width, int height, int sr, int er) {
     this.posx = posx;
     this.posy = posy;
-    this.width = width;
-    this.height = height;
+    this.w = width;
+    this.h = height;
     this.sr = sr;
     this.er = er;
     title = "The Slider";
@@ -37,12 +31,12 @@ class Slider extends Controller {
     pushStyle();
     fill(isHovered ? ktgui.COLOR_BG_HOVERED : ktgui.COLOR_BG_PASSIVE);
     rectMode(CORNER);
-    rect(0, 0, this.width, this.height);
+    rect(0, 0, w, h);
     fill(isHovered ? ktgui.COLOR_FG_HOVERED : ktgui.COLOR_FG_HOVERED);
-    rect(0, 0, pos, this.height);
+    rect(0, 0, pos, h);
     fill(0);
     textAlign(LEFT, CENTER);
-    text(str(value), 10, height/2);
+    text(str(value), 10, h*0.5);
     textAlign(LEFT, BOTTOM);
     text(title, 10, -2);
     popStyle();
@@ -106,14 +100,14 @@ class Slider extends Controller {
   //
   //-----------------------------------------------------------------------------------------------
   void updateHandlePositionFromMouse() {
-    pos = constrain(mouseX - posx, 0, this.width);
+    pos = constrain(mouseX - posx, 0, w);
   }
 
   //-----------------------------------------------------------------------------------------------
   //
   //-----------------------------------------------------------------------------------------------
   void updateValueFromHandlePosition() {
-    value = map(pos, 0, this.width, sr, er);
+    value = map(pos, 0, w, sr, er);
   }
 
   //-----------------------------------------------------------------------------------------------

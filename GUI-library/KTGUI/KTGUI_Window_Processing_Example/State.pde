@@ -7,13 +7,11 @@
  *********************************************************************************************************************/
 public class State {
   List<Controller> controllers;
-  HashMap<String, Object> context;
   String name;
 
   State(String name) {
     this.name = name;
     this.controllers = new ArrayList<Controller>();
-    this.context = new HashMap<String, Object>();
   }
 
   void draw() {

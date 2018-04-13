@@ -44,7 +44,7 @@ class StateManager {
   //--------------------------------------------------------------------------------------------------
   void goToNextState() {
     int indexOfCurrentState = states.indexOf(activeState);
-    int next = (indexOfCurrentState < states.size() - 1) ? indexOfCurrentState++ : 0;
+    int next = (indexOfCurrentState < states.size() - 1) ? ++indexOfCurrentState : 0;
     activeState = states.get(next);
   }
 
