@@ -16,7 +16,7 @@ abstract class KTGUIEventAdapter {
   void onKeyReleased() {
   }
   void onKeyPressed() {
-	}
+  }
 }
 
 
@@ -32,7 +32,8 @@ abstract class KTGUIEventAdapter {
  *********************************************************************************************************************/
 public class KTGUI {
   PApplet pa;
-  List<Controller> controllers;
+  List<State> states;
+  State activeState;
 
   color COLOR_FG_HOVERED = color(10, 150, 10); 
   color COLOR_FG_PRESSED = color(10, 200, 10);
@@ -51,51 +52,55 @@ public class KTGUI {
     this.pa.registerMethod("mouseEvent", this);
     this.pa.registerMethod("keyEvent", this);
 
-    controllers = new ArrayList<Controller>();
+    states = new ArrayList<State>();
   }
 
   //-------------------------------------------------------------------------------------------------------------------
   // Transfer 'draw' event from PApplet to KTGUI components
   //-------------------------------------------------------------------------------------------------------------------
   void draw() {
-    for (Controller controller : controllers) {
-      controller.draw();
-    }
+    activeState.draw();
   }
 
   //-------------------------------------------------------------------------------------------------------------------
   // This is a 'factory' method
   //-------------------------------------------------------------------------------------------------------------------
-  Button createButton(int x, int y, int w, int h) {
+  State createState(String name) {
+    State state = new State(name);
+    states.add(state);
+    activeState = state;
+    return state;
+  }
+
+  void makeStateActive(State state) {
+    activeState = state;
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'factory' method
+  //-------------------------------------------------------------------------------------------------------------------
+  Button createButton(State state, int x, int y, int w, int h) {
     Button btn = new Button(x, y, w, h);
-    registerController(btn);
+    state.attachController(btn);
     return btn;
   }
 
   //-------------------------------------------------------------------------------------------------------------------
   // This is a 'factory' method
   //-------------------------------------------------------------------------------------------------------------------
-  Slider createSlider(int x, int y, int w, int h, int s, int e) {
+  Slider createSlider(State state, int x, int y, int w, int h, int s, int e) {
     Slider slider = new Slider(x, y, w, h, s, e);
-    registerController(slider);
+    state.attachController(slider);
     return slider;
   }
 
   //-------------------------------------------------------------------------------------------------------------------
   // This is a 'factory' method
   //-------------------------------------------------------------------------------------------------------------------
-  Window createWindow(int x, int y, int w, int h) {
+  Window createWindow(State state, int x, int y, int w, int h) {
     Window window = new Window(x, y, w, h);
-    registerController(window);
+    state.attachController(window);
     return window;
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This method is used to automatically register each KTGUI component (controller) created by factory method
-  //-------------------------------------------------------------------------------------------------------------------
-  void registerController(Controller controller) {
-    controllers.add(controller);
-    println("Controller:" + controller.getClass().getCanonicalName() + " has been registered!");
   }
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -137,7 +142,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void mouseDragged() {
     //println("Dragged!");
-    for (Controller controller : controllers) {
+    for (Controller controller : activeState.controllers) {
       controller.processMouseDragged();
     }
   }
@@ -147,7 +152,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void mousePressed() {
     //println("Press at: " + mouseX + " " + mouseY);
-    for (Controller controller : controllers) {
+    for (Controller controller : activeState.controllers) {
       controller.processMousePressed();
     }
   }
@@ -157,7 +162,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void mouseReleased() {
     //println("Release at: " + mouseX + " " + mouseY);
-    for (Controller controller : controllers) {
+    for (Controller controller : activeState.controllers) {
       controller.processMouseReleased();
     }
   }
@@ -167,7 +172,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void mouseMoved() {
     //println("Moved!");
-    for (Controller controller : controllers) {
+    for (Controller controller : activeState.controllers) {
       controller.processMouseMoved();
     }
   }
@@ -177,7 +182,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void keyPressed() {
     //println("Pressed key: " + keyCode);
-    for (Controller controller : controllers) {
+    for (Controller controller : activeState.controllers) {
       controller.processKeyPressed();
     }
   }
@@ -187,7 +192,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   void keyReleased() {
     //println("Released key: " + keyCode);
-    for (Controller controller : controllers) {
+    for (Controller controller : activeState.controllers) {
       controller.processKeyReleased();
     }
   }

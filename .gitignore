@@ -23,3 +23,4 @@ hs_err_pid*
 
 # VS hidden folder
 /.vscode/*
+*.autosave

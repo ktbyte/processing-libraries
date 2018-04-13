@@ -53,10 +53,17 @@ class Window extends Controller {
     pg = createGraphics(wdth + 1, hght + 1);
   }
   void draw() {
+    drawChildrenControllers();
     drawTitleBar();
     drawBorder();
     updateControllers();
     image(pg, posx, posy);
+  }
+  
+  void drawChildrenControllers() {
+    for (Controller controller : controllers) {
+      controller.draw();
+    }
   }
 
   void drawTitleBar() {
@@ -75,6 +82,10 @@ class Window extends Controller {
     pg.endDraw();
 
     // drawButtons (minimize, maximize, close)
+  }
+  
+  void addEventAdapter(KTGUIEventAdapter adapter) {
+    adapters.add(adapter);
   }
 
   void drawBorder() {
@@ -151,7 +162,7 @@ class Window extends Controller {
   boolean isPointInsideTitleBar(int x, int y) {
     boolean isInside = false;
     if (x > posx && x < posx + this.w) {
-      if (y > posy && y < posy + this.h) {
+      if (y > posy && y < posy + TITLE_BAR_HEIGHT) {
         isInside = true;
       }
     }

@@ -60,6 +60,7 @@ class Button extends Controller {
       popStyle();
       popMatrix();
     }
+
   }
 
   // process mouseMoved event received from PApplet
