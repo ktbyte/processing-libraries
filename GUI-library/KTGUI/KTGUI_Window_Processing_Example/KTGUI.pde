@@ -72,7 +72,7 @@ public class KTGUI {
     return state;
   }
 
-  void makeStateActive(State state) {
+  void goToState(State state) {
     activeState = state;
   }
 

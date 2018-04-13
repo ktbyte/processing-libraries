@@ -32,7 +32,7 @@ void setup() {
   nextStateBtn.addEventAdapters(new KTGUIEventAdapter() {
     public void onMousePressed() {
       println("Next state button was pressed: number of clicks: " + s1.getFromContext("click_count"));
-      ktgui.makeStateActive(s2);
+      ktgui.goToState(s2);
     }
   }
   );
@@ -48,7 +48,7 @@ void setup() {
   s2.attachController(w2);
   s2.attachController(w3);
 
-  ktgui.makeStateActive(s1);
+  ktgui.goToState(s1);
 }
 
 /**********************************************************************************************************************
