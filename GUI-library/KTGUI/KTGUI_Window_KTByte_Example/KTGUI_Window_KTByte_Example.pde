@@ -16,7 +16,7 @@ void setup() {
   anotherButton.addEventAdapters(new KTGUIEventAdapter() {
     void onMousePressed() {
       println("Callback message: The anotherButton (goToState(1)) was pressed!");
-      ktgui.stateManager.goToState(1);
+      ktgui.stateManager.goToState(2);
     }  
   }
   );
