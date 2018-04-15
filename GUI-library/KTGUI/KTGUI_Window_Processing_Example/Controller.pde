@@ -13,23 +13,23 @@ public abstract class Controller {
   Window parentWindow = null;
   PGraphics pg;
 
-  public void updateGraphics() {
+  void updateGraphics() {
   }
-  public void draw() {
+  void draw() {
   }
-  public void processMouseMoved() {
+  void processMouseMoved() {
   }
-  public void processMousePressed() {
+  void processMousePressed() {
   }
-  public void processMouseReleased() {
+  void processMouseReleased() {
   }
-  public void processMouseDragged() {
+  void processMouseDragged() {
   }
-  public void processKeyPressed() {
+  void processKeyPressed() {
   }
-  public void processKeyReleased() {
+  void processKeyReleased() {
   }
-  public void setParentWindow(Window window) {
+  void setParentWindow(Window window) {
     this.parentWindow = window;
   }
   void setTitle(String title) {

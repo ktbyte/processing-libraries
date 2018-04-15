@@ -1,3 +1,4 @@
+
 /**********************************************************************************************************************
  * This is an example of the KTGUI component (controller).
  * This class extends the 'Controller' class.
@@ -47,29 +48,33 @@ class Button extends Controller {
 
   // process mouseMoved event received from PApplet
   void processMouseMoved() {
-    isHovered = isPointInside(mouseX, mouseY) ? true : false;
-    for (KTGUIEventAdapter adapter : adapters) {
-      adapter.onMouseMoved();
+    if (isPointInside(mouseX, mouseY)) {
+      isHovered = true;
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMouseMoved();
+      }
+    } else {
+      isHovered = false;
     }
   }
 
   // process mousePressed event received from PApplet
   void processMousePressed() {
-    if (isHovered) {
+    if (isPointInside(mouseX, mouseY)) {
       isPressed = true;
       for (KTGUIEventAdapter adapter : adapters) {
         adapter.onMousePressed();
       }
+    } else {
+      isPressed = false;
     }
   }
 
   // process mouseReleased event received from PApplet
   void processMouseReleased() {
     isPressed = false;
-    if (isHovered) {
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseReleased();
-      }
+    for (KTGUIEventAdapter adapter : adapters) {
+      adapter.onMouseReleased();
     }
   }
 

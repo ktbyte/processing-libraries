@@ -1,44 +1,49 @@
+import java.util.*;
+
 KTGUI ktgui;
-Button jumpButton, anotherButton, nextStateBtn;
+Button jumpButton, anotherButton, nextStageBtn;
 Window w1, w2, w3;
-State s1, s2;
+Stage s1, s2, s3;
 
 /**********************************************************************************************************************
  * 
  *********************************************************************************************************************/
 void setup() {
   size(600, 500);
-  ktgui = new KTGUI(this); // default state is automatically created
+  ktgui = new KTGUI(this); // default stage is automatically created
 
+  s1 = ktgui.stageManager.createStage("stage_1");
   anotherButton = ktgui.createButton(50, 50, 100, 50);
-  anotherButton.setTitle("Go To\nState1");
+  anotherButton.setTitle("Go To\nStage_2");
   anotherButton.addEventAdapters(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      println("Callback message: The DefaultButton was pressed!");
-      ktgui.stateManager.goToState(1);
+      println("Callback message: The anotherButton (goToStage(1)) was pressed!");
+      ktgui.stageManager.goToStage(2);
     }  
   }
   );
+  s1.registerController(anotherButton);
   
-  // Now, the "s1" state is "active". So, the both 'w1' and 'nextStateButton' are automatically attached to this state. 
+  // Now, the "s1" stage is "active". So, the both 'w1' and 'nextStageButton' are automatically attached to this stage. 
   // We can still use 's1.attachController(Controller) though.
-  s1 = ktgui.stateManager.createState("state_1");
+  s2 = ktgui.stageManager.createStage("stage_2");
   w1 = ktgui.createWindow(10, 10, 300, 200);
-  nextStateBtn = ktgui.createButton(width - 120, height - 70, 100, 50);
-  nextStateBtn.setTitle("NextState");
-  nextStateBtn.addEventAdapters(new KTGUIEventAdapter() {
+  w1.setTitle("Window_1");
+  nextStageBtn = ktgui.createButton(width - 120, height - 70, 100, 50);
+  nextStageBtn.setTitle("NextStage");
+  nextStageBtn.addEventAdapters(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      println("Callback message: The Nex-State-Button was pressed!");
-      ktgui.stateManager.goToNextState();
-      ktgui.stateManager.activeState.attachController(nextStateBtn);
+      println("Callback message: The Next-Stage-Button was pressed!");
+      ktgui.stageManager.goToNextStage();
     }
   }
   );
+  s2.registerController(w1);
 
 
-  // Now, the "s2" state is "active". So, the jumpButton is automatically attached to this state.
+  // Now, the "s2" stage is "active". So, the jumpButton is automatically attached to this stage.
   // We can use 's2.attachController(Controller) though.
-  s2 = ktgui.stateManager.createState("state_2");
+  s3 = ktgui.stageManager.createStage("stage_3");
   jumpButton = ktgui.createButton(50, 50, 100, 50);
   jumpButton.setTitle("Jump!");
   jumpButton.addEventAdapters(new KTGUIEventAdapter() {
@@ -52,14 +57,23 @@ void setup() {
     }  
   }
   );
+  s3.registerController(jumpButton);
   
-  // The "s2" state is still "active". So, the both windows are automatically attached to this state.
+  // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
   w2 = ktgui.createWindow(10, 10, 300, 200);
-  w3 = ktgui.createWindow(50, 50, 300, 200);
+  w2.setTitle("Window_2");
+  s3.registerController(w2);
+  
+  w3 = ktgui.createWindow(10, 230, 300, 200);
+  w3.setTitle("Window_3");
   w3.attachController(jumpButton);
+  s3.registerController(w3);
+  
+  // this button will be visible in all stages
+  ktgui.stageManager.defaultStage.registerController(nextStageBtn);
 
-  ktgui.stateManager.goToState(s1);
+  ktgui.stageManager.goToStage(s3);
 }
 
 /**********************************************************************************************************************
@@ -71,9 +85,11 @@ void draw() {
   fill(0);
   textSize(20);
   textAlign(RIGHT, CENTER);
-  text(ktgui.stateManager.activeState.name, width - 10, 10);
+  text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
+  text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
+  text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
 }
 
 void keyPressed(){
-  ktgui.stateManager.goToNextState();
+  ktgui.stageManager.goToNextStage();
 }
