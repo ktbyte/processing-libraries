@@ -1,5 +1,3 @@
-import java.util.*;
-
 KTGUI ktgui;
 Button jumpButton, anotherButton, nextStageBtn;
 Window w1, w2, w3;
@@ -16,9 +14,9 @@ void setup() {
   anotherButton = ktgui.createButton(50, 50, 100, 50);
   anotherButton.setTitle("Go To\nStage_2");
   anotherButton.addEventAdapters(new KTGUIEventAdapter() {
-    public void onMousePressed() {
+    void onMousePressed() {
       println("Callback message: The anotherButton (goToStage(1)) was pressed!");
-      ktgui.stageManager.goToStage(2);
+      ktgui.stageManager.goToStage(1);
     }  
   }
   );
@@ -32,7 +30,7 @@ void setup() {
   nextStageBtn = ktgui.createButton(width - 120, height - 70, 100, 50);
   nextStageBtn.setTitle("NextStage");
   nextStageBtn.addEventAdapters(new KTGUIEventAdapter() {
-    public void onMousePressed() {
+    void onMousePressed() {
       println("Callback message: The Next-Stage-Button was pressed!");
       ktgui.stageManager.goToNextStage();
     }
@@ -47,7 +45,7 @@ void setup() {
   jumpButton = ktgui.createButton(50, 50, 100, 50);
   jumpButton.setTitle("Jump!");
   jumpButton.addEventAdapters(new KTGUIEventAdapter() {
-    public void onMousePressed() {
+    void onMousePressed() {
       println("Callback message: The Jumping Button was pressed!");
       if(jumpButton.parentWindow == w3){
         w2.attachController(jumpButton);
