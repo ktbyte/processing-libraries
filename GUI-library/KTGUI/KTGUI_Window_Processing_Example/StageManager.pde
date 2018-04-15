@@ -1,80 +1,82 @@
 /**********************************************************************************************************************
  *
  *********************************************************************************************************************/
-class StateManager {
-  List<State> states; // replace 'List' with 'Set' to prevent duplicates
-  State activeState;
+class StageManager {
+  List<Stage> stages; // replace 'List' with 'Set' to prevent duplicates
+  Stage activeStage;
+  Stage defaultStage;
 
   //--------------------------------------------------------------------------------------------------
   //
   //--------------------------------------------------------------------------------------------------
-  StateManager() {
-    states = new ArrayList<State>();
+  StageManager() {
+    stages = new ArrayList<Stage>();
+    defaultStage = new Stage("Default");
   }
 
   //--------------------------------------------------------------------------------------------------
   //
   //--------------------------------------------------------------------------------------------------
-  State createState(String name) {
-    State state = new State(name);
-    states.add(state);
-    activeState = state;
-    return state;
+  Stage createStage(String name) {
+    Stage Stage = new Stage(name);
+    stages.add(Stage);
+    activeStage = Stage;
+    return Stage;
   }
 
   //--------------------------------------------------------------------------------------------------
   //
   //--------------------------------------------------------------------------------------------------
-  void goToState(State state) {
-    activeState = state;
+  void goToStage(Stage Stage) {
+    activeStage = Stage;
   }
 
   //--------------------------------------------------------------------------------------------------
   //
   //--------------------------------------------------------------------------------------------------
-  void goToState(int numState) {
-    if (numState > 0 && numState < states.size()) {
-      activeState = states.get(numState);
+  void goToStage(int numStage) {
+    if (numStage > 0 && numStage < stages.size()) {
+      activeStage = stages.get(numStage);
     }
-    println("numState:" + numState);
-    println("numState < states.size():" + (numState < states.size()));
-    println("states.indexOf(activeState):" + states.indexOf(activeState));
+    println("numStage:" + numStage);
+    println("numStage < Stages.size():" + (numStage < stages.size()));
+    println("Stages.indexOf(activeStage):" + stages.indexOf(activeStage));
     println();
   }
 
   //--------------------------------------------------------------------------------------------------
   //
   //--------------------------------------------------------------------------------------------------
-  void goToNextState() {
-    int indexOfCurrentState = states.indexOf(activeState);
+  void goToNextStage() {
+    int indexOfCurrentStage = stages.indexOf(activeStage);
     println("Before...");
-    println("indexOfCurrentState:" + indexOfCurrentState);
+    println("indexOfCurrentStage:" + indexOfCurrentStage);
 
-    if (indexOfCurrentState < states.size() - 1) {
-      activeState = states.get(indexOfCurrentState + 1);
+    if (indexOfCurrentStage < stages.size() - 1) {
+      activeStage = stages.get(indexOfCurrentStage + 1);
     } else {
-      activeState = states.get(0);
+      activeStage = stages.get(0);
     }
 
     println("After...");
-    indexOfCurrentState = states.indexOf(activeState);
-    println("indexOfCurrentState:" + indexOfCurrentState);
+    indexOfCurrentStage = stages.indexOf(activeStage);
+    println("indexOfCurrentStage:" + indexOfCurrentStage);
     println();
   }
 
   //--------------------------------------------------------------------------------------------------
   //
   //--------------------------------------------------------------------------------------------------
-  void printStates() {
-    for (int i = 0; i < states.size(); i++) {
-      println("[" + i + "] - " + states.get(i).name);
+  void printStages() {
+    for (int i = 0; i < stages.size(); i++) {
+      println("[" + i + "] - " + stages.get(i).name);
     }
   }
 
   //--------------------------------------------------------------------------------------------------
   //
   //--------------------------------------------------------------------------------------------------
-  List<State> getStates() {
-    return states;
+  List<Stage> getStages() {
+    return stages;
   }
 }

@@ -1,52 +1,53 @@
+import java.util.*;
+
 KTGUI ktgui;
-Button jumpButton, anotherButton, nextStateBtn;
+Button jumpButton, anotherButton, nextStageBtn;
 Window w1, w2, w3;
-State s1, s2, s3;
+Stage s1, s2, s3;
 
 /**********************************************************************************************************************
  * 
  *********************************************************************************************************************/
 void setup() {
   size(600, 500);
-  ktgui = new KTGUI(this); // default state is automatically created
+  ktgui = new KTGUI(this); // default stage is automatically created
 
-  s1 = ktgui.stateManager.createState("state_1");
+  s1 = ktgui.stageManager.createStage("stage_1");
   anotherButton = ktgui.createButton(50, 50, 100, 50);
-  anotherButton.setTitle("Go To\nState_2");
+  anotherButton.setTitle("Go To\nStage_2");
   anotherButton.addEventAdapters(new KTGUIEventAdapter() {
-    void onMousePressed() {
-      println("Callback message: The anotherButton (goToState(1)) was pressed!");
-      ktgui.stateManager.goToState(2);
+    public void onMousePressed() {
+      println("Callback message: The anotherButton (goToStage(1)) was pressed!");
+      ktgui.stageManager.goToStage(2);
     }  
   }
   );
   s1.registerController(anotherButton);
-
   
-  // Now, the "s1" state is "active". So, the both 'w1' and 'nextStateButton' are automatically attached to this state. 
+  // Now, the "s1" stage is "active". So, the both 'w1' and 'nextStageButton' are automatically attached to this stage. 
   // We can still use 's1.attachController(Controller) though.
-  s2 = ktgui.stateManager.createState("state_2");
+  s2 = ktgui.stageManager.createStage("stage_2");
   w1 = ktgui.createWindow(10, 10, 300, 200);
   w1.setTitle("Window_1");
-  nextStateBtn = ktgui.createButton(width - 120, height - 70, 100, 50);
-  nextStateBtn.setTitle("NextState");
-  nextStateBtn.addEventAdapters(new KTGUIEventAdapter() {
-    void onMousePressed() {
-      println("Callback message: The Nex-State-Button was pressed!");
-      ktgui.stateManager.goToNextState();
+  nextStageBtn = ktgui.createButton(width - 120, height - 70, 100, 50);
+  nextStageBtn.setTitle("NextStage");
+  nextStageBtn.addEventAdapters(new KTGUIEventAdapter() {
+    public void onMousePressed() {
+      println("Callback message: The Next-Stage-Button was pressed!");
+      ktgui.stageManager.goToNextStage();
     }
   }
   );
   s2.registerController(w1);
 
 
-  // Now, the "s2" state is "active". So, the jumpButton is automatically attached to this state.
+  // Now, the "s2" stage is "active". So, the jumpButton is automatically attached to this stage.
   // We can use 's2.attachController(Controller) though.
-  s3 = ktgui.stateManager.createState("state_3");
+  s3 = ktgui.stageManager.createStage("stage_3");
   jumpButton = ktgui.createButton(50, 50, 100, 50);
   jumpButton.setTitle("Jump!");
   jumpButton.addEventAdapters(new KTGUIEventAdapter() {
-    void onMousePressed() {
+    public void onMousePressed() {
       println("Callback message: The Jumping Button was pressed!");
       if(jumpButton.parentWindow == w3){
         w2.attachController(jumpButton);
@@ -58,7 +59,7 @@ void setup() {
   );
   s3.registerController(jumpButton);
   
-  // The "s2" state is still "active". So, the both windows are automatically attached to this state.
+  // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
   w2 = ktgui.createWindow(10, 10, 300, 200);
   w2.setTitle("Window_2");
@@ -69,11 +70,10 @@ void setup() {
   w3.attachController(jumpButton);
   s3.registerController(w3);
   
-  s1.registerController(nextStateBtn);
-  s2.registerController(nextStateBtn);
-  s3.registerController(nextStateBtn);
+  // this button will be visible in all stages
+  ktgui.stageManager.defaultStage.registerController(nextStageBtn);
 
-  ktgui.stateManager.goToState(s3);
+  ktgui.stageManager.goToStage(s3);
 }
 
 /**********************************************************************************************************************
@@ -85,284 +85,14 @@ void draw() {
   fill(0);
   textSize(20);
   textAlign(RIGHT, CENTER);
-  text("activeState.name:" + ktgui.stateManager.activeState.name, width - 10, 10);
-  text("activeState.index:" + ktgui.stateManager.states.indexOf(ktgui.stateManager.activeState), width - 10, 30);
-  text("size():" + ktgui.stateManager.states.size(), width - 10, 50);
+  text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
+  text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
+  text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
 }
 
 void keyPressed(){
-  ktgui.stateManager.goToNextState();
+  ktgui.stageManager.goToNextStage();
 }
-
-/**********************************************************************************************************************
- * A state can have multple controllers.
- * The KTGUI class should handle the transition from one state to another.
- * Only one state can be active at a time. 
- * Only the GUI elements from the active state will be displayed
- * This allows the sharing of variables between different states, by storing/retriving data from the 'context' object
- *********************************************************************************************************************/
-public class State {
-  List<Controller> controllers;
-  String name;
-
-  State(String name) {
-    this.name = name;
-    this.controllers = new ArrayList<Controller>();
-  }
-
-  void draw() {
-    for (Controller controller : controllers) {
-      controller.updateGraphics();
-      controller.draw();
-    }
-  }
-
-  void registerController(Controller controller) {
-    if (!controllers.contains(controller)) {
-      println("Controller:" + controller.title + " is registered to the State:" + name);
-      controllers.add(controller);
-    }
-  }
-
-  void unregisterController(Controller controller) {
-    if (controllers.contains(controller)) {
-      println("Controller:" + controller.title + " is unregistered to the State:" + name);
-      controllers.remove(controller);
-    }
-  }
-}
-
-/**********************************************************************************************************************
- *
- *********************************************************************************************************************/
-class StateManager {
-  List<State> states; // replace 'List' with 'Set' to prevent duplicates
-  State activeState;
-
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  StateManager() {
-    states = new ArrayList<State>();
-  }
-
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  State createState(String name) {
-    State state = new State(name);
-    states.add(state);
-    activeState = state;
-    return state;
-  }
-
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  void goToState(State state) {
-    activeState = state;
-  }
-
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  void goToState(int numState) {
-    if (numState > 0 && numState < states.size()) {
-      activeState = states.get(numState);
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  void goToNextState() {
-    int indexOfCurrentState = states.indexOf(activeState);
-    println("Before...");
-    println("indexOfCurrentState:" + indexOfCurrentState);
-
-    if (indexOfCurrentState < states.size() - 1) {
-        activeState = states.get(indexOfCurrentState + 1);
-    } else {
-        activeState = states.get(0);
-    }
-    
-    println("After...");
-    indexOfCurrentState = states.indexOf(activeState);
-    println("indexOfCurrentState:" + indexOfCurrentState);
-  }
-
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  void printStates() {
-    for (int i = 0; i < states.size(); i++) {
-      println("[" + i + "] - " + states.get(i).name);
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  List<State> getStates() {
-    return states;
-  }
-}
-
-
-/**********************************************************************************************************************
- * This class is used to 'transfer' the 'draw', 'mouse' and 'keyboard' events from PApplet to KTGUI components 
- * (controllers).
- * The main idea is to eliminate the need of adding the callback methods directly in the Processing's 'mouseXXXXX()' 
- * and 'keyXXXXX()' methods.
- * This class is used also as a factory to create the KTGUI components (controllers). 
- * When this class creates a KTGUI component it also automatically registers this component in components list.
- * When some event is received from PApplet, this class automatically iterates through all the components in the 
- * components list and 'transfers' the events to each component.
- *********************************************************************************************************************/
-public class KTGUI {
-  PApplet pa;
-  StateManager stateManager;
-
-  color COLOR_FG_HOVERED = color(10, 150, 10); 
-  color COLOR_FG_PRESSED = color(10, 200, 10);
-  color COLOR_FG_PASSIVE = color(100, 100, 200); 
-  color COLOR_BG_HOVERED = color(100); 
-  color COLOR_BG_PASSIVE = color(100); 
-  color COLOR_BG_PRESSED = color(200);
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
-  // thread.
-  //-------------------------------------------------------------------------------------------------------------------
-  public KTGUI(PApplet pa) {
-    this.pa = pa;
-    this.pa.registerMethod("draw", this);
-    this.pa.registerMethod("mouseEvent", this);
-    this.pa.registerMethod("keyEvent", this);
-
-    stateManager = new StateManager();
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // Transfer 'draw' event from PApplet to KTGUI components
-  //-------------------------------------------------------------------------------------------------------------------
-  void draw() {
-    stateManager.activeState.draw();
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'factory' method
-  //-------------------------------------------------------------------------------------------------------------------
-  Button createButton(int x, int y, int w, int h) {
-    Button btn = new Button(x, y, w, h);
-    //stateManager.activeState.attachController(btn);
-    return btn;
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'factory' method
-  //-------------------------------------------------------------------------------------------------------------------
-  Window createWindow(int x, int y, int w, int h) {
-    Window window = new Window(x, y, w, h);
-    //stateManager.activeState.attachController(window);
-    return window;
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This method 'redirects' the incoming mouse events from PApplet to 'transfer' methods 
-  //-------------------------------------------------------------------------------------------------------------------
-  void mouseEvent(MouseEvent e) {
-    switch (e.getAction()) {
-    case MouseEvent.PRESS:
-      this.mousePressed();
-      break;
-    case MouseEvent.RELEASE:
-      this.mouseReleased();
-      break;
-    case MouseEvent.DRAG:
-      this.mouseDragged();
-      break;
-    case MouseEvent.MOVE:
-      this.mouseMoved();
-      break;
-    }
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This method 'redirects' the incoming keyboard events from PApplet to 'transfer' methods
-  //-------------------------------------------------------------------------------------------------------------------
-  void keyEvent(KeyEvent e) {
-    switch (e.getAction()) {
-    case KeyEvent.PRESS:
-      this.keyPressed();
-      break;
-    case KeyEvent.RELEASE:
-      this.keyReleased();
-      break;
-    }
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
-  //-------------------------------------------------------------------------------------------------------------------
-  void mouseDragged() {
-    //println("Dragged!");
-    for (Controller controller : stateManager.activeState.controllers) {
-      controller.processMouseDragged();
-    }
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
-  //-------------------------------------------------------------------------------------------------------------------
-  void mousePressed() {
-    //println("Press at: " + mouseX + " " + mouseY);
-    for (Controller controller : stateManager.activeState.controllers) {
-      controller.processMousePressed();
-    }
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
-  //-------------------------------------------------------------------------------------------------------------------
-  void mouseReleased() {
-    //println("Release at: " + mouseX + " " + mouseY);
-    for (Controller controller : stateManager.activeState.controllers) {
-      controller.processMouseReleased();
-    }
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
-  //-------------------------------------------------------------------------------------------------------------------
-  void mouseMoved() {
-    //println("Moved!");
-    for (Controller controller : stateManager.activeState.controllers) {
-      controller.processMouseMoved();
-    }
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
-  //-------------------------------------------------------------------------------------------------------------------
-  void keyPressed() {
-    //println("Pressed key: " + keyCode);
-    for (Controller controller : stateManager.activeState.controllers) {
-      controller.processKeyPressed();
-    }
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
-  //-------------------------------------------------------------------------------------------------------------------
-  void keyReleased() {
-    //println("Released key: " + keyCode);
-    for (Controller controller : stateManager.activeState.controllers) {
-      controller.processKeyReleased();
-    }
-  }
-}
-
 
 
 /**********************************************************************************************************************
@@ -379,7 +109,7 @@ class Button extends Controller {
     this.posy = posy;
     this.w = w;
     this.h = h;
-    //title = "";
+    title = "Button";
     adapters = new ArrayList<KTGUIEventAdapter>();
     pg = createGraphics(w + 1, h + 1);
   }
@@ -414,29 +144,33 @@ class Button extends Controller {
 
   // process mouseMoved event received from PApplet
   void processMouseMoved() {
-    isHovered = isPointInside(mouseX, mouseY) ? true : false;
-    for (KTGUIEventAdapter adapter : adapters) {
-      adapter.onMouseMoved();
+    if (isPointInside(mouseX, mouseY)) {
+      isHovered = true;
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMouseMoved();
+      }
+    } else {
+      isHovered = false;
     }
   }
 
   // process mousePressed event received from PApplet
   void processMousePressed() {
-    if (isHovered) {
+    if (isPointInside(mouseX, mouseY)) {
       isPressed = true;
       for (KTGUIEventAdapter adapter : adapters) {
         adapter.onMousePressed();
       }
+    } else {
+      isPressed = false;
     }
   }
 
   // process mouseReleased event received from PApplet
   void processMouseReleased() {
     isPressed = false;
-    if (isHovered) {
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseReleased();
-      }
+    for (KTGUIEventAdapter adapter : adapters) {
+      adapter.onMouseReleased();
     }
   }
 
@@ -521,6 +255,179 @@ public abstract class Controller {
 
 
 /**********************************************************************************************************************
+ * This class is used to 'transfer' the 'draw', 'mouse' and 'keyboard' events from PApplet to KTGUI components 
+ * (controllers).
+ * The main idea is to eliminate the need of adding the callback methods directly in the Processing's 'mouseXXXXX()' 
+ * and 'keyXXXXX()' methods.
+ * This class is used also as a factory to create the KTGUI components (controllers). 
+ * When this class creates a KTGUI component it also automatically registers this component in components list.
+ * When some event is received from PApplet, this class automatically iterates through all the components in the 
+ * components list and 'transfers' the events to each component.
+ *********************************************************************************************************************/
+public class KTGUI {
+  PApplet pa;
+  StageManager stageManager;
+
+  color COLOR_FG_HOVERED = color(10, 150, 10); 
+  color COLOR_FG_PRESSED = color(10, 200, 10);
+  color COLOR_FG_PASSIVE = color(100, 100, 200); 
+  color COLOR_BG_HOVERED = color(100); 
+  color COLOR_BG_PASSIVE = color(100); 
+  color COLOR_BG_PRESSED = color(200);
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
+  // thread.
+  //-------------------------------------------------------------------------------------------------------------------
+  public KTGUI(PApplet pa) {
+    this.pa = pa;
+    this.pa.registerMethod("draw", this);
+    this.pa.registerMethod("mouseEvent", this);
+    this.pa.registerMethod("keyEvent", this);
+
+    stageManager = new StageManager();
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // Transfer 'draw' event from PApplet to KTGUI components
+  //-------------------------------------------------------------------------------------------------------------------
+  void draw() {
+    stageManager.defaultStage.draw();
+    stageManager.activeStage.draw();
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'factory' method
+  //-------------------------------------------------------------------------------------------------------------------
+  Button createButton(int x, int y, int w, int h) {
+    Button btn = new Button(x, y, w, h);
+    //stageManager.activeStage.attachController(btn);
+    return btn;
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'factory' method
+  //-------------------------------------------------------------------------------------------------------------------
+  Window createWindow(int x, int y, int w, int h) {
+    Window window = new Window(x, y, w, h);
+    //stageManager.activeStage.attachController(window);
+    return window;
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This method 'redirects' the incoming mouse events from PApplet to 'transfer' methods 
+  //-------------------------------------------------------------------------------------------------------------------
+  void mouseEvent(MouseEvent e) {
+    switch (e.getAction()) {
+    case MouseEvent.PRESS:
+      this.mousePressed();
+      break;
+    case MouseEvent.RELEASE:
+      this.mouseReleased();
+      break;
+    case MouseEvent.DRAG:
+      this.mouseDragged();
+      break;
+    case MouseEvent.MOVE:
+      this.mouseMoved();
+      break;
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This method 'redirects' the incoming keyboard events from PApplet to 'transfer' methods
+  //-------------------------------------------------------------------------------------------------------------------
+  void keyEvent(KeyEvent e) {
+    switch (e.getAction()) {
+    case KeyEvent.PRESS:
+      this.keyPressed();
+      break;
+    case KeyEvent.RELEASE:
+      this.keyReleased();
+      break;
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  //-------------------------------------------------------------------------------------------------------------------
+  void mouseDragged() {
+    //println("Dragged!");
+    for (Controller controller : stageManager.activeStage.controllers) {
+      controller.processMouseDragged();
+    }
+    for (Controller controller : stageManager.defaultStage.controllers) {
+      controller.processMouseDragged();
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  //-------------------------------------------------------------------------------------------------------------------
+  void mousePressed() {
+    //println("Press at: " + mouseX + " " + mouseY);
+    for (Controller controller : stageManager.activeStage.controllers) {
+      controller.processMousePressed();
+    }
+    for (Controller controller : stageManager.defaultStage.controllers) {
+      controller.processMousePressed();
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  //-------------------------------------------------------------------------------------------------------------------
+  void mouseReleased() {
+    //println("Release at: " + mouseX + " " + mouseY);
+    for (Controller controller : stageManager.activeStage.controllers) {
+      controller.processMouseReleased();
+    }
+    for (Controller controller : stageManager.defaultStage.controllers) {
+      controller.processMouseReleased();
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  //-------------------------------------------------------------------------------------------------------------------
+  void mouseMoved() {
+    //println("Moved!");
+    for (Controller controller : stageManager.activeStage.controllers) {
+      controller.processMouseMoved();
+    }
+    for (Controller controller : stageManager.defaultStage.controllers) {
+      controller.processMouseMoved();
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  //-------------------------------------------------------------------------------------------------------------------
+  void keyPressed() {
+    //println("Pressed key: " + keyCode);
+    for (Controller controller : stageManager.activeStage.controllers) {
+      controller.processKeyPressed();
+    }
+    for (Controller controller : stageManager.activeStage.controllers) {
+      controller.processKeyPressed();
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  //-------------------------------------------------------------------------------------------------------------------
+  void keyReleased() {
+    //println("Released key: " + keyCode);
+    for (Controller controller : stageManager.activeStage.controllers) {
+      controller.processKeyReleased();
+    }
+    for (Controller controller : stageManager.activeStage.controllers) {
+      controller.processKeyReleased();
+    }
+  }
+}
+
+/**********************************************************************************************************************
  * This abstract class should be extended by the KTGUI components (controllers)
  *********************************************************************************************************************/
 abstract class KTGUIEventAdapter {
@@ -540,9 +447,123 @@ abstract class KTGUIEventAdapter {
     PApplet.println(string);
   }
 }
+/**********************************************************************************************************************
+ * A Stage can have multple controllers.
+ * The KTGUI class should handle the transition from one Stage to another.
+ * Only one Stage can be active at a time. 
+ * Only the GUI elements from the active Stage will be displayed
+ * This allows the sharing of variables between different Stages, by storing/retriving data from the 'context' object
+ *********************************************************************************************************************/
+public class Stage {
+  List<Controller> controllers;
+  String name;
 
+  Stage(String name) {
+    this.name = name;
+    this.controllers = new ArrayList<Controller>();
+  }
 
+  void draw() {
+    for (Controller controller : controllers) {
+      controller.updateGraphics();
+      controller.draw();
+    }
+  }
 
+  void registerController(Controller controller) {
+    if (!controllers.contains(controller)) {
+      controllers.add(controller);
+    }
+  }
+
+  void unregisterController(Controller controller) {
+    if (controllers.contains(controller)) {
+      controllers.remove(controller);
+    }
+  }
+}
+/**********************************************************************************************************************
+ *
+ *********************************************************************************************************************/
+class StageManager {
+  List<Stage> stages; // replace 'List' with 'Set' to prevent duplicates
+  Stage activeStage;
+  Stage defaultStage;
+
+  //--------------------------------------------------------------------------------------------------
+  //
+  //--------------------------------------------------------------------------------------------------
+  StageManager() {
+    stages = new ArrayList<Stage>();
+    defaultStage = new Stage("Default");
+  }
+
+  //--------------------------------------------------------------------------------------------------
+  //
+  //--------------------------------------------------------------------------------------------------
+  Stage createStage(String name) {
+    Stage Stage = new Stage(name);
+    stages.add(Stage);
+    activeStage = Stage;
+    return Stage;
+  }
+
+  //--------------------------------------------------------------------------------------------------
+  //
+  //--------------------------------------------------------------------------------------------------
+  void goToStage(Stage Stage) {
+    activeStage = Stage;
+  }
+
+  //--------------------------------------------------------------------------------------------------
+  //
+  //--------------------------------------------------------------------------------------------------
+  void goToStage(int numStage) {
+    if (numStage > 0 && numStage < stages.size()) {
+      activeStage = stages.get(numStage);
+    }
+    println("numStage:" + numStage);
+    println("numStage < Stages.size():" + (numStage < stages.size()));
+    println("Stages.indexOf(activeStage):" + stages.indexOf(activeStage));
+    println();
+  }
+
+  //--------------------------------------------------------------------------------------------------
+  //
+  //--------------------------------------------------------------------------------------------------
+  void goToNextStage() {
+    int indexOfCurrentStage = stages.indexOf(activeStage);
+    println("Before...");
+    println("indexOfCurrentStage:" + indexOfCurrentStage);
+
+    if (indexOfCurrentStage < stages.size() - 1) {
+      activeStage = stages.get(indexOfCurrentStage + 1);
+    } else {
+      activeStage = stages.get(0);
+    }
+
+    println("After...");
+    indexOfCurrentStage = stages.indexOf(activeStage);
+    println("indexOfCurrentStage:" + indexOfCurrentStage);
+    println();
+  }
+
+  //--------------------------------------------------------------------------------------------------
+  //
+  //--------------------------------------------------------------------------------------------------
+  void printStages() {
+    for (int i = 0; i < stages.size(); i++) {
+      println("[" + i + "] - " + stages.get(i).name);
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------
+  //
+  //--------------------------------------------------------------------------------------------------
+  List<Stage> getStages() {
+    return stages;
+  }
+}
 // This class should change the type of cursor depending on the type of action
 // ARROW - when the pointer is outside the 'window' area or border
 // HAND  - when the pointer is over the 'window' area or border
@@ -578,8 +599,7 @@ class Window extends Controller {
   ArrayList<Controller> controllers = new ArrayList<Controller>();
   ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
 
-  //String title = "Window title bar. Drag it!";
-
+  String title = "Window title bar. Drag it!";
   int posx, posy, w, h;
 
   PGraphics pg;
@@ -654,22 +674,19 @@ class Window extends Controller {
   }
 
   void attachController(Controller controller) {
-    // prevent one controller to be attached to two windows
     if (controller.parentWindow != null) {
-      controller.parentWindow.controllers.remove(controller); 
+      controller.parentWindow.controllers.remove(controller); // reset parentWindow
     }
  
     if (!controllers.contains(controller)) {
-      println("Controller:" + controller.title + " is attached to Window:" + title);
       controllers.add(controller);
       controller.setParentWindow(this);
     }
   }
 
-  void detachController(Controller controller) {
-    if (controllers.contains(controller)) {
-      println("Controller:" + controller.title + " is detached from Window:" + title);
-      controllers.remove(controller);
+  void attachControllers(ArrayList<Controller> controllers) {
+    for (Controller controller : controllers) {
+      attachController(controller);
     }
   }
 
