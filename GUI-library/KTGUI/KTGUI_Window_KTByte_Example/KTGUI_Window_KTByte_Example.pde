@@ -20,7 +20,7 @@ void setup() {
     }  
   }
   );
-  s1.attachController(anotherButton);
+  s1.registerController(anotherButton);
 
   
   // Now, the "s1" state is "active". So, the both 'w1' and 'nextStateButton' are automatically attached to this state. 
@@ -37,7 +37,7 @@ void setup() {
     }
   }
   );
-  s2.attachController(w1);
+  s2.registerController(w1);
 
 
   // Now, the "s2" state is "active". So, the jumpButton is automatically attached to this state.
@@ -56,24 +56,24 @@ void setup() {
     }  
   }
   );
-  s3.attachController(jumpButton);
+  s3.registerController(jumpButton);
   
   // The "s2" state is still "active". So, the both windows are automatically attached to this state.
   // We can still use 's2.attachController(Controller) though.
   w2 = ktgui.createWindow(10, 10, 300, 200);
   w2.setTitle("Window_2");
-  s3.attachController(w2);
+  s3.registerController(w2);
   
   w3 = ktgui.createWindow(10, 230, 300, 200);
   w3.setTitle("Window_3");
   w3.attachController(jumpButton);
-  s3.attachController(w3);
+  s3.registerController(w3);
   
-  s1.attachController(nextStateBtn);
-  s2.attachController(nextStateBtn);
-  s3.attachController(nextStateBtn);
+  s1.registerController(nextStateBtn);
+  s2.registerController(nextStateBtn);
+  s3.registerController(nextStateBtn);
 
-  ktgui.stateManager.goToState(s1);
+  ktgui.stateManager.goToState(s3);
 }
 
 /**********************************************************************************************************************
@@ -117,14 +117,16 @@ public class State {
     }
   }
 
-  void attachController(Controller controller) {
+  void registerController(Controller controller) {
     if (!controllers.contains(controller)) {
+      println("Controller:" + controller.title + " is registered to the State:" + name);
       controllers.add(controller);
     }
   }
 
-  void detachController(Controller controller) {
+  void unregisterController(Controller controller) {
     if (controllers.contains(controller)) {
+      println("Controller:" + controller.title + " is unregistered to the State:" + name);
       controllers.remove(controller);
     }
   }
@@ -253,7 +255,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   Button createButton(int x, int y, int w, int h) {
     Button btn = new Button(x, y, w, h);
-    stateManager.activeState.attachController(btn);
+    //stateManager.activeState.attachController(btn);
     return btn;
   }
 
@@ -262,7 +264,7 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   Window createWindow(int x, int y, int w, int h) {
     Window window = new Window(x, y, w, h);
-    stateManager.activeState.attachController(window);
+    //stateManager.activeState.attachController(window);
     return window;
   }
 
@@ -377,7 +379,7 @@ class Button extends Controller {
     this.posy = posy;
     this.w = w;
     this.h = h;
-    title = "Button";
+    //title = "";
     adapters = new ArrayList<KTGUIEventAdapter>();
     pg = createGraphics(w + 1, h + 1);
   }
@@ -576,7 +578,8 @@ class Window extends Controller {
   ArrayList<Controller> controllers = new ArrayList<Controller>();
   ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
 
-  String title = "Window title bar. Drag it!";
+  //String title = "Window title bar. Drag it!";
+
   int posx, posy, w, h;
 
   PGraphics pg;
@@ -651,19 +654,22 @@ class Window extends Controller {
   }
 
   void attachController(Controller controller) {
+    // prevent one controller to be attached to two windows
     if (controller.parentWindow != null) {
-      controller.parentWindow.controllers.remove(controller); // reset parentWindow
+      controller.parentWindow.controllers.remove(controller); 
     }
  
     if (!controllers.contains(controller)) {
+      println("Controller:" + controller.title + " is attached to Window:" + title);
       controllers.add(controller);
       controller.setParentWindow(this);
     }
   }
 
-  void attachControllers(ArrayList<Controller> controllers) {
-    for (Controller controller : controllers) {
-      attachController(controller);
+  void detachController(Controller controller) {
+    if (controllers.contains(controller)) {
+      println("Controller:" + controller.title + " is detached from Window:" + title);
+      controllers.remove(controller);
     }
   }
 
