@@ -21,6 +21,7 @@ void setup() {
   }
   );
   s1.attachController(anotherButton);
+
   
   // Now, the "s1" state is "active". So, the both 'w1' and 'nextStateButton' are automatically attached to this state. 
   // We can still use 's1.attachController(Controller) though.
@@ -33,11 +34,9 @@ void setup() {
     void onMousePressed() {
       println("Callback message: The Nex-State-Button was pressed!");
       ktgui.stateManager.goToNextState();
-      ktgui.stateManager.activeState.attachController(nextStateBtn);
     }
   }
   );
-  s2.attachController(nextStateBtn);
   s2.attachController(w1);
 
 
@@ -68,9 +67,13 @@ void setup() {
   w3.attachController(jumpButton);
   s3.attachController(w2);
   s3.attachController(w3);
+  
+  s1.attachController(nextStateBtn);
+  s2.attachController(nextStateBtn);
   s3.attachController(nextStateBtn);
 
-  ktgui.stateManager.goToState(s3);
+
+  //ktgui.stateManager.goToState(s3);
 }
 
 /**********************************************************************************************************************
@@ -117,6 +120,12 @@ public class State {
   void attachController(Controller controller) {
     if (!controllers.contains(controller)) {
       controllers.add(controller);
+    }
+  }
+
+  void detachController(Controller controller) {
+    if (controllers.contains(controller)) {
+      controllers.remove(controller);
     }
   }
 }
