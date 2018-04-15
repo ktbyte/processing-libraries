@@ -35,11 +35,9 @@ void setup() {
     public void onMousePressed() {
       println("Callback message: The Nex-State-Button was pressed!");
       ktgui.stateManager.goToNextState();
-      ktgui.stateManager.activeState.attachController(nextStateBtn);
     }
   }
   );
-  s2.attachController(nextStateBtn);
   s2.attachController(w1);
 
 
@@ -65,14 +63,19 @@ void setup() {
   // We can still use 's2.attachController(Controller) though.
   w2 = ktgui.createWindow(10, 10, 300, 200);
   w2.setTitle("Window_2");
-  w3 = ktgui.createWindow(50, 50, 300, 200);
+  
+  w3 = ktgui.createWindow(10, 230, 300, 200);
   w3.setTitle("Window_3");
   w3.attachController(jumpButton);
+  
   s3.attachController(w2);
   s3.attachController(w3);
+  
+  s1.attachController(nextStateBtn);
+  s2.attachController(nextStateBtn);
   s3.attachController(nextStateBtn);
 
-  ktgui.stateManager.goToState(s3);
+  //ktgui.stateManager.goToState(s3);
 }
 
 /**********************************************************************************************************************
@@ -119,6 +122,12 @@ public class State {
   void attachController(Controller controller) {
     if (!controllers.contains(controller)) {
       controllers.add(controller);
+    }
+  }
+
+  void detachController(Controller controller) {
+    if (controllers.contains(controller)) {
+      controllers.remove(controller);
     }
   }
 }
