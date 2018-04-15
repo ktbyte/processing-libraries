@@ -63,12 +63,11 @@ void setup() {
   // We can still use 's2.attachController(Controller) though.
   w2 = ktgui.createWindow(10, 10, 300, 200);
   w2.setTitle("Window_2");
+  s3.attachController(w2);
   
   w3 = ktgui.createWindow(10, 230, 300, 200);
   w3.setTitle("Window_3");
   w3.attachController(jumpButton);
-  
-  s3.attachController(w2);
   s3.attachController(w3);
   
   s1.attachController(nextStateBtn);
