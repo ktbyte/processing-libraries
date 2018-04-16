@@ -5,7 +5,7 @@
 // MOVE  - when the user is moving the 'window' 
 
 // Potentially, this class and the KTGUI library class should use the PGraphics in order to 
-// be able to share/switch graphic context. If this is possible, the we will be able
+// be able to share/switch graphic context. If this is possible, then we will be able
 // to implement the 'minimize' feature.
 
 // The other way to implement the window is to 'mimic' the behavior of the window.
@@ -33,13 +33,11 @@ class Window extends Controller {
   ArrayList<Controller> controllers = new ArrayList<Controller>();
   ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
 
-  String title = "Window title bar. Drag it!";
-  int posx, posy, w, h;
-
-  PGraphics pg;
-
   boolean isTitleBarHovered, isTitleBarPressed;  
   boolean isBorderHovered, isBorderPressed;  
+
+  WindowCloseButton windowCloseBtn;
+  //Button windowCloseBtn;
 
   Window(int posx, int posy, int w, int h) {
     this.posx = posx;
@@ -47,17 +45,22 @@ class Window extends Controller {
     this.w = w;
     this.h = h;
     updateSize(w, h);
+    windowCloseBtn = new WindowCloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
+    attachController(windowCloseBtn);
+    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
   }
 
   void updateSize(int wdth, int hght) {
     pg = createGraphics(wdth + 1, hght + 1);
   }
+
   void draw() {
-    drawChildrenControllers();
     drawTitleBar();
     drawBorder();
     updateControllers();
     image(pg, posx, posy);
+    windowCloseBtn.draw();
+    drawChildrenControllers();
   }
 
   void drawChildrenControllers() {
@@ -80,8 +83,6 @@ class Window extends Controller {
     pg.textSize(TITLE_BAR_HEIGHT*0.65);
     pg.text(title, 10, TITLE_BAR_HEIGHT*0.5);
     pg.endDraw();
-
-    // drawButtons (minimize, maximize, close)
   }
 
   void addEventAdapter(KTGUIEventAdapter adapter) {
@@ -111,7 +112,7 @@ class Window extends Controller {
     if (controller.parentWindow != null) {
       controller.parentWindow.controllers.remove(controller); // reset parentWindow
     }
- 
+
     if (!controllers.contains(controller)) {
       controllers.add(controller);
       controller.setParentWindow(this);
@@ -171,5 +172,42 @@ class Window extends Controller {
       }
     }
     return isInside;
+  }
+
+  /*****************************************************************************************************
+   * 
+   ****************************************************************************************************/
+  class WindowCloseButton extends Button {
+
+    WindowCloseButton(int posx, int posy, int w, int h) {
+      super(posx, posy, w, h);
+    }
+
+    void updateGraphics() {
+      pg.beginDraw();
+      pg.rectMode(CORNER);
+      if (isHovered && !isPressed) {
+        pg.fill(ktgui.COLOR_FG_HOVERED);
+      } else if (isHovered && isPressed) {
+        pg.fill(ktgui.COLOR_FG_PRESSED);
+      } else {
+        //pg.fill(ktgui.COLOR_FG_PASSIVE);
+        pg.fill(200, 200);
+      }
+      pg.stroke(0);
+      pg.strokeWeight(1);
+      pg.rectMode(CORNER);
+      pg.rect(0, 0, w, h);
+      pg.line(w * 0.2, h * 0.2, w * 0.8, h * 0.8);
+      pg.line(w * 0.2, h * 0.8, w * 0.8, h * 0.2);
+      pg.endDraw();
+    }
+
+    void processMousePressed() {
+      super.processMousePressed();
+      if (isPressed) {
+        parentWindow.parentStage.controllers.remove(parentWindow);
+      }
+    }
   }
 }

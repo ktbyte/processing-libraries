@@ -16,20 +16,29 @@ public class Stage {
 
   void draw() {
     for (Controller controller : controllers) {
-      controller.updateGraphics();
-      controller.draw();
+      if (controller.mustBeDestroyed) {
+        controllers.remove(controller);
+      } else {
+        controller.updateGraphics();
+        controller.draw();
+      }
     }
   }
 
   void registerController(Controller controller) {
+    if(ktgui.stageManager.defaultStage.controllers.contains(controller)){
+      ktgui.stageManager.defaultStage.controllers.remove(controller);      
+    }
     if (!controllers.contains(controller)) {
       controllers.add(controller);
+      controller.parentStage = this;
     }
   }
 
   void unregisterController(Controller controller) {
     if (controllers.contains(controller)) {
       controllers.remove(controller);
+      controller.parentStage = null;
     }
   }
 }

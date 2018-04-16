@@ -9,8 +9,10 @@ public abstract class Controller {
   String title;
   int posx, posy, w, h;  
   boolean isPressed, isHovered;
+  boolean mustBeDestroyed;
   ArrayList<KTGUIEventAdapter> adapters;
   Window parentWindow = null;
+  Stage parentStage = null;
   PGraphics pg;
 
   void updateGraphics() {
