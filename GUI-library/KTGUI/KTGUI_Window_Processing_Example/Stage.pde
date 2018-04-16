@@ -16,12 +16,8 @@ public class Stage {
 
   void draw() {
     for (Controller controller : controllers) {
-      if (controller.mustBeDestroyed) {
-        controllers.remove(controller);
-      } else {
-        controller.updateGraphics();
-        controller.draw();
-      }
+      controller.updateGraphics();
+      controller.draw();
     }
   }
 
