@@ -61,7 +61,7 @@ void setup() {
   
   // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
-  w2 = ktgui.createWindow(10, 10, 300, 200);
+  w2 = ktgui.createWindow(110, 110, 300, 200);
   w2.setTitle("Window_2");
   s3.registerController(w2);
   

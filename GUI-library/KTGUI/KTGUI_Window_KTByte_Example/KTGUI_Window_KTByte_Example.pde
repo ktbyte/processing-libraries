@@ -13,10 +13,10 @@ void setup() {
   s1 = ktgui.stageManager.createStage("stage_1");
   anotherButton = ktgui.createButton(50, 50, 100, 50);
   anotherButton.setTitle("Go To\nStage_2");
-  anotherButton.addEventAdapters(new KTGUIEventAdapter() {
+  anotherButton.addEventAdapter(new KTGUIEventAdapter() {
     void onMousePressed() {
       println("Callback message: The anotherButton (goToStage(1)) was pressed!");
-      ktgui.stageManager.goToStage(1);
+      ktgui.stageManager.goToStage(2);
     }  
   }
   );
@@ -29,7 +29,7 @@ void setup() {
   w1.setTitle("Window_1");
   nextStageBtn = ktgui.createButton(width - 120, height - 70, 100, 50);
   nextStageBtn.setTitle("NextStage");
-  nextStageBtn.addEventAdapters(new KTGUIEventAdapter() {
+  nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
     void onMousePressed() {
       println("Callback message: The Next-Stage-Button was pressed!");
       ktgui.stageManager.goToNextStage();
@@ -44,7 +44,7 @@ void setup() {
   s3 = ktgui.stageManager.createStage("stage_3");
   jumpButton = ktgui.createButton(50, 50, 100, 50);
   jumpButton.setTitle("Jump!");
-  jumpButton.addEventAdapters(new KTGUIEventAdapter() {
+  jumpButton.addEventAdapter(new KTGUIEventAdapter() {
     void onMousePressed() {
       println("Callback message: The Jumping Button was pressed!");
       if(jumpButton.parentWindow == w3){
@@ -59,7 +59,7 @@ void setup() {
   
   // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
-  w2 = ktgui.createWindow(10, 10, 300, 200);
+  w2 = ktgui.createWindow(110, 110, 300, 200);
   w2.setTitle("Window_2");
   s3.registerController(w2);
   
@@ -91,166 +91,6 @@ void draw() {
 void keyPressed(){
   ktgui.stageManager.goToNextStage();
 }
-
-
-/**********************************************************************************************************************
- * This is an example of the KTGUI component (controller).
- * This class extends the 'Controller' class.
- * This class overrides only the 'mouse-related' methods of the 'Controller' class.
- * The object of this class can be 'Pressed', 'Hovered', 'Released' and 'Dragged'.
- *********************************************************************************************************************/
-class Button extends Controller {
-  boolean isPressed, isHovered;
-
-  Button(int posx, int posy, int w, int h) {
-    this.posx = posx;
-    this.posy = posy;
-    this.w = w;
-    this.h = h;
-    title = "Button";
-    adapters = new ArrayList<KTGUIEventAdapter>();
-    pg = createGraphics(w + 1, h + 1);
-  }
-
-  void addEventAdapters(KTGUIEventAdapter adapter) {
-    adapters.add(adapter);
-  }
-
-  void updateGraphics() {
-    pg.beginDraw();
-    pg.rectMode(CORNER);
-    if (isHovered && !isPressed) {
-      pg.fill(ktgui.COLOR_FG_HOVERED);
-    } else if (isHovered && isPressed) {
-      pg.fill(ktgui.COLOR_FG_PRESSED);
-    } else {
-      pg.fill(ktgui.COLOR_FG_PASSIVE);
-    }
-    pg.rect(0, 0, w, h);
-    pg.fill(255);
-    pg.textAlign(CENTER, CENTER);
-    pg.textSize(14);
-    pg.text(title, w*0.5, h*0.5);
-    pg.endDraw();
-  }
-
-  void draw() {
-    if (parentWindow == null) {
-      image(pg, posx, posy);
-    }
-  }
-
-  // process mouseMoved event received from PApplet
-  void processMouseMoved() {
-    if (isPointInside(mouseX, mouseY)) {
-      isHovered = true;
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseMoved();
-      }
-    } else {
-      isHovered = false;
-    }
-  }
-
-  // process mousePressed event received from PApplet
-  void processMousePressed() {
-    if (isPointInside(mouseX, mouseY)) {
-      isPressed = true;
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMousePressed();
-      }
-    } else {
-      isPressed = false;
-    }
-  }
-
-  // process mouseReleased event received from PApplet
-  void processMouseReleased() {
-    isPressed = false;
-    for (KTGUIEventAdapter adapter : adapters) {
-      adapter.onMouseReleased();
-    }
-  }
-
-  // process mouseDragged event received from PApplet
-  void processMouseDragged() {
-    if (isPressed) {
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseDragged();
-      }
-    }
-  }
-
-  boolean isPointInside(int x, int y) {
-    boolean isInside = false;
-
-    int px = (parentWindow == null) ? 0 : parentWindow.posx;
-    int py = (parentWindow == null) ? 0 : parentWindow.posy;
-
-    if (x > px + posx && x < px + posx + w) {
-      if (y > py + posy && y < py + posy + h) {
-        isInside = true;
-      }
-    }
-
-    return isInside;
-  }
-}
-
-/**********************************************************************************************************************
- * This class automatically receives events from PApplet when they happen.
- * Every KTGUI component (controller) should extend this class in order to be able to receive the mouse and keyboard 
- * events.
- * One should override only the 'needed' event methods. This allows to save time and decrease the amount of code.
- * One should always overridde the 'draw' method.
- *********************************************************************************************************************/
-public abstract class Controller {
-  String title;
-  int posx, posy, w, h;  
-  boolean isPressed, isHovered;
-  ArrayList<KTGUIEventAdapter> adapters;
-  Window parentWindow = null;
-  PGraphics pg;
-
-  void updateGraphics() {
-  }
-  void draw() {
-  }
-  void processMouseMoved() {
-  }
-  void processMousePressed() {
-  }
-  void processMouseReleased() {
-  }
-  void processMouseDragged() {
-  }
-  void processKeyPressed() {
-  }
-  void processKeyReleased() {
-  }
-  void setParentWindow(Window window) {
-    this.parentWindow = window;
-  }
-  void setTitle(String title) {
-    this.title = title;
-  }
-  PGraphics getGraphics() {
-    return pg;
-  }
-  int getPosX() {
-    return posx;
-  }
-  int getPosY() {
-    return posy;
-  }
-  void setPosX(int posx) {
-    this.posx = posx;
-  }
-  void setPosY(int posy) {
-    this.posy = posy;
-  }
-}
-
 
 /**********************************************************************************************************************
  * This class is used to 'transfer' the 'draw', 'mouse' and 'keyboard' events from PApplet to KTGUI components 
@@ -299,7 +139,6 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   Button createButton(int x, int y, int w, int h) {
     Button btn = new Button(x, y, w, h);
-    //stageManager.activeStage.attachController(btn);
     return btn;
   }
 
@@ -308,7 +147,6 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   Window createWindow(int x, int y, int w, int h) {
     Window window = new Window(x, y, w, h);
-    //stageManager.activeStage.attachController(window);
     return window;
   }
 
@@ -424,27 +262,6 @@ public class KTGUI {
     }
   }
 }
-
-/**********************************************************************************************************************
- * This abstract class should be extended by the KTGUI components (controllers)
- *********************************************************************************************************************/
-abstract class KTGUIEventAdapter {
-  void onMousePressed() {
-  }
-  void onMouseReleased() {
-  }
-  void onMouseMoved() {
-  }
-  void onMouseDragged() {
-  }
-  void onKeyReleased() {
-  }
-  void onKeyPressed() {
-  }
-  void println(String string){
-    PApplet.println(string);
-  }
-}
 /**********************************************************************************************************************
  * A Stage can have multple controllers.
  * The KTGUI class should handle the transition from one Stage to another.
@@ -469,14 +286,19 @@ public class Stage {
   }
 
   void registerController(Controller controller) {
+    if(ktgui.stageManager.defaultStage.controllers.contains(controller)){
+      ktgui.stageManager.defaultStage.controllers.remove(controller);      
+    }
     if (!controllers.contains(controller)) {
       controllers.add(controller);
+      controller.parentStage = this;
     }
   }
 
   void unregisterController(Controller controller) {
     if (controllers.contains(controller)) {
       controllers.remove(controller);
+      controller.parentStage = null;
     }
   }
 }
@@ -562,6 +384,84 @@ class StageManager {
     return stages;
   }
 }
+/**********************************************************************************************************************
+ * This class automatically receives events from PApplet when they happen.
+ * Every KTGUI component (controller) should extend this class in order to be able to receive the mouse and keyboard 
+ * events.
+ * One should override only the 'needed' event methods. This allows to save time and decrease the amount of code.
+ * One should always overridde the 'draw' method.
+ *********************************************************************************************************************/
+public abstract class Controller {
+  String title;
+  int posx, posy, w, h;  
+  boolean isPressed, isHovered;
+  ArrayList<KTGUIEventAdapter> adapters;
+  Window parentWindow = null;
+  Stage parentStage = null;
+  PGraphics pg;
+
+  void updateGraphics() {
+  }
+  void draw() {
+  }
+  void processMouseMoved() {
+  }
+  void processMousePressed() {
+  }
+  void processMouseReleased() {
+  }
+  void processMouseDragged() {
+  }
+  void processKeyPressed() {
+  }
+  void processKeyReleased() {
+  }
+  void addEventAdapter(KTGUIEventAdapter adapter) {
+    adapters.add(adapter);
+  }
+  void setParentWindow(Window window) {
+    this.parentWindow = window;
+  }
+  void setTitle(String title) {
+    this.title = title;
+  }
+  PGraphics getGraphics() {
+    return pg;
+  }
+  int getPosX() {
+    return posx;
+  }
+  int getPosY() {
+    return posy;
+  }
+  void setPosX(int posx) {
+    this.posx = posx;
+  }
+  void setPosY(int posy) {
+    this.posy = posy;
+  }
+}
+
+/**********************************************************************************************************************
+ * This abstract class should be extended by the KTGUI components (controllers)
+ *********************************************************************************************************************/
+abstract class KTGUIEventAdapter {
+  void onMousePressed() {
+  }
+  void onMouseReleased() {
+  }
+  void onMouseMoved() {
+  }
+  void onMouseDragged() {
+  }
+  void onKeyReleased() {
+  }
+  void onKeyPressed() {
+  }
+  void println(String string){
+    PApplet.println(string);
+  }
+}
 // This class should change the type of cursor depending on the type of action
 // ARROW - when the pointer is outside the 'window' area or border
 // HAND  - when the pointer is over the 'window' area or border
@@ -569,7 +469,7 @@ class StageManager {
 // MOVE  - when the user is moving the 'window' 
 
 // Potentially, this class and the KTGUI library class should use the PGraphics in order to 
-// be able to share/switch graphic context. If this is possible, the we will be able
+// be able to share/switch graphic context. If this is possible, then we will be able
 // to implement the 'minimize' feature.
 
 // The other way to implement the window is to 'mimic' the behavior of the window.
@@ -589,21 +489,14 @@ class StageManager {
 class Window extends Controller {
   int TITLE_BAR_HEIGHT = 20;
   int MENU_BAR_HEIGHT = 20;
-
+  ArrayList<Controller> controllers = new ArrayList<Controller>();
+  ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
+  boolean isTitleBarHovered, isTitleBarPressed;  
+  boolean isBorderHovered, isBorderPressed;  
+  WindowCloseButton windowCloseBtn;
   // Border border;
   // TitleBar titleBar;
   // MenuBar menuBar;
-
-  ArrayList<Controller> controllers = new ArrayList<Controller>();
-  ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
-
-  String title = "Window title bar. Drag it!";
-  int posx, posy, w, h;
-
-  PGraphics pg;
-
-  boolean isTitleBarHovered, isTitleBarPressed;  
-  boolean isBorderHovered, isBorderPressed;  
 
   Window(int posx, int posy, int w, int h) {
     this.posx = posx;
@@ -611,23 +504,24 @@ class Window extends Controller {
     this.w = w;
     this.h = h;
     updateSize(w, h);
+
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+
+    windowCloseBtn = new WindowCloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
+    attachController(windowCloseBtn);
+    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
   }
 
   void updateSize(int wdth, int hght) {
     pg = createGraphics(wdth + 1, hght + 1);
   }
+
   void draw() {
-    drawChildrenControllers();
     drawTitleBar();
     drawBorder();
-    updateControllers();
+    drawControllers();
     image(pg, posx, posy);
-  }
-
-  void drawChildrenControllers() {
-    for (Controller controller : controllers) {
-      controller.draw();
-    }
   }
 
   void drawTitleBar() {
@@ -644,12 +538,6 @@ class Window extends Controller {
     pg.textSize(TITLE_BAR_HEIGHT*0.65);
     pg.text(title, 10, TITLE_BAR_HEIGHT*0.5);
     pg.endDraw();
-
-    // drawButtons (minimize, maximize, close)
-  }
-
-  void addEventAdapter(KTGUIEventAdapter adapter) {
-    adapters.add(adapter);
   }
 
   void drawBorder() {
@@ -663,7 +551,7 @@ class Window extends Controller {
     pg.endDraw();
   }
 
-  void updateControllers() {
+  void drawControllers() {
     for (Controller controller : controllers) {
       pg.beginDraw();
       pg.image(controller.getGraphics(), controller.getPosX(), controller.getPosY());
@@ -675,7 +563,7 @@ class Window extends Controller {
     if (controller.parentWindow != null) {
       controller.parentWindow.controllers.remove(controller); // reset parentWindow
     }
- 
+
     if (!controllers.contains(controller)) {
       controllers.add(controller);
       controller.setParentWindow(this);
@@ -734,6 +622,145 @@ class Window extends Controller {
         isInside = true;
       }
     }
+    return isInside;
+  }
+}
+
+
+/*****************************************************************************************************
+ * 
+ ****************************************************************************************************/
+class WindowCloseButton extends Button {
+
+  WindowCloseButton(int posx, int posy, int w, int h) {
+    super(posx, posy, w, h);
+  }
+
+  void updateGraphics() {
+    pg.beginDraw();
+    pg.rectMode(CORNER);
+    if (isHovered && !isPressed) {
+      pg.fill(ktgui.COLOR_FG_HOVERED);
+    } else if (isHovered && isPressed) {
+      pg.fill(ktgui.COLOR_FG_PRESSED);
+    } else {
+      //pg.fill(ktgui.COLOR_FG_PASSIVE);
+      pg.fill(200, 200);
+    }
+    pg.stroke(0);
+    pg.strokeWeight(1);
+    pg.rectMode(CORNER);
+    pg.rect(0, 0, w, h);
+    pg.line(w * 0.2, h * 0.2, w * 0.8, h * 0.8);
+    pg.line(w * 0.2, h * 0.8, w * 0.8, h * 0.2);
+    pg.endDraw();
+  }
+
+  void processMousePressed() {
+    super.processMousePressed();
+    if (isPressed) {
+      parentWindow.parentStage.controllers.remove(parentWindow);
+    }
+  }
+}
+
+/**********************************************************************************************************************
+ * This is an example of the KTGUI component (controller).
+ * This class extends the 'Controller' class.
+ * This class overrides only the 'mouse-related' methods of the 'Controller' class.
+ * The object of this class can be 'Pressed', 'Hovered', 'Released' and 'Dragged'.
+ *********************************************************************************************************************/
+class Button extends Controller {
+  boolean isPressed, isHovered;
+
+  Button(int posx, int posy, int w, int h) {
+    this.posx = posx;
+    this.posy = posy;
+    this.w = w;
+    this.h = h;
+    title = "Button";
+    adapters = new ArrayList<KTGUIEventAdapter>();
+    pg = createGraphics(w + 1, h + 1);
+    ktgui.stageManager.defaultStage.registerController(this);
+  }
+
+  void updateGraphics() {
+    pg.beginDraw();
+    pg.rectMode(CORNER);
+    if (isHovered && !isPressed) {
+      pg.fill(ktgui.COLOR_FG_HOVERED);
+    } else if (isHovered && isPressed) {
+      pg.fill(ktgui.COLOR_FG_PRESSED);
+    } else {
+      pg.fill(ktgui.COLOR_FG_PASSIVE);
+    }
+    pg.rect(0, 0, w, h);
+    pg.fill(255);
+    pg.textAlign(CENTER, CENTER);
+    pg.textSize(14);
+    pg.text(title, w*0.5, h*0.5);
+    pg.endDraw();
+  }
+
+  void draw() {
+    if (parentWindow == null) {
+      image(pg, posx, posy);
+    }
+  }
+
+  // process mouseMoved event received from PApplet
+  void processMouseMoved() {
+    if (isPointInside(mouseX, mouseY)) {
+      isHovered = true;
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMouseMoved();
+      }
+    } else {
+      isHovered = false;
+    }
+  }
+
+  // process mousePressed event received from PApplet
+  void processMousePressed() {
+    if (isPointInside(mouseX, mouseY)) {
+      isPressed = true;
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMousePressed();
+      }
+    } else {
+      isPressed = false;
+    }
+  }
+
+  // process mouseReleased event received from PApplet
+  void processMouseReleased() {
+    isPressed = false;
+    for (KTGUIEventAdapter adapter : adapters) {
+      adapter.onMouseReleased();
+    }
+  }
+
+  // process mouseDragged event received from PApplet
+  void processMouseDragged() {
+    if (isPressed) {
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMouseDragged();
+      }
+    }
+  }
+
+  boolean isPointInside(int x, int y) {
+    boolean isInside = false;
+
+    int px = (parentWindow == null) ? 0 : parentWindow.posx;
+    int py = (parentWindow == null) ? 0 : parentWindow.posy;
+
+    if (x > px + posx && x < px + posx + w) {
+      if (y > py + posy && y < py + posy + h) {
+        isInside = true;
+      }
+    }
+
     return isInside;
   }
 }

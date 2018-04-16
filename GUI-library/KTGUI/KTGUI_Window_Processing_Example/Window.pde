@@ -40,10 +40,10 @@ class Window extends Controller {
     this.w = w;
     this.h = h;
     updateSize(w, h);
-    
+
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
-    
+
     windowCloseBtn = new WindowCloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
     attachController(windowCloseBtn);
     ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
@@ -160,41 +160,42 @@ class Window extends Controller {
     }
     return isInside;
   }
+}
 
-  /*****************************************************************************************************
-   * 
-   ****************************************************************************************************/
-  class WindowCloseButton extends Button {
 
-    WindowCloseButton(int posx, int posy, int w, int h) {
-      super(posx, posy, w, h);
+/*****************************************************************************************************
+ * 
+ ****************************************************************************************************/
+class WindowCloseButton extends Button {
+
+  WindowCloseButton(int posx, int posy, int w, int h) {
+    super(posx, posy, w, h);
+  }
+
+  void updateGraphics() {
+    pg.beginDraw();
+    pg.rectMode(CORNER);
+    if (isHovered && !isPressed) {
+      pg.fill(ktgui.COLOR_FG_HOVERED);
+    } else if (isHovered && isPressed) {
+      pg.fill(ktgui.COLOR_FG_PRESSED);
+    } else {
+      //pg.fill(ktgui.COLOR_FG_PASSIVE);
+      pg.fill(200, 200);
     }
+    pg.stroke(0);
+    pg.strokeWeight(1);
+    pg.rectMode(CORNER);
+    pg.rect(0, 0, w, h);
+    pg.line(w * 0.2, h * 0.2, w * 0.8, h * 0.8);
+    pg.line(w * 0.2, h * 0.8, w * 0.8, h * 0.2);
+    pg.endDraw();
+  }
 
-    void updateGraphics() {
-      pg.beginDraw();
-      pg.rectMode(CORNER);
-      if (isHovered && !isPressed) {
-        pg.fill(ktgui.COLOR_FG_HOVERED);
-      } else if (isHovered && isPressed) {
-        pg.fill(ktgui.COLOR_FG_PRESSED);
-      } else {
-        //pg.fill(ktgui.COLOR_FG_PASSIVE);
-        pg.fill(200, 200);
-      }
-      pg.stroke(0);
-      pg.strokeWeight(1);
-      pg.rectMode(CORNER);
-      pg.rect(0, 0, w, h);
-      pg.line(w * 0.2, h * 0.2, w * 0.8, h * 0.8);
-      pg.line(w * 0.2, h * 0.8, w * 0.8, h * 0.2);
-      pg.endDraw();
-    }
-
-    void processMousePressed() {
-      super.processMousePressed();
-      if (isPressed) {
-        parentWindow.parentStage.controllers.remove(parentWindow);
-      }
+  void processMousePressed() {
+    super.processMousePressed();
+    if (isPressed) {
+      parentWindow.parentStage.controllers.remove(parentWindow);
     }
   }
 }
