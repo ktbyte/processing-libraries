@@ -25,19 +25,14 @@
 class Window extends Controller {
   int TITLE_BAR_HEIGHT = 20;
   int MENU_BAR_HEIGHT = 20;
-
+  ArrayList<Controller> controllers = new ArrayList<Controller>();
+  ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
+  boolean isTitleBarHovered, isTitleBarPressed;  
+  boolean isBorderHovered, isBorderPressed;  
+  WindowCloseButton windowCloseBtn;
   // Border border;
   // TitleBar titleBar;
   // MenuBar menuBar;
-
-  ArrayList<Controller> controllers = new ArrayList<Controller>();
-  ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
-
-  boolean isTitleBarHovered, isTitleBarPressed;  
-  boolean isBorderHovered, isBorderPressed;  
-
-  WindowCloseButton windowCloseBtn;
-  //Button windowCloseBtn;
 
   Window(int posx, int posy, int w, int h) {
     this.posx = posx;
@@ -45,6 +40,10 @@ class Window extends Controller {
     this.w = w;
     this.h = h;
     updateSize(w, h);
+    
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+    
     windowCloseBtn = new WindowCloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
     attachController(windowCloseBtn);
     ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
@@ -57,16 +56,8 @@ class Window extends Controller {
   void draw() {
     drawTitleBar();
     drawBorder();
-    updateControllers();
+    drawControllers();
     image(pg, posx, posy);
-    windowCloseBtn.draw();
-    drawChildrenControllers();
-  }
-
-  void drawChildrenControllers() {
-    for (Controller controller : controllers) {
-      controller.draw();
-    }
   }
 
   void drawTitleBar() {
@@ -85,10 +76,6 @@ class Window extends Controller {
     pg.endDraw();
   }
 
-  void addEventAdapter(KTGUIEventAdapter adapter) {
-    adapters.add(adapter);
-  }
-
   void drawBorder() {
     // change thickness depending on the user-mouse behavior
     pg.beginDraw();
@@ -100,7 +87,7 @@ class Window extends Controller {
     pg.endDraw();
   }
 
-  void updateControllers() {
+  void drawControllers() {
     for (Controller controller : controllers) {
       pg.beginDraw();
       pg.image(controller.getGraphics(), controller.getPosX(), controller.getPosY());

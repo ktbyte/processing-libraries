@@ -16,10 +16,7 @@ class Button extends Controller {
     title = "Button";
     adapters = new ArrayList<KTGUIEventAdapter>();
     pg = createGraphics(w + 1, h + 1);
-  }
-
-  void addEventAdapters(KTGUIEventAdapter adapter) {
-    adapters.add(adapter);
+    ktgui.stageManager.defaultStage.registerController(this);
   }
 
   void updateGraphics() {

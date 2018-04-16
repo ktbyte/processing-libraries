@@ -31,6 +31,9 @@ public abstract class Controller {
   }
   void processKeyReleased() {
   }
+  void addEventAdapter(KTGUIEventAdapter adapter) {
+    adapters.add(adapter);
+  }
   void setParentWindow(Window window) {
     this.parentWindow = window;
   }

@@ -46,7 +46,6 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   Button createButton(int x, int y, int w, int h) {
     Button btn = new Button(x, y, w, h);
-    ktgui.stageManager.defaultStage.registerController(btn);
     return btn;
   }
 
@@ -55,7 +54,6 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   Window createWindow(int x, int y, int w, int h) {
     Window window = new Window(x, y, w, h);
-    ktgui.stageManager.defaultStage.registerController(window);
     return window;
   }
 
