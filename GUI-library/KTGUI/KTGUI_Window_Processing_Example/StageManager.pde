@@ -64,19 +64,14 @@ class StageManager {
     println();
   }
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  void printStages() {
-    for (int i = 0; i < stages.size(); i++) {
-      println("[" + i + "] - " + stages.get(i).name);
+  void closeWindow(Window window) {
+    for (Controller controller : window.controllers) {
+      activeStage.controllers.remove(controller);
+      //defaultStage.controllers.remove(controller);
+      //controller.parentStage.controllers.remove(controller);
     }
-  }
-
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  List<Stage> getStages() {
-    return stages;
+    //window.parentStage.controllers.remove(window);
+    activeStage.controllers.remove(window);
+    //defaultStage.controllers.remove(window);
   }
 }

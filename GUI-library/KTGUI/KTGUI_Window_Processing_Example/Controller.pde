@@ -9,6 +9,7 @@ public abstract class Controller {
   String title;
   int posx, posy, w, h;  
   boolean isPressed, isHovered;
+  boolean isAlive = true;
   ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
   Window parentWindow = null;
   Pane parentPane = null;

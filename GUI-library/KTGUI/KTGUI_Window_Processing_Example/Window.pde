@@ -28,13 +28,13 @@ class Window extends Controller {
   int TITLE_BAR_HEIGHT = 14;
   int MENU_BAR_HEIGHT = 20;
   int BORDER_THICKNESS = 3;
-  
+
   ArrayList<Controller> controllers = new ArrayList<Controller>();
 
   boolean isTitleBarHovered, isTitleBarPressed;  
   boolean isWindowHovered, isWindowPressed;  
   boolean isBorderHovered, isBorderPressed;  
-  
+
   WindowCloseButton windowCloseBtn;
   // Border border;
   // TitleBar titleBar;
@@ -175,7 +175,6 @@ class Window extends Controller {
     }
     return isInside;
   }
-
 }
 
 
@@ -209,9 +208,13 @@ class WindowCloseButton extends Button {
   }
 
   void processMousePressed() {
+    isAlive = false;
     super.processMousePressed();
     if (isPressed) {
-      parentWindow.parentStage.controllers.remove(parentWindow);
+      //parentWindow.parentStage.controllers.remove(parentWindow);
+      //ktgui.stageManager.defaultStage.controllers.remove(parentWindow);
+      //ktgui.stageManager.activeStage.controllers.remove(parentWindow);
+      ktgui.stageManager.closeWindow(parentWindow);
     }
   }
 }
