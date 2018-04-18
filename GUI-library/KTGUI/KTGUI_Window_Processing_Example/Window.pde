@@ -105,7 +105,6 @@ class Window extends Controller {
     if (controller.parentWindow != null) {
       controller.parentWindow.controllers.remove(controller); // reset parentWindow
     }
-
     if (!controllers.contains(controller)) {
       controllers.add(controller);
       controller.setParentWindow(this);

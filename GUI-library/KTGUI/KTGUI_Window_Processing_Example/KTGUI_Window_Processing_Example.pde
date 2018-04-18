@@ -29,7 +29,7 @@ void setup() {
   anotherButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       println("Callback message: The anotherButton (goToStage(1)) was pressed!");
-      ktgui.stageManager.goToStage(2);
+      ktgui.stageManager.goToStage(1);
     }  
   }
   );
@@ -38,8 +38,8 @@ void setup() {
   // Now, the "s1" stage is "active". So, the both 'w1' and 'nextStageButton' are automatically attached to this stage. 
   // We can still use 's1.attachController(Controller) though.
   s2 = ktgui.stageManager.createStage("stage_2");
-  Panel panel = ktgui.createPanel((int)(width * 0.5 - 200), 20, 400, 100);  
-  s2.registerController(panel);
+  Pane pane = ktgui.createPane((int)(width * 0.5 - 200), 120, 400, 200);  
+  s2.registerController(pane);
 
 
   // Now, the "s2" stage is "active". So, the jumpButton is automatically attached to this stage.
@@ -74,7 +74,7 @@ void setup() {
   // this button will be visible in all stages
   ktgui.stageManager.defaultStage.registerController(nextStageBtn);
 
-  ktgui.stageManager.goToStage(s3);
+  ktgui.stageManager.goToStage(s2);
 }
 
 /**********************************************************************************************************************

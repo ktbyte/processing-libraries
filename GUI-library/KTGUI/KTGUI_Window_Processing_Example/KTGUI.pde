@@ -1,4 +1,3 @@
-
 /**********************************************************************************************************************
  * This class is used to 'transfer' the 'draw', 'mouse' and 'keyboard' events from PApplet to KTGUI components 
  * (controllers).
@@ -61,9 +60,9 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   // This is a 'factory' method
   //-------------------------------------------------------------------------------------------------------------------
-  Panel createPanel(int x, int y, int w, int h) {
-    Panel panel = new Panel(x, y, w, h);
-    return panel;
+  Pane createPane(int x, int y, int w, int h) {
+    Pane pane = new Pane(x, y, w, h);
+    return pane;
   }
 
   //-------------------------------------------------------------------------------------------------------------------
