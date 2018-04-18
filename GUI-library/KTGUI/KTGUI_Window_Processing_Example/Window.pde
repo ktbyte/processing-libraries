@@ -8,26 +8,31 @@
 // be able to share/switch graphic context. If this is possible, then we will be able
 // to implement the 'minimize' feature.
 
-// The other way to implement the window is to 'mimic' the behavior of the window.
-// I mean, we don't need to really implement _ALL_ the drawing methods of PApplet. 
-// Instead, we can only implement the synchronized motion of both, the parent and
-// and the child components.
+// We should implement the synchronized motion of both, the parent and the child components.
 // For this, we could draw the border, background ant title bar. Then, we can use the 
 // title bar to move the window and use the border to change the size of the window.
 // When the window has moved, all the 'child' gui elements should receive the 'event'
 // that forces them to change their position the same amount of dx and dy as the 
 // parent window.
-// The only thing that is left to figure out is how to 'clip()' the extents of the 
-// gui elements that are crossing or even outside the window area.
 
-// Of course, we need to register all the 'child' components. Use the ArrayList for this.
+// The extents 'clipping' of the gui components which are crossing or even outside the
+// window area is done using the PGraphics.
+
+// In order to register all the 'child' components we are using the ArrayList<Controller>.
+
+// !!! The Window should contain a TitleBar and Panel.
+// !!! The TitleBar should contain a Button.
+// !!! The Panel chould contain a Border.
 
 class Window extends Controller {
   int TITLE_BAR_HEIGHT = 20;
   int MENU_BAR_HEIGHT = 20;
+  int BORDER_THICKNESS = 3;
+  
   ArrayList<Controller> controllers = new ArrayList<Controller>();
   ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
   boolean isTitleBarHovered, isTitleBarPressed;  
+  boolean isWindowHovered, isWindowPressed;  
   boolean isBorderHovered, isBorderPressed;  
   WindowCloseButton windowCloseBtn;
   // Border border;
@@ -160,6 +165,17 @@ class Window extends Controller {
     }
     return isInside;
   }
+
+  boolean isPointInsideWindow(int x, int y) {
+    boolean isInside = false;
+    if (x > posx && x < posx + this.w) {
+      if (y > posy + TITLE_BAR_HEIGHT && y < posy + this.h) {
+        isInside = true;
+      }
+    }
+    return isInside;
+  }
+
 }
 
 
