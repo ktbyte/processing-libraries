@@ -12,6 +12,8 @@ void setup() {
   size(600, 500);
   ktgui = new KTGUI(this); // default stage is automatically created
 
+  Panel panel = ktgui.createPanel(200, 150, 200, 200);  
+
   s1 = ktgui.stageManager.createStage("stage_1");
   anotherButton = ktgui.createButton(50, 50, 100, 50);
   anotherButton.setTitle("Go To\nStage_2");

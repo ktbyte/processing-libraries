@@ -14,8 +14,9 @@ class Button extends Controller {
     this.w = w;
     this.h = h;
     title = "Button";
-    adapters = new ArrayList<KTGUIEventAdapter>();
     pg = createGraphics(w + 1, h + 1);
+
+    // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
 

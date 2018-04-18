@@ -59,6 +59,14 @@ public class KTGUI {
   }
 
   //-------------------------------------------------------------------------------------------------------------------
+  // This is a 'factory' method
+  //-------------------------------------------------------------------------------------------------------------------
+  Panel createPanel(int x, int y, int w, int h) {
+    Panel panel = new Panel(x, y, w, h);
+    return panel;
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
   // This method 'redirects' the incoming mouse events from PApplet to 'transfer' methods.
   // This method will be called when the PApplet.mouseEvent is happening.
   //-------------------------------------------------------------------------------------------------------------------
