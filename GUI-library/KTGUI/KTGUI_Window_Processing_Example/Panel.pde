@@ -36,7 +36,7 @@ class Panel extends Controller {
     pg.beginDraw();
     pg.stroke(0);
     pg.strokeWeight(1);
-    pg.noFill();
+    pg.fill(200, 220, 200);
     pg.rectMode(CORNER);
     pg.rect(0, 0, w, h);
     pg.endDraw();

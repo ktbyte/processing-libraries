@@ -25,7 +25,7 @@
 // !!! The Panel chould contain a Border.
 
 class Window extends Controller {
-  int TITLE_BAR_HEIGHT = 40;
+  int TITLE_BAR_HEIGHT = 14;
   int MENU_BAR_HEIGHT = 20;
   int BORDER_THICKNESS = 3;
   

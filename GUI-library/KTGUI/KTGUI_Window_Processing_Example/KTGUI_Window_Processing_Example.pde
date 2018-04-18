@@ -9,10 +9,19 @@ Stage s1, s2, s3;
  * 
  *********************************************************************************************************************/
 void setup() {
-  size(600, 500);
+  size(800, 500);
   ktgui = new KTGUI(this); // default stage is automatically created
 
-  Panel panel = ktgui.createPanel(200, 150, 200, 200);  
+  // this button will be visible always because it will be located on default stage
+  nextStageBtn = ktgui.createButton(width - 120, height - 70, 100, 50);
+  nextStageBtn.setTitle("NextStage");
+  nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
+    public void onMousePressed() {
+      println("Callback message: The Next-Stage-Button was pressed!");
+      ktgui.stageManager.goToNextStage();
+    }
+  }
+  );
 
   s1 = ktgui.stageManager.createStage("stage_1");
   anotherButton = ktgui.createButton(50, 50, 100, 50);
@@ -29,18 +38,8 @@ void setup() {
   // Now, the "s1" stage is "active". So, the both 'w1' and 'nextStageButton' are automatically attached to this stage. 
   // We can still use 's1.attachController(Controller) though.
   s2 = ktgui.stageManager.createStage("stage_2");
-  w1 = ktgui.createWindow(10, 10, 300, 200);
-  w1.setTitle("Window_1");
-  nextStageBtn = ktgui.createButton(width - 120, height - 70, 100, 50);
-  nextStageBtn.setTitle("NextStage");
-  nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
-    public void onMousePressed() {
-      println("Callback message: The Next-Stage-Button was pressed!");
-      ktgui.stageManager.goToNextStage();
-    }
-  }
-  );
-  s2.registerController(w1);
+  Panel panel = ktgui.createPanel((int)(width * 0.5 - 200), 20, 400, 100);  
+  s2.registerController(panel);
 
 
   // Now, the "s2" stage is "active". So, the jumpButton is automatically attached to this stage.
@@ -87,6 +86,7 @@ void draw() {
   fill(0);
   textSize(20);
   textAlign(RIGHT, CENTER);
+  textFont(createFont("monospaced", 16));
   text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
   text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
   text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);

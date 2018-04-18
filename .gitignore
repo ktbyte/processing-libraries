@@ -24,3 +24,6 @@ hs_err_pid*
 # VS hidden folder
 /.vscode/*
 *.autosave
+
+# Brackets 'Processing' plugin build folder
+**/build/**

@@ -18,17 +18,17 @@ class StageManager {
   //
   //--------------------------------------------------------------------------------------------------
   Stage createStage(String name) {
-    Stage Stage = new Stage(name);
-    stages.add(Stage);
-    activeStage = Stage;
-    return Stage;
+    Stage stage = new Stage(name);
+    stages.add(stage);
+    activeStage = stage;
+    return stage;
   }
 
   //--------------------------------------------------------------------------------------------------
   //
   //--------------------------------------------------------------------------------------------------
-  void goToStage(Stage Stage) {
-    activeStage = Stage;
+  void goToStage(Stage stage) {
+    activeStage = stage;
   }
 
   //--------------------------------------------------------------------------------------------------
