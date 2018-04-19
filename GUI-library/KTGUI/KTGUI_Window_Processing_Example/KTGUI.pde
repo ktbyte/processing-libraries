@@ -19,10 +19,10 @@ public class KTGUI {
   color COLOR_BG_PASSIVE = color(100); 
   color COLOR_BG_PRESSED = color(200);
 
-  //-------------------------------------------------------------------------------------------------------------------
-  // The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
-  // thread.
-  //-------------------------------------------------------------------------------------------------------------------
+  /*
+  * The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
+  * thread.
+  */
   public KTGUI(PApplet pa) {
     this.pa = pa;
     this.pa.registerMethod("draw", this);
