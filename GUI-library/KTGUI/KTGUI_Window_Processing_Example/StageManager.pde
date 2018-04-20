@@ -1,22 +1,17 @@
 /**********************************************************************************************************************
- *
+ * 
  *********************************************************************************************************************/
 class StageManager {
+
   List<Stage> stages; // replace 'List' with 'Set' to prevent duplicates
   Stage activeStage;
   Stage defaultStage;
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
   StageManager() {
     stages = new ArrayList<Stage>();
     defaultStage = new Stage("Default");
   }
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
   Stage createStage(String name) {
     Stage stage = new Stage(name);
     stages.add(stage);
@@ -24,16 +19,10 @@ class StageManager {
     return stage;
   }
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
   void goToStage(Stage stage) {
     activeStage = stage;
   }
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
   void goToStage(int numStage) {
     if (numStage > 0 && numStage < stages.size()) {
       activeStage = stages.get(numStage);
@@ -44,9 +33,6 @@ class StageManager {
     println();
   }
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
   void goToNextStage() {
     int indexOfCurrentStage = stages.indexOf(activeStage);
     println("Before...");
@@ -65,13 +51,14 @@ class StageManager {
   }
 
   void closeWindow(Window window) {
+    println("closeWindow(Window) for window:" + window.title + " has been called.");
     for (Controller controller : window.controllers) {
-      activeStage.controllers.remove(controller);
-      //defaultStage.controllers.remove(controller);
-      //controller.parentStage.controllers.remove(controller);
+      println("Controller:" + controller.title + " 'isActive' variable is set to FALSE");  
+      controller.isActive = false;
     }
-    //window.parentStage.controllers.remove(window);
-    activeStage.controllers.remove(window);
-    //defaultStage.controllers.remove(window);
+    window.isActive = false;
+    window.parentStage.unregisterController(window);
+    activeStage.unregisterController(window);
+    defaultStage.unregisterController(window);
   }
 }

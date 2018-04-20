@@ -54,7 +54,12 @@ class Window extends Controller {
     attachController(windowCloseBtn);
     ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
   }
-
+ 
+  void setTitle(String string) {
+    title = string;
+    windowCloseBtn.setTitle("WindowCloseButton-of:" + title);    
+  }
+  
   void updateSize(int wdth, int hght) {
     pg = createGraphics(wdth + 1, hght + 1);
   }
@@ -102,12 +107,14 @@ class Window extends Controller {
   }
 
   void attachController(Controller controller) {
-    if (controller.parentWindow != null) {
-      controller.parentWindow.controllers.remove(controller); // reset parentWindow
-    }
-    if (!controllers.contains(controller)) {
-      controllers.add(controller);
-      controller.setParentWindow(this);
+    if (isActive) {
+      if (controller.parentWindow != null) {
+        controller.parentWindow.controllers.remove(controller); // reset parentWindow
+      }
+      if (!controllers.contains(controller)) {
+        controllers.add(controller);
+        controller.setParentWindow(this);
+      }
     }
   }
 
@@ -208,12 +215,8 @@ class WindowCloseButton extends Button {
   }
 
   void processMousePressed() {
-    isAlive = false;
     super.processMousePressed();
     if (isPressed) {
-      //parentWindow.parentStage.controllers.remove(parentWindow);
-      //ktgui.stageManager.defaultStage.controllers.remove(parentWindow);
-      //ktgui.stageManager.activeStage.controllers.remove(parentWindow);
       ktgui.stageManager.closeWindow(parentWindow);
     }
   }
