@@ -51,13 +51,20 @@ class StageManager {
   }
 
   void closeWindow(Window window) {
-    println("closeWindow(Window) for window:" + window.title + " has been called.");
+    // first, destroy all the child components
     for (Controller controller : window.controllers) {
-      println("Controller:" + controller.title + " 'isActive' variable is set to FALSE");  
       controller.isActive = false;
+      for (Stage stage : stages) {
+        stage.controllers.remove(controller);
+      }
+      activeStage.unregisterController(controller);
+      defaultStage.unregisterController(controller);
     }
+    // now, destroy the window itself
     window.isActive = false;
-    window.parentStage.unregisterController(window);
+    for (Stage stage : stages) {
+      stage.controllers.remove(window);
+    }
     activeStage.unregisterController(window);
     defaultStage.unregisterController(window);
   }

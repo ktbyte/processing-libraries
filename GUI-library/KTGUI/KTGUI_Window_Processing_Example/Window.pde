@@ -54,12 +54,12 @@ class Window extends Controller {
     attachController(windowCloseBtn);
     ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
   }
- 
+
   void setTitle(String string) {
     title = string;
-    windowCloseBtn.setTitle("WindowCloseButton-of:" + title);    
+    windowCloseBtn.setTitle("WindowCloseButton-of:" + title);
   }
-  
+
   void updateSize(int wdth, int hght) {
     pg = createGraphics(wdth + 1, hght + 1);
   }
@@ -109,7 +109,7 @@ class Window extends Controller {
   void attachController(Controller controller) {
     if (isActive) {
       if (controller.parentWindow != null) {
-        controller.parentWindow.controllers.remove(controller); // reset parentWindow
+        controller.parentWindow.detachController(controller); // reset parentWindow
       }
       if (!controllers.contains(controller)) {
         controllers.add(controller);
@@ -118,10 +118,9 @@ class Window extends Controller {
     }
   }
 
-  void attachControllers(ArrayList<Controller> controllers) {
-    for (Controller controller : controllers) {
-      attachController(controller);
-    }
+  void detachController(Controller controller) {
+    controller.parentWindow = null;
+    controllers.remove(controller);
   }
 
   // process mouseMoved event received from PApplet
