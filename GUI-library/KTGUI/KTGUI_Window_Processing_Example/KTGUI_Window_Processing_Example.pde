@@ -58,7 +58,10 @@ void setup() {
     }
   }
   );
-  s3.registerController(jumpButton);
+  s3.registerController(jumpButton); // --------- !!!!!! --------- the controller must be automatically 
+                                     // registered in the parentWindow.parentStage ???????
+                                     // In that case, each newly created controller must be added to 
+                                     // stageManager.defaultStage
 
   // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
