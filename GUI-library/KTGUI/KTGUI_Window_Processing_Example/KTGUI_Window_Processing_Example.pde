@@ -21,6 +21,8 @@ void setup() {
     }
   }
   );
+  // this button will be visible in all stages
+  ktgui.stageManager.defaultStage.registerController(nextStageBtn);
 
   s1 = ktgui.stageManager.createStage("stage_1");
   anotherButton = ktgui.createButton("Go To Stage_2", 50, height - 70, 100, 50);
@@ -55,10 +57,6 @@ void setup() {
     }
   }
   );
-  s3.registerController(jumpButton); // --------- !!!!!! --------- the controller must be automatically 
-                                     // registered in the parentWindow.parentStage ???????
-                                     // In that case, each newly created controller must be added to 
-                                     // stageManager.defaultStage
 
   // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
@@ -67,10 +65,11 @@ void setup() {
 
   w3 = ktgui.createWindow("Window_3", 10, 200, 300, 200);
   w3.attachController(jumpButton);
+  //s3.registerController(jumpButton); // --------- !!!!!! --------- the controller must be automatically 
+  // registered in the parentWindow.parentStage ???????
+  // In that case, each newly created controller must be added to 
+  // stageManager.defaultStage
   s3.registerController(w3);
-
-  // this button will be visible in all stages
-  ktgui.stageManager.defaultStage.registerController(nextStageBtn);
 
   ktgui.stageManager.goToStage(s2);
 }
@@ -113,6 +112,7 @@ void draw() {
       }
     }
   }
+
 }
 
 void keyPressed() {

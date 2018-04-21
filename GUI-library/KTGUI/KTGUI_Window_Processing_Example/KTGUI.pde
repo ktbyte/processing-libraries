@@ -11,6 +11,7 @@
 public class KTGUI {
   PApplet pa;
   StageManager stageManager;
+  HashMap<Controller, Integer> garbageList = new HashMap<Controller, Integer>();
 
   color COLOR_FG_HOVERED = color(10, 150, 10); 
   color COLOR_FG_PRESSED = color(10, 200, 10);
@@ -21,8 +22,8 @@ public class KTGUI {
 
   /*
   * The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
-  * thread.
-  */
+   * thread.
+   */
   public KTGUI(PApplet pa) {
     this.pa = pa;
     this.pa.registerMethod("draw", this);
@@ -39,6 +40,17 @@ public class KTGUI {
   void draw() {
     stageManager.defaultStage.draw();
     stageManager.activeStage.draw();
+    collectGarbage();
+  }
+
+  void collectGarbage() {
+    for (Map.Entry me : garbageList.entrySet()) {
+      Controller controller = (Controller)me.getKey();
+      int time = (Integer)me.getValue();
+      if (millis() - time > 1000) {
+        if (controller.parentStage != null) controller.parentStage.unregisterController(controller);
+      }
+    }
   }
 
   //-------------------------------------------------------------------------------------------------------------------

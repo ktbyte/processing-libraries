@@ -46,9 +46,9 @@ class Window extends Controller {
     this.w = w;
     this.h = h;
     updateSize(w, h);
-  
+
     title = "a Window";
-    
+
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
 
@@ -64,7 +64,7 @@ class Window extends Controller {
     this.w = w;
     this.h = h;
     updateSize(w, h);
-    
+
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
 
@@ -73,7 +73,7 @@ class Window extends Controller {
     attachController(windowCloseBtn);
     ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
   }
-  
+
   void setTitle(String string) {
     title = string;
     windowCloseBtn.setTitle("CloseButton-of:" + title);
@@ -127,12 +127,30 @@ class Window extends Controller {
 
   void attachController(Controller controller) {
     if (isActive) {
+      // detach from existing window first (if exist)
       if (controller.parentWindow != null) {
         controller.parentWindow.detachController(controller); // reset parentWindow
       }
+      // add to the list of controllers
       if (!controllers.contains(controller)) {
         controllers.add(controller);
         controller.setParentWindow(this);
+        // try to register in parentStage
+        registerChildController(controller);
+      }
+    }
+  }
+
+  void registerChildController(Controller controller) {
+    if (parentStage != null) {
+      parentStage.registerController(controller);
+    }
+  }
+
+  void registerChildControllers() {
+    if (parentStage != null) {
+      for (Controller controller : controllers) {
+        registerChildController(controller);
       }
     }
   }
@@ -140,6 +158,12 @@ class Window extends Controller {
   void detachController(Controller controller) {
     controller.parentWindow = null;
     controllers.remove(controller);
+  }
+
+  void detachAllControllers() {
+    for (Controller controller: controllers) {
+      detachController(controller);
+    }
   }
 
   // process mouseMoved event received from PApplet
@@ -185,16 +209,6 @@ class Window extends Controller {
     boolean isInside = false;
     if (x > posx && x < posx + this.w) {
       if (y > posy && y < posy + TITLE_BAR_HEIGHT) {
-        isInside = true;
-      }
-    }
-    return isInside;
-  }
-
-  boolean isPointInsideWindow(int x, int y) {
-    boolean isInside = false;
-    if (x > posx && x < posx + this.w) {
-      if (y > posy + TITLE_BAR_HEIGHT && y < posy + this.h) {
         isInside = true;
       }
     }

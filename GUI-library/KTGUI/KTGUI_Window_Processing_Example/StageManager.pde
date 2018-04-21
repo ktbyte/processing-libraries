@@ -27,45 +27,27 @@ class StageManager {
     if (numStage > 0 && numStage < stages.size()) {
       activeStage = stages.get(numStage);
     }
-    //println("numStage:" + numStage);
-    //println("numStage < Stages.size():" + (numStage < stages.size()));
-    //println("Stages.indexOf(activeStage):" + stages.indexOf(activeStage));
-    //println();
   }
 
   void goToNextStage() {
     int indexOfCurrentStage = stages.indexOf(activeStage);
-    //println("Before...");
-    //println("indexOfCurrentStage:" + indexOfCurrentStage);
-
     if (indexOfCurrentStage < stages.size() - 1) {
       activeStage = stages.get(indexOfCurrentStage + 1);
     } else {
       activeStage = stages.get(0);
     }
-
-    //println("After...");
-    //indexOfCurrentStage = stages.indexOf(activeStage);
-    //println("indexOfCurrentStage:" + indexOfCurrentStage);
-    //println();
   }
 
   void closeWindow(Window window) {
-    // first, destroy all the child components
-    for (Controller controller : window.controllers) {
-      controller.isActive = false;
-    }
-    //for (Stage stage : stages) {
-    //  stage.controllers.remove(window);
-    //}
     println("closeWindow(Window) for window:" + window.title + " has been called.");
+    
     for (Controller controller : window.controllers) {
       println("Controller:" + controller.title + " 'isActive' variable is set to FALSE");  
       controller.isActive = false;
+      ktgui.garbageList.put(controller, millis());
     }
+    
     window.isActive = false;
-    window.parentStage.unregisterController(window);
-    activeStage.unregisterController(window);
-    defaultStage.unregisterController(window); //<>//
-  }
+    ktgui.garbageList.put(window, millis());
+  } //<>//
 }
