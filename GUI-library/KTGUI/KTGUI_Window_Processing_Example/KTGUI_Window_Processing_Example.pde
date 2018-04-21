@@ -13,8 +13,7 @@ void setup() {
   ktgui = new KTGUI(this); // default stage is automatically created
 
   // this button will be visible always because it will be located on default stage
-  nextStageBtn = ktgui.createButton(width - 120, height - 70, 100, 50);
-  nextStageBtn.setTitle("NextStage");
+  nextStageBtn = ktgui.createButton("NextStage", width - 120, height - 70, 100, 50);
   nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       println("Callback message: The Next-Stage-Button was pressed!");
@@ -24,8 +23,7 @@ void setup() {
   );
 
   s1 = ktgui.stageManager.createStage("stage_1");
-  anotherButton = ktgui.createButton(50, height - 70, 100, 50);
-  anotherButton.setTitle("Go To Stage_2");
+  anotherButton = ktgui.createButton("Go To Stage_2", 50, height - 70, 100, 50);
   anotherButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       println("Callback message: The anotherButton (goToStage(1)) was pressed!");
@@ -45,8 +43,7 @@ void setup() {
   // Now, the "s2" stage is "active". So, the jumpButton is automatically attached to this stage.
   // We can use 's2.attachController(Controller) though.
   s3 = ktgui.stageManager.createStage("stage_3");
-  jumpButton = ktgui.createButton(50, 50, 100, 50);
-  jumpButton.setTitle("Jump!");
+  jumpButton = ktgui.createButton("Jump!", 50, 50, 100, 50);
   jumpButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       println("Callback message: The Jumping Button was pressed!");
@@ -65,12 +62,10 @@ void setup() {
 
   // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
-  w2 = ktgui.createWindow(400, 200, 300, 200);
-  w2.setTitle("Window_2");
+  w2 = ktgui.createWindow("Window_2", 400, 200, 300, 200);
   s3.registerController(w2);
 
-  w3 = ktgui.createWindow(10, 200, 300, 200);
-  w3.setTitle("Window_3");
+  w3 = ktgui.createWindow("Window_3", 10, 200, 300, 200);
   w3.attachController(jumpButton);
   s3.registerController(w3);
 

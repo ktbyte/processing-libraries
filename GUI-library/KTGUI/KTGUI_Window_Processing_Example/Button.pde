@@ -14,13 +14,26 @@ class Button extends Controller {
     this.h = h;
     isActive = true;
 
-    title = "Button";
+    title = "a Button";
     pg = createGraphics(w + 1, h + 1);
 
     // automatically register the newly created window in default stage of stageManager
-    //ktgui.stageManager.defaultStage.registerController(this);
+    ktgui.stageManager.defaultStage.registerController(this);
   }
 
+  Button(String title, int posx, int posy, int w, int h) {
+    this.title = title;
+    this.posx = posx;
+    this.posy = posy;
+    this.w = w;
+    this.h = h;
+    isActive = true;
+
+    pg = createGraphics(w + 1, h + 1);
+
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+  }
   void updateGraphics() {
     pg.beginDraw();
     pg.rectMode(CORNER);

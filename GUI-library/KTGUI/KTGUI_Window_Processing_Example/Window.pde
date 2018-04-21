@@ -46,15 +46,34 @@ class Window extends Controller {
     this.w = w;
     this.h = h;
     updateSize(w, h);
-
+  
+    title = "a Window";
+    
     // automatically register the newly created window in default stage of stageManager
-    //ktgui.stageManager.defaultStage.registerController(this);
+    ktgui.stageManager.defaultStage.registerController(this);
 
     windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
     attachController(windowCloseBtn);
-    //ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
   }
 
+  Window(String title, int posx, int posy, int w, int h) {
+    this.title = title;
+    this.posx = posx;
+    this.posy = posy;
+    this.w = w;
+    this.h = h;
+    updateSize(w, h);
+    
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+
+    windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
+    setTitle(title);
+    attachController(windowCloseBtn);
+    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+  }
+  
   void setTitle(String string) {
     title = string;
     windowCloseBtn.setTitle("CloseButton-of:" + title);
@@ -191,6 +210,10 @@ class CloseButton extends Button {
 
   CloseButton(int posx, int posy, int w, int h) {
     super(posx, posy, w, h);
+  }
+
+  CloseButton(String title, int posx, int posy, int w, int h) {
+    super(title, posx, posy, w, h);
   }
 
   void updateGraphics() {

@@ -48,12 +48,19 @@ public class KTGUI {
     Button btn = new Button(x, y, w, h);
     return btn;
   }
-
+  Button createButton(String title, int x, int y, int w, int h) {
+    Button btn = new Button(title, x, y, w, h);
+    return btn;
+  }
   //-------------------------------------------------------------------------------------------------------------------
   // This is a 'factory' method
   //-------------------------------------------------------------------------------------------------------------------
   Window createWindow(int x, int y, int w, int h) {
     Window window = new Window(x, y, w, h);
+    return window;
+  }
+  Window createWindow(String title, int x, int y, int w, int h) {
+    Window window = new Window(title, x, y, w, h);
     return window;
   }
 
