@@ -22,8 +22,19 @@ public class Stage {
   }
 
   void registerController(Controller controller) {
-    if(ktgui.stageManager.defaultStage.controllers.contains(controller)){
-      ktgui.stageManager.defaultStage.controllers.remove(controller);      
+    println("Trying to register " + controller.title + " in " + name);
+    if (ktgui.stageManager.defaultStage.controllers.contains(controller)) {
+      ktgui.stageManager.defaultStage.controllers.remove(controller);
+    }
+    if (ktgui.stageManager.activeStage != null) {
+      if (ktgui.stageManager.activeStage.controllers.contains(controller)) {
+        ktgui.stageManager.activeStage.controllers.remove(controller);
+      }
+    }
+    for (Stage stage : ktgui.stageManager.stages) {
+      if (stage.controllers.contains(controller)) {
+        stage.controllers.remove(controller);
+      }
     }
     if (!controllers.contains(controller)) {
       controllers.add(controller);

@@ -18,7 +18,7 @@ class Button extends Controller {
     pg = createGraphics(w + 1, h + 1);
 
     // automatically register the newly created window in default stage of stageManager
-    ktgui.stageManager.defaultStage.registerController(this);
+    //ktgui.stageManager.defaultStage.registerController(this);
   }
 
   void updateGraphics() {

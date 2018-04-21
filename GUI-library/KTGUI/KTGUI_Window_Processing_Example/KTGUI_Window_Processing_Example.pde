@@ -38,7 +38,7 @@ void setup() {
   // Now, the "s1" stage is "active". So, the both 'w1' and 'nextStageButton' are automatically attached to this stage. 
   // We can still use 's1.attachController(Controller) though.
   s2 = ktgui.stageManager.createStage("stage_2");
-  Pane pane = ktgui.createPane((int)(width * 0.5 - 200), 120, 400, 200);  
+  Pane pane = ktgui.createPane((int)(width * 0.5 - 200), 240, 400, 200);  
   s2.registerController(pane);
 
 
@@ -112,7 +112,7 @@ void draw() {
   }
   text("-------------------------------------------------------------------", 10, ypos+=YSHIFT);
   for (Stage stage : ktgui.stageManager.stages) {
-    for (Controller controller : ktgui.stageManager.defaultStage.controllers) {
+    for (Controller controller : stage.controllers) {
       if (controller.title != null) { 
         text("stage." + stage.name + ": " + controller.title, 10, ypos+=YSHIFT);
       }

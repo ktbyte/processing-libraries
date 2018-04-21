@@ -35,7 +35,7 @@ class Window extends Controller {
   boolean isWindowHovered, isWindowPressed;  
   boolean isBorderHovered, isBorderPressed;  
 
-  WindowCloseButton windowCloseBtn;
+  CloseButton windowCloseBtn;
   // Border border;
   // TitleBar titleBar;
   // MenuBar menuBar;
@@ -48,16 +48,16 @@ class Window extends Controller {
     updateSize(w, h);
 
     // automatically register the newly created window in default stage of stageManager
-    ktgui.stageManager.defaultStage.registerController(this);
+    //ktgui.stageManager.defaultStage.registerController(this);
 
-    windowCloseBtn = new WindowCloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
+    windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
     attachController(windowCloseBtn);
-    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+    //ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
   }
 
   void setTitle(String string) {
     title = string;
-    windowCloseBtn.setTitle("WindowCloseButton-of:" + title);
+    windowCloseBtn.setTitle("CloseButton-of:" + title);
   }
 
   void updateSize(int wdth, int hght) {
@@ -187,9 +187,9 @@ class Window extends Controller {
 /*****************************************************************************************************
  * 
  ****************************************************************************************************/
-class WindowCloseButton extends Button {
+class CloseButton extends Button {
 
-  WindowCloseButton(int posx, int posy, int w, int h) {
+  CloseButton(int posx, int posy, int w, int h) {
     super(posx, posy, w, h);
   }
 
