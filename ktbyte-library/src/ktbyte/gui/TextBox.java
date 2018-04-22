@@ -19,6 +19,16 @@ public class TextBox implements PConstants {
 	private KeyEventListener keyEventListener;
 	private float padding;
 
+	/**
+	 * a Constructor, usually called in the setup() method in your sketch to
+	 * initialize the Console
+	 * 
+	 * @example TextBox_basic1
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
 	public TextBox(PApplet pap, int x, int y, int width, int height) {
 		this.parent = pap;
 		this.parent.registerMethod("draw", this);
@@ -40,14 +50,14 @@ public class TextBox implements PConstants {
 		this.r4 = r4;
 	}
 
-	void computeDefaultAttributes() {
+	private void computeDefaultAttributes() {
 		this.padding = 0.08f * h;
 		parent.textSize(this.textSize);
 		this.textHeight = parent.textAscent() + parent.textDescent();
 		computeTextSize();
 	}
 
-	void computeTextSize() {
+	private void computeTextSize() {
 		while (textHeight > h - padding * 2) {
 			this.textSize--;
 			parent.textSize(this.textSize);
@@ -68,7 +78,7 @@ public class TextBox implements PConstants {
 		parent.popStyle();
 	}
 	
-	void drawBlinkingInputCursor() {
+	private void drawBlinkingInputCursor() {
 		if (!isFocused) {
 			return;
 		}
@@ -129,7 +139,7 @@ public class TextBox implements PConstants {
 		return parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h;
 	}
 
-	boolean isFocused() {
+	public boolean isFocused() {
 		return isFocused;
 	}
 

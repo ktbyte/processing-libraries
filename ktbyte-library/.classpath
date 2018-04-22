@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/test/Downloads/processing-3.3.6-windows64/processing-3.3.6/core/library/core.jar"/>
 	<classpathentry kind="lib" path="C:/Users/test/Documents/Processing/libraries/soundcipher/library/SoundCipher.jar"/>
+	<classpathentry kind="lib" path="C:/Users/test/Documents/eclipse/libs/minim.jar"/>
 	<classpathentry kind="output" path="resources/code"/>
 </classpath>

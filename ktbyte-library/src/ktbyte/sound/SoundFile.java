@@ -1,18 +1,19 @@
-//package ktbyte.sound;
-//
-//import java.util.ArrayList;
-//
-//import processing.core.*;
-//
-//public class SoundFile {
+package ktbyte.sound;
+
+import java.util.ArrayList;
+
+import processing.core.*;
+import ddf.minim.*;
+
+public class SoundFile {
 //	  ArrayList<KTSound> sounds;
-//	  PApplet pap;
+	  PApplet pap;
 //	  boolean isReady;
 //
 //	  public SoundFile(PApplet pap) {
 //	    this.pap = pap;
 //	    if (pap.javaVersionName != null) {
-//	      minim = new Minim(this.pap);
+////	      minim = new Minim(this.pap);
 //	      this.isReady = true;
 //	    } else {
 //	      // Waiting for the javascript binding
@@ -103,4 +104,4 @@
 //	    }
 //	  }
 //	  return -1;
-//	}
+	}

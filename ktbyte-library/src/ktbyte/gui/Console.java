@@ -31,6 +31,16 @@ public class Console implements PConstants {
 	private float scrollBarMaxHeight;
 	private TextBox inputBox;
 
+	/**
+	 * a Constructor, usually called in the setup() method in your sketch to
+	 * initialize the Console
+	 * 
+	 * @example Console_basicQA
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
 	public Console(PApplet pap, int x, int y, int width, int height) {
 		this.parent = pap;
 		this.parent.registerMethod("draw", this);
@@ -56,7 +66,7 @@ public class Console implements PConstants {
 		computeDefaultAttributes();
 	}
 
-	void computeDefaultAttributes() {
+	private void computeDefaultAttributes() {
 		if (h < 400) {
 			this.textSize = 18;
 		} else if (h < 900) {
@@ -81,7 +91,7 @@ public class Console implements PConstants {
 		parent.popStyle();
 	}
 
-	void drawConsoleTextBox() {
+	private void drawConsoleTextBox() {
 		parent.rectMode(CORNER);
 		parent.fill(0);
 		parent.noStroke();
@@ -98,7 +108,7 @@ public class Console implements PConstants {
 		}
 	}
 
-	void drawScrollBar() {
+	private void drawScrollBar() {
 		parent.noStroke();
 		parent.fill(50);
 		parent.rect(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, h - inputBoxHeight, 0, BOX_RONDING, 0, 0);
@@ -123,12 +133,18 @@ public class Console implements PConstants {
 		downBtn.drawButton();
 	}
 
+	/**
+	 * Outputs text in the console
+	 * 
+	 * @param text
+	 *          the text to be written in the console
+	 */
 	public void write(String text) {
 		splitCommandBasedOnConsoleWidth(new Command(text, false));
 		lastVariableName = "";
 	}
 
-	void splitCommandBasedOnConsoleWidth(Command command) {
+	private void splitCommandBasedOnConsoleWidth(Command command) {
 		Line line = new Line();
 		parent.textSize(textSize);
 		String[] wordsFromCommand = PApplet.split(command.text, " ");
@@ -146,10 +162,22 @@ public class Console implements PConstants {
 		lines.add(line);
 	}
 
+	/**
+	 * Returns a stored value from the console's memory
+	 * 
+	 * @param name
+	 *          the key of the stored entry
+	 */
 	public String getValue(String name) {
 		return dict.get(name);
 	}
 
+	/**
+	 * Sets the name of the next console's entry
+	 * 
+	 * @param name
+	 *          the key of the next stored entry
+	 */
 	public void readInput(String name) {
 		this.lastVariableName = name;
 	}
@@ -178,11 +206,11 @@ public class Console implements PConstants {
 		}
 	}
 
-	void mouseWheel(MouseEvent e) {
+	private void mouseWheel(MouseEvent e) {
 		mouseScrolled(e.getCount());
 	}
 
-	void mousePressed() {
+	private void mousePressed() {
 		if (parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h) {
 			isFocused = true;
 			inputBox.setIsFocused(true);
@@ -201,7 +229,7 @@ public class Console implements PConstants {
 		}
 	}
 
-	void handleConsoleInput() {
+	private void handleConsoleInput() {
 		String textInput = inputBox.getText();
 		splitCommandBasedOnConsoleWidth(new Command(textInput, true));
 		dict.put(lastVariableName, textInput);
@@ -209,18 +237,42 @@ public class Console implements PConstants {
 		inputBox.setText("");
 	}
 
+	/**
+	 * Sets the console's input listener
+	 * 
+	 * @param consoleInputListener
+	 *          console input listener
+	 */
 	public void setConsoleInputListener(ConsoleInputListener consoleInputListener) {
 		this.consoleInputListener = consoleInputListener;
 	}
 
+	/**
+	 * Sets the color of the input text
+	 * 
+	 * @param inputTextColor
+	 *          the color of the input text
+	 */
 	public void setInputTextColor(int inputTextColor) {
 		this.inputTextColor = inputTextColor;
 	}
 
+	/**
+	 * Sets the color of the output text
+	 * 
+	 * @param outputTextColor
+	 *          the color of the output text
+	 */
 	public void setOutputTextColor(int outputTextColor) {
 		this.outputTextColor = outputTextColor;
 	}
 
+	/**
+	 * Sets the size of the text
+	 * 
+	 * @param textSize
+	 *          the size of the text
+	 */
 	public void setTextSize(int textSize) {
 		this.textSize = textSize;
 		this.textHeight = parent.textAscent() + parent.textDescent();
@@ -254,7 +306,7 @@ public class Console implements PConstants {
 			computeArrowEndPoints();
 		}
 
-		void computeArrowEndPoints() {
+		private void computeArrowEndPoints() {
 			switch (orientation) {
 			case UP:
 				this.p1 = new Point(x + 0.2f * s, y + 0.8f * s);
@@ -280,7 +332,7 @@ public class Console implements PConstants {
 			}
 		}
 
-		void drawButton() {
+		private void drawButton() {
 			parent.rectMode(CORNER);
 			parent.noStroke();
 			parent.fill(80);
