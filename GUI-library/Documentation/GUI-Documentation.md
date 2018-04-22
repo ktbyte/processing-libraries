@@ -473,6 +473,10 @@ The full list of these 'specific' methods can be found [here](https://github.com
 - `public void mouseEvent(MouseEvent e)` Method that's called when a mouse event occurs in the parent *PApplet*. Drawing inside this method is allowed because mouse events are queued, unless the sketch has called `noLoop()`.
 - `public void keyEvent(KeyEvent e)` Method that's called when a key event occurs in the parent *PApplet.* Drawing is allowed because key events are queued, unless the sketch has called `noLoop()`.
 
+#### Class diagram for the KTGUI library
+
+![class diagram](https://github.com/ktbyte/processing-libraries/blob/GUI/KTBYTEDEV-618-align-component/GUI-library/Documentation/.images/Class-Diagram.png)
+
 
 #### The implementation of 'main' and 'GUI' related code separation 
 
