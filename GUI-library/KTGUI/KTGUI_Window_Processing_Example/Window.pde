@@ -141,6 +141,45 @@ class Window extends Controller {
     }
   }
 
+  void addController(Controller controller, int hAlign, int vAlign) {
+    if (isActive) {
+      int hPos = 0, vPos = 0;
+
+      switch (hAlign) {
+      case LEFT:
+        hPos = 10;
+        break;
+      case RIGHT:
+        hPos = this.w - 10;
+        break;
+      case CENTER:
+        hPos = (int)(this.w * 0.5);
+        break;
+      default:
+        break;
+      }
+
+      switch (vAlign) {
+      case TOP:
+        vPos = 10;
+        break;
+      case BOTTOM:
+        vPos = this.h - 10; 
+        break;
+      case CENTER:
+        vPos = (int)(this.h * 0.5);
+        break;
+      default:
+        break;
+      }
+
+      controller.posx = hPos;
+      controller.posy = vPos;
+
+      attachController(controller);
+    }
+  }
+
   void registerChildController(Controller controller) {
     if (parentStage != null) {
       parentStage.registerController(controller);
@@ -161,7 +200,7 @@ class Window extends Controller {
   }
 
   void detachAllControllers() {
-    for (Controller controller: controllers) {
+    for (Controller controller : controllers) {
       detachController(controller);
     }
   }
