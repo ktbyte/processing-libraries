@@ -203,11 +203,13 @@ class Window extends Controller {
 
   // process mouseDragged event received from PApplet
   void processMouseDragged() {
-    if (isTitleBarPressed) {
-      posx += mouseX - pmouseX;
-      posy += mouseY - pmouseY;
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseDragged();
+    if (isDragable) {
+      if (isTitleBarPressed) {
+        posx += mouseX - pmouseX;
+        posy += mouseY - pmouseY;
+        for (KTGUIEventAdapter adapter : adapters) {
+          adapter.onMouseDragged();
+        }
       }
     }
   }

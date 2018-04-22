@@ -53,7 +53,7 @@ class Button extends Controller {
   }
 
   void draw() {
-    if (parentWindow == null) {
+    if (parentWindow == null && parentPane == null) {
       image(pg, posx, posy);
     }
   }
@@ -72,7 +72,7 @@ class Button extends Controller {
 
   // process mousePressed event received from PApplet
   void processMousePressed() {
-    if(isActive){
+    if (isActive) {
       if (isPointInside(mouseX, mouseY)) {
         isPressed = true;
         for (KTGUIEventAdapter adapter : adapters) {
@@ -94,9 +94,11 @@ class Button extends Controller {
 
   // process mouseDragged event received from PApplet
   void processMouseDragged() {
-    if (isPressed) {
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseDragged();
+    if (isDragable) {
+      if (isPressed) {
+        for (KTGUIEventAdapter adapter : adapters) {
+          adapter.onMouseDragged();
+        }
       }
     }
   }
@@ -104,8 +106,18 @@ class Button extends Controller {
   boolean isPointInside(int x, int y) {
     boolean isInside = false;
 
-    int px = (parentWindow == null) ? 0 : parentWindow.posx;
-    int py = (parentWindow == null) ? 0 : parentWindow.posy;
+    //int px = (parentWindow == null) ? 0 : parentWindow.posx;
+    //int py = (parentWindow == null) ? 0 : parentWindow.posy;
+    int px = 0;
+    int py = 0;
+
+    if (parentWindow == null && parentPane != null) {
+      px = parentPane.posx;
+      py = parentPane.posy;
+    } else if (parentWindow != null && parentPane == null) {
+      px = parentWindow.posx;
+      py = parentWindow.posy;
+    }
 
     if (x > px + posx && x < px + posx + w) {
       if (y > py + posy && y < py + posy + h) {

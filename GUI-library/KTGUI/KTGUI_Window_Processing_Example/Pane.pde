@@ -7,7 +7,7 @@
  * The second one: This class should be possible to use as a standalone object.
  *********************************************************************************************************************/
 class Pane extends Controller {
- 
+
   ArrayList<Controller> controllers = new ArrayList<Controller>();
 
   Pane(int posx, int posy, int w, int h) {
@@ -15,11 +15,12 @@ class Pane extends Controller {
     this.posy = posy;
     this.w = w;
     this.h = h;
+    this.isDragable = false;
     updateSize(w, h);
-    
+
     title = "a Pane";
-    
-    // automatically register the newly created window in default stage of stageManager
+
+    // automatically register the newly created pane in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
 
@@ -29,9 +30,10 @@ class Pane extends Controller {
     this.posy = posy;
     this.w = w;
     this.h = h;
+    this.isDragable = false;
     updateSize(w, h);
-    
-    // automatically register the newly created window in default stage of stageManager
+
+    // automatically register the newly created pane in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
 
@@ -65,22 +67,53 @@ class Pane extends Controller {
   }
 
   void attachController(Controller controller) {
-    if (controller.parentPane != null) {
-      controller.parentPane.controllers.remove(controller); // remove 'this' controller from parentPanel's children-controllers list
-    }
-
-    if (!controllers.contains(controller)) {
-      controllers.add(controller);
-      controller.setParentPane(this);
+    if (isActive) {
+      // detach from existing pane first (if exist)
+      if (controller.parentPane != null) {
+        controller.parentPane.detachController(controller); // reset parentWindow
+      }
+      // add to the list of controllers
+      if (!controllers.contains(controller)) {
+        controllers.add(controller);
+        controller.setParentPane(this);
+        // try to register in parentStage
+        registerChildController(controller);
+      }
     }
   }
 
-  void attachControllers(ArrayList<Controller> controllers) {
-    for (Controller controller : controllers) {
+  void addController(Controller controller, int hAlign, int vAlign) {
+    if (isActive) {
+      controller.alignAbout(this, hAlign, vAlign);
       attachController(controller);
     }
   }
-  
+
+  void detachController(Controller controller) {
+    controller.parentPane = null;
+    controllers.remove(controller);
+  }
+
+  void detachAllControllers() {
+    for (Controller controller : controllers) {
+      detachController(controller);
+    }
+  }
+
+  void registerChildController(Controller controller) {
+    if (parentStage != null) {
+      parentStage.registerController(controller);
+    }
+  }
+
+  void registerChildControllers() {
+    if (parentStage != null) {
+      for (Controller controller : controllers) {
+        registerChildController(controller);
+      }
+    }
+  }
+
   // process mouseMoved event received from PApplet
   void processMouseMoved() {
     isHovered = isPointInside(mouseX, mouseY) ? true : false;
@@ -111,11 +144,13 @@ class Pane extends Controller {
 
   // process mouseDragged event received from PApplet
   void processMouseDragged() {
-    if (isPressed) {
-      posx += mouseX - pmouseX;
-      posy += mouseY - pmouseY;
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseDragged();
+    if (isDragable) {
+      if (isPressed) {
+        posx += mouseX - pmouseX;
+        posy += mouseY - pmouseY;
+        for (KTGUIEventAdapter adapter : adapters) {
+          adapter.onMouseDragged();
+        }
       }
     }
   }
@@ -129,5 +164,4 @@ class Pane extends Controller {
     }
     return isInside;
   }
-
 }

@@ -10,6 +10,7 @@ public abstract class Controller {
   int posx, posy, w, h;  
   boolean isPressed, isHovered;
   boolean isActive = true;
+  boolean isDragable = true;
   ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
   Window parentWindow = null;
   Pane parentPane = null;
@@ -63,10 +64,10 @@ public abstract class Controller {
   void alignAboutApplet(int hAlign, int vAlign) {
     switch (hAlign) {
     case LEFT:
-      this.posx = 10;
+      this.posx = ktgui.ALIGN_GAP;
       break;
     case RIGHT:
-      this.posx = width - this.w - 10;
+      this.posx = width - this.w - ktgui.ALIGN_GAP;
       break;
     case CENTER:
       this.posx = (int)(width * 0.5 - this.w * 0.5);
@@ -77,10 +78,10 @@ public abstract class Controller {
     //
     switch (vAlign) {
     case TOP:
-      this.posy = 10;
+      this.posy = ktgui.ALIGN_GAP;
       break;
     case BOTTOM:
-      this.posy = height - this.h - 10; 
+      this.posy = height - this.h - ktgui.ALIGN_GAP; 
       break;
     case CENTER:
       this.posy = (int)(height * 0.5 - this.h * 0.5);
@@ -93,10 +94,10 @@ public abstract class Controller {
   void alignAbout(Controller controller, int hAlign, int vAlign) {
     switch (hAlign) {
     case LEFT:
-      this.posx = 10;
+      this.posx = ktgui.ALIGN_GAP;
       break;
     case RIGHT:
-      this.posx = controller.w - this.w - 10;
+      this.posx = controller.w - this.w - ktgui.ALIGN_GAP;
       break;
     case CENTER:
       this.posx = (int)(controller.w * 0.5 - this.w * 0.5);
@@ -107,10 +108,10 @@ public abstract class Controller {
     //
     switch (vAlign) {
     case TOP:
-      this.posy = 10;
+      this.posy = ktgui.ALIGN_GAP;
       break;
     case BOTTOM:
-      this.posy = controller.h - this.h - 10; 
+      this.posy = controller.h - this.h - ktgui.ALIGN_GAP; 
       break;
     case CENTER:
       this.posy = (int)(controller.h * 0.5 - this.h * 0.5);

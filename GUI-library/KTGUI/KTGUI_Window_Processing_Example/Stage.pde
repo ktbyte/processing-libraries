@@ -64,6 +64,12 @@ public class Stage {
         Window window = (Window) controller;
         window.registerChildControllers();
       }
+
+      // try to add all child components of controller, if it is of type Pane
+      if (controller.getClass().getCanonicalName().contains(".Pane")) {
+        Pane pane = (Pane) controller;
+        pane.registerChildControllers();
+      }
     } else {
       println("\talready exist.");
     }

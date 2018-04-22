@@ -19,6 +19,8 @@ public class KTGUI {
   color COLOR_BG_HOVERED = color(100); 
   color COLOR_BG_PASSIVE = color(100); 
   color COLOR_BG_PRESSED = color(200);
+  
+  final int ALIGN_GAP = 20;
 
   /*
   * The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
@@ -83,6 +85,10 @@ public class KTGUI {
   //-------------------------------------------------------------------------------------------------------------------
   Pane createPane(int x, int y, int w, int h) {
     Pane pane = new Pane(x, y, w, h);
+    return pane;
+  }
+  Pane createPane(String title, int x, int y, int w, int h) {
+    Pane pane = new Pane(title, x, y, w, h);
     return pane;
   }
 
