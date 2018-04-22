@@ -6,19 +6,34 @@
  * The object of this class can be 'Pressed', 'Hovered', 'Released' and 'Dragged'.
  *********************************************************************************************************************/
 class Button extends Controller {
-  boolean isPressed, isHovered;
 
   Button(int posx, int posy, int w, int h) {
     this.posx = posx;
     this.posy = posy;
     this.w = w;
     this.h = h;
-    title = "Button";
-    adapters = new ArrayList<KTGUIEventAdapter>();
+    isActive = true;
+
+    title = "a Button";
     pg = createGraphics(w + 1, h + 1);
+
+    // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
 
+  Button(String title, int posx, int posy, int w, int h) {
+    this.title = title;
+    this.posx = posx;
+    this.posy = posy;
+    this.w = w;
+    this.h = h;
+    isActive = true;
+
+    pg = createGraphics(w + 1, h + 1);
+
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+  }
   void updateGraphics() {
     pg.beginDraw();
     pg.rectMode(CORNER);
@@ -57,13 +72,15 @@ class Button extends Controller {
 
   // process mousePressed event received from PApplet
   void processMousePressed() {
-    if (isPointInside(mouseX, mouseY)) {
-      isPressed = true;
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMousePressed();
+    if(isActive){
+      if (isPointInside(mouseX, mouseY)) {
+        isPressed = true;
+        for (KTGUIEventAdapter adapter : adapters) {
+          adapter.onMousePressed();
+        }
+      } else {
+        isPressed = false;
       }
-    } else {
-      isPressed = false;
     }
   }
 

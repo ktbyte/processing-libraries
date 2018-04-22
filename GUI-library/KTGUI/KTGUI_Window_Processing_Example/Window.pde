@@ -8,28 +8,34 @@
 // be able to share/switch graphic context. If this is possible, then we will be able
 // to implement the 'minimize' feature.
 
-// The other way to implement the window is to 'mimic' the behavior of the window.
-// I mean, we don't need to really implement _ALL_ the drawing methods of PApplet. 
-// Instead, we can only implement the synchronized motion of both, the parent and
-// and the child components.
+// We should implement the synchronized motion of both, the parent and the child components.
 // For this, we could draw the border, background ant title bar. Then, we can use the 
 // title bar to move the window and use the border to change the size of the window.
 // When the window has moved, all the 'child' gui elements should receive the 'event'
 // that forces them to change their position the same amount of dx and dy as the 
 // parent window.
-// The only thing that is left to figure out is how to 'clip()' the extents of the 
-// gui elements that are crossing or even outside the window area.
 
-// Of course, we need to register all the 'child' components. Use the ArrayList for this.
+// The extents 'clipping' of the gui components which are crossing or even outside the
+// window area is done using the PGraphics.
+
+// In order to register all the 'child' components we are using the ArrayList<Controller>.
+
+// !!! The Window should contain a TitleBar and Panel.
+// !!! The TitleBar should contain a Button.
+// !!! The Panel chould contain a Border.
 
 class Window extends Controller {
-  int TITLE_BAR_HEIGHT = 20;
+  int TITLE_BAR_HEIGHT = 14;
   int MENU_BAR_HEIGHT = 20;
+  int BORDER_THICKNESS = 3;
+
   ArrayList<Controller> controllers = new ArrayList<Controller>();
-  ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
+
   boolean isTitleBarHovered, isTitleBarPressed;  
+  boolean isWindowHovered, isWindowPressed;  
   boolean isBorderHovered, isBorderPressed;  
-  WindowCloseButton windowCloseBtn;
+
+  CloseButton windowCloseBtn;
   // Border border;
   // TitleBar titleBar;
   // MenuBar menuBar;
@@ -41,12 +47,36 @@ class Window extends Controller {
     this.h = h;
     updateSize(w, h);
 
+    title = "a Window";
+
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
 
-    windowCloseBtn = new WindowCloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
+    windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
     attachController(windowCloseBtn);
     ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+  }
+
+  Window(String title, int posx, int posy, int w, int h) {
+    this.title = title;
+    this.posx = posx;
+    this.posy = posy;
+    this.w = w;
+    this.h = h;
+    updateSize(w, h);
+
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+
+    windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
+    setTitle(title);
+    attachController(windowCloseBtn);
+    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+  }
+
+  void setTitle(String string) {
+    title = string;
+    windowCloseBtn.setTitle("CloseButton-of:" + title);
   }
 
   void updateSize(int wdth, int hght) {
@@ -96,19 +126,43 @@ class Window extends Controller {
   }
 
   void attachController(Controller controller) {
-    if (controller.parentWindow != null) {
-      controller.parentWindow.controllers.remove(controller); // reset parentWindow
-    }
-
-    if (!controllers.contains(controller)) {
-      controllers.add(controller);
-      controller.setParentWindow(this);
+    if (isActive) {
+      // detach from existing window first (if exist)
+      if (controller.parentWindow != null) {
+        controller.parentWindow.detachController(controller); // reset parentWindow
+      }
+      // add to the list of controllers
+      if (!controllers.contains(controller)) {
+        controllers.add(controller);
+        controller.setParentWindow(this);
+        // try to register in parentStage
+        registerChildController(controller);
+      }
     }
   }
 
-  void attachControllers(ArrayList<Controller> controllers) {
-    for (Controller controller : controllers) {
-      attachController(controller);
+  void registerChildController(Controller controller) {
+    if (parentStage != null) {
+      parentStage.registerController(controller);
+    }
+  }
+
+  void registerChildControllers() {
+    if (parentStage != null) {
+      for (Controller controller : controllers) {
+        registerChildController(controller);
+      }
+    }
+  }
+
+  void detachController(Controller controller) {
+    controller.parentWindow = null;
+    controllers.remove(controller);
+  }
+
+  void detachAllControllers() {
+    for (Controller controller: controllers) {
+      detachController(controller);
     }
   }
 
@@ -166,10 +220,14 @@ class Window extends Controller {
 /*****************************************************************************************************
  * 
  ****************************************************************************************************/
-class WindowCloseButton extends Button {
+class CloseButton extends Button {
 
-  WindowCloseButton(int posx, int posy, int w, int h) {
+  CloseButton(int posx, int posy, int w, int h) {
     super(posx, posy, w, h);
+  }
+
+  CloseButton(String title, int posx, int posy, int w, int h) {
+    super(title, posx, posy, w, h);
   }
 
   void updateGraphics() {
@@ -195,7 +253,7 @@ class WindowCloseButton extends Button {
   void processMousePressed() {
     super.processMousePressed();
     if (isPressed) {
-      parentWindow.parentStage.controllers.remove(parentWindow);
+      ktgui.stageManager.closeWindow(parentWindow);
     }
   }
 }

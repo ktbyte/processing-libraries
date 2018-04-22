@@ -9,8 +9,10 @@ public abstract class Controller {
   String title;
   int posx, posy, w, h;  
   boolean isPressed, isHovered;
-  ArrayList<KTGUIEventAdapter> adapters;
+  boolean isActive = true;
+  ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
   Window parentWindow = null;
+  Pane parentPane = null;
   Stage parentStage = null;
   PGraphics pg;
 
@@ -35,6 +37,9 @@ public abstract class Controller {
   }
   void setParentWindow(Window window) {
     this.parentWindow = window;
+  }
+  void setParentPane(Pane pane) {
+    this.parentPane = pane;
   }
   void setTitle(String title) {
     this.title = title;
