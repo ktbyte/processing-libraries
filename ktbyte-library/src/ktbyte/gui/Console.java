@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Console implements PConstants {
-	private final static int BACKSPACE_ASCII_CODE = 8;
-	private final static int ENTER_ASCII_CODE = 10;
-	private final static int BASIC_ASCII_LOWER_LIMIT = 32;
-	private final static int BASIC_ASCII_UPPER_LIMIT = 126;
 	private final static int BOX_RONDING = 7;
 	private final static int SCROLL_BAR_WIDTH = 20;
 	private final static float INPUT_BOX_HEIGHT_PERCENTAGE = 0.1f;
@@ -19,7 +15,6 @@ public class Console implements PConstants {
 	private int inputTextColor;
 	private int outputTextColor;
 	private ArrayList<Line> lines;
-	private String textInput;
 	private int inputBoxHeight;
 	private HashMap<String, String> dict;
 	private ConsoleInputListener consoleInputListener;
@@ -33,13 +28,13 @@ public class Console implements PConstants {
 	private ArrowButton upBtn;
 	private ArrowButton downBtn;
 	private float scrollBarMaxHeight;
-	private PApplet pap;
+	private PApplet parent;
+	private TextBox inputBox;
 
 	public Console(PApplet pap, int x, int y, int width, int height) {
-		this.pap = pap;
-		this.pap.registerMethod("draw", this);
-		this.pap.registerMethod("mouseEvent", this);
-		this.pap.registerMethod("keyEvent", this);
+		this.parent = pap;
+		this.parent.registerMethod("draw", this);
+		this.parent.registerMethod("mouseEvent", this);
 		this.inputTextColor = pap.color(255);
 		this.outputTextColor = pap.color(170);
 		this.x = x;
@@ -50,7 +45,14 @@ public class Console implements PConstants {
 		this.inputBoxHeight = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
 		this.lines = new ArrayList<>();
 		this.dict = new HashMap<String, String>();
-		this.textInput = "";
+		inputBox = new TextBox(this.parent, x, y + h - inputBoxHeight, w, inputBoxHeight);
+		inputBox.setKeyEventListener(new KeyEventListener() {
+	
+			@Override
+			public void onEnterKey() {
+				handleConsoleInput();
+			}
+		});
 		computeDefaultAttributes();
 	}
 
@@ -62,8 +64,8 @@ public class Console implements PConstants {
 		} else {
 			this.textSize = 24;
 		}
-		pap.textSize(this.textSize);
-		this.textHeight = pap.textAscent() + pap.textDescent();
+		parent.textSize(this.textSize);
+		this.textHeight = parent.textAscent() + parent.textDescent();
 		this.maxLinesToDisplay = computeMaxLinesToDisplay();
 		this.scrollBarMaxHeight = h - inputBoxHeight - SCROLL_BAR_WIDTH * 2;
 	}
@@ -73,37 +75,36 @@ public class Console implements PConstants {
 	}
 
 	public void draw() {
-		pap.pushStyle();
+		parent.pushStyle();
 		drawConsoleTextBox();
-		drawInputBox();
 		drawScrollBar();
-		pap.popStyle();
+		parent.popStyle();
 	}
 
 	void drawConsoleTextBox() {
-		pap.rectMode(CORNER);
-		pap.fill(0);
-		pap.noStroke();
-		pap.rect(x, y, w - SCROLL_BAR_WIDTH, h - inputBoxHeight, BOX_RONDING, 0, 0, 0);
-		pap.textSize(textSize);
-		pap.textAlign(LEFT, TOP);
+		parent.rectMode(CORNER);
+		parent.fill(0);
+		parent.noStroke();
+		parent.rect(x, y, w - SCROLL_BAR_WIDTH, h - inputBoxHeight, BOX_RONDING, 0, 0, 0);
+		parent.textSize(textSize);
+		parent.textAlign(LEFT, TOP);
 		int consoleStartLine = PApplet.max(0, lines.size() - maxLinesToDisplay + lineScrollOffset);
 		int consoleEndLine = PApplet.min(lines.size(), consoleStartLine + maxLinesToDisplay);
 
 		for (int i = consoleStartLine, j = 0; i < consoleEndLine; i++, j++) {
-			pap.stroke(lines.get(i).textColor);
-			pap.fill(lines.get(i).textColor);
-			pap.text(lines.get(i).text, x + globalPadding, y + j * (textHeight + 2) + globalPadding);
+			parent.stroke(lines.get(i).textColor);
+			parent.fill(lines.get(i).textColor);
+			parent.text(lines.get(i).text, x + globalPadding, y + j * (textHeight + 2) + globalPadding);
 		}
 	}
 
 	void drawScrollBar() {
-		pap.noStroke();
-		pap.fill(50);
-		pap.rect(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, h - inputBoxHeight, 0, BOX_RONDING, 0, 0);
-		upBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, 0, 0, BOX_RONDING, 0, 0);
-		downBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y + h - inputBoxHeight - 20, SCROLL_BAR_WIDTH, 2);
-		pap.fill(120);
+		parent.noStroke();
+		parent.fill(50);
+		parent.rect(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, h - inputBoxHeight, 0, BOX_RONDING, 0, 0);
+		upBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, UP, 0, BOX_RONDING, 0, 0);
+		downBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y + h - inputBoxHeight - 20, SCROLL_BAR_WIDTH, DOWN);
+		parent.fill(120);
 
 		float scrollBarHeight = scrollBarMaxHeight;
 		if (lines.size() > maxLinesToDisplay) {
@@ -116,46 +117,11 @@ public class Console implements PConstants {
 			scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea
 					- (-lineScrollOffset * ((float) trackScrollArea / consoleScrollableLines));
 		}
-		pap.rectMode(CORNER);
-		pap.rect(x + w - SCROLL_BAR_WIDTH, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
+		parent.rectMode(CORNER);
+		parent.rect(x + w - SCROLL_BAR_WIDTH, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
 
 		upBtn.drawButton();
 		downBtn.drawButton();
-	}
-
-	void drawInputBox() {
-		pap.fill(255);
-		pap.noStroke();
-		pap.rect(x, y + h - inputBoxHeight, w, inputBoxHeight, 0, 0, BOX_RONDING, BOX_RONDING);
-		pap.fill(0);
-		pap.textSize(textSize);
-		pap.textAlign(LEFT, CENTER);
-		pap.text(getTrimmedInputText(textInput), x + globalPadding, y + 0.9f * h + inputBoxHeight / 2);
-		drawBlinkingInputCursor();
-	}
-
-	String getTrimmedInputText(String textInput) {
-		String trimmedTextInput = "";
-		char[] textInputCharArray = textInput.toCharArray();
-		for (int i = textInputCharArray.length - 1; i >= 0; i--) {
-			if (pap.textWidth(trimmedTextInput) + pap.textWidth(textInputCharArray[i]) < w - globalPadding * 2) {
-				trimmedTextInput = textInputCharArray[i] + trimmedTextInput;
-			} else {
-				break;
-			}
-		}
-		return trimmedTextInput;
-	};
-
-	void drawBlinkingInputCursor() {
-		if (!isFocused) {
-			return;
-		}
-		pap.stroke(0);
-		if (pap.frameCount % 60 < 30) {
-			float cursorX = PApplet.min(x + w - globalPadding, x + pap.textWidth(textInput) + globalPadding);
-			pap.line(cursorX, y + h - inputBoxHeight + 10, cursorX, y + h - 10);
-		}
 	}
 
 	public void write(String text) {
@@ -165,11 +131,11 @@ public class Console implements PConstants {
 
 	void splitCommandBasedOnConsoleWidth(Command command) {
 		Line line = new Line();
-		pap.textSize(textSize);
+		parent.textSize(textSize);
 		String[] wordsFromCommand = PApplet.split(command.text, " ");
 		int i = 0;
 		while (i < wordsFromCommand.length) {
-			if (pap.textWidth(line.text + " ") + pap.textWidth(wordsFromCommand[i]) < w - SCROLL_BAR_WIDTH) {
+			if (parent.textWidth(line.text + " ") + parent.textWidth(wordsFromCommand[i]) < w - SCROLL_BAR_WIDTH) {
 				line.text += wordsFromCommand[i] + " ";
 				line.textColor = (command.isInput ? inputTextColor : outputTextColor);
 				i++;
@@ -217,38 +183,19 @@ public class Console implements PConstants {
 		mouseScrolled(e.getCount());
 	}
 
-	public void keyEvent(KeyEvent e) {
-		if (e.getAction() == KeyEvent.PRESS) {
-			keyPressed();
-		}
-	}
-
-	void keyPressed() {
-		if (!isFocused) {
-			return;
-		}
-		if ((int) pap.key == BACKSPACE_ASCII_CODE && textInput.length() > 0) {
-			textInput = textInput.substring(0, textInput.length() - 1);
-		} else if ((int) pap.key == ENTER_ASCII_CODE) {
-			handleConsoleInput();
-		} else if ((int) pap.key >= BASIC_ASCII_LOWER_LIMIT && (int) pap.key <= BASIC_ASCII_UPPER_LIMIT) {
-			byte b = (byte) pap.key;
-			char ch = (char) b;
-			textInput += ch;
-		}
-	}
-
 	void mousePressed() {
-		if (pap.mouseX > x && pap.mouseX < x + w && pap.mouseY > y && pap.mouseY < y + h) {
+		if (parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h) {
 			isFocused = true;
+			inputBox.setIsFocused(true);
 		} else {
 			isFocused = false;
+			inputBox.setIsFocused(false);
 		}
-		if (upBtn.isPressed(pap.mouseX, pap.mouseY)) {
+		if (upBtn.isPressed(parent.mouseX, parent.mouseY)) {
 			if (-lineScrollOffset < lines.size() - maxLinesToDisplay) {
 				lineScrollOffset--;
 			}
-		} else if (downBtn.isPressed(pap.mouseX, pap.mouseY)) {
+		} else if (downBtn.isPressed(parent.mouseX, parent.mouseY)) {
 			if (lineScrollOffset < 0) {
 				lineScrollOffset++;
 			}
@@ -256,10 +203,11 @@ public class Console implements PConstants {
 	}
 
 	void handleConsoleInput() {
+		String textInput = inputBox.getText();
 		splitCommandBasedOnConsoleWidth(new Command(textInput, true));
 		dict.put(lastVariableName, textInput);
 		consoleInputListener.onConsoleInput(lastVariableName, textInput);
-		textInput = "";
+		inputBox.setText("");
 	}
 
 	public void setConsoleInputListener(ConsoleInputListener consoleInputListener) {
@@ -276,17 +224,16 @@ public class Console implements PConstants {
 
 	public void setTextSize(int textSize) {
 		this.textSize = textSize;
-		this.textHeight = pap.textAscent() + pap.textDescent();
+		this.textHeight = parent.textAscent() + parent.textDescent();
 		this.maxLinesToDisplay = computeMaxLinesToDisplay();
 	}
 
 	private class ArrowButton {
 		private int x, y, s;
-		private int r1, r2, r3, r4; // box-roundings
+		private int r1, r2, r3, r4; // box rounding parameters
 		private Point p1, p2, p3;
 
-		// TODO - try to use an enum insted of ints
-		public int orientation; // int from 0-3, clockwise
+		public int orientation;
 
 		ArrowButton(int x, int y, int s, int o) {
 			this.x = x;
@@ -310,22 +257,22 @@ public class Console implements PConstants {
 
 		void computeArrowEndPoints() {
 			switch (orientation) {
-			case 0: // UP
+			case UP:
 				this.p1 = new Point(x + 0.2f * s, y + 0.8f * s);
 				this.p2 = new Point(x + 0.8f * s, y + 0.8f * s);
 				this.p3 = new Point(x + 0.5f * s, y + 0.2f * s);
 				break;
-			case 1: // RIGHT
+			case RIGHT:
 				this.p1 = new Point(x + 0.2f * s, y + 0.2f * s);
 				this.p2 = new Point(x + 0.2f * s, y + 0.8f * s);
 				this.p3 = new Point(x + 0.8f * s, y + 0.5f * s);
 				break;
-			case 2: // DOWN
+			case DOWN:
 				this.p1 = new Point(x + 0.2f * s, y + 0.2f * s);
 				this.p2 = new Point(x + 0.8f * s, y + 0.2f * s);
 				this.p3 = new Point(x + 0.5f * s, y + 0.8f * s);
 				break;
-			case 3: // LEFT
+			case LEFT:
 				this.p1 = new Point(x + 0.8f * s, y + 0.2f * s);
 				this.p2 = new Point(x + 0.8f * s, y + 0.8f * s);
 				this.p3 = new Point(x + 0.2f * s, y + 0.5f * s);
@@ -335,13 +282,13 @@ public class Console implements PConstants {
 		}
 
 		void drawButton() {
-			pap.rectMode(CORNER);
-			pap.noStroke();
-			pap.fill(80);
-			pap.rect(this.x, this.y, s, s, r1, r2, r3, r4);
-			pap.stroke(200);
-			pap.line(p1.x, p1.y, p3.x, p3.y);
-			pap.line(p2.x, p2.y, p3.x, p3.y);
+			parent.rectMode(CORNER);
+			parent.noStroke();
+			parent.fill(80);
+			parent.rect(this.x, this.y, s, s, r1, r2, r3, r4);
+			parent.stroke(200);
+			parent.line(p1.x, p1.y, p3.x, p3.y);
+			parent.line(p2.x, p2.y, p3.x, p3.y);
 		}
 
 		boolean isPressed(float mx, float my) {
