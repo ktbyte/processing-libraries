@@ -48,7 +48,9 @@ public class KTGUI {
       Controller controller = (Controller)me.getKey();
       int time = (Integer)me.getValue();
       if (millis() - time > 100) {
-        if (controller.parentStage != null) controller.parentStage.unregisterController(controller);
+        if (controller.parentStage != null) { 
+          controller.parentStage.unregisterController(controller);
+        }
       }
     }
   }

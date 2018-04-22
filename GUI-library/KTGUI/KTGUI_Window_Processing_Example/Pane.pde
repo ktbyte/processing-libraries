@@ -23,6 +23,18 @@ class Pane extends Controller {
     ktgui.stageManager.defaultStage.registerController(this);
   }
 
+  Pane(String title, int posx, int posy, int w, int h) {
+    this.title = title;
+    this.posx = posx;
+    this.posy = posy;
+    this.w = w;
+    this.h = h;
+    updateSize(w, h);
+    
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+  }
+
   void updateSize(int wdth, int hght) {
     pg = createGraphics(wdth + 1, hght + 1);
   }

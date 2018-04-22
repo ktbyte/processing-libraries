@@ -143,7 +143,7 @@ class Window extends Controller {
 
   void addController(Controller controller, int hAlign, int vAlign) {
     if (isActive) {
-      alignAbout(controller, hAlign, vAlign);
+      controller.alignAbout(this, hAlign, vAlign);
       attachController(controller);
     }
   }

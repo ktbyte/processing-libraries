@@ -5,6 +5,8 @@ Button jumpButton, anotherButton, nextStageBtn;
 Window w1, w2, w3;
 Stage s1, s2, s3;
 
+Stage alignStage;
+
 /**********************************************************************************************************************
  * 
  *********************************************************************************************************************/
@@ -74,7 +76,10 @@ void setup() {
   w3.addController(jumpButton, CENTER, CENTER);
   s3.registerController(w3);
 
-  ktgui.stageManager.goToStage(s2);
+  alignStage = ktgui.stageManager.createStage("Aligning");
+  
+
+  ktgui.stageManager.goToStage(s1);
 }
 
 /**********************************************************************************************************************
@@ -115,6 +120,13 @@ void draw() {
       }
     }
   }
+  text("----------------------------------------------------", 10, ypos+=YSHIFT);
+  text("(jumpButton == null):" + (jumpButton == null), 10, ypos+=YSHIFT);
+  text("(anotherButton == null):" + (anotherButton == null), 10, ypos+=YSHIFT);
+  text("(nextStageBtn == null):" + (nextStageBtn == null), 10, ypos+=YSHIFT);
+  text("(w1 == null):" + (w1 == null), 10, ypos+=YSHIFT);
+  text("(w2 == null):" + (w2 == null), 10, ypos+=YSHIFT);
+  text("(w3 == null):" + (w3 == null), 10, ypos+=YSHIFT);
   text("----------------------------------------------------", 10, ypos+=YSHIFT);
 }
 

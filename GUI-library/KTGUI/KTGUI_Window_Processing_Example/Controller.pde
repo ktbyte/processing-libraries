@@ -93,13 +93,13 @@ public abstract class Controller {
   void alignAbout(Controller controller, int hAlign, int vAlign) {
     switch (hAlign) {
     case LEFT:
-      controller.posx = 10;
+      this.posx = 10;
       break;
     case RIGHT:
-      controller.posx = this.w - controller.w - 10;
+      this.posx = controller.w - this.w - 10;
       break;
     case CENTER:
-      controller.posx = (int)(this.w * 0.5 - controller.w * 0.5);
+      this.posx = (int)(controller.w * 0.5 - this.w * 0.5);
       break;
     default:
       break;
@@ -107,15 +107,91 @@ public abstract class Controller {
     //
     switch (vAlign) {
     case TOP:
-      controller.posy = 10;
+      this.posy = 10;
       break;
     case BOTTOM:
-      controller.posy = this.h - controller.h - 10; 
+      this.posy = controller.h - this.h - 10; 
       break;
     case CENTER:
-      controller.posy = (int)(this.h * 0.5 - controller.h * 0.5);
+      this.posy = (int)(controller.h * 0.5 - this.h * 0.5);
       break;
     default:
+      break;
+    }
+  }
+
+  void stackAbout(Controller controller, int direction, int align) {
+    switch (direction) {
+
+    case TOP: // stack this controller above the given controller
+      this.posy = controller.posy - this.h;
+      switch (align) {
+      case LEFT:
+        this.posx = controller.posx;
+        break;
+      case RIGHT:
+        this.posx = controller.posx + controller.w - this.w;
+        break;
+      case CENTER:
+        this.posx = (int)(controller.posx + controller.w * 0.5) - (int)(this.w * 0.5);
+        break;
+      default:
+        break;
+      }
+      break;
+
+    case BOTTOM: // stack this controller below the given controller
+      this.posy = controller.posy + this.h; 
+      switch (align) {
+      case LEFT:
+        this.posx = controller.posx;
+        break;
+      case RIGHT:
+        this.posx = controller.posx + controller.w - this.w;
+        break;
+      case CENTER:
+        this.posx = (int)(controller.posx + controller.w * 0.5) - (int)(this.w * 0.5);
+        break;
+      default:
+        break;
+      }
+      break;
+
+    case LEFT: // stack this controller to the left about given controller
+      this.posx = controller.posx - this.w;
+      switch (align) {
+      case TOP:
+        this.posy = controller.posy;
+        break;
+      case BOTTOM:
+        this.posy = controller.posy + controller.h - this.h;
+        break;
+      case CENTER:
+        this.posy = (int)(controller.posy + controller.h * 0.5) - (int)(this.h * 0.5);
+        break;
+      default:
+        break;
+      }
+      break;
+
+    case RIGHT:  // stack this controller to the right about given controller
+      this.posx = controller.posx + this.w;
+      switch (align) {
+      case TOP:
+        this.posy = controller.posy;
+        break;
+      case BOTTOM:
+        this.posy = controller.posy + controller.h - this.h;
+        break;
+      case CENTER:
+        this.posy = (int)(controller.posy + controller.h * 0.5) - (int)(this.h * 0.5);
+        break;
+      default:
+        break;
+      }
+      break;
+      
+    default: // do nothing
       break;
     }
   }
