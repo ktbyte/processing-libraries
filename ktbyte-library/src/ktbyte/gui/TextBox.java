@@ -9,16 +9,15 @@ public class TextBox implements PConstants {
 	private final static int BASIC_ASCII_LOWER_LIMIT = 32;
 	private final static int BASIC_ASCII_UPPER_LIMIT = 126;
 
+	private PApplet parent;
 	private int x, y, w, h;
-	private int r1, r2, r3, r4; // box rounding params
-	private boolean handleFocus;
-	private boolean isFocused;
+	private int r1, r2, r3, r4; // box rounding parameters
+	private boolean handleFocus, isFocused;
 	private String textInput;
 	private int textSize;
 	private float textHeight;
 	private KeyEventListener keyEventListener;
 	private float padding;
-	private PApplet parent;
 
 	public TextBox(PApplet pap, int x, int y, int width, int height) {
 		this.parent = pap;
@@ -67,6 +66,17 @@ public class TextBox implements PConstants {
 		parent.text(getTrimmedInputText(textInput), x + padding, y + h / 2);
 		drawBlinkingInputCursor();
 		parent.popStyle();
+	}
+	
+	void drawBlinkingInputCursor() {
+		if (!isFocused) {
+			return;
+		}
+		parent.stroke(0);
+		if (parent.frameCount % 60 < 30) {
+			float cursorX = PApplet.min(x + w - padding, x + parent.textWidth(textInput) + padding);
+			parent.line(cursorX, y + h / 2 - textHeight / 2, cursorX, y + h / 2 + textHeight / 2);
+		}
 	}
 
 	public void mouseEvent(MouseEvent e) {
@@ -119,6 +129,14 @@ public class TextBox implements PConstants {
 		return parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h;
 	}
 
+	boolean isFocused() {
+		return isFocused;
+	}
+
+	void setIsFocused(boolean isFocused) {
+		this.isFocused = isFocused;
+	}
+	
 	public void setText(String text) {
 		this.textInput = text;
 	}
@@ -130,14 +148,6 @@ public class TextBox implements PConstants {
 
 	public String getText() {
 		return this.textInput;
-	}
-
-	boolean isFocused() {
-		return isFocused;
-	}
-
-	void setIsFocused(boolean isFocused) {
-		this.isFocused = isFocused;
 	}
 
 	public void setKeyEventListener(KeyEventListener keyEventListener) {
@@ -156,15 +166,4 @@ public class TextBox implements PConstants {
 		}
 		return trimmedTextInput;
 	};
-
-	void drawBlinkingInputCursor() {
-		if (!isFocused) {
-			return;
-		}
-		parent.stroke(0);
-		if (parent.frameCount % 60 < 30) {
-			float cursorX = PApplet.min(x + w - padding, x + parent.textWidth(textInput) + padding);
-			parent.line(cursorX, y + h / 2 - textHeight / 2, cursorX, y + h / 2 + textHeight / 2);
-		}
-	}
 }

@@ -10,6 +10,7 @@ public class Console implements PConstants {
 	private final static int SCROLL_BAR_WIDTH = 20;
 	private final static float INPUT_BOX_HEIGHT_PERCENTAGE = 0.1f;
 
+	private PApplet parent;
 	private int x, y;
 	private int w, h;
 	private int inputTextColor;
@@ -28,7 +29,6 @@ public class Console implements PConstants {
 	private ArrowButton upBtn;
 	private ArrowButton downBtn;
 	private float scrollBarMaxHeight;
-	private PApplet parent;
 	private TextBox inputBox;
 
 	public Console(PApplet pap, int x, int y, int width, int height) {
@@ -105,7 +105,7 @@ public class Console implements PConstants {
 		upBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, UP, 0, BOX_RONDING, 0, 0);
 		downBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y + h - inputBoxHeight - 20, SCROLL_BAR_WIDTH, DOWN);
 		parent.fill(120);
-
+		
 		float scrollBarHeight = scrollBarMaxHeight;
 		if (lines.size() > maxLinesToDisplay) {
 			scrollBarHeight = PApplet.max(25, ((float) maxLinesToDisplay / lines.size()) * scrollBarMaxHeight);
@@ -114,8 +114,7 @@ public class Console implements PConstants {
 		float trackScrollArea = h - inputBoxHeight - SCROLL_BAR_WIDTH * 2 - scrollBarHeight;
 		float scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea;
 		if (lines.size() > maxLinesToDisplay) {
-			scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea
-					- (-lineScrollOffset * ((float) trackScrollArea / consoleScrollableLines));
+			scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea + (lineScrollOffset * ((float) trackScrollArea / consoleScrollableLines));
 		}
 		parent.rectMode(CORNER);
 		parent.rect(x + w - SCROLL_BAR_WIDTH, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
@@ -231,7 +230,7 @@ public class Console implements PConstants {
 	private class ArrowButton {
 		private int x, y, s;
 		private int r1, r2, r3, r4; // box rounding parameters
-		private Point p1, p2, p3;
+		private Point p1, p2, p3; // arrow definition points
 
 		public int orientation;
 
