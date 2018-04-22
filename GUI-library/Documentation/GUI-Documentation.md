@@ -29,7 +29,7 @@
     + [KTGUI Library](#ktgui-library)
       - [The concept of 'main' and 'GUI' related code separation](#the-concept-of-main-and-gui-related-code-separation)
       - [The implementation of 'main' and 'GUI' related code separation](#the-implementation-of-main-and-gui-related-code-separation)
-      
+
 
 ## Introduction
 
@@ -475,7 +475,7 @@ The full list of these 'specific' methods can be found [here](https://github.com
 
 #### Class diagram for the KTGUI library
 
-![class diagram](https://github.com/ktbyte/processing-libraries/blob/GUI/KTBYTEDEV-618-align-component/GUI-library/Documentation/.images/Class-Diagram.png)
+![class diagram](https://raw.githubusercontent.com/ktbyte/processing-libraries/GUI/KTBYTEDEV-618-align-component/GUI-library/Documentation/.images/Class-Diagram.png)
 
 
 #### The implementation of 'main' and 'GUI' related code separation 
