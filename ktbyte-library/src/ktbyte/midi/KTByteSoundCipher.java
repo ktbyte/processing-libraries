@@ -10,22 +10,19 @@ import arb.soundcipher.SoundCipher;
  */
 
 public class KTByteSoundCipher {
-	
-	// myParent is a reference to the parent sketch
-	PApplet myParent;
+	PApplet parent;
 	SoundCipher sc;
-	
 
 	/**
 	 * a Constructor, usually called in the setup() method in your sketch to
 	 * initialize and start the Library.
 	 * 
 	 * @example Hello
-	 * @param theParent
+	 * @param parent
 	 */
-	public KTByteSoundCipher(PApplet theParent) {
-		this.myParent = theParent;
-		this.sc = new SoundCipher(myParent);
+	public KTByteSoundCipher(PApplet parent) {
+		this.parent = parent;
+		this.sc = new SoundCipher(parent);
 	}
 	
 	/**
