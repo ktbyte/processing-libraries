@@ -47,7 +47,7 @@ public class KTGUI {
     for (Map.Entry me : garbageList.entrySet()) {
       Controller controller = (Controller)me.getKey();
       int time = (Integer)me.getValue();
-      if (millis() - time > 1000) {
+      if (millis() - time > 100) {
         if (controller.parentStage != null) controller.parentStage.unregisterController(controller);
       }
     }
