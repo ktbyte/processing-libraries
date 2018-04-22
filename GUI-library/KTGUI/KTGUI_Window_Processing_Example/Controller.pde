@@ -59,4 +59,64 @@ public abstract class Controller {
   void setPosY(int posy) {
     this.posy = posy;
   }
+
+  void alignAboutApplet(int hAlign, int vAlign) {
+    switch (hAlign) {
+    case LEFT:
+      this.posx = 10;
+      break;
+    case RIGHT:
+      this.posx = width - this.w - 10;
+      break;
+    case CENTER:
+      this.posx = (int)(width * 0.5 - this.w * 0.5);
+      break;
+    default:
+      break;
+    }
+    //
+    switch (vAlign) {
+    case TOP:
+      this.posy = 10;
+      break;
+    case BOTTOM:
+      this.posy = height - this.h - 10; 
+      break;
+    case CENTER:
+      this.posy = (int)(height * 0.5 - this.h * 0.5);
+      break;
+    default:
+      break;
+    }
+  }
+
+  void alignAbout(Controller controller, int hAlign, int vAlign) {
+    switch (hAlign) {
+    case LEFT:
+      controller.posx = 10;
+      break;
+    case RIGHT:
+      controller.posx = this.w - controller.w - 10;
+      break;
+    case CENTER:
+      controller.posx = (int)(this.w * 0.5 - controller.w * 0.5);
+      break;
+    default:
+      break;
+    }
+    //
+    switch (vAlign) {
+    case TOP:
+      controller.posy = 10;
+      break;
+    case BOTTOM:
+      controller.posy = this.h - controller.h - 10; 
+      break;
+    case CENTER:
+      controller.posy = (int)(this.h * 0.5 - controller.h * 0.5);
+      break;
+    default:
+      break;
+    }
+  }
 }
