@@ -3,6 +3,12 @@ package ktbyte.gui;
 import processing.event.*;
 import processing.core.*;
 
+/**
+ * 
+ * @author Ovidiu Miu
+ *
+ * This element is a rectangle input in which text can be entered if the box is focused.
+ */
 public class TextBox implements PConstants {
 	private final static int BACKSPACE_ASCII_CODE = 8;
 	private final static int ENTER_ASCII_CODE = 10;
@@ -20,8 +26,8 @@ public class TextBox implements PConstants {
 	private float padding;
 
 	/**
-	 * a Constructor, usually called in the setup() method in your sketch to
-	 * initialize the Console
+	 * This constructs the TextBox object within the current context (PApplet),
+	 *  starting from the x and y coordinates, having the specified width and height.
 	 * 
 	 * @example TextBox_basic1
 	 * @param x
@@ -43,6 +49,18 @@ public class TextBox implements PConstants {
 		computeDefaultAttributes();
 	}
 
+	/**
+	 * Sets the rounding of the rectangle's border. The parameters should be entered in a clockwise order
+	 * 
+	 * @param r1
+	 * 	UP
+	 * @param r2
+	 * 	RIGHT
+	 * @param r3
+	 * 	DOWN
+	 * @param r4
+	 * 	LEFT
+	 */
 	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
 		this.r1 = r1;
 		this.r2 = r2;
@@ -65,6 +83,10 @@ public class TextBox implements PConstants {
 		}
 	}
 
+	/**
+	 * This is a register method and should not be called directly
+	 * @param e
+	 */
 	public void draw() {
 		parent.pushStyle();
 		parent.fill(255);
@@ -89,12 +111,20 @@ public class TextBox implements PConstants {
 		}
 	}
 
+	/**
+	 * This is a register method and should not be called directly
+	 * @param e
+	 */
 	public void mouseEvent(MouseEvent e) {
 		if (e.getAction() == MouseEvent.PRESS) {
 			this.mousePressed();
 		}
 	}
 
+	/**
+	 * This is a register method and should not be called directly
+	 * @param e
+	 */
 	public void keyEvent(KeyEvent e) {
 		if (e.getAction() == KeyEvent.PRESS) {
 			this.keyPressed();

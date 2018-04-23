@@ -5,6 +5,12 @@ import processing.core.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * 
+ * @author Ovidiu Miu
+ *
+ * This element acts as a Command-line interface, accepting user input and handling custom responses.
+ */
 public class Console implements PConstants {
 	private final static int BOX_RONDING = 7;
 	private final static int SCROLL_BAR_WIDTH = 20;
@@ -32,8 +38,8 @@ public class Console implements PConstants {
 	private TextBox inputBox;
 
 	/**
-	 * a Constructor, usually called in the setup() method in your sketch to
-	 * initialize the Console
+	 * This constructs a new Console object within the current context (PApplet),
+	 *  starting from the x and y coordinates, having a given width and height
 	 * 
 	 * @example Console_basicQA
 	 * @param x
@@ -84,6 +90,10 @@ public class Console implements PConstants {
 		return (int) ((0.9 * h - globalPadding * 2) / (textHeight + 2));
 	}
 
+	/**
+	 * This is a register method and should not be called directly
+	 * @param e
+	 */
 	public void draw() {
 		parent.pushStyle();
 		drawConsoleTextBox();
@@ -182,6 +192,10 @@ public class Console implements PConstants {
 		this.lastVariableName = name;
 	}
 
+	/**
+	 * This is a register method and should not be called directly
+	 * @param e
+	 */
 	public void mouseEvent(MouseEvent e) {
 		if (e.getAction() == MouseEvent.PRESS) {
 			mousePressed();
