@@ -5,7 +5,7 @@ Button jumpButton, anotherButton, nextStageBtn;
 Window w1, w2, w3;
 Stage s1, s2, s3;
 Stage alignStage;
-boolean debug = false;
+boolean debug = true;
 
 /**********************************************************************************************************************
  * 

@@ -28,24 +28,20 @@ public class Stage {
     String[] tokens = splitTokens(controllerClassName, ".$");
     if (tokens.length > 1) controllerClassName = tokens[1];
     println("Trying to register '" + controller.title + "' " + controllerClassName + " in '" + name + "' stage.");
-    
-    // try to remove controller from default stage first
+
+ 
+    // try to remove controller from default stage then
     if (ktgui.stageManager.defaultStage.controllers.contains(controller)) {
       println("\tdefaultStage already contains this controller: --> removing from default stage.");
-      ktgui.stageManager.defaultStage.controllers.remove(controller);
+      ktgui.stageManager.defaultStage.unregisterController(controller);
     }
 
-    // try to remove controller from active stage first
+    // try to remove controller from active stage then
     if (ktgui.stageManager.activeStage != null) {
       if (ktgui.stageManager.activeStage.controllers.contains(controller)) {
       println("\tactiveStage already contains this controller: --> removing from active stage.");
-        ktgui.stageManager.activeStage.controllers.remove(controller);
+        ktgui.stageManager.activeStage.unregisterController(controller);
       }
-    }
-
-    // try to remove controller from parent stage first
-    if (controller.parentStage != null) {
-      println("\tparentStage(" + controller.parentStage.name + ") != null: true");
     }
 
     // add controller to this stage
@@ -70,10 +66,12 @@ public class Stage {
     } else {
       println("\talready exist.");
     }
+    println("------------------------------------------------------------------------------------");
   }
 
   void unregisterController(Controller controller) {
     if (controllers.contains(controller)) {
+      println("\t" + name + " already contains controller '" + controller.title + "': --> removing from '" + name + "' stage.");
       controllers.remove(controller);
       controller.parentStage = null;
     }

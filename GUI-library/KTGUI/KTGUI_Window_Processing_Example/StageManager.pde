@@ -10,6 +10,7 @@ class StageManager {
   StageManager() {
     stages = new ArrayList<Stage>();
     defaultStage = new Stage("Default");
+    activeStage = defaultStage;
   }
 
   Stage createStage(String name) {
