@@ -1,4 +1,12 @@
 class Bar extends Controller {
+
+  
+  /*
+  
+  See the notes in KTBYTEDEV-678
+  
+  */
+  
   
   CloseButton closeButton;
   
@@ -7,6 +15,9 @@ class Bar extends Controller {
     this.posy = y;
     this.w  = w;
     this.h = h;
+    
+    closeButton = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
+        
   }
   
   void draw() {
@@ -24,6 +35,8 @@ class Bar extends Controller {
     pg.text(title, 10, ktgui.TITLE_BAR_HEIGHT*0.5);
     pg.endDraw();  
   }
+  
+  //void attachController(
 }
 
 class TitleBar extends Bar {
