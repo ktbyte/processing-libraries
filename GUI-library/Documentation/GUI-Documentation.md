@@ -72,7 +72,7 @@ void tickle(){
   }
 }
 ```
-Making this check inside the 'draw()' method ensures that no state change would be missed. The advantage of this approach is simplicity of the design. The drawback of this approach is the redundancy - if there are a lot of GUI elements present in the code then it will put the extensive load on the processor. Moreover, in case there are lot of GUI components in the code the logic that handles the checking of all these components became very complex and hard to manage. The better approach is to use the [callback methods](#example-2) - these are the methods that will be executed automatically when the GUI component event is triggered.
+Making this check inside the 'draw()' method ensures that no state change would be missed. The advantage of this approach is simplicity of the design. The drawback of this approach is the redundancy - if there are a lot of GUI elements present in the code then it will put the extensive load on the processor. Moreover, in case there are lot of GUI components in the code the logic that handles the checking of all these components became very complex and hard to manage. The better approach is to use the [callback methods](#button-example-2) - these are the methods that will be executed automatically when the GUI component event is triggered.
 
 #### Button example 2
 
