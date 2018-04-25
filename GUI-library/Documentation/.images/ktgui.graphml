@@ -399,7 +399,7 @@ void unregisterController(Controller);
           <y:Geometry height="53.7629796839733" width="147.8781038374716" x="1035.4187923250556" y="1514.7313769751706"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="131.08642578125" x="8.395839028110913" y="14.927463485978706">WindowCloseButton<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="131.08642578125" x="8.3958390281108" y="3.0">WindowCloseButton<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -482,7 +482,7 @@ in parentPApplet;
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="82.94582392776533" width="135.3837471783295" x="983.4369910479488" y="2292.3614559819425"/>
+          <y:Geometry height="88.35942489261902" width="135.3837471783295" x="983.4369910479488" y="2292.3614559819425"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.44091796875" x="45.47141460478974" y="3.0">KTGUI<y:LabelModel>
@@ -494,7 +494,8 @@ in parentPApplet;
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel>PApplet parentPApplet;</y:AttributeLabel>
-            <y:MethodLabel>void mouseEvent()</y:MethodLabel>
+            <y:MethodLabel>void mouseEvent();
+void keyboardEvent();	</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -503,7 +504,7 @@ in parentPApplet;
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="92.01354401805816" width="160.91873589164777" x="1362.3579842759393" y="2676.903216704292"/>
+          <y:Geometry height="92.01354401805816" width="160.91873589164777" x="1362.3579842759393" y="2720.330305767182"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="92.86083984375" x="34.028948023948885" y="3.0">StageManager<y:LabelModel>
@@ -525,7 +526,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="109.39277652370197" width="222.02031602708803" x="1480.6932553022227" y="2824.531264621742"/>
+          <y:Geometry height="109.39277652370197" width="222.02031602708803" x="1480.6932553022227" y="2867.958353684632"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="121.025390625" x="50.497462701044014" y="3.0">Stage defaultStage<y:LabelModel>
@@ -548,7 +549,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="109.39277652370151" width="222.02031602708803" x="1186.50762557786" y="2824.531264621742"/>
+          <y:Geometry height="109.39277652370151" width="222.02031602708803" x="1186.50762557786" y="2867.958353684632"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="115.2744140625" x="53.372950982294014" y="3.0">Stage activeStage<y:LabelModel>
@@ -570,7 +571,7 @@ Stage defaultStage;</y:AttributeLabel>
     <node id="n32">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="52.79909706546232" width="175.91422121896164" x="963.1717540276328" y="2509.1007336343187"/>
+          <y:Geometry height="52.79909706546232" width="175.91422121896164" x="963.1717540276328" y="2552.5278226972086"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="111.390625" x="32.261798109480765" y="17.048962595230932">event == PRESSED<y:LabelModel>
@@ -587,7 +588,7 @@ Stage defaultStage;</y:AttributeLabel>
     <node id="n33">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="52.79909706546232" width="175.91422121896164" x="963.1717540276328" y="2415.804458239282"/>
+          <y:Geometry height="52.79909706546232" width="175.91422121896164" x="963.1717540276328" y="2459.231547302172"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="118.064453125" x="28.924884046980765" y="17.048962595231387">event == RELEASED<y:LabelModel>
@@ -605,7 +606,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="82.94582392776533" width="175.91422121896164" x="1209.560672981923" y="2400.731094808131"/>
+          <y:Geometry height="82.94582392776533" width="175.91422121896164" x="1209.560672981923" y="2444.158183871021"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.44091796875" x="65.73665162510582" y="3.0">KTGUI<y:LabelModel>
@@ -626,7 +627,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="82.94582392776533" width="175.91422121896164" x="1209.560672981923" y="2494.027370203167"/>
+          <y:Geometry height="82.94582392776533" width="175.91422121896164" x="1209.560672981923" y="2537.454459266057"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.44091796875" x="65.73665162510582" y="3.0">KTGUI<y:LabelModel>
@@ -646,7 +647,7 @@ Stage defaultStage;</y:AttributeLabel>
     <node id="n36">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="52.79909706546232" width="210.43814835256012" x="1455.949591936213" y="2415.804458239282"/>
+          <y:Geometry height="52.79909706546232" width="210.43814835256012" x="1455.949591936213" y="2459.231547302172"/>
           <y:Fill color="#CCFFFF" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="183.4140625" x="13.512042926280174" y="9.698376657731387">same logic as in PRESSED event
@@ -953,10 +954,10 @@ controlleres which must be drawn on it;</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLNoteNode>
-          <y:Geometry height="59.46275395033899" width="277.3769751693003" x="3131.0387923372127" y="3257.905675294157"/>
+          <y:Geometry height="59.46275395033899" width="277.3769751693003" x="3790.3817291439045" y="3257.905675294157"/>
           <y:Fill color="#FFFF99" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="48.103515625" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="159.07421875" x="59.15137820964992" y="5.679619162669496">The login behind 
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="48.103515625" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="159.07421875" x="59.15137820964992" y="5.679619162669496">The logic behind 
 closing the Window</y:NodeLabel>
         </y:UMLNoteNode>
       </data>
@@ -1061,7 +1062,7 @@ closing the Window</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLNoteNode>
-          <y:Geometry height="91.36474252176777" width="277.3769751693003" x="1379.318258321281" y="3251.220362797423"/>
+          <y:Geometry height="91.36474252176777" width="277.3769751693003" x="1599.8777950736232" y="3251.220362797423"/>
           <y:Fill color="#FFFF99" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="92.20703125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="224.130859375" x="26.623057897150147" y="-0.4211443641161168">The logic behind process of
@@ -1074,7 +1075,7 @@ the Window</y:NodeLabel>
     <node id="n59">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="918.5264384942525" y="3560.387697516938"/>
+          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="1139.0859752465947" y="3560.387697516938"/>
           <y:Fill color="#CCFFCC" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="203.1015625" x="22.796848546839783" y="17.530903904486877">b = ktgui.createButton(int, int, int, int);<y:LabelModel>
@@ -1092,7 +1093,7 @@ the Window</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="363.6730396606929" width="433.09480812641084" x="1752.1333987125713" y="3676.1501128668233"/>
+          <y:Geometry height="363.6730396606929" width="433.09480812641084" x="1972.6929354649135" y="3676.1501128668233"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="39.40087890625" x="196.84696461008042" y="3.0">Stage<y:LabelModel>
@@ -1131,7 +1132,7 @@ the Window</y:NodeLabel>
     <node id="n61">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="1844.333172978937" y="3560.387697516938"/>
+          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="2064.892709731279" y="3560.387697516938"/>
           <y:Fill color="#CCFFCC" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="125.359375" x="61.66794229683978" y="17.530903904486877">s.registerController(w);<y:LabelModel>
@@ -1149,7 +1150,7 @@ the Window</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="260.1596370813472" width="310.18470719012316" x="1312.0514841746526" y="3676.1501128668233"/>
+          <y:Geometry height="260.1596370813472" width="310.18470719012316" x="1532.6110209269948" y="3676.1501128668233"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="53.81640625" x="128.18415047006158" y="3.0">Window<y:LabelModel>
@@ -1182,7 +1183,7 @@ the Window</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="123.07223476298009" width="248.69525959367957" x="918.5264384942525" y="3676.1501128668233"/>
+          <y:Geometry height="123.07223476298009" width="248.69525959367957" x="1139.0859752465947" y="3676.1501128668233"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.44091796875" x="102.12717081246478" y="3.0">KTGUI<y:LabelModel>
@@ -1206,7 +1207,7 @@ the Window</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="123.07223476298009" width="129.0" x="1451.5367765981905" y="3359.437358916485"/>
+          <y:Geometry height="123.07223476298009" width="129.0" x="1672.0963133505327" y="3359.437358916485"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="53.11181640625" x="37.944091796875" y="3.0">PApplet<y:LabelModel>
@@ -1229,7 +1230,7 @@ Button b;</y:AttributeLabel>
     <node id="n65">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="1342.796207972874" y="3560.387697516938"/>
+          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="1563.3557447252163" y="3560.387697516938"/>
           <y:Fill color="#CCFFCC" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="118.708984375" x="64.99313760933978" y="17.530903904486877">w.attachController(b);<y:LabelModel>
@@ -1246,7 +1247,7 @@ Button b;</y:AttributeLabel>
     <node id="n66">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="30.0" x="888.5264384942525" y="3530.387697516938"/>
+          <y:Geometry height="30.0" width="30.0" x="1109.0859752465947" y="3530.387697516938"/>
           <y:Fill color="#FFCC99" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="24" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="17.34765625" x="6.326171875" y="-1.701171875">1</y:NodeLabel>
@@ -1257,7 +1258,7 @@ Button b;</y:AttributeLabel>
     <node id="n67">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="30.0" x="1312.796207972874" y="3530.387697516938"/>
+          <y:Geometry height="30.0" width="30.0" x="1533.3557447252163" y="3530.387697516938"/>
           <y:Fill color="#FFCC99" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="24" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="17.34765625" x="6.326171875" y="-1.701171875">2</y:NodeLabel>
@@ -1268,7 +1269,7 @@ Button b;</y:AttributeLabel>
     <node id="n68">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="30.0" x="1814.333172978937" y="3530.387697516938"/>
+          <y:Geometry height="30.0" width="30.0" x="2034.8927097312792" y="3530.387697516938"/>
           <y:Fill color="#FFCC99" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="24" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="17.34765625" x="6.326171875" y="-1.701171875">3</y:NodeLabel>
@@ -1280,7 +1281,7 @@ Button b;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLNoteNode>
-          <y:Geometry height="76.86039653764738" width="277.3769751693003" x="1678.9286989306468" y="3258.472535789483"/>
+          <y:Geometry height="76.86039653764738" width="277.3769751693003" x="1899.488235682989" y="3258.472535789483"/>
           <y:Fill color="#FFFF99" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="70.1552734375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="243.150390625" x="17.113292272150147" y="3.352561550073915">This sssumes that the ktgui, 
@@ -1293,10 +1294,10 @@ exist.</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLNoteNode>
-          <y:Geometry height="145.2218006192793" width="345.12498038740205" x="1302.0395782719452" y="4415.887939503123"/>
+          <y:Geometry height="111.46344225477651" width="345.12498038740205" x="1927.783723821255" y="4274.424497248347"/>
           <y:Fill color="#FFFF99" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="92.20703125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="321.56640625" x="11.779287068701024" y="26.507384684639874">When one's attaching the controller
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="92.20703125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="321.56640625" x="11.779287068701024" y="9.628205502388482">When one's attaching the controller
 to the window, this window tries to 
 register the newly attached controller 
 to this window's parent stage (if it exist).</y:NodeLabel>
@@ -1307,7 +1308,7 @@ to this window's parent stage (if it exist).</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="208.11286681715524" width="433.09480812641084" x="1250.5964337065086" y="4177.775072685968"/>
+          <y:Geometry height="208.11286681715524" width="433.09480812641084" x="1471.1559704588508" y="4177.775072685968"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="225.025390625" x="104.03470875070542" y="3.0">Stage              (window.parentStage)<y:LabelModel>
@@ -1336,7 +1337,7 @@ to this window's parent stage (if it exist).</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="139.60050312760586" width="310.18470719012316" x="1312.0514841746526" y="3987.2421597532666"/>
+          <y:Geometry height="139.60050312760586" width="310.18470719012316" x="1532.6110209269948" y="3987.2421597532666"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="53.81640625" x="128.18415047006158" y="3.0">Window<y:LabelModel>
@@ -1361,10 +1362,10 @@ to this window's parent stage (if it exist).</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLNoteNode>
-          <y:Geometry height="145.2218006192793" width="345.12498038740205" x="1796.1183125820758" y="4249.423655655122"/>
+          <y:Geometry height="102.25661724627616" width="345.12498038740205" x="2365.12586811468" y="4115.047913903776"/>
           <y:Fill color="#FFFF99" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="92.20703125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="346.158203125" x="-0.5166113687989764" y="26.507384684639874">When one's attaching the window to the 
+          <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="92.20703125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="346.158203125" x="-0.5166113687992038" y="5.024792998137855">When one's attaching the window to the 
 stage, this stage tries to make this window 
 to register all its child components (if they 
 are exist) in this stage.</y:NodeLabel>
@@ -1375,7 +1376,7 @@ are exist) in this stage.</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="139.60050312760586" width="310.18470719012316" x="1813.5884491807153" y="4079.823152527516"/>
+          <y:Geometry height="139.60050312760586" width="310.18470719012316" x="2034.1479859330575" y="4079.823152527516"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="53.81640625" x="128.18415047006158" y="3.0">Window<y:LabelModel>
@@ -1430,7 +1431,7 @@ switched/changed.<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="82.94582392776533" width="135.3837471783295" x="2697.7821704241974" y="3428.3165914221304"/>
+          <y:Geometry height="82.94582392776533" width="135.3837471783295" x="3357.125107230889" y="3428.3165914221304"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="53.11181640625" x="41.13596538603974" y="3.0">PApplet<y:LabelModel>
@@ -1451,7 +1452,7 @@ switched/changed.<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="82.94582392776533" width="135.3837471783295" x="2697.7821704241974" y="3564.7522573363526"/>
+          <y:Geometry height="82.94582392776533" width="135.3837471783295" x="3357.125107230889" y="3564.7522573363526"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.44091796875" x="45.47141460478974" y="3.0">KTGUI<y:LabelModel>
@@ -1472,7 +1473,7 @@ switched/changed.<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="92.01354401805816" width="160.91873589164777" x="3189.267911976039" y="3541.2624153498955"/>
+          <y:Geometry height="92.01354401805816" width="160.91873589164777" x="3848.610848782731" y="3541.2624153498955"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="92.86083984375" x="34.028948023948885" y="3.0">StageManager<y:LabelModel>
@@ -1494,7 +1495,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="109.39277652370197" width="222.02031602708803" x="3307.6031830023226" y="3688.8904632673466"/>
+          <y:Geometry height="109.39277652370197" width="222.02031602708803" x="3966.9461198090144" y="3688.8904632673466"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="121.025390625" x="50.497462701044014" y="3.0">Stage defaultStage<y:LabelModel>
@@ -1517,7 +1518,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="109.39277652370151" width="222.02031602708803" x="3013.4175532779595" y="3688.8904632673466"/>
+          <y:Geometry height="109.39277652370151" width="222.02031602708803" x="3672.7604900846513" y="3688.8904632673466"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="115.2744140625" x="53.372950982294014" y="3.0">Stage activeStage<y:LabelModel>
@@ -1539,7 +1540,7 @@ Stage defaultStage;</y:AttributeLabel>
     <node id="n81">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="52.79909706546232" width="175.91422121896164" x="2677.5169334038815" y="3701.187923250575"/>
+          <y:Geometry height="52.79909706546232" width="175.91422121896164" x="3336.8598702105733" y="3701.187923250575"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="111.390625" x="32.26179810948088" y="17.048962595230932">event == PRESSED<y:LabelModel>
@@ -1557,7 +1558,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="82.94582392776533" width="175.91422121896164" x="3181.770169312382" y="3428.3165914221304"/>
+          <y:Geometry height="82.94582392776533" width="175.91422121896164" x="3841.113106119074" y="3428.3165914221304"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.44091796875" x="65.73665162510582" y="3.0">KTGUI<y:LabelModel>
@@ -1577,7 +1578,7 @@ Stage defaultStage;</y:AttributeLabel>
     <node id="n83">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="2375.5095864122927" y="3442.9080135440263"/>
+          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="3034.8525232189845" y="3442.9080135440263"/>
           <y:Fill color="#CCFFCC" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="153.373046875" x="47.661106359339556" y="10.180317966986877">USER.mousePressed() ON 
@@ -1596,7 +1597,7 @@ WINDOW CLOSE BUTTON<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="153.0513928624082" width="305.4801242238767" x="3116.9872178099245" y="3889.66206667914"/>
+          <y:Geometry height="153.0513928624082" width="305.4801242238767" x="3776.3301546166163" y="3889.66206667914"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="131.08642578125" x="87.19684922131336" y="3.0">WindowCloseButton<y:LabelModel>
@@ -1622,7 +1623,7 @@ WINDOW CLOSE BUTTON<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="219.39116067206191" width="305.4801242238767" x="3641.716043115695" y="3428.3165914221304"/>
+          <y:Geometry height="219.39116067206191" width="305.4801242238767" x="4301.058979922387" y="3428.3165914221304"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="92.86083984375" x="106.30964219006336" y="3.0">StageManager<y:LabelModel>
@@ -1652,7 +1653,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="49.3920926447704" width="260.06892358854816" x="2794.790463341897" y="3900.5638268466723"/>
+          <y:Geometry height="49.3920926447704" width="260.06892358854816" x="3454.133400148589" y="3900.5638268466723"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="35.8525390625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="231.4873046875" x="14.29080945052408" y="3.0">       Window     
@@ -1674,7 +1675,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="82.94582392776533" width="260.0689235885483" x="3664.4216434333593" y="3702.113939565315"/>
+          <y:Geometry height="82.94582392776533" width="260.0689235885483" x="4323.764580240051" y="3702.113939565315"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.44091796875" x="107.81400280989914" y="3.0">KTGUI<y:LabelModel>
@@ -1694,7 +1695,7 @@ Stage defaultStage;</y:AttributeLabel>
     <node id="n88">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="30.0" x="2484.8572162091327" y="3385.5680045016275"/>
+          <y:Geometry height="30.0" width="30.0" x="3144.2001530158245" y="3385.5680045016275"/>
           <y:Fill color="#FFCC99" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="24" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="17.34765625" x="6.326171875" y="-1.701171875">1</y:NodeLabel>
@@ -1705,7 +1706,7 @@ Stage defaultStage;</y:AttributeLabel>
     <node id="n89">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="30.0" x="3254.727279921863" y="3385.5680045016275"/>
+          <y:Geometry height="30.0" width="30.0" x="3914.070216728555" y="3385.5680045016275"/>
           <y:Fill color="#FFCC99" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="24" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="17.34765625" x="6.326171875" y="-1.701171875">2</y:NodeLabel>
@@ -1716,7 +1717,7 @@ Stage defaultStage;</y:AttributeLabel>
     <node id="n90">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="30.0" x="3779.4561052276335" y="3385.5680045016275"/>
+          <y:Geometry height="30.0" width="30.0" x="4438.799042034325" y="3385.5680045016275"/>
           <y:Fill color="#FFCC99" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="24" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="17.34765625" x="6.326171875" y="-1.701171875">3</y:NodeLabel>
@@ -1728,7 +1729,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="124.70897692907806" width="260.0689235885483" x="3664.42164343336" y="3928.69836572456"/>
+          <y:Geometry height="124.70897692907806" width="260.0689235885483" x="4323.764580240051" y="3928.69836572456"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.44091796875" x="107.81400280989914" y="3.0">KTGUI<y:LabelModel>
@@ -1751,7 +1752,7 @@ Stage defaultStage;</y:AttributeLabel>
     <node id="n92">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="53.7629796839733" width="133.2284941756493" x="3727.8418581398087" y="3829.9975747668336"/>
+          <y:Geometry height="53.7629796839733" width="133.2284941756493" x="4387.184794946501" y="3829.9975747668336"/>
           <y:Fill color="#CCFFCC" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="111.71875" x="10.754872087824424" y="17.530903904486422">time delay = 100 ms<y:LabelModel>
@@ -1785,6 +1786,24 @@ Stage defaultStage;</y:AttributeLabel>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="left" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="26.0517578125" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="398.224609375" x="13.634194449954407" y="16.705498068919496">An example of mouse/keyboard event processing</y:NodeLabel>
         </y:UMLNoteNode>
+      </data>
+    </node>
+    <node id="n95">
+      <data key="d6">
+        <y:ShapeNode>
+          <y:Geometry height="52.79909706546232" width="210.43814835256012" x="1455.9495919362132" y="2344.0873976983066"/>
+          <y:Fill color="#CCFFCC" transparent="false"/>
+          <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="194.107421875" x="8.165363238779946" y="9.698376657730932">same sequence as for mouse event
+.........<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
       </data>
     </node>
     <edge id="e0" source="n2" target="n3">
@@ -2053,7 +2072,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="1591.7034133157667" y="2722.909988713321"/>
+            <y:Point x="1591.7034133157667" y="2766.337077776211"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2065,7 +2084,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="1297.517783591404" y="2722.909988713321"/>
+            <y:Point x="1297.517783591404" y="2766.337077776211"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2076,7 +2095,11 @@ Stage defaultStage;</y:AttributeLabel>
     <edge id="e23" source="n28" target="n33">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:Path sx="-36.642058148870206" sy="19.993701149142908" tx="0.0" ty="0.0">
+            <y:Point x="963.4369910479488" y="2356.534869577395"/>
+            <y:Point x="963.4369910479488" y="2419.9762140883668"/>
+            <y:Point x="1051.1288646371136" y="2419.9762140883668"/>
+          </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:BendStyle smoothed="false"/>
@@ -2117,7 +2140,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="1442.8173522217633" y="2535.5002821670496"/>
+            <y:Point x="1442.8173522217633" y="2578.9273712299396"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2339,8 +2362,8 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="47.50732957196578" tx="0.0" ty="0.0">
-            <y:Point x="853.0570081674051" y="3468.480805869941"/>
-            <y:Point x="853.0570081674051" y="3587.2691873589247"/>
+            <y:Point x="1073.6165449197474" y="3468.480805869941"/>
+            <y:Point x="1073.6165449197474" y="3587.2691873589247"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2352,9 +2375,9 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="68.05757561904738" tx="0.0" ty="12.361465135032631">
-            <y:Point x="1277.200726931456" y="3874.2875070265445"/>
-            <y:Point x="1277.200726931456" y="3961.7759548507192"/>
-            <y:Point x="1467.143837769714" y="3961.7759548507192"/>
+            <y:Point x="1497.7602636837983" y="3874.2875070265445"/>
+            <y:Point x="1497.7602636837983" y="3961.7759548507192"/>
+            <y:Point x="1687.7033745220565" y="3961.7759548507192"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2366,9 +2389,9 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="22.361774846258413" tx="0.0" ty="0.0">
-            <y:Point x="1277.200726931456" y="4079.4041861633277"/>
-            <y:Point x="1277.200726931456" y="4152.30886778342"/>
-            <y:Point x="1467.143837769714" y="4152.30886778342"/>
+            <y:Point x="1497.7602636837983" y="4079.4041861633277"/>
+            <y:Point x="1497.7602636837983" y="4152.30886778342"/>
+            <y:Point x="1687.7033745220563" y="4152.30886778342"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2380,9 +2403,9 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="120.7096689266582" tx="0.0" ty="0.0">
-            <y:Point x="1719.7061623591292" y="3978.696301623828"/>
-            <y:Point x="1719.7061623591292" y="4059.823152527516"/>
-            <y:Point x="1968.680802775777" y="4059.823152527516"/>
+            <y:Point x="1940.2656991114713" y="3978.696301623828"/>
+            <y:Point x="1940.2656991114713" y="4059.823152527516"/>
+            <y:Point x="2189.240339528119" y="4059.823152527516"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2440,7 +2463,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="3418.6133410158664" y="3587.2691873589247"/>
+            <y:Point x="4077.956277822558" y="3587.2691873589247"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2452,7 +2475,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="3124.4277112915033" y="3587.2691873589247"/>
+            <y:Point x="3783.770648098195" y="3587.2691873589247"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2464,8 +2487,8 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="87.69187358916452" sy="0.0" tx="0.0" ty="22.053394038743136">
-            <y:Point x="2942.8914416287853" y="3727.587471783306"/>
-            <y:Point x="2942.8914416287853" y="3491.8428974247563"/>
+            <y:Point x="3602.234378435477" y="3727.587471783306"/>
+            <y:Point x="3602.234378435477" y="3491.8428974247563"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2497,8 +2520,8 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="3124.4277112915033" y="3854.278191894829"/>
-            <y:Point x="3269.7272799218626" y="3854.278191894829"/>
+            <y:Point x="3783.770648098195" y="3854.278191894829"/>
+            <y:Point x="3929.0702167285544" y="3854.278191894829"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2510,8 +2533,8 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="21.9108634592168">
-            <y:Point x="3418.6133410158664" y="3854.278191894829"/>
-            <y:Point x="3269.7272799218626" y="3854.278191894829"/>
+            <y:Point x="4077.956277822558" y="3854.278191894829"/>
+            <y:Point x="3929.0702167285544" y="3854.278191894829"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2523,7 +2546,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="22.597766065129235">
-            <y:Point x="2499.8572162091323" y="3628.8229353653646"/>
+            <y:Point x="3159.200153015824" y="3628.8229353653646"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2535,8 +2558,8 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="30.58577535988161" tx="0.0" ty="-31.769532755302862">
-            <y:Point x="3584.8541669754954" y="3996.773538470226"/>
-            <y:Point x="3584.8541669754954" y="3506.2426390028586"/>
+            <y:Point x="4244.197103782188" y="3996.773538470226"/>
+            <y:Point x="4244.197103782188" y="3506.2426390028586"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2558,9 +2581,9 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="117.30422006477056" sy="72.84219487061091" tx="0.0" ty="0.0">
-            <y:Point x="3621.716043115695" y="3610.8543666287724"/>
-            <y:Point x="3621.716043115695" y="3674.9108458297533"/>
-            <y:Point x="3794.4561052276335" y="3674.9108458297533"/>
+            <y:Point x="4281.058979922387" y="3610.8543666287724"/>
+            <y:Point x="4281.058979922387" y="3674.9108458297533"/>
+            <y:Point x="4453.799042034325" y="3674.9108458297533"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -2571,10 +2594,7 @@ Stage defaultStage;</y:AttributeLabel>
     <edge id="e66" source="n87" target="n92">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="3794.4561052276335" y="3806.844696217993"/>
-            <y:Point x="3794.456105227633" y="3806.844696217993"/>
-          </y:Path>
+          <y:Path sx="0.0" sy="0.0" tx="-9.094947017729282E-13" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:BendStyle smoothed="false"/>
@@ -2584,12 +2604,20 @@ Stage defaultStage;</y:AttributeLabel>
     <edge id="e67" source="n92" target="n91">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="3794.456105227633" y="3927.2718284734515"/>
-            <y:Point x="3794.456105227634" y="3927.2718284734515"/>
-          </y:Path>
+          <y:Path sx="0.0" sy="0.0" tx="9.094947017729282E-13" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e68" source="n28" target="n95">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="33.945777802785415" tx="0.0" ty="-4.547473508864641E-13"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>

@@ -38,11 +38,11 @@ class Button extends Controller {
     pg.beginDraw();
     pg.rectMode(CORNER);
     if (isHovered && !isPressed) {
-      pg.fill(ktgui.COLOR_FG_HOVERED);
+      pg.fill(hoveredColor);
     } else if (isHovered && isPressed) {
-      pg.fill(ktgui.COLOR_FG_PRESSED);
+      pg.fill(pressedColor);
     } else {
-      pg.fill(ktgui.COLOR_FG_PASSIVE);
+      pg.fill(passiveColor);
     }
     pg.rect(0, 0, w, h);
     pg.fill(255);

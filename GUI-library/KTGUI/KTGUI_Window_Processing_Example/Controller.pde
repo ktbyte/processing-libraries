@@ -16,6 +16,9 @@ public abstract class Controller {
   Pane parentPane = null;
   Stage parentStage = null;
   PGraphics pg;
+  color hoveredColor = ktgui.COLOR_FG_HOVERED;
+  color pressedColor = ktgui.COLOR_FG_PRESSED;
+  color passiveColor = ktgui.COLOR_FG_PASSIVE;
 
   void updateGraphics() {
   }
@@ -44,6 +47,15 @@ public abstract class Controller {
   }
   void setTitle(String title) {
     this.title = title;
+  }
+  void setHoveredColor(color c) {
+    hoveredColor = c;
+  }
+  void setPressedColor(color c) {
+    pressedColor = c;
+  }
+  void setPassiveColor(color c) {
+    passiveColor = c;
   }
   PGraphics getGraphics() {
     return pg;

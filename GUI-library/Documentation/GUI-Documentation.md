@@ -48,8 +48,8 @@ This GUI component acts as a button. The Button reacts if the user clicks on it 
 There are three examples available:
 
 1. [Example of the Button that does not use the callback method](#button-example-1)
-2. [Example of the Button that uses the callback method](#button-example-2) 
-3. [Example of the Button that uses the callback method and is part of the 'library'](#button-example-3)
+2. [Example of the Button that **uses the callback** method](#button-example-2) 
+3. [Example of the Button that uses the callback method and is **part of the 'library'**](#button-example-3)
 
 #### Button example 1
 
@@ -338,7 +338,9 @@ void setup() {
 
 The constructor has the following form:
 
-**_Slider**_(int _**x**_, int _**y**_, int _**width**_, int _**height**_, int _**sr**_, int _**er**_)
+```java
+Slider(int x, int y, int widht, int height, int sr, int er)
+```
 
 where
 
@@ -390,12 +392,12 @@ void setup() {
                        
 ```
 
-As explained in the the KTGUI library [example](#ktgui-library), the KTGUI library class automatically calls the ```draw()``` method of the _Slider_ class at the end of every _Processing.js_ frame. This way the shape of the _Slider_ object is updated automatically.
+As explained in the the KTGUI library [section](#ktgui-library), the KTGUI library class automatically calls the ```draw()``` method of the _Slider_ class at the end of every Processing.js ```draw()``` method cycle. This way the shape of the _Slider_ object is updated automatically without the need of user writing additional code for that.
 
-The practical use of _Slider_ is related to the moments in time when the user changes the slider value. In order to 'attach' some wanted behavior to this _Slider_ event one must do the following:
+The practical use of _Slider_ is related to the situations when the user changes the slider value. In order to 'attach' some wanted behavior to this _Slider_ event one must do the following:
 
 1. Create the class (or use existing one) that extends the ```KTGUIEventAdapter``` class. 
-2. Override the particular method of the ```KTGUIEventAdapter``` class. Below is an example that shows how to react on the event when the user presses the mouse button while the cursor is inside the _Slider_ shape (here we create the anonymous class that extends the ```KTGUIEventAdapter``` class):
+2. Override the particular method of the ```KTGUIEventAdapter``` class. Below is an example that shows how to react on the event when the user presses the mouse button while the cursor is inside the _Slider_ shape (for that, we create an anonymous class that extends the ```KTGUIEventAdapter``` class):
 
 ```java
   slider.addEventAdapters(new KTGUIEventAdapter() {
@@ -461,7 +463,7 @@ void **onEnterKey()** - *This method will be called after each press of the ENTE
 
 ### KTGUI Library
 
-As was already mentioned in the [Example of the Button that uses the callback method and is part of the 'library'](#example-3), the KTGUI Library is a class that is specifically designed to provide the ability to separate the 'main' code of the application from the 'GUI' related code. 
+As was already mentioned in the [Example of the Button that uses the callback method and is part of the 'library'](#button-example-3), the KTGUI Library is a class that is specifically designed to provide the ability to separate the 'main' code of the application from the 'GUI' related code. 
 
 #### The concept of 'main' and 'GUI' related code separation 
 

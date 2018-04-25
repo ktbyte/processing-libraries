@@ -82,6 +82,7 @@ void setup() {
   Pane p1 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
   p1.alignAboutApplet(LEFT, TOP);
   Button p1b1 = ktgui.createButton("Top", 10, 10, 180, 40);
+  p1b1.setPassiveColor(color(200, 120, 50));
   p1.addController(p1b1, CENTER, TOP);
   Button p1b2 = ktgui.createButton("Below & Center", 10, 10, 160, 40);
   p1.attachController(p1b2);
@@ -97,6 +98,7 @@ void setup() {
   Pane p2 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
   p2.alignAboutApplet(CENTER, TOP);
   Button p2b1 = ktgui.createButton("Center", 10, 10, 180, 40);
+  p2b1.setPassiveColor(color(20, 200, 150));
   p2.addController(p2b1, CENTER, CENTER);
   Button p2b2 = ktgui.createButton("Below & Center", 10, 10, 160, 40);
   p2.attachController(p2b2);
@@ -112,6 +114,7 @@ void setup() {
   Pane p3 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
   p3.alignAboutApplet(RIGHT, TOP);
   Button p3b1 = ktgui.createButton("Bottom", 10, 10, 180, 40);
+  p3b1.setPassiveColor(color(250, 20, 200));
   p3.addController(p3b1, CENTER, BOTTOM);
   Button p3b2 = ktgui.createButton("Above & Center", 10, 10, 160, 40);
   p3.attachController(p3b2);
