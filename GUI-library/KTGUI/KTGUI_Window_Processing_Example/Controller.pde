@@ -48,6 +48,12 @@ public abstract class Controller {
   void setTitle(String title) {
     this.title = title;
   }
+  void setWidth(int w) {
+    this.w = w;
+  }
+  void setHeight(int h) {
+    this.h = h;
+  }
   void setHoveredColor(color c) {
     hoveredColor = c;
   }

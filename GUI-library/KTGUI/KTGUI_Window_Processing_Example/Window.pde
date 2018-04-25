@@ -25,9 +25,6 @@
 // !!! The Panel chould contain a Border.
 
 class Window extends Controller {
-  int TITLE_BAR_HEIGHT = 14;
-  int MENU_BAR_HEIGHT = 20;
-  int BORDER_THICKNESS = 3;
 
   ArrayList<Controller> controllers = new ArrayList<Controller>();
 
@@ -52,7 +49,7 @@ class Window extends Controller {
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
 
-    windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
+    windowCloseBtn = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
     attachController(windowCloseBtn);
     ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
   }
@@ -68,7 +65,7 @@ class Window extends Controller {
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
 
-    windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
+    windowCloseBtn = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
     setTitle(title);
     attachController(windowCloseBtn);
     ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
@@ -98,11 +95,11 @@ class Window extends Controller {
     pg.fill(180);
     pg.stroke(15);
     pg.strokeWeight(1);
-    pg.rect(0, 0, w, TITLE_BAR_HEIGHT);
+    pg.rect(0, 0, w, ktgui.TITLE_BAR_HEIGHT);
     pg.fill(25);
     pg.textAlign(LEFT, CENTER);
-    pg.textSize(TITLE_BAR_HEIGHT*0.65);
-    pg.text(title, 10, TITLE_BAR_HEIGHT*0.5);
+    pg.textSize(ktgui.TITLE_BAR_HEIGHT*0.65);
+    pg.text(title, 10, ktgui.TITLE_BAR_HEIGHT*0.5);
     pg.endDraw();
   }
 
@@ -113,7 +110,7 @@ class Window extends Controller {
     pg.strokeWeight(1);
     pg.noFill();
     pg.rectMode(CORNER);
-    pg.rect(0, TITLE_BAR_HEIGHT, w, h - TITLE_BAR_HEIGHT);
+    pg.rect(0, ktgui.TITLE_BAR_HEIGHT, w, h - ktgui.TITLE_BAR_HEIGHT);
     pg.endDraw();
   }
 
@@ -217,7 +214,7 @@ class Window extends Controller {
   boolean isPointInsideTitleBar(int x, int y) {
     boolean isInside = false;
     if (x > posx && x < posx + this.w) {
-      if (y > posy && y < posy + TITLE_BAR_HEIGHT) {
+      if (y > posy && y < posy + ktgui.TITLE_BAR_HEIGHT) {
         isInside = true;
       }
     }

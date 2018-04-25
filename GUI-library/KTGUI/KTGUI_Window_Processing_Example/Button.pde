@@ -53,6 +53,8 @@ class Button extends Controller {
   }
 
   void draw() {
+    // if this button don't belongs to any window or pane 
+    // then draw directly on the PApplet canvas 
     if (parentWindow == null && parentPane == null) {
       image(pg, posx, posy);
     }

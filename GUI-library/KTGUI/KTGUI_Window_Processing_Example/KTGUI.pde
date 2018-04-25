@@ -20,7 +20,11 @@ public class KTGUI {
   color COLOR_BG_PASSIVE = color(100); 
   color COLOR_BG_PRESSED = color(200);
   
-  final int ALIGN_GAP = 20;
+  int TITLE_BAR_HEIGHT = 14;
+  int MENU_BAR_HEIGHT = 20;
+  int BORDER_THICKNESS = 3;
+  
+  int ALIGN_GAP = 20;
 
   /*
   * The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 

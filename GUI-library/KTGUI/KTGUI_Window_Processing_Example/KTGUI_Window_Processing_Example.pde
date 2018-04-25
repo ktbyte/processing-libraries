@@ -5,7 +5,8 @@ Button jumpButton, anotherButton, nextStageBtn;
 Window w1, w2, w3;
 Stage s1, s2, s3;
 Stage alignStage;
-boolean debug = true;
+boolean debug = false;
+Button dbgButton;
 
 /**********************************************************************************************************************
  * 
@@ -13,6 +14,14 @@ boolean debug = true;
 void setup() {
   size(800, 500);
   ktgui = new KTGUI(this); // default stage is automatically created
+
+  dbgButton = ktgui.createButton("Debug", 0, 0, 100, 50);
+  dbgButton.alignAboutApplet(CENTER, BOTTOM);
+  dbgButton.addEventAdapter(new KTGUIEventAdapter() {
+    public void onMousePressed() {
+      debug = !debug;
+    }
+  });
 
   // this button will be visible always because it will be located on default stage
   nextStageBtn = ktgui.createButton("NextStage", width - 120, height - 70, 100, 50);
@@ -40,8 +49,8 @@ void setup() {
   // Now, the "s1" stage is "active". So, the both 'w1' and 'nextStageButton' are automatically attached to this stage. 
   // We can still use 's1.attachController(Controller) though.
   s2 = ktgui.stageManager.createStage("stage_2");
-  Pane pane = ktgui.createPane((int)(width * 0.5 - 200), 240, 400, 200);  
-  pane.alignAboutApplet(CENTER, BOTTOM);
+  Pane pane = ktgui.createPane((int)(width * 0.5 - 200), 200, 400, 200);  
+  pane.alignAboutApplet(CENTER, TOP);
   pane.isDragable = true;
   s2.registerController(pane);
 
@@ -125,7 +134,7 @@ void setup() {
   p3b4.stackAbout(p3b3, TOP, RIGHT);
   alignStage.registerController(p3);
 
-  ktgui.stageManager.goToStage(alignStage);
+  ktgui.stageManager.goToStage(s1);
 }
 
 /**********************************************************************************************************************
@@ -134,15 +143,15 @@ void setup() {
 void draw() {
   background(170, 220, 170);
   //
-  fill(0);
-  textSize(20);
-  textAlign(RIGHT, CENTER);
-  textFont(createFont("monospaced", 16));
-  text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
-  text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
-  text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
-
   if (debug) {
+    fill(0);
+    textSize(20);
+    textAlign(RIGHT, CENTER);
+    textFont(createFont("monospaced", 16));
+    text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
+    text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
+    text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
+
     textSize(10);
     int YSHIFT = 12;  
     int ypos = 0;
