@@ -24,8 +24,6 @@ void setup() {
     }
   }
   );
-  // this button will be visible in all stages
-  ktgui.stageManager.defaultStage.registerController(nextStageBtn);
 
   s1 = ktgui.stageManager.createStage("stage_1");
   anotherButton = ktgui.createButton("Go To Stage_2", 50, height - 70, 150, 50);
