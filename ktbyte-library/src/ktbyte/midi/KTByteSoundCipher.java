@@ -6,10 +6,10 @@ import arb.soundcipher.SoundCipher;
 
 /**
  * 
- * @example Hello 
+ * This element can be used to create music. It is just a wrapper library over the SoundCipher library.
  */
-
 public class KTByteSoundCipher {
+	
 	PApplet parent;
 	SoundCipher sc;
 
@@ -19,6 +19,7 @@ public class KTByteSoundCipher {
 	 * 
 	 * @example Hello
 	 * @param parent
+	 *   The main PApplet instance
 	 */
 	public KTByteSoundCipher(PApplet parent) {
 		this.parent = parent;
@@ -36,26 +37,6 @@ public class KTByteSoundCipher {
 	 */
 	public void playNote(double pitch, double dynamic, double duration) {
 		this.sc.playNote(pitch, dynamic, duration);
-	}
-	
-	/**
-	 * return the version of the Library.
-	 * 
-	 * @return String
-	 */
-	public static String version() {
-		return "";
-	}
-
-	/**
-	 * 
-	 * @param theA
-	 *          the width of test
-	 * @param theB
-	 *          the height of test
-	 */
-	public void setVariable(int theA, int theB) {
-//		myVariable = theA + theB;
 	}
 }
 

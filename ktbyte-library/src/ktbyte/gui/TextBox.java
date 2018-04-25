@@ -5,11 +5,10 @@ import processing.core.*;
 
 /**
  * 
- * @author Ovidiu Miu
- *
- * This element is a rectangle input in which text can be entered if the box is focused.
+ * This GUI element is a rectangle input in which text can be entered if the box is focused.
  */
 public class TextBox implements PConstants {
+	
 	private final static int BACKSPACE_ASCII_CODE = 8;
 	private final static int ENTER_ASCII_CODE = 10;
 	private final static int BASIC_ASCII_LOWER_LIMIT = 32;
@@ -26,14 +25,17 @@ public class TextBox implements PConstants {
 	private float padding;
 
 	/**
-	 * This constructs the TextBox object within the current context (PApplet),
+	 * This constructs a new TextBox object within the current context (PApplet),
 	 *  starting from the x and y coordinates, having the specified width and height.
 	 * 
-	 * @example TextBox_basic1
 	 * @param x
+	 *   x coordinate
 	 * @param y
+	 *   y coordinate
 	 * @param width
+	 * 	width of the TextBox
 	 * @param height
+	 * 	height of the TextBox
 	 */
 	public TextBox(PApplet pap, int x, int y, int width, int height) {
 		this.parent = pap;
@@ -53,13 +55,13 @@ public class TextBox implements PConstants {
 	 * Sets the rounding of the rectangle's border. The parameters should be entered in a clockwise order
 	 * 
 	 * @param r1
-	 * 	UP
+	 * 	Up
 	 * @param r2
-	 * 	RIGHT
+	 * 	Right
 	 * @param r3
-	 * 	DOWN
+	 * 	Down
 	 * @param r4
-	 * 	LEFT
+	 * 	Left
 	 */
 	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
 		this.r1 = r1;
@@ -85,7 +87,6 @@ public class TextBox implements PConstants {
 
 	/**
 	 * This is a register method and should not be called directly
-	 * @param e
 	 */
 	public void draw() {
 		parent.pushStyle();
@@ -114,6 +115,7 @@ public class TextBox implements PConstants {
 	/**
 	 * This is a register method and should not be called directly
 	 * @param e
+	 * 	The received mouse event
 	 */
 	public void mouseEvent(MouseEvent e) {
 		if (e.getAction() == MouseEvent.PRESS) {
@@ -124,6 +126,7 @@ public class TextBox implements PConstants {
 	/**
 	 * This is a register method and should not be called directly
 	 * @param e
+	 * 	The received key event
 	 */
 	public void keyEvent(KeyEvent e) {
 		if (e.getAction() == KeyEvent.PRESS) {
@@ -165,31 +168,65 @@ public class TextBox implements PConstants {
 		}
 	}
 
-	boolean isInside() {
+	private boolean isInside() {
 		return parent.mouseX > x && parent.mouseX < x + w && parent.mouseY > y && parent.mouseY < y + h;
 	}
 
+	/**
+	 * Returns the whether the elements is focused or not
+	 * 
+	 * @return <code>true</code> if the element is focused; <code>false</code> otherwise
+	 */
 	public boolean isFocused() {
 		return isFocused;
 	}
 
+	/**
+	 * Sets the focus of the element
+	 * 
+	 * @param isFocused
+	 *   <code>true</code> to make the element to be focused; <code>false</code> otherwise
+	 */
 	void setIsFocused(boolean isFocused) {
 		this.isFocused = isFocused;
 	}
 	
+	/**
+	 * Sets the current text
+	 * 
+	 * @param text
+	 *   The text that should be displayed inside the box
+	 */
 	public void setText(String text) {
 		this.textInput = text;
 	}
 
+	/**
+	 * Sets the text size
+	 * 
+	 * @param textSize
+	 *   The text size
+	 */
 	public void setTextSize(int textSize) {
 		this.textSize = textSize;
 		computeDefaultAttributes();
 	}
 
+	/**
+	 * Returns the current text
+	 * 
+	 * @return the current text from inside the box
+	 */
 	public String getText() {
 		return this.textInput;
 	}
 
+	/**
+	 * Sets the key-event listener of the TextBox
+	 * 
+	 * @param keyEventListener
+	 *   The key-event listener
+	 */
 	public void setKeyEventListener(KeyEventListener keyEventListener) {
 		this.keyEventListener = keyEventListener;
 	}

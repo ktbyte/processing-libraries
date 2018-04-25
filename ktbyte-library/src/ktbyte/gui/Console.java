@@ -7,9 +7,7 @@ import java.util.HashMap;
 
 /**
  * 
- * @author Ovidiu Miu
- *
- * This element acts as a Command-line interface, accepting user input and handling custom responses.
+ * This GUI element acts as a Command-line interface, accepting user input and handling custom responses.
  */
 public class Console implements PConstants {
 	private final static int BOX_RONDING = 7;
@@ -41,11 +39,14 @@ public class Console implements PConstants {
 	 * This constructs a new Console object within the current context (PApplet),
 	 *  starting from the x and y coordinates, having a given width and height
 	 * 
-	 * @example Console_basicQA
 	 * @param x
+	 *   x coordinate
 	 * @param y
+	 *   y coordinate
 	 * @param width
+	 * 	width of the console
 	 * @param height
+	 * 	height of the console
 	 */
 	public Console(PApplet pap, int x, int y, int width, int height) {
 		this.parent = pap;
@@ -92,7 +93,6 @@ public class Console implements PConstants {
 
 	/**
 	 * This is a register method and should not be called directly
-	 * @param e
 	 */
 	public void draw() {
 		parent.pushStyle();
@@ -119,11 +119,13 @@ public class Console implements PConstants {
 	}
 
 	private void drawScrollBar() {
+		int consoleTextBoxHeight = h - inputBoxHeight;
+		int consoleTextBoxWidth = w - SCROLL_BAR_WIDTH;
 		parent.noStroke();
 		parent.fill(50);
-		parent.rect(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, h - inputBoxHeight, 0, BOX_RONDING, 0, 0);
-		upBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y, SCROLL_BAR_WIDTH, UP, 0, BOX_RONDING, 0, 0);
-		downBtn = new ArrowButton(x + w - SCROLL_BAR_WIDTH, y + h - inputBoxHeight - 20, SCROLL_BAR_WIDTH, DOWN);
+		parent.rect(x + consoleTextBoxWidth, y, SCROLL_BAR_WIDTH, consoleTextBoxHeight, 0, BOX_RONDING, 0, 0);
+		upBtn = new ArrowButton(x + consoleTextBoxWidth, y, SCROLL_BAR_WIDTH, UP, 0, BOX_RONDING, 0, 0);
+		downBtn = new ArrowButton(x + consoleTextBoxWidth, y + consoleTextBoxHeight - 20, SCROLL_BAR_WIDTH, DOWN);
 		parent.fill(120);
 		
 		float scrollBarHeight = scrollBarMaxHeight;
@@ -131,13 +133,13 @@ public class Console implements PConstants {
 			scrollBarHeight = PApplet.max(25, ((float) maxLinesToDisplay / lines.size()) * scrollBarMaxHeight);
 		}
 		int consoleScrollableLines = lines.size() - maxLinesToDisplay;
-		float trackScrollArea = h - inputBoxHeight - SCROLL_BAR_WIDTH * 2 - scrollBarHeight;
-		float scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea;
+		float scrollableAreaHeight = consoleTextBoxHeight - SCROLL_BAR_WIDTH * 2 - scrollBarHeight;
+		float scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + scrollableAreaHeight;
 		if (lines.size() > maxLinesToDisplay) {
-			scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + trackScrollArea + (lineScrollOffset * ((float) trackScrollArea / consoleScrollableLines));
+			scrollBarYCoordinate = y + SCROLL_BAR_WIDTH + scrollableAreaHeight + (lineScrollOffset * (scrollableAreaHeight / consoleScrollableLines));
 		}
 		parent.rectMode(CORNER);
-		parent.rect(x + w - SCROLL_BAR_WIDTH, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
+		parent.rect(x + consoleTextBoxWidth, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
 
 		upBtn.drawButton();
 		downBtn.drawButton();
@@ -177,6 +179,8 @@ public class Console implements PConstants {
 	 * 
 	 * @param name
 	 *          the key of the stored entry
+	 *          
+	 * @return a stored value from the console's memory
 	 */
 	public String getValue(String name) {
 		return dict.get(name);
@@ -195,6 +199,7 @@ public class Console implements PConstants {
 	/**
 	 * This is a register method and should not be called directly
 	 * @param e
+	 * 	The received mouse event
 	 */
 	public void mouseEvent(MouseEvent e) {
 		if (e.getAction() == MouseEvent.PRESS) {
@@ -252,7 +257,7 @@ public class Console implements PConstants {
 	}
 
 	/**
-	 * Sets the console's input listener
+	 * Sets the input listener of the console
 	 * 
 	 * @param consoleInputListener
 	 *          console input listener

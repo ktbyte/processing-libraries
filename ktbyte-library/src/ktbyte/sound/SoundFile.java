@@ -1,107 +1,69 @@
 package ktbyte.sound;
 
-import java.util.ArrayList;
-
 import processing.core.*;
 import ddf.minim.*;
 
+/**
+ * 
+ * This element can be used to play mp3 files. It is just a wrapper library over the minim library.
+ */
 public class SoundFile {
-//	  ArrayList<KTSound> sounds;
-	  PApplet pap;
-//	  boolean isReady;
-//
-//	  public SoundFile(PApplet pap) {
-//	    this.pap = pap;
-//	    if (pap.javaVersionName != null) {
-////	      minim = new Minim(this.pap);
-//	      this.isReady = true;
-//	    } else {
-//	      // Waiting for the javascript binding
-//	      this.isReady = false;
-//	    }
-//	    this.sounds = new ArrayList();
-//	  }
-//
-//	  void add(KTSound ktSound) {
-//	    sounds.add(ktSound);
-//	  }
-//
-//	  void loadQueuedSounds() {
-//	    for (String soundName : jsSoundsToLoad) {
-//	      audioLibJS.loadSound(soundName);
-//	    }
-//	    this.isReady = true;
-//	  }
-//
-//	  boolean getIsReady() {
-//	    return isReady;
-//	  }
-//	}
-//
-//	public class KTSound {
-//	  private AudioPlayer sound;
-//	  private PApplet pap;
-//	  private String path;
-//
-//	  KTSound(PApplet pap, String path) {
-//	    this.pap = pap;
-//	    this.path = path;
-//	    if (pap.javaVersionName == null) {
-//	      jsSoundsToLoad.add(getPathName(path));
-//	    } else {
-//	      sound = minim.loadFile(path);
-//	    }
-//	  }
-//
-//	  void play() {
-//	    if (pap.javaVersionName == null && audioLibJS != null) {
-//	      audioLibJS.playSound(getPathName(path));
-//	    } else {
-//	      sound.rewind();
-//	      sound.play();
-//	    }
-//	  };
-//
-//	  void stop() {
-//	    if (pap.javaVersionName == null && audioLibJS != null) {
-//	      audioLibJS.stopSound(getPathName(path));
-//	    } else {
-//	      sound.pause();
-//	    }
-//	  };
-//
-//
-//	  void loop() {
-//	    if (pap.javaVersionName == null && audioLibJS != null) {
-//	      audioLibJS.loopSound(getPathName(path));
-//	    } else {
-//	      sound.loop();
-//	    }
-//	  };
-//
-//	  void setVolume(float volume) {
-//	    if (pap.javaVersionName == null && audioLibJS != null) {
-//	      // buzz.js uses a '0-100' interval for the volume parameter 
-//	      audioLibJS.setVolume(getPathName(path), volume * 100);
-//	    } else {
-//	      sound.setVolume(volume);
-//	    }
-//	  };
-//
-//	  void setContext(PApplet pap) {
-//	    this.pap = pap;
-//	  }
-//	}
-//
-//	String getPathName(String name) {
-//	  return name.substring(0, getLastIndexOf(name, '.'));
-//	}
-//
-//	int getLastIndexOf(String str, char ch) {
-//	  for (int i = str.length()-1; i > 0; i--) {
-//	    if (str.charAt(i) == new Character(ch)) {
-//	      return i;
-//	    }
-//	  }
-//	  return -1;
+
+	private PApplet parent;
+	private String path;
+	private Minim minim;
+	private AudioPlayer sound;
+
+	/**
+	 * This constructs a SoundFile object within the current context (PApplet),
+	 * 
+	 * @param parent
+	 *   The main PApplet instance
+	 * @param path
+	 *   Path can be either a file path or and URL in the browser environment. In PDE environment, it only accepts a file path
+	 */
+	public SoundFile(PApplet parent, String path) {
+		this.parent = parent;
+		this.path = path;
+		this.minim = new Minim(parent);
 	}
+
+	/**
+	 * Starts the playback of a sound
+	 */
+	public void play() {
+		sound.rewind();
+		sound.play();
+	}
+
+	/**
+	 * Loads the sound file
+	 */
+	public void load() {
+		sound = minim.loadFile(path);
+	}
+
+	/**
+	 * Stops the playback of the sound
+	 */
+	public void stop() {
+		sound.pause();
+	}
+
+	/**
+	 * Loops the playback of a sound
+	 */
+	public void loop() {
+		sound.loop();
+	}
+	
+	/**
+	 * In the KTByte environment: Returns true if the sound is loaded and ready to use
+	 * In PDE environment: Always returns true
+	 * @return
+	 *   True of the sound is loaded and can be used.
+	 */
+	public boolean isLoaded() {
+		return true;
+	}
+}

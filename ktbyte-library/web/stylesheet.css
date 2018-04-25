@@ -14,27 +14,32 @@ body {
     font-size : 0.70em;
 	font-weight : normal;
 	line-height	: normal;
+	background-color: black;
+	color: #fb5000;
 }
 
 
 
 #container {
 	margin-left:64px;
-	background-color:#fff;
+	background-color:#f8f8f8;
 }
 
 #header {
 	float:left;
-	padding-top:24px;
-	padding-bottom:48px;
+	padding: 24px 20px 48px 20px;
 }
 
 #menu {
 	margin-top:16px;
 	float:left;
-	margin-bottom:64px;
+	margin-bottom:32px;
+    padding-left: 20px;
 }
 
+#content {
+	padding: 20px;
+}
 
 #about,
 #download,
@@ -159,11 +164,13 @@ body {
 
 
 #header {
-	background-color:#fff;
-	color:#333;
+	background-color: #0a0a29;
+	color: #fff;
 }
 
-
+#header>h1 {
+   	color: #fff; 
+}
 
 h1, h2, h3, h4, h5, h6 {
 	color:#666;
@@ -192,10 +199,12 @@ a:link:visited {
 }
 
 
+/*
 #footer, #menu {
 	background-color:#fff;
 	color:#333;
 }
+*/
 
 
 #footer a, #menu a {
