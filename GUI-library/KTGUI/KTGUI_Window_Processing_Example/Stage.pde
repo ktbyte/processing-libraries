@@ -24,29 +24,24 @@ public class Stage {
   }
 
   void registerController(Controller controller) {
-    println("Trying to register " + controller.title + " in " + name);
-
+    String controllerClassName = controller.getClass().getName();
+    String[] tokens = splitTokens(controllerClassName, ".$");
+    if (tokens.length > 1) controllerClassName = tokens[1];
+    println("Trying to register '" + controller.title + "' " + controllerClassName + " in '" + name + "' stage.");
+    
     // try to remove controller from default stage first
     if (ktgui.stageManager.defaultStage.controllers.contains(controller)) {
-      println("\tktgui.stageManager.defaultStage.controllers.contains(controller):" + ktgui.stageManager.defaultStage.controllers.contains(controller) + " -- removing");
+      println("\tdefaultStage already contains this controller: --> removing from default stage.");
       ktgui.stageManager.defaultStage.controllers.remove(controller);
     }
 
     // try to remove controller from active stage first
     if (ktgui.stageManager.activeStage != null) {
       if (ktgui.stageManager.activeStage.controllers.contains(controller)) {
-        println("\tktgui.stageManager.activeStage.controllers.contains(controller):" + ktgui.stageManager.activeStage.controllers.contains(controller) + " -- removing");
+      println("\tactiveStage already contains this controller: --> removing from active stage.");
         ktgui.stageManager.activeStage.controllers.remove(controller);
       }
     }
-
-    //// remove from list of controllers of each stage
-    //for (Stage stage : ktgui.stageManager.stages) {
-    //  if (stage.controllers.contains(controller)) {
-    //    println("\t" + stage.name + ".controllers.contains(controller):" + stage.controllers.contains(controller) + " -- removing");
-    //    stage.controllers.remove(controller);
-    //  }
-    //}
 
     // try to remove controller from parent stage first
     if (controller.parentStage != null) {
@@ -57,18 +52,20 @@ public class Stage {
     if (!controllers.contains(controller)) {
       controllers.add(controller);
       controller.parentStage = this;
-      println("\tsuccessfull. new parentStage is (" + name + ")");
-
-      // try to add all child components of controller, if it is of type Window
-      if (controller.getClass().getCanonicalName().contains(".Window")) {
-        Window window = (Window) controller;
-        window.registerChildControllers();
-      }
-
-      // try to add all child components of controller, if it is of type Pane
-      if (controller.getClass().getCanonicalName().contains(".Pane")) {
-        Pane pane = (Pane) controller;
-        pane.registerChildControllers();
+      println("\tAdded to controllers list successfully, new parentStage is (" + name + ")");
+      if (tokens.length > 1) {
+        // try to add all child components of controller, if it is of type Window
+        if (tokens[1].contains("Window")) {
+          Window window = (Window) controller;
+          window.registerChildControllers();
+        }
+        // try to add all child components of controller, if it is of type Pane
+        if (tokens[1].contains("Pane")) {
+          Pane pane = (Pane) controller;
+          pane.registerChildControllers();
+        }
+      } else {
+        println("....Cannot register child controllers of '" + name + "'");
       }
     } else {
       println("\talready exist.");
