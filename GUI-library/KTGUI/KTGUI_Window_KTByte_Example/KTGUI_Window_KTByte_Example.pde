@@ -2,33 +2,19 @@ KTGUI ktgui;
 Button jumpButton, anotherButton, nextStageBtn;
 Window w1, w2, w3;
 Stage s1, s2, s3;
+Stage alignStage;
+boolean debug = false;
 
 /**********************************************************************************************************************
  * 
  *********************************************************************************************************************/
 void setup() {
-  size(600, 500);
+  size(800, 500);
   ktgui = new KTGUI(this); // default stage is automatically created
 
-  s1 = ktgui.stageManager.createStage("stage_1");
-  anotherButton = ktgui.createButton(50, 50, 100, 50);
-  anotherButton.setTitle("Go To\nStage_2");
-  anotherButton.addEventAdapter(new KTGUIEventAdapter() {
-    void onMousePressed() {
-      println("Callback message: The anotherButton (goToStage(1)) was pressed!");
-      ktgui.stageManager.goToStage(2);
-    }  
-  }
-  );
-  s1.registerController(anotherButton);
-  
-  // Now, the "s1" stage is "active". So, the both 'w1' and 'nextStageButton' are automatically attached to this stage. 
-  // We can still use 's1.attachController(Controller) though.
-  s2 = ktgui.stageManager.createStage("stage_2");
-  w1 = ktgui.createWindow(10, 10, 300, 200);
-  w1.setTitle("Window_1");
-  nextStageBtn = ktgui.createButton(width - 120, height - 70, 100, 50);
-  nextStageBtn.setTitle("NextStage");
+  // this button will be visible always because it will be located on default stage
+  nextStageBtn = ktgui.createButton("NextStage", width - 120, height - 70, 100, 50);
+  nextStageBtn.alignAboutApplet(RIGHT, BOTTOM);
   nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
     void onMousePressed() {
       println("Callback message: The Next-Stage-Button was pressed!");
@@ -36,42 +22,110 @@ void setup() {
     }
   }
   );
-  s2.registerController(w1);
+  // this button will be visible in all stages
+  ktgui.stageManager.defaultStage.registerController(nextStageBtn);
+
+  s1 = ktgui.stageManager.createStage("stage_1");
+  anotherButton = ktgui.createButton("Go To Stage_2", 50, height - 70, 150, 50);
+  anotherButton.alignAboutApplet(LEFT, BOTTOM);
+  anotherButton.addEventAdapter(new KTGUIEventAdapter() {
+    void onMousePressed() {
+      println("Callback message: The anotherButton (goToStage(1)) was pressed!");
+      ktgui.stageManager.goToStage(1);
+    }
+  }
+  );
+  s1.registerController(anotherButton);
+
+  // Now, the "s1" stage is "active". So, the both 'w1' and 'nextStageButton' are automatically attached to this stage. 
+  // We can still use 's1.attachController(Controller) though.
+  s2 = ktgui.stageManager.createStage("stage_2");
+  Pane pane = ktgui.createPane((int)(width * 0.5 - 200), 240, 400, 200);  
+  pane.alignAboutApplet(CENTER, BOTTOM);
+  pane.isDragable = true;
+  s2.registerController(pane);
 
 
   // Now, the "s2" stage is "active". So, the jumpButton is automatically attached to this stage.
   // We can use 's2.attachController(Controller) though.
   s3 = ktgui.stageManager.createStage("stage_3");
-  jumpButton = ktgui.createButton(50, 50, 100, 50);
-  jumpButton.setTitle("Jump!");
+  jumpButton = ktgui.createButton("Jump!", 50, 50, 100, 50);
   jumpButton.addEventAdapter(new KTGUIEventAdapter() {
     void onMousePressed() {
       println("Callback message: The Jumping Button was pressed!");
-      if(jumpButton.parentWindow == w3){
-        w2.attachController(jumpButton);
-      }else if(jumpButton.parentWindow == w2){
-        w3.attachController(jumpButton);
+      if (jumpButton.parentWindow == w3) {
+        //w2.attachController(jumpButton);
+        w2.addController(jumpButton, LEFT, 0);
+      } else if (jumpButton.parentWindow == w2) {
+        //w3.attachController(jumpButton);
+        w3.addController(jumpButton, RIGHT, 0);
       }
-    }  
+    }
   }
   );
-  s3.registerController(jumpButton);
-  
+
   // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
-  w2 = ktgui.createWindow(110, 110, 300, 200);
-  w2.setTitle("Window_2");
+  w2 = ktgui.createWindow("Window_2", 400, 220, 300, 200);
+  w2.alignAboutApplet(LEFT, 0);
   s3.registerController(w2);
-  
-  w3 = ktgui.createWindow(10, 230, 300, 200);
-  w3.setTitle("Window_3");
-  w3.attachController(jumpButton);
-  s3.registerController(w3);
-  
-  // this button will be visible in all stages
-  ktgui.stageManager.defaultStage.registerController(nextStageBtn);
 
-  ktgui.stageManager.goToStage(s3);
+  w3 = ktgui.createWindow("Window_3", 10, 220, 300, 200);
+  w3.alignAboutApplet(RIGHT, 0); 
+  w3.addController(jumpButton, CENTER, CENTER);
+  s3.registerController(w3);
+
+  alignStage = ktgui.stageManager.createStage("Aligning");
+
+  Pane p1 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
+  p1.alignAboutApplet(LEFT, TOP);
+  Button p1b1 = ktgui.createButton("Top", 10, 10, 180, 40);
+  p1b1.setPassiveColor(color(200, 120, 50));
+  p1.addController(p1b1, CENTER, TOP);
+  Button p1b2 = ktgui.createButton("Below & Center", 10, 10, 160, 40);
+  p1.attachController(p1b2);
+  p1b2.stackAbout(p1b1, BOTTOM, CENTER);
+  Button p1b3 = ktgui.createButton("Below & Left", 10, 10, 140, 40);
+  p1.attachController(p1b3);
+  p1b3.stackAbout(p1b2, BOTTOM, LEFT);
+  Button p1b4 = ktgui.createButton("Below & Right", 10, 10, 120, 40);
+  p1.attachController(p1b4);
+  p1b4.stackAbout(p1b3, BOTTOM, RIGHT);
+  alignStage.registerController(p1);
+
+  Pane p2 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
+  p2.alignAboutApplet(CENTER, TOP);
+  Button p2b1 = ktgui.createButton("Center", 10, 10, 180, 40);
+  p2b1.setPassiveColor(color(20, 200, 150));
+  p2.addController(p2b1, CENTER, CENTER);
+  Button p2b2 = ktgui.createButton("Below & Center", 10, 10, 160, 40);
+  p2.attachController(p2b2);
+  p2b2.stackAbout(p2b1, BOTTOM, CENTER);
+  Button p2b3 = ktgui.createButton("Below & Left", 10, 10, 140, 40);
+  p2.attachController(p2b3);
+  p2b3.stackAbout(p2b2, BOTTOM, LEFT);
+  Button p2b4 = ktgui.createButton("Below & Right", 10, 10, 120, 40);
+  p2.attachController(p2b4);
+  p2b4.stackAbout(p2b3, BOTTOM, RIGHT);
+  alignStage.registerController(p2);
+
+  Pane p3 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
+  p3.alignAboutApplet(RIGHT, TOP);
+  Button p3b1 = ktgui.createButton("Bottom", 10, 10, 180, 40);
+  p3b1.setPassiveColor(color(250, 20, 200));
+  p3.addController(p3b1, CENTER, BOTTOM);
+  Button p3b2 = ktgui.createButton("Above & Center", 10, 10, 160, 40);
+  p3.attachController(p3b2);
+  p3b2.stackAbout(p3b1, TOP, CENTER);
+  Button p3b3 = ktgui.createButton("Above & Left", 10, 10, 140, 40);
+  p3.attachController(p3b3);
+  p3b3.stackAbout(p3b2, TOP, LEFT);
+  Button p3b4 = ktgui.createButton("Above & Right", 10, 10, 120, 40);
+  p3.attachController(p3b4);
+  p3b4.stackAbout(p3b3, TOP, RIGHT);
+  alignStage.registerController(p3);
+
+  ktgui.stageManager.goToStage(alignStage);
 }
 
 /**********************************************************************************************************************
@@ -80,18 +134,47 @@ void setup() {
 void draw() {
   background(170, 220, 170);
   //
-  fill(0);
-  textSize(20);
-  textAlign(RIGHT, CENTER);
-  text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
-  text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
-  text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
+  if (debug) {
+    fill(0);
+    textSize(20);
+    textAlign(RIGHT, CENTER);
+    textFont(createFont("monospaced", 16));
+    text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
+    text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
+    text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
+
+    textSize(10);
+    int YSHIFT = 12;  
+    int ypos = 0;
+    textAlign(LEFT, CENTER);
+    text("----------------------------------------------------", 10, ypos+=YSHIFT);
+    for (Controller controller : ktgui.stageManager.defaultStage.controllers) {
+      if (controller.title != null) { 
+        text("defaultStage: " + controller.title.replaceAll("\n", ""), 10, ypos+=YSHIFT);
+      }
+    }
+    text("----------------------------------------------------", 10, ypos+=YSHIFT);
+    for (Controller controller : ktgui.stageManager.activeStage.controllers) {
+      if (controller.title != null) {
+        text("activeStage: " + controller.title, 10, ypos+=YSHIFT);
+      }
+    }
+    text("----------------------------------------------------", 10, ypos+=YSHIFT);
+    for (Stage stage : ktgui.stageManager.stages) {
+      for (Controller controller : stage.controllers) {
+        if (controller.title != null) { 
+          text("stage." + stage.name + ": " + controller.title, 10, ypos+=YSHIFT);
+        }
+      }
+    }
+    text("----------------------------------------------------", 10, ypos+=YSHIFT);
+    text("alignStage.controllers.size():" + alignStage.controllers.size(), 10, ypos+=YSHIFT);
+  }
 }
 
-void keyPressed(){
+void keyPressed() {
   ktgui.stageManager.goToNextStage();
 }
-
 /**********************************************************************************************************************
  * This class is used to 'transfer' the 'draw', 'mouse' and 'keyboard' events from PApplet to KTGUI components 
  * (controllers).
@@ -105,6 +188,7 @@ void keyPressed(){
 public class KTGUI {
   PApplet pa;
   StageManager stageManager;
+  HashMap<Controller, Integer> garbageList = new HashMap<Controller, Integer>();
 
   color COLOR_FG_HOVERED = color(10, 150, 10); 
   color COLOR_FG_PRESSED = color(10, 200, 10);
@@ -112,11 +196,13 @@ public class KTGUI {
   color COLOR_BG_HOVERED = color(100); 
   color COLOR_BG_PASSIVE = color(100); 
   color COLOR_BG_PRESSED = color(200);
+  
+  final int ALIGN_GAP = 20;
 
-  //-------------------------------------------------------------------------------------------------------------------
-  // The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
-  // thread.
-  //-------------------------------------------------------------------------------------------------------------------
+  /*
+  * The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
+   * thread.
+   */
   public KTGUI(PApplet pa) {
     this.pa = pa;
     this.pa.registerMethod("draw", this);
@@ -127,11 +213,25 @@ public class KTGUI {
   }
 
   //-------------------------------------------------------------------------------------------------------------------
-  // Transfer 'draw' event from PApplet to KTGUI components
+  // Transfer 'draw' event from PApplet to KTGUI components. 
+  // This method will be called at the end of the PApplet.draw().
   //-------------------------------------------------------------------------------------------------------------------
   void draw() {
     stageManager.defaultStage.draw();
     stageManager.activeStage.draw();
+    collectGarbage();
+  }
+
+  void collectGarbage() {
+    for (Map.Entry me : garbageList.entrySet()) {
+      Controller controller = (Controller)me.getKey();
+      int time = (Integer)me.getValue();
+      if (millis() - time > 100) {
+        if (controller.parentStage != null) { 
+          controller.parentStage.unregisterController(controller);
+        }
+      }
+    }
   }
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -141,7 +241,10 @@ public class KTGUI {
     Button btn = new Button(x, y, w, h);
     return btn;
   }
-
+  Button createButton(String title, int x, int y, int w, int h) {
+    Button btn = new Button(title, x, y, w, h);
+    return btn;
+  }
   //-------------------------------------------------------------------------------------------------------------------
   // This is a 'factory' method
   //-------------------------------------------------------------------------------------------------------------------
@@ -149,9 +252,26 @@ public class KTGUI {
     Window window = new Window(x, y, w, h);
     return window;
   }
+  Window createWindow(String title, int x, int y, int w, int h) {
+    Window window = new Window(title, x, y, w, h);
+    return window;
+  }
 
   //-------------------------------------------------------------------------------------------------------------------
-  // This method 'redirects' the incoming mouse events from PApplet to 'transfer' methods 
+  // This is a 'factory' method
+  //-------------------------------------------------------------------------------------------------------------------
+  Pane createPane(int x, int y, int w, int h) {
+    Pane pane = new Pane(x, y, w, h);
+    return pane;
+  }
+  Pane createPane(String title, int x, int y, int w, int h) {
+    Pane pane = new Pane(title, x, y, w, h);
+    return pane;
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  // This method 'redirects' the incoming mouse events from PApplet to 'transfer' methods.
+  // This method will be called when the PApplet.mouseEvent is happening.
   //-------------------------------------------------------------------------------------------------------------------
   void mouseEvent(MouseEvent e) {
     switch (e.getAction()) {
@@ -171,7 +291,8 @@ public class KTGUI {
   }
 
   //-------------------------------------------------------------------------------------------------------------------
-  // This method 'redirects' the incoming keyboard events from PApplet to 'transfer' methods
+  // This method 'redirects' the incoming keyboard events from PApplet to 'transfer' methods.
+  // This method will be called when the PApplet.keyEvent is happening.
   //-------------------------------------------------------------------------------------------------------------------
   void keyEvent(KeyEvent e) {
     switch (e.getAction()) {
@@ -185,10 +306,9 @@ public class KTGUI {
   }
 
   //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  // This is a 'transfer' method - it 'redirects' the PApplet.mouseDragged event to KTGUI components (controllers)
   //-------------------------------------------------------------------------------------------------------------------
   void mouseDragged() {
-    //println("Dragged!");
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processMouseDragged();
     }
@@ -198,10 +318,9 @@ public class KTGUI {
   }
 
   //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  // This is a 'transfer' method - it 'redirects' the PApplet.mousePressed event to KTGUI components (controllers)
   //-------------------------------------------------------------------------------------------------------------------
   void mousePressed() {
-    //println("Press at: " + mouseX + " " + mouseY);
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processMousePressed();
     }
@@ -211,10 +330,9 @@ public class KTGUI {
   }
 
   //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  // This is a 'transfer' method - it 'redirects' the PApplet.mouseReleased event to KTGUI components (controllers)
   //-------------------------------------------------------------------------------------------------------------------
-  void mouseReleased() {
-    //println("Release at: " + mouseX + " " + mouseY);
+  void mouseReleased() { 
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processMouseReleased();
     }
@@ -224,10 +342,9 @@ public class KTGUI {
   }
 
   //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  // This is a 'transfer' method - it 'redirects' the PApplet.mouseMoved event to KTGUI components (controllers)
   //-------------------------------------------------------------------------------------------------------------------
   void mouseMoved() {
-    //println("Moved!");
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processMouseMoved();
     }
@@ -237,27 +354,25 @@ public class KTGUI {
   }
 
   //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  // This is a 'transfer' method - it 'redirects' the PApplet.keyPressed event to KTGUI components (controllers)
   //-------------------------------------------------------------------------------------------------------------------
   void keyPressed() {
-    //println("Pressed key: " + keyCode);
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processKeyPressed();
     }
-    for (Controller controller : stageManager.activeStage.controllers) {
+    for (Controller controller : stageManager.defaultStage.controllers) {
       controller.processKeyPressed();
     }
   }
 
   //-------------------------------------------------------------------------------------------------------------------
-  // This is a 'transfer' method - it 'redirects' the event from PApplet to KTGUI components (controllers)
+  // This is a 'transfer' method - it 'redirects' the PApplet.keyReleased event to KTGUI components (controllers)
   //-------------------------------------------------------------------------------------------------------------------
   void keyReleased() {
-    //println("Released key: " + keyCode);
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processKeyReleased();
     }
-    for (Controller controller : stageManager.activeStage.controllers) {
+    for (Controller controller : stageManager.defaultStage.controllers) {
       controller.processKeyReleased();
     }
   }
@@ -280,18 +395,62 @@ public class Stage {
 
   void draw() {
     for (Controller controller : controllers) {
-      controller.updateGraphics();
-      controller.draw();
+      if (controller.isActive) {
+        controller.updateGraphics();
+        controller.draw();
+      }
     }
   }
 
   void registerController(Controller controller) {
-    if(ktgui.stageManager.defaultStage.controllers.contains(controller)){
-      ktgui.stageManager.defaultStage.controllers.remove(controller);      
+    println("Trying to register " + controller.title + " in " + name);
+
+    // try to remove controller from default stage first
+    if (ktgui.stageManager.defaultStage.controllers.contains(controller)) {
+      println("\tktgui.stageManager.defaultStage.controllers.contains(controller):" + ktgui.stageManager.defaultStage.controllers.contains(controller) + " -- removing");
+      ktgui.stageManager.defaultStage.controllers.remove(controller);
     }
+
+    // try to remove controller from active stage first
+    if (ktgui.stageManager.activeStage != null) {
+      if (ktgui.stageManager.activeStage.controllers.contains(controller)) {
+        println("\tktgui.stageManager.activeStage.controllers.contains(controller):" + ktgui.stageManager.activeStage.controllers.contains(controller) + " -- removing");
+        ktgui.stageManager.activeStage.controllers.remove(controller);
+      }
+    }
+
+    //// remove from list of controllers of each stage
+    //for (Stage stage : ktgui.stageManager.stages) {
+    //  if (stage.controllers.contains(controller)) {
+    //    println("\t" + stage.name + ".controllers.contains(controller):" + stage.controllers.contains(controller) + " -- removing");
+    //    stage.controllers.remove(controller);
+    //  }
+    //}
+
+    // try to remove controller from parent stage first
+    if (controller.parentStage != null) {
+      println("\tparentStage(" + controller.parentStage.name + ") != null: true");
+    }
+
+    // add controller to this stage
     if (!controllers.contains(controller)) {
       controllers.add(controller);
       controller.parentStage = this;
+      println("\tsuccessfull. new parentStage is (" + name + ")");
+
+      // try to add all child components of controller, if it is of type Window
+      if (controller.getClass().getName().contains(".Window")) {
+        Window window = (Window) controller;
+        window.registerChildControllers();
+      }
+
+      // try to add all child components of controller, if it is of type Pane
+      if (controller.getClass().getName().contains(".Pane")) {
+        Pane pane = (Pane) controller;
+        pane.registerChildControllers();
+      }
+    } else {
+      println("\talready exist.");
     }
   }
 
@@ -303,86 +462,57 @@ public class Stage {
   }
 }
 /**********************************************************************************************************************
- *
+ * 
  *********************************************************************************************************************/
 class StageManager {
+
   List<Stage> stages; // replace 'List' with 'Set' to prevent duplicates
   Stage activeStage;
   Stage defaultStage;
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
   StageManager() {
     stages = new ArrayList<Stage>();
     defaultStage = new Stage("Default");
   }
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
   Stage createStage(String name) {
-    Stage Stage = new Stage(name);
-    stages.add(Stage);
-    activeStage = Stage;
-    return Stage;
+    Stage stage = new Stage(name);
+    stages.add(stage);
+    activeStage = stage;
+    return stage;
   }
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  void goToStage(Stage Stage) {
-    activeStage = Stage;
+  void goToStage(Stage stage) {
+    activeStage = stage;
   }
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
   void goToStage(int numStage) {
     if (numStage > 0 && numStage < stages.size()) {
       activeStage = stages.get(numStage);
     }
-    println("numStage:" + numStage);
-    println("numStage < Stages.size():" + (numStage < stages.size()));
-    println("Stages.indexOf(activeStage):" + stages.indexOf(activeStage));
-    println();
   }
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
   void goToNextStage() {
     int indexOfCurrentStage = stages.indexOf(activeStage);
-    println("Before...");
-    println("indexOfCurrentStage:" + indexOfCurrentStage);
-
     if (indexOfCurrentStage < stages.size() - 1) {
       activeStage = stages.get(indexOfCurrentStage + 1);
     } else {
       activeStage = stages.get(0);
     }
-
-    println("After...");
-    indexOfCurrentStage = stages.indexOf(activeStage);
-    println("indexOfCurrentStage:" + indexOfCurrentStage);
-    println();
   }
 
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  void printStages() {
-    for (int i = 0; i < stages.size(); i++) {
-      println("[" + i + "] - " + stages.get(i).name);
+  void closeWindow(Window window) {
+    println("closeWindow(Window) for window:" + window.title + " has been called.");
+    
+    for (Controller controller : window.controllers) {
+      println("Controller:" + controller.title + " 'isActive' variable is set to FALSE");  
+      controller.isActive = false;
+      ktgui.garbageList.put(controller, millis());
     }
-  }
-
-  //--------------------------------------------------------------------------------------------------
-  //
-  //--------------------------------------------------------------------------------------------------
-  List<Stage> getStages() {
-    return stages;
-  }
+    
+    window.isActive = false;
+    ktgui.garbageList.put(window, millis());
+  } //<>//
 }
 /**********************************************************************************************************************
  * This class automatically receives events from PApplet when they happen.
@@ -395,10 +525,16 @@ public abstract class Controller {
   String title;
   int posx, posy, w, h;  
   boolean isPressed, isHovered;
-  ArrayList<KTGUIEventAdapter> adapters;
+  boolean isActive = true;
+  boolean isDragable = true;
+  ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
   Window parentWindow = null;
+  Pane parentPane = null;
   Stage parentStage = null;
   PGraphics pg;
+  color hoveredColor = ktgui.COLOR_FG_HOVERED;
+  color pressedColor = ktgui.COLOR_FG_PRESSED;
+  color passiveColor = ktgui.COLOR_FG_PASSIVE;
 
   void updateGraphics() {
   }
@@ -422,8 +558,20 @@ public abstract class Controller {
   void setParentWindow(Window window) {
     this.parentWindow = window;
   }
+  void setParentPane(Pane pane) {
+    this.parentPane = pane;
+  }
   void setTitle(String title) {
     this.title = title;
+  }
+  void setHoveredColor(color c) {
+    hoveredColor = c;
+  }
+  void setPressedColor(color c) {
+    pressedColor = c;
+  }
+  void setPassiveColor(color c) {
+    passiveColor = c;
   }
   PGraphics getGraphics() {
     return pg;
@@ -440,8 +588,143 @@ public abstract class Controller {
   void setPosY(int posy) {
     this.posy = posy;
   }
-}
 
+  void alignAboutApplet(int hAlign, int vAlign) {
+    switch (hAlign) {
+    case LEFT:
+      this.posx = ktgui.ALIGN_GAP;
+      break;
+    case RIGHT:
+      this.posx = width - this.w - ktgui.ALIGN_GAP;
+      break;
+    case CENTER:
+      this.posx = (int)(width * 0.5 - this.w * 0.5);
+      break;
+    default:
+      break;
+    }
+    //
+    switch (vAlign) {
+    case TOP:
+      this.posy = ktgui.ALIGN_GAP;
+      break;
+    case BOTTOM:
+      this.posy = height - this.h - ktgui.ALIGN_GAP; 
+      break;
+    case CENTER:
+      this.posy = (int)(height * 0.5 - this.h * 0.5);
+      break;
+    default:
+      break;
+    }
+  }
+
+  void alignAbout(Controller controller, int hAlign, int vAlign) {
+    switch (hAlign) {
+    case LEFT:
+      this.posx = ktgui.ALIGN_GAP;
+      break;
+    case RIGHT:
+      this.posx = controller.w - this.w - ktgui.ALIGN_GAP;
+      break;
+    case CENTER:
+      this.posx = (int)(controller.w * 0.5 - this.w * 0.5);
+      break;
+    default:
+      break;
+    }
+    //
+    switch (vAlign) {
+    case TOP:
+      this.posy = ktgui.ALIGN_GAP;
+      break;
+    case BOTTOM:
+      this.posy = controller.h - this.h - ktgui.ALIGN_GAP; 
+      break;
+    case CENTER:
+      this.posy = (int)(controller.h * 0.5 - this.h * 0.5);
+      break;
+    default:
+      break;
+    }
+  }
+
+  void stackAbout(Controller controller, int direction, int align) {
+    switch (direction) {
+
+    case TOP: // stack this controller above the given controller
+      this.posy = controller.posy - this.h;
+      switch (align) {
+      case LEFT:
+        this.posx = controller.posx;
+        break;
+      case RIGHT:
+        this.posx = controller.posx + controller.w - this.w;
+        break;
+      case CENTER:
+        this.posx = (int)(controller.posx + controller.w * 0.5) - (int)(this.w * 0.5);
+        break;
+      default:
+        break;
+      }
+      break;
+
+    case BOTTOM: // stack this controller below the given controller
+      this.posy = controller.posy + this.h; 
+      switch (align) {
+      case LEFT:
+        this.posx = controller.posx;
+        break;
+      case RIGHT:
+        this.posx = controller.posx + controller.w - this.w;
+        break;
+      case CENTER:
+        this.posx = (int)(controller.posx + controller.w * 0.5) - (int)(this.w * 0.5);
+        break;
+      default:
+        break;
+      }
+      break;
+
+    case LEFT: // stack this controller to the left about given controller
+      this.posx = controller.posx - this.w;
+      switch (align) {
+      case TOP:
+        this.posy = controller.posy;
+        break;
+      case BOTTOM:
+        this.posy = controller.posy + controller.h - this.h;
+        break;
+      case CENTER:
+        this.posy = (int)(controller.posy + controller.h * 0.5) - (int)(this.h * 0.5);
+        break;
+      default:
+        break;
+      }
+      break;
+
+    case RIGHT:  // stack this controller to the right about given controller
+      this.posx = controller.posx + this.w;
+      switch (align) {
+      case TOP:
+        this.posy = controller.posy;
+        break;
+      case BOTTOM:
+        this.posy = controller.posy + controller.h - this.h;
+        break;
+      case CENTER:
+        this.posy = (int)(controller.posy + controller.h * 0.5) - (int)(this.h * 0.5);
+        break;
+      default:
+        break;
+      }
+      break;
+      
+    default: // do nothing
+      break;
+    }
+  }
+}
 /**********************************************************************************************************************
  * This abstract class should be extended by the KTGUI components (controllers)
  *********************************************************************************************************************/
@@ -472,28 +755,34 @@ abstract class KTGUIEventAdapter {
 // be able to share/switch graphic context. If this is possible, then we will be able
 // to implement the 'minimize' feature.
 
-// The other way to implement the window is to 'mimic' the behavior of the window.
-// I mean, we don't need to really implement _ALL_ the drawing methods of PApplet. 
-// Instead, we can only implement the synchronized motion of both, the parent and
-// and the child components.
+// We should implement the synchronized motion of both, the parent and the child components.
 // For this, we could draw the border, background ant title bar. Then, we can use the 
 // title bar to move the window and use the border to change the size of the window.
 // When the window has moved, all the 'child' gui elements should receive the 'event'
 // that forces them to change their position the same amount of dx and dy as the 
 // parent window.
-// The only thing that is left to figure out is how to 'clip()' the extents of the 
-// gui elements that are crossing or even outside the window area.
 
-// Of course, we need to register all the 'child' components. Use the ArrayList for this.
+// The extents 'clipping' of the gui components which are crossing or even outside the
+// window area is done using the PGraphics.
+
+// In order to register all the 'child' components we are using the ArrayList<Controller>.
+
+// !!! The Window should contain a TitleBar and Panel.
+// !!! The TitleBar should contain a Button.
+// !!! The Panel chould contain a Border.
 
 class Window extends Controller {
-  int TITLE_BAR_HEIGHT = 20;
+  int TITLE_BAR_HEIGHT = 14;
   int MENU_BAR_HEIGHT = 20;
+  int BORDER_THICKNESS = 3;
+
   ArrayList<Controller> controllers = new ArrayList<Controller>();
-  ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
+
   boolean isTitleBarHovered, isTitleBarPressed;  
+  boolean isWindowHovered, isWindowPressed;  
   boolean isBorderHovered, isBorderPressed;  
-  WindowCloseButton windowCloseBtn;
+
+  CloseButton windowCloseBtn;
   // Border border;
   // TitleBar titleBar;
   // MenuBar menuBar;
@@ -505,12 +794,36 @@ class Window extends Controller {
     this.h = h;
     updateSize(w, h);
 
+    title = "a Window";
+
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
 
-    windowCloseBtn = new WindowCloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
+    windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
     attachController(windowCloseBtn);
     ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+  }
+
+  Window(String title, int posx, int posy, int w, int h) {
+    this.title = title;
+    this.posx = posx;
+    this.posy = posy;
+    this.w = w;
+    this.h = h;
+    updateSize(w, h);
+
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+
+    windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
+    setTitle(title);
+    attachController(windowCloseBtn);
+    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+  }
+
+  void setTitle(String string) {
+    title = string;
+    windowCloseBtn.setTitle("CloseButton-of:" + title);
   }
 
   void updateSize(int wdth, int hght) {
@@ -560,19 +873,50 @@ class Window extends Controller {
   }
 
   void attachController(Controller controller) {
-    if (controller.parentWindow != null) {
-      controller.parentWindow.controllers.remove(controller); // reset parentWindow
-    }
-
-    if (!controllers.contains(controller)) {
-      controllers.add(controller);
-      controller.setParentWindow(this);
+    if (isActive) {
+      // detach from existing window first (if exist)
+      if (controller.parentWindow != null) {
+        controller.parentWindow.detachController(controller); // reset parentWindow
+      }
+      // add to the list of controllers
+      if (!controllers.contains(controller)) {
+        controllers.add(controller);
+        controller.setParentWindow(this);
+        // try to register in parentStage
+        registerChildController(controller);
+      }
     }
   }
 
-  void attachControllers(ArrayList<Controller> controllers) {
-    for (Controller controller : controllers) {
+  void addController(Controller controller, int hAlign, int vAlign) {
+    if (isActive) {
+      controller.alignAbout(this, hAlign, vAlign);
       attachController(controller);
+    }
+  }
+
+  void registerChildController(Controller controller) {
+    if (parentStage != null) {
+      parentStage.registerController(controller);
+    }
+  }
+
+  void registerChildControllers() {
+    if (parentStage != null) {
+      for (Controller controller : controllers) {
+        registerChildController(controller);
+      }
+    }
+  }
+
+  void detachController(Controller controller) {
+    controller.parentWindow = null;
+    controllers.remove(controller);
+  }
+
+  void detachAllControllers() {
+    for (Controller controller : controllers) {
+      detachController(controller);
     }
   }
 
@@ -606,11 +950,13 @@ class Window extends Controller {
 
   // process mouseDragged event received from PApplet
   void processMouseDragged() {
-    if (isTitleBarPressed) {
-      posx += mouseX - pmouseX;
-      posy += mouseY - pmouseY;
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseDragged();
+    if (isDragable) {
+      if (isTitleBarPressed) {
+        posx += mouseX - pmouseX;
+        posy += mouseY - pmouseY;
+        for (KTGUIEventAdapter adapter : adapters) {
+          adapter.onMouseDragged();
+        }
       }
     }
   }
@@ -630,10 +976,14 @@ class Window extends Controller {
 /*****************************************************************************************************
  * 
  ****************************************************************************************************/
-class WindowCloseButton extends Button {
+class CloseButton extends Button {
 
-  WindowCloseButton(int posx, int posy, int w, int h) {
+  CloseButton(int posx, int posy, int w, int h) {
     super(posx, posy, w, h);
+  }
+
+  CloseButton(String title, int posx, int posy, int w, int h) {
+    super(title, posx, posy, w, h);
   }
 
   void updateGraphics() {
@@ -659,7 +1009,7 @@ class WindowCloseButton extends Button {
   void processMousePressed() {
     super.processMousePressed();
     if (isPressed) {
-      parentWindow.parentStage.controllers.remove(parentWindow);
+      ktgui.stageManager.closeWindow(parentWindow);
     }
   }
 }
@@ -671,28 +1021,43 @@ class WindowCloseButton extends Button {
  * The object of this class can be 'Pressed', 'Hovered', 'Released' and 'Dragged'.
  *********************************************************************************************************************/
 class Button extends Controller {
-  boolean isPressed, isHovered;
 
   Button(int posx, int posy, int w, int h) {
     this.posx = posx;
     this.posy = posy;
     this.w = w;
     this.h = h;
-    title = "Button";
-    adapters = new ArrayList<KTGUIEventAdapter>();
+    isActive = true;
+
+    title = "a Button";
     pg = createGraphics(w + 1, h + 1);
+
+    // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
 
+  Button(String title, int posx, int posy, int w, int h) {
+    this.title = title;
+    this.posx = posx;
+    this.posy = posy;
+    this.w = w;
+    this.h = h;
+    isActive = true;
+
+    pg = createGraphics(w + 1, h + 1);
+
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+  }
   void updateGraphics() {
     pg.beginDraw();
     pg.rectMode(CORNER);
     if (isHovered && !isPressed) {
-      pg.fill(ktgui.COLOR_FG_HOVERED);
+      pg.fill(hoveredColor);
     } else if (isHovered && isPressed) {
-      pg.fill(ktgui.COLOR_FG_PRESSED);
+      pg.fill(pressedColor);
     } else {
-      pg.fill(ktgui.COLOR_FG_PASSIVE);
+      pg.fill(passiveColor);
     }
     pg.rect(0, 0, w, h);
     pg.fill(255);
@@ -703,7 +1068,7 @@ class Button extends Controller {
   }
 
   void draw() {
-    if (parentWindow == null) {
+    if (parentWindow == null && parentPane == null) {
       image(pg, posx, posy);
     }
   }
@@ -722,13 +1087,15 @@ class Button extends Controller {
 
   // process mousePressed event received from PApplet
   void processMousePressed() {
-    if (isPointInside(mouseX, mouseY)) {
-      isPressed = true;
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMousePressed();
+    if (isActive) {
+      if (isPointInside(mouseX, mouseY)) {
+        isPressed = true;
+        for (KTGUIEventAdapter adapter : adapters) {
+          adapter.onMousePressed();
+        }
+      } else {
+        isPressed = false;
       }
-    } else {
-      isPressed = false;
     }
   }
 
@@ -742,9 +1109,11 @@ class Button extends Controller {
 
   // process mouseDragged event received from PApplet
   void processMouseDragged() {
-    if (isPressed) {
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseDragged();
+    if (isDragable) {
+      if (isPressed) {
+        for (KTGUIEventAdapter adapter : adapters) {
+          adapter.onMouseDragged();
+        }
       }
     }
   }
@@ -752,8 +1121,18 @@ class Button extends Controller {
   boolean isPointInside(int x, int y) {
     boolean isInside = false;
 
-    int px = (parentWindow == null) ? 0 : parentWindow.posx;
-    int py = (parentWindow == null) ? 0 : parentWindow.posy;
+    //int px = (parentWindow == null) ? 0 : parentWindow.posx;
+    //int py = (parentWindow == null) ? 0 : parentWindow.posy;
+    int px = 0;
+    int py = 0;
+
+    if (parentWindow == null && parentPane != null) {
+      px = parentPane.posx;
+      py = parentPane.posy;
+    } else if (parentWindow != null && parentPane == null) {
+      px = parentWindow.posx;
+      py = parentWindow.posy;
+    }
 
     if (x > px + posx && x < px + posx + w) {
       if (y > py + posy && y < py + posy + h) {
@@ -761,6 +1140,173 @@ class Button extends Controller {
       }
     }
 
+    return isInside;
+  }
+}
+/**********************************************************************************************************************
+ * There are two points to mention. 
+ *
+ * The first one: This class should be used with Window class. In particular, the object of this class should be  
+ * contained in the 'Window' object as a 'part' of it. 
+ *
+ * The second one: This class should be possible to use as a standalone object.
+ *********************************************************************************************************************/
+class Pane extends Controller {
+
+  ArrayList<Controller> controllers = new ArrayList<Controller>();
+
+  Pane(int posx, int posy, int w, int h) {
+    this.posx = posx;
+    this.posy = posy;
+    this.w = w;
+    this.h = h;
+    this.isDragable = false;
+    updateSize(w, h);
+
+    title = "a Pane";
+
+    // automatically register the newly created pane in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+  }
+
+  Pane(String title, int posx, int posy, int w, int h) {
+    this.title = title;
+    this.posx = posx;
+    this.posy = posy;
+    this.w = w;
+    this.h = h;
+    this.isDragable = false;
+    updateSize(w, h);
+
+    // automatically register the newly created pane in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
+  }
+
+  void updateSize(int wdth, int hght) {
+    pg = createGraphics(wdth + 1, hght + 1);
+  }
+
+  void draw() {
+    drawBorder();
+    drawControllers();
+    image(pg, posx, posy);
+  }
+
+  void drawBorder() {
+    // change thickness depending on the user-mouse behavior
+    pg.beginDraw();
+    pg.stroke(0);
+    pg.strokeWeight(1);
+    pg.fill(200, 220, 200);
+    pg.rectMode(CORNER);
+    pg.rect(0, 0, w, h);
+    pg.endDraw();
+  }
+
+  void drawControllers() {
+    for (Controller controller : controllers) {
+      pg.beginDraw();
+      pg.image(controller.getGraphics(), controller.getPosX(), controller.getPosY());
+      pg.endDraw();
+    }
+  }
+
+  void attachController(Controller controller) {
+    if (isActive) {
+      // detach from existing pane first (if exist)
+      if (controller.parentPane != null) {
+        controller.parentPane.detachController(controller); // reset parentWindow
+      }
+      // add to the list of controllers
+      if (!controllers.contains(controller)) {
+        controllers.add(controller);
+        controller.setParentPane(this);
+        // try to register in parentStage
+        registerChildController(controller);
+      }
+    }
+  }
+
+  void addController(Controller controller, int hAlign, int vAlign) {
+    if (isActive) {
+      controller.alignAbout(this, hAlign, vAlign);
+      attachController(controller);
+    }
+  }
+
+  void detachController(Controller controller) {
+    controller.parentPane = null;
+    controllers.remove(controller);
+  }
+
+  void detachAllControllers() {
+    for (Controller controller : controllers) {
+      detachController(controller);
+    }
+  }
+
+  void registerChildController(Controller controller) {
+    if (parentStage != null) {
+      parentStage.registerController(controller);
+    }
+  }
+
+  void registerChildControllers() {
+    if (parentStage != null) {
+      for (Controller controller : controllers) {
+        registerChildController(controller);
+      }
+    }
+  }
+
+  // process mouseMoved event received from PApplet
+  void processMouseMoved() {
+    isHovered = isPointInside(mouseX, mouseY) ? true : false;
+    for (KTGUIEventAdapter adapter : adapters) {
+      adapter.onMouseMoved();
+    }
+  }
+
+  // process mousePressed event received from PApplet
+  void processMousePressed() {
+    if (isHovered) {
+      isPressed = true;
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMousePressed();
+      }
+    }
+  }
+
+  // process mouseReleased event received from PApplet
+  void processMouseReleased() {
+    isPressed = false;
+    if (isHovered) {
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMouseReleased();
+      }
+    }
+  }
+
+  // process mouseDragged event received from PApplet
+  void processMouseDragged() {
+    if (isDragable) {
+      if (isPressed) {
+        posx += mouseX - pmouseX;
+        posy += mouseY - pmouseY;
+        for (KTGUIEventAdapter adapter : adapters) {
+          adapter.onMouseDragged();
+        }
+      }
+    }
+  }
+
+  boolean isPointInside(int x, int y) {
+    boolean isInside = false;
+    if (x > posx && x < posx + this.w) {
+      if (y > posy && y < posy + this.h) {
+        isInside = true;
+      }
+    }
     return isInside;
   }
 }

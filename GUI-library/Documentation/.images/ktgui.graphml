@@ -726,7 +726,7 @@ Stage s;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="123.07223476297986" width="266.43340857787825" x="165.5096419502485" y="3702.030765870766"/>
+          <y:Geometry height="123.07223476297986" width="266.43340857787825" x="-249.43114946061166" y="3702.030765870766"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="53.81640625" x="106.30850116393913" y="3.0">Window<y:LabelModel>
@@ -747,7 +747,7 @@ WindowCloseButton windowCloseButton;</y:AttributeLabel>
     <node id="n41">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="174.37871644234784" y="3560.387697516938"/>
+          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="-240.56207496851232" y="3560.387697516938"/>
           <y:Fill color="#CCFFCC" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="230.412109375" x="9.141575109339755" y="17.530903904486877">Window w = createWindow(int, int, int, int);<y:LabelModel>
@@ -765,7 +765,7 @@ WindowCloseButton windowCloseButton;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="123.07223476297963" width="229.9548532731376" x="-603.2703607360318" y="3887.1024362996595"/>
+          <y:Geometry height="123.07223476297963" width="229.9548532731376" x="134.85481062700296" y="3702.0307658707666"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="92.86083984375" x="68.5470067146938" y="3.0">StageManager<y:LabelModel>
@@ -788,7 +788,7 @@ ArrayList&lt;Stage&gt; stages;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="44.414991117743284" width="186.7161578763929" x="205.3682673009915" y="3865.728641570178"/>
+          <y:Geometry height="44.414991117743284" width="186.7161578763929" x="-209.57252410986865" y="3865.728641570178"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="131.08642578125" x="27.814866047571456" y="3.0">WindowCloseButton<y:LabelModel>
@@ -877,7 +877,7 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="102.09706546275379" width="219.9232505643339" x="-598.2545593816299" y="4072.174106728552"/>
+          <y:Geometry height="102.09706546275379" width="219.9232505643339" x="139.87061198140486" y="3887.102436299659"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="39.40087890625" x="90.26118582904195" y="3.0">Stage<y:LabelModel>
@@ -982,7 +982,7 @@ closing the Window</y:NodeLabel>
     <node id="n53">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="-240.5620749685123" y="3560.387697516938"/>
+          <y:Geometry height="53.7629796839733" width="248.69525959367957" x="524.1428247944924" y="3560.387697516938"/>
           <y:Fill color="#CCFFCC" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="125.359375" x="61.66794229683978" y="17.530903904486877">s.registerController(w);<y:LabelModel>
@@ -1000,7 +1000,7 @@ closing the Window</y:NodeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="208.11286681715524" width="433.09480812641084" x="-332.761849234878" y="3702.030765870766"/>
+          <y:Geometry height="208.11286681715524" width="433.09480812641084" x="431.9430505281267" y="3702.030765870766"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="39.40087890625" x="196.84696461008042" y="3.0">Stage<y:LabelModel>
@@ -1050,7 +1050,7 @@ closing the Window</y:NodeLabel>
     <node id="n57">
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="30.0" width="30.0" x="144.37871644234784" y="3530.387697516938"/>
+          <y:Geometry height="30.0" width="30.0" x="71.51641395927777" y="3530.387697516938"/>
           <y:Fill color="#FFCC99" transparent="false"/>
           <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="24" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="17.34765625" x="6.326171875" y="-1.701171875">3</y:NodeLabel>
@@ -1806,6 +1806,34 @@ Stage defaultStage;</y:AttributeLabel>
         </y:ShapeNode>
       </data>
     </node>
+    <node id="n96">
+      <data key="d6">
+        <y:ShapeNode>
+          <y:Geometry height="53.7629796839733" width="296.63164660858797" x="101.51641395927777" y="3560.387697516938"/>
+          <y:Fill color="#CCFFCC" transparent="false"/>
+          <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="254.998046875" x="20.816799866793986" y="17.530903904486877">s = ktgui.stageManager.createStage("aStage");<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:Shape type="roundrectangle"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n97">
+      <data key="d6">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="494.1428247944924" y="3530.387697516938"/>
+          <y:Fill color="#FFCC99" transparent="false"/>
+          <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="24" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="33.40234375" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="17.34765625" x="6.326171875" y="-1.701171875">4</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
     <edge id="e0" source="n2" target="n3">
       <data key="d10">
         <y:PolyLineEdge>
@@ -2172,20 +2200,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e30" source="n39" target="n42">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="-488.2929340994626" y="3840.200348263541"/>
-            <y:Point x="-488.29293409946297" y="3840.200348263541"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="plain"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e31" source="n41" target="n40">
+    <edge id="e30" source="n41" target="n40">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2195,7 +2210,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e32" source="n44" target="n45">
+    <edge id="e31" source="n44" target="n45">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -2207,7 +2222,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e33" source="n44" target="n46">
+    <edge id="e32" source="n44" target="n46">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -2219,7 +2234,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e34" source="n48" target="n49">
+    <edge id="e33" source="n48" target="n49">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2229,7 +2244,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e35" source="n49" target="n44">
+    <edge id="e34" source="n49" target="n44">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2239,7 +2254,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e36" source="n42" target="n47">
+    <edge id="e35" source="n42" target="n47">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2249,7 +2264,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e37" source="n50" target="n22">
+    <edge id="e36" source="n50" target="n22">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-4.145429166779081" sy="24.781619719845594" tx="-4.145429166779081" ty="-33.568781226651936">
@@ -2262,7 +2277,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e38" source="n52" target="n39">
+    <edge id="e37" source="n52" target="n39">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2272,12 +2287,12 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e39" source="n53" target="n54">
+    <edge id="e38" source="n53" target="n54">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="-116.21444517167251" y="3673.7358819847805"/>
-            <y:Point x="-116.2144451716726" y="3673.7358819847805"/>
+            <y:Point x="648.4904545913322" y="3673.7358819847805"/>
+            <y:Point x="648.4904545913321" y="3673.7358819847805"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="plain"/>
@@ -2285,30 +2300,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e40" source="n52" target="n53">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="-8.709989157869359" ty="-0.03360952776074555">
-            <y:Point x="-306.6086842145022" y="3587.2691873589247"/>
-            <y:Point x="-306.6086842145022" y="3587.235577831164"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="delta"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e41" source="n53" target="n41">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="-8.28206379673827" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="delta"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e42" source="n65" target="n62">
+    <edge id="e39" source="n65" target="n62">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-2.27373675443232E-13" ty="-112.87707488275657"/>
@@ -2318,7 +2310,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e43" source="n59" target="n63">
+    <edge id="e40" source="n59" target="n63">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2328,7 +2320,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e44" source="n61" target="n60">
+    <edge id="e41" source="n61" target="n60">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2338,7 +2330,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e45" source="n65" target="n61">
+    <edge id="e42" source="n65" target="n61">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2348,7 +2340,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e46" source="n59" target="n65">
+    <edge id="e43" source="n59" target="n65">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2358,7 +2350,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e47" source="n64" target="n59">
+    <edge id="e44" source="n64" target="n59">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="47.50732957196578" tx="0.0" ty="0.0">
@@ -2371,7 +2363,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e48" source="n62" target="n72">
+    <edge id="e45" source="n62" target="n72">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="68.05757561904738" tx="0.0" ty="12.361465135032631">
@@ -2385,7 +2377,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e49" source="n72" target="n71">
+    <edge id="e46" source="n72" target="n71">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="22.361774846258413" tx="0.0" ty="0.0">
@@ -2399,7 +2391,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e50" source="n60" target="n74">
+    <edge id="e47" source="n60" target="n74">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="120.7096689266582" tx="0.0" ty="0.0">
@@ -2413,7 +2405,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e51" source="n24" target="n16">
+    <edge id="e48" source="n24" target="n16">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="19.41302609698147" ty="-34.30769204765829">
@@ -2426,7 +2418,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e52" source="n75" target="n18">
+    <edge id="e49" source="n75" target="n18">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-0.21343534360312333" sy="109.95351817854885" tx="-0.21343534360312333" ty="-35.95484716021974">
@@ -2439,7 +2431,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e53" source="n40" target="n43">
+    <edge id="e50" source="n40" target="n43">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-3.410605131648481E-13" ty="8.306666820216833"/>
@@ -2449,7 +2441,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e54" source="n76" target="n77">
+    <edge id="e51" source="n76" target="n77">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2459,7 +2451,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e55" source="n78" target="n79">
+    <edge id="e52" source="n78" target="n79">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -2471,7 +2463,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e56" source="n78" target="n80">
+    <edge id="e53" source="n78" target="n80">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -2483,7 +2475,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e57" source="n81" target="n82">
+    <edge id="e54" source="n81" target="n82">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="87.69187358916452" sy="0.0" tx="0.0" ty="22.053394038743136">
@@ -2496,7 +2488,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e58" source="n82" target="n78">
+    <edge id="e55" source="n82" target="n78">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="23.49177356323844" tx="0.0" ty="0.0"/>
@@ -2506,7 +2498,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e59" source="n77" target="n81">
+    <edge id="e56" source="n77" target="n81">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2516,7 +2508,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e60" source="n80" target="n84">
+    <edge id="e57" source="n80" target="n84">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -2529,7 +2521,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e61" source="n79" target="n84">
+    <edge id="e58" source="n79" target="n84">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="21.9108634592168">
@@ -2542,7 +2534,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e62" source="n83" target="n77">
+    <edge id="e59" source="n83" target="n77">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="22.597766065129235">
@@ -2554,7 +2546,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e63" source="n84" target="n85">
+    <edge id="e60" source="n84" target="n85">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="30.58577535988161" tx="0.0" ty="-31.769532755302862">
@@ -2567,7 +2559,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e64" source="n86" target="n84">
+    <edge id="e61" source="n86" target="n84">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="3.7223063933279263" tx="-79.42786151385826" ty="-37.20558354795867"/>
@@ -2577,7 +2569,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e65" source="n85" target="n87">
+    <edge id="e62" source="n85" target="n87">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="117.30422006477056" sy="72.84219487061091" tx="0.0" ty="0.0">
@@ -2591,7 +2583,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e66" source="n87" target="n92">
+    <edge id="e63" source="n87" target="n92">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-9.094947017729282E-13" ty="0.0"/>
@@ -2601,7 +2593,7 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e67" source="n92" target="n91">
+    <edge id="e64" source="n92" target="n91">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="9.094947017729282E-13" ty="0.0"/>
@@ -2611,13 +2603,57 @@ Stage defaultStage;</y:AttributeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e68" source="n28" target="n95">
+    <edge id="e65" source="n28" target="n95">
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="33.945777802785415" tx="0.0" ty="-4.547473508864641E-13"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e66" source="n52" target="n41">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e67" source="n41" target="n96">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e68" source="n96" target="n53">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="-16.081036171753" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e69" source="n96" target="n42">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
