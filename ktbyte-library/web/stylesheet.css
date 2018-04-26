@@ -1,24 +1,16 @@
-/* processingLibs style by andreas schlegel, sojamo. */
-
-
 * {
 	margin:0;
 	padding:0;
 	border:0;
 }
 
-
 body {
 	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif; 
 	font-size : 100%; 
-    font-size : 0.70em;
+    font-size : 0.80em;
 	font-weight : normal;
 	line-height	: normal;
-	background-color: black;
-	color: #fb5000;
 }
-
-
 
 #container {
 	margin-left:64px;

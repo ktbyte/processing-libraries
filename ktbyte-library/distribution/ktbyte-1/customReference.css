@@ -1,20 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
 body {
-	margin: 0;
-	padding: 0;
-	overflow-y: scroll;
-	
-	background-color: #f8f8f8;
-	
-	font-family: 'theSerif', 'Enriqueta', georgia, times, serif; 
-	
-	-webkit-font-smoothing: antialiased; 
-	-webkit-text-size-adjust: none;
-	
-	font-size: 100%; 
-    font-size: 0.79em;
-	font-weight: normal;
-	line-height: 1.5em;
-	color: black;
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif; 
+	font-size : 100%; 
+    font-size : 0.80em;
+	font-weight : normal;
+	line-height	: normal;
 }
 
 a {
@@ -23,12 +18,40 @@ a {
 	color: #2c7bb5;
 }
 
-.content {
-	width: 680px;
-	float: left;
-	/*overflow: hidden;*/
-	position: relative;
-    padding: 20px;
+#container {
+	margin-left:64px;
+	background-color:#f8f8f8;
+}
+
+#header {
+	float:left;
+	padding: 24px 20px 48px 20px;
+}
+
+#menu {
+	margin-top:16px;
+	float:left;
+	margin-bottom:32px;
+    padding-left: 20px;
+}
+
+ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+
+.clear {
+	clear:both;
+}
+
+#menu ul li, #subMenu ul li {
+	float:left;
+	padding-right:6px;
+}
+
+#content {
+	padding: 20px;
 }
 
 div.ref-col { 
@@ -55,3 +78,37 @@ div.ref-col {
 }
 
 .ref-col p { margin-top: -.5em; margin-bottom: 2em; }
+
+body {
+	color : #333;
+	background-color :#fff;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color:#666;
+}
+
+#header {
+	background-color: #0a0a29;
+	color: #fff;
+}
+
+#header>h1 {
+   	color: #fff; 
+}
+
+
+pre, code {  
+	color: #000000;
+}
+
+a:hover, 
+a:active {
+	color: #333;
+}
+
