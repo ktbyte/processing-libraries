@@ -3,9 +3,9 @@ import ktbyte.midi.*;
 // Try pressing the keys q through p in the keyboard
 // The sharps also work
 
-KTByteSoundCipher sc;
+KTSoundCipher sc;
 void setup() {
-  sc = new KTByteSoundCipher(this);
+  sc = new KTSoundCipher(this);
 }
 
 void draw() {

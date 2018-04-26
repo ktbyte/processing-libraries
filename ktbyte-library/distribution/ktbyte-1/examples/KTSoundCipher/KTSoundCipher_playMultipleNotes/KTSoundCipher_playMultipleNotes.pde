@@ -1,8 +1,8 @@
 import ktbyte.midi.*;
 
-KTByteSoundCipher sc;
+KTSoundCipher sc;
 void setup() {
-    sc = new KTByteSoundCipher(this);
+    sc = new KTSoundCipher(this);
 }
  
 int note = 60;

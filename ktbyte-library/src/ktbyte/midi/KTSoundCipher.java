@@ -9,7 +9,7 @@ import arb.soundcipher.constants.*;
  * 
  * This element can be used to create music. It is just a wrapper library over the SoundCipher library.
  */
-public class KTByteSoundCipher {
+public class KTSoundCipher {
 	
 	private PApplet parent;
 	private SoundCipher soundCipher;
@@ -21,7 +21,7 @@ public class KTByteSoundCipher {
 	 * @param parent
 	 *   The main PApplet instance
 	 */
-	public KTByteSoundCipher(PApplet parent) {
+	public KTSoundCipher(PApplet parent) {
 		this.parent = parent;
 		this.soundCipher = new SoundCipher(parent);
 	}
