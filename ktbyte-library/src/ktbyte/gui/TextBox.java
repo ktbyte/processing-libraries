@@ -17,7 +17,7 @@ public class TextBox implements PConstants {
 	private PApplet parent;
 	private int x, y, w, h;
 	private int r1, r2, r3, r4; // box rounding parameters
-	private boolean handleFocus, isFocused;
+	private boolean handleFocus = true, isFocused;
 	private String textInput;
 	private int textSize;
 	private float textHeight;
@@ -219,6 +219,10 @@ public class TextBox implements PConstants {
 	 */
 	public String getText() {
 		return this.textInput;
+	}
+	
+	public void setHandleFocus(boolean handleFocus) {
+		this.handleFocus = handleFocus;
 	}
 
 	/**

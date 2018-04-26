@@ -63,6 +63,7 @@ public class Console implements PConstants {
 		this.lines = new ArrayList<>();
 		this.dict = new HashMap<String, String>();
 		inputBox = new TextBox(this.parent, x, y + h - inputBoxHeight, w, inputBoxHeight);
+		inputBox.setHandleFocus(true);
 		inputBox.setBorderRoundings(0, 0, 7, 7);
 		inputBox.setKeyEventListener(new KeyEventListener() {
 	
