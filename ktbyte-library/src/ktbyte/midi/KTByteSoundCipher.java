@@ -3,6 +3,7 @@ package ktbyte.midi;
 
 import processing.core.*;
 import arb.soundcipher.SoundCipher;
+import arb.soundcipher.constants.*;
 
 /**
  * 
@@ -10,20 +11,19 @@ import arb.soundcipher.SoundCipher;
  */
 public class KTByteSoundCipher {
 	
-	PApplet parent;
-	SoundCipher sc;
+	private PApplet parent;
+	private SoundCipher soundCipher;
 
 	/**
 	 * a Constructor, usually called in the setup() method in your sketch to
 	 * initialize and start the Library.
 	 * 
-	 * @example Hello
 	 * @param parent
 	 *   The main PApplet instance
 	 */
 	public KTByteSoundCipher(PApplet parent) {
 		this.parent = parent;
-		this.sc = new SoundCipher(parent);
+		this.soundCipher = new SoundCipher(parent);
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class KTByteSoundCipher {
 	 * 			The length that the note will sound, in beats          
 	 */
 	public void playNote(double pitch, double dynamic, double duration) {
-		this.sc.playNote(pitch, dynamic, duration);
+		this.soundCipher.playNote(pitch, dynamic, duration);
 	}
 }
 
