@@ -8,7 +8,6 @@ class Bar extends Controller {
    */
 
 
-
   Bar(int x, int y, int w, int h) {
     this.posx = x;
     this.posy = y;
@@ -32,9 +31,6 @@ class Bar extends Controller {
     pg.endDraw();
   }
 
-  void attachController(Controller controller) {
-  
-  }
 }
 
 class TitleBar extends Bar {
