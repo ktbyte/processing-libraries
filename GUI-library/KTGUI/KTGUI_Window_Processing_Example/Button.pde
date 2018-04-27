@@ -55,7 +55,7 @@ class Button extends Controller {
   void draw() {
     // if this button don't belongs to any window or pane 
     // then draw directly on the PApplet canvas 
-    if (parentComponent == null) {
+    if (parentController == null) {
       image(pg, posx, posy);
     }
   }
@@ -108,8 +108,8 @@ class Button extends Controller {
   boolean isPointInside(int x, int y) {
     boolean isInside = false;
 
-    int px = (parentComponent == null) ? 0 : ((Controller)parentComponent).posx;
-    int py = (parentComponent == null) ? 0 : ((Controller)parentComponent).posy;
+    int px = (parentController == null) ? 0 : parentController.posx;
+    int py = (parentController == null) ? 0 : parentController.posy;
 
     if (x > px + posx && x < px + posx + w) {
       if (y > py + posy && y < py + posy + h) {
@@ -158,7 +158,7 @@ class CloseButton extends Button {
   void processMousePressed() {
     super.processMousePressed();
     if (isPressed) {
-      ktgui.stageManager.closeParentComponent(parentComponent);
+      ktgui.stageManager.closeParentController(parentController);
     }
   }
 }

@@ -11,17 +11,13 @@ interface Component {
  * One should override only the 'needed' event methods. This allows to save time and decrease the amount of code.
  * One should always overridde the 'draw' method.
  *********************************************************************************************************************/
-public abstract class Controller implements Component {
+public abstract class Controller extends EventProcessor implements Component {
   String title;
   int posx, posy, w, h;  
-  boolean isPressed, isHovered;
-  boolean isActive = true;
-  boolean isDragable = true;
-  ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
+
   ArrayList<Controller> controllers = new ArrayList<Controller>();
-  //Window parentWindow = null;
-  //Pane parentPane = null;
-  Component parentComponent = null;
+
+  Controller parentController = null;
   Stage parentStage = null;
   PGraphics pg;
   color hoveredColor = ktgui.COLOR_FG_HOVERED;
@@ -32,23 +28,8 @@ public abstract class Controller implements Component {
   }
   void draw() {
   }
-  void processMouseMoved() {
-  }
-  void processMousePressed() {
-  }
-  void processMouseReleased() {
-  }
-  void processMouseDragged() {
-  }
-  void processKeyPressed() {
-  }
-  void processKeyReleased() {
-  }
-  void addEventAdapter(KTGUIEventAdapter adapter) {
-    adapters.add(adapter);
-  }
-  void setParentComponent(Component component) {
-    this.parentComponent = component;
+  void setParentComponent(Controller controller) {
+    this.parentController = controller;
   }
   void setTitle(String title) {
     this.title = title;
@@ -92,8 +73,8 @@ public abstract class Controller implements Component {
   void attachController(Controller controller) {
     if (isActive) {
       // detach from existing window first (if exist)
-      if (controller.parentComponent != null) {
-        Controller pc = (Controller)controller.parentComponent;
+      if (controller.parentController != null) {
+        Controller pc = (Controller)controller.parentController;
         pc.detachController(controller); // reset parentWindow
       }
       // add to the list of controllers
@@ -119,7 +100,7 @@ public abstract class Controller implements Component {
     }
   }
   void detachController(Controller controller) {
-    controller.parentComponent = null;
+    controller.parentController = null;
     controllers.remove(controller);
   }
   void detachAllControllers() {
