@@ -8,8 +8,6 @@
  *********************************************************************************************************************/
 class Pane extends Controller {
 
-  ArrayList<Controller> controllers = new ArrayList<Controller>();
-
   Pane(int posx, int posy, int w, int h) {
     this.posx = posx;
     this.posy = posy;
@@ -63,54 +61,6 @@ class Pane extends Controller {
       pg.beginDraw();
       pg.image(controller.getGraphics(), controller.getPosX(), controller.getPosY());
       pg.endDraw();
-    }
-  }
-
-  void attachController(Controller controller) {
-    if (isActive) {
-      // detach from existing pane first (if exist)
-      if (controller.parentPane != null) {
-        controller.parentPane.detachController(controller); // reset parentWindow
-      }
-      // add to the list of controllers
-      if (!controllers.contains(controller)) {
-        controllers.add(controller);
-        controller.setParentPane(this);
-        // try to register in parentStage
-        registerChildController(controller);
-      }
-    }
-  }
-
-  void addController(Controller controller, int hAlign, int vAlign) {
-    if (isActive) {
-      controller.alignAbout(this, hAlign, vAlign);
-      attachController(controller);
-    }
-  }
-
-  void detachController(Controller controller) {
-    controller.parentPane = null;
-    controllers.remove(controller);
-  }
-
-  void detachAllControllers() {
-    for (Controller controller : controllers) {
-      detachController(controller);
-    }
-  }
-
-  void registerChildController(Controller controller) {
-    if (parentStage != null) {
-      parentStage.registerController(controller);
-    }
-  }
-
-  void registerChildControllers() {
-    if (parentStage != null) {
-      for (Controller controller : controllers) {
-        registerChildController(controller);
-      }
     }
   }
 

@@ -1,19 +1,27 @@
 /**********************************************************************************************************************
+ *
+ **********************************************************************************************************************/
+interface Component {
+}
+
+/**********************************************************************************************************************
  * This class automatically receives events from PApplet when they happen.
  * Every KTGUI component (controller) should extend this class in order to be able to receive the mouse and keyboard 
  * events.
  * One should override only the 'needed' event methods. This allows to save time and decrease the amount of code.
  * One should always overridde the 'draw' method.
  *********************************************************************************************************************/
-public abstract class Controller {
+public abstract class Controller implements Component {
   String title;
   int posx, posy, w, h;  
   boolean isPressed, isHovered;
   boolean isActive = true;
   boolean isDragable = true;
   ArrayList<KTGUIEventAdapter> adapters = new ArrayList<KTGUIEventAdapter>();
-  Window parentWindow = null;
-  Pane parentPane = null;
+  ArrayList<Controller> controllers = new ArrayList<Controller>();
+  //Window parentWindow = null;
+  //Pane parentPane = null;
+  Component parentComponent = null;
   Stage parentStage = null;
   PGraphics pg;
   color hoveredColor = ktgui.COLOR_FG_HOVERED;
@@ -39,11 +47,8 @@ public abstract class Controller {
   void addEventAdapter(KTGUIEventAdapter adapter) {
     adapters.add(adapter);
   }
-  void setParentWindow(Window window) {
-    this.parentWindow = window;
-  }
-  void setParentPane(Pane pane) {
-    this.parentPane = pane;
+  void setParentComponent(Component component) {
+    this.parentComponent = component;
   }
   void setTitle(String title) {
     this.title = title;
@@ -78,7 +83,50 @@ public abstract class Controller {
   void setPosY(int posy) {
     this.posy = posy;
   }
+  void addController(Controller controller, int hAlign, int vAlign) {
+    if (isActive) {
+      controller.alignAbout(this, hAlign, vAlign);
+      attachController(controller);
+    }
+  }
+  void attachController(Controller controller) {
+    if (isActive) {
+      // detach from existing window first (if exist)
+      if (controller.parentComponent != null) {
+        Controller pc = (Controller)controller.parentComponent;
+        pc.detachController(controller); // reset parentWindow
+      }
+      // add to the list of controllers
+      if (!controllers.contains(controller)) {
+        controllers.add(controller);
+        controller.setParentComponent(this);
+        // try to register in parentStage
+        registerChildController(controller);
+      }
+    }
+  }
+  void registerChildController(Controller controller) {
+    if (parentStage != null) {
+      parentStage.registerController(controller);
+    }
+  }
 
+  void registerChildControllers() {
+    if (parentStage != null) {
+      for (Controller controller : controllers) {
+        registerChildController(controller);
+      }
+    }
+  }
+  void detachController(Controller controller) {
+    controller.parentComponent = null;
+    controllers.remove(controller);
+  }
+  void detachAllControllers() {
+    for (Controller controller : controllers) {
+      detachController(controller);
+    }
+  }
   void alignAboutApplet(int hAlign, int vAlign) {
     switch (hAlign) {
     case LEFT:
@@ -209,7 +257,7 @@ public abstract class Controller {
         break;
       }
       break;
-      
+
     default: // do nothing
       break;
     }

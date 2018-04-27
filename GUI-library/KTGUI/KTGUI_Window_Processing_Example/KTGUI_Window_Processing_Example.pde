@@ -62,10 +62,10 @@ void setup() {
   jumpButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       println("Callback message: The Jumping Button was pressed!");
-      if (jumpButton.parentWindow == w3) {
+      if (jumpButton.parentComponent == w3) {
         //w2.attachController(jumpButton);
         w2.addController(jumpButton, LEFT, 0);
-      } else if (jumpButton.parentWindow == w2) {
+      } else if (jumpButton.parentComponent == w2) {
         //w3.attachController(jumpButton);
         w3.addController(jumpButton, RIGHT, 0);
       }

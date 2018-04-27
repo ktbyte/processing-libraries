@@ -26,8 +26,6 @@
 
 class Window extends Controller {
 
-  ArrayList<Controller> controllers = new ArrayList<Controller>();
-
   boolean isTitleBarHovered, isTitleBarPressed;  
   boolean isWindowHovered, isWindowPressed;  
   boolean isBorderHovered, isBorderPressed;  
@@ -119,54 +117,6 @@ class Window extends Controller {
       pg.beginDraw();
       pg.image(controller.getGraphics(), controller.getPosX(), controller.getPosY());
       pg.endDraw();
-    }
-  }
-
-  void attachController(Controller controller) {
-    if (isActive) {
-      // detach from existing window first (if exist)
-      if (controller.parentWindow != null) {
-        controller.parentWindow.detachController(controller); // reset parentWindow
-      }
-      // add to the list of controllers
-      if (!controllers.contains(controller)) {
-        controllers.add(controller);
-        controller.setParentWindow(this);
-        // try to register in parentStage
-        registerChildController(controller);
-      }
-    }
-  }
-
-  void addController(Controller controller, int hAlign, int vAlign) {
-    if (isActive) {
-      controller.alignAbout(this, hAlign, vAlign);
-      attachController(controller);
-    }
-  }
-
-  void registerChildController(Controller controller) {
-    if (parentStage != null) {
-      parentStage.registerController(controller);
-    }
-  }
-
-  void registerChildControllers() {
-    if (parentStage != null) {
-      for (Controller controller : controllers) {
-        registerChildController(controller);
-      }
-    }
-  }
-
-  void detachController(Controller controller) {
-    controller.parentWindow = null;
-    controllers.remove(controller);
-  }
-
-  void detachAllControllers() {
-    for (Controller controller : controllers) {
-      detachController(controller);
     }
   }
 

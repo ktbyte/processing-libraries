@@ -1,4 +1,4 @@
-/**********************************************************************************************************************
+/********************************************************************************************************************** //<>//
  * 
  *********************************************************************************************************************/
 class StageManager {
@@ -39,16 +39,16 @@ class StageManager {
     }
   }
 
-  void closeWindow(Window window) {
-    println("closeWindow(Window) for window:" + window.title + " has been called.");
-    
-    for (Controller controller : window.controllers) {
+  void closeParentComponent(Component component) {
+    println("closeParentComponent(Component) for component:" + ((Controller)component).title + " has been called.");
+
+    for (Controller controller : ((Controller)component).controllers) {
       println("Controller:" + controller.title + " 'isActive' variable is set to FALSE");  
       controller.isActive = false;
       ktgui.garbageList.put(controller, millis());
     }
-    
-    window.isActive = false;
-    ktgui.garbageList.put(window, millis());
-  } //<>//
+
+    ((Controller)component).isActive = false;
+    ktgui.garbageList.put(((Controller)component), millis());
+  }
 }
