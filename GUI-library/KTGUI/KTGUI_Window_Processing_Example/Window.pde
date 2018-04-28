@@ -32,7 +32,7 @@ class Window extends Controller {
 
   CloseButton windowCloseBtn;
   // Border border;
-  // TitleBar titleBar;
+  Bar titleBar;
   // MenuBar menuBar;
 
   Window(int posx, int posy, int w, int h) {
@@ -67,6 +67,10 @@ class Window extends Controller {
     setTitle(title);
     attachController(windowCloseBtn);
     ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+    
+    titleBar = new Bar("tb:" + title, 0, 0, w, ktgui.TITLE_BAR_HEIGHT);
+    //attachController(titleBar);
+    //registerChildController(titleBar);
   }
 
   void setTitle(String string) {

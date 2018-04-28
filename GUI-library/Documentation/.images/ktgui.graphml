@@ -842,6 +842,7 @@ Stage defaultStage;</y:AttributeLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel>ArrayList&lt;Controller&gt; controllers;</y:AttributeLabel>
             <y:MethodLabel>for (Controller controller: controllers) {
+  controller.updateGraphics();
   controller.draw();
 }</y:MethodLabel>
           </y:UML>
@@ -865,6 +866,7 @@ Stage defaultStage;</y:AttributeLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel>ArrayList&lt;Controller&gt; controllers;</y:AttributeLabel>
             <y:MethodLabel>for (Controller controller: controllers) {
+  controller.updateGraphics();
   controller.draw();
 }</y:MethodLabel>
           </y:UML>

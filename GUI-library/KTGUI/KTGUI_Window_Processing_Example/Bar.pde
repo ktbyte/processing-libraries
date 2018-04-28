@@ -14,6 +14,9 @@ class Bar extends Controller {
     this.w  = w;
     this.h = h;
     this.title = "a Bar";
+    pg = createGraphics(w + 1, h + 1);
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
   }
 
   Bar(String title, int x, int y, int w, int h) {
@@ -22,9 +25,12 @@ class Bar extends Controller {
     this.posy = y;
     this.w  = w;
     this.h = h;
+    pg = createGraphics(w + 1, h + 1);
+    // automatically register the newly created window in default stage of stageManager
+    ktgui.stageManager.defaultStage.registerController(this);
   }
 
-  void draw() {
+  void updateGraphics() {
     // drawBar and title
     pg.beginDraw();
     pg.background(200, 200);
@@ -40,6 +46,64 @@ class Bar extends Controller {
     pg.endDraw();
   }
 
+  void draw() {
+    // if this button doesn't belongs to any parent controller 
+    // then draw directly on the PApplet canvas 
+    if (parentController == null) {
+      image(pg, posx, posy);
+    }
+  }
+
+  // process mouseMoved event received from PApplet
+  void processMouseMoved() {
+    isHovered = isPointInside(mouseX, mouseY) ? true : false;
+    for (KTGUIEventAdapter adapter : adapters) {
+      adapter.onMouseMoved();
+    }
+  }
+
+  // process mousePressed event received from PApplet
+  void processMousePressed() {
+    if (isHovered) {
+      isPressed = true;
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMousePressed();
+      }
+    }
+  }
+
+  // process mouseReleased event received from PApplet
+  void processMouseReleased() {
+    isPressed = false;
+    if (isHovered) {
+      for (KTGUIEventAdapter adapter : adapters) {
+        adapter.onMouseReleased();
+      }
+    }
+  }
+  
+  // process mouseDragged event received from PApplet
+  void processMouseDragged() {
+    if (isDragable) {
+      if (isPressed) {
+        posx += mouseX - pmouseX;
+        posy += mouseY - pmouseY;
+        for (KTGUIEventAdapter adapter : adapters) {
+          adapter.onMouseDragged();
+        }
+      }
+    }
+  }
+  
+  boolean isPointInside(int x, int y) {
+    boolean isInside = false;
+    if (x > posx && x < posx + this.w) {
+      if (y > posy && y < posy + this.h) {
+        isInside = true;
+      }
+    }
+    return isInside;
+  }
 }
 
 class TitleBar extends Bar {
@@ -53,10 +117,6 @@ class TitleBar extends Bar {
   TitleBar(String title, int x, int y, int w, int h) {
     super(title, x, y, w, h);
     closeButton = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
-  }
-
-  void draw() {
-    super.draw();
   }
 
 }

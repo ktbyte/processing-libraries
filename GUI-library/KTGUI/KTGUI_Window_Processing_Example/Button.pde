@@ -34,6 +34,7 @@ class Button extends Controller {
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
+  
   void updateGraphics() {
     pg.beginDraw();
     pg.rectMode(CORNER);

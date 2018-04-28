@@ -64,10 +64,10 @@ void setup() {
       println("Callback message: The Jumping Button was pressed!");
       if (jumpButton.parentController == w3) {
         //w2.attachController(jumpButton);
-        w2.addController(jumpButton, LEFT, 0);
+        w2.addController(jumpButton, 0, TOP);
       } else if (jumpButton.parentController == w2) {
         //w3.attachController(jumpButton);
-        w3.addController(jumpButton, RIGHT, 0);
+        w3.addController(jumpButton, 0, BOTTOM);
       }
     }
   }
@@ -134,7 +134,7 @@ void setup() {
   p3b4.stackAbout(p3b3, TOP, RIGHT);
   alignStage.registerController(p3);
 
-  ktgui.stageManager.goToStage(s1);
+  ktgui.stageManager.goToStage(s3);
 }
 
 /**********************************************************************************************************************
