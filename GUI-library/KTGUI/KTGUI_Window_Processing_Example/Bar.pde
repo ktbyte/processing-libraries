@@ -13,6 +13,15 @@ class Bar extends Controller {
     this.posy = y;
     this.w  = w;
     this.h = h;
+    this.title = "a Bar";
+  }
+
+  Bar(String title, int x, int y, int w, int h) {
+    this.title = title;
+    this.posx = x;
+    this.posy = y;
+    this.w  = w;
+    this.h = h;
   }
 
   void draw() {
@@ -38,6 +47,11 @@ class TitleBar extends Bar {
   
   TitleBar(int x, int y, int w, int h) {
     super(x, y, w, h);
+    closeButton = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
+  }
+
+  TitleBar(String title, int x, int y, int w, int h) {
+    super(title, x, y, w, h);
     closeButton = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
   }
 

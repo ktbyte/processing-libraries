@@ -1,25 +1,20 @@
 /**********************************************************************************************************************
- *
- **********************************************************************************************************************/
-interface Component {
-}
-
-/**********************************************************************************************************************
  * This class automatically receives events from PApplet when they happen.
  * Every KTGUI component (controller) should extend this class in order to be able to receive the mouse and keyboard 
  * events.
  * One should override only the 'needed' event methods. This allows to save time and decrease the amount of code.
  * One should always overridde the 'draw' method.
  *********************************************************************************************************************/
-public abstract class Controller extends EventProcessor implements Component {
+public abstract class Controller extends EventProcessor {
   String title;
   int posx, posy, w, h;  
 
   ArrayList<Controller> controllers = new ArrayList<Controller>();
-
   Controller parentController = null;
   Stage parentStage = null;
+  
   PGraphics pg;
+  
   color hoveredColor = ktgui.COLOR_FG_HOVERED;
   color pressedColor = ktgui.COLOR_FG_PRESSED;
   color passiveColor = ktgui.COLOR_FG_PASSIVE;
@@ -28,7 +23,7 @@ public abstract class Controller extends EventProcessor implements Component {
   }
   void draw() {
   }
-  void setParentComponent(Controller controller) {
+  void setParentController(Controller controller) {
     this.parentController = controller;
   }
   void setTitle(String title) {
@@ -80,7 +75,7 @@ public abstract class Controller extends EventProcessor implements Component {
       // add to the list of controllers
       if (!controllers.contains(controller)) {
         controllers.add(controller);
-        controller.setParentComponent(this);
+        controller.setParentController(this);
         // try to register in parentStage
         registerChildController(controller);
       }
