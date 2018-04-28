@@ -12,9 +12,9 @@ public abstract class Controller extends EventProcessor {
   ArrayList<Controller> controllers = new ArrayList<Controller>();
   Controller parentController = null;
   Stage parentStage = null;
-  
+
   PGraphics pg;
-  
+
   color hoveredColor = ktgui.COLOR_FG_HOVERED;
   color pressedColor = ktgui.COLOR_FG_PRESSED;
   color passiveColor = ktgui.COLOR_FG_PASSIVE;
@@ -47,18 +47,7 @@ public abstract class Controller extends EventProcessor {
   PGraphics getGraphics() {
     return pg;
   }
-  int getPosX() {
-    return posx;
-  }
-  int getPosY() {
-    return posy;
-  }
-  void setPosX(int posx) {
-    this.posx = posx;
-  }
-  void setPosY(int posy) {
-    this.posy = posy;
-  }
+
   void addController(Controller controller, int hAlign, int vAlign) {
     if (isActive) {
       controller.alignAbout(this, hAlign, vAlign);
@@ -81,12 +70,18 @@ public abstract class Controller extends EventProcessor {
       }
     }
   }
+  // register child controller and all his childs (recursively
   void registerChildController(Controller controller) {
     if (parentStage != null) {
       parentStage.registerController(controller);
+      if (controller.controllers.size() > 0) {
+        ArrayList<Controller> childControllers = controller.controllers;
+        for (Controller child : childControllers) {
+          registerChildController(child);
+        }
+      }
     }
   }
-
   void registerChildControllers() {
     if (parentStage != null) {
       for (Controller controller : controllers) {
@@ -103,12 +98,20 @@ public abstract class Controller extends EventProcessor {
       detachController(controller);
     }
   }
+  void updateChildrenPositions(int dx, int dy) {
+    for (Controller controller : controllers) {
+      controller.posx += dx;
+      controller.posy += dy;
+    }
+  }
   void alignAboutApplet(int hAlign, int vAlign) {
     switch (hAlign) {
     case LEFT:
+      updateChildrenPositions(ktgui.ALIGN_GAP - this.posx, 0);
       this.posx = ktgui.ALIGN_GAP;
       break;
     case RIGHT:
+      updateChildrenPositions(width - this.w - ktgui.ALIGN_GAP - this.posx, 0);
       this.posx = width - this.w - ktgui.ALIGN_GAP;
       break;
     case CENTER:

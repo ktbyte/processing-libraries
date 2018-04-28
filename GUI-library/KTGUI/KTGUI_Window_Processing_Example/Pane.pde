@@ -59,7 +59,7 @@ class Pane extends Controller {
   void drawControllers() {
     for (Controller controller : controllers) {
       pg.beginDraw();
-      pg.image(controller.getGraphics(), controller.getPosX(), controller.getPosY());
+      pg.image(controller.getGraphics(), controller.posx, controller.posy);
       pg.endDraw();
     }
   }

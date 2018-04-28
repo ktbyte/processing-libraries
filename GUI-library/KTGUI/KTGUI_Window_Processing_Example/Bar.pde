@@ -2,7 +2,7 @@ class Bar extends Controller {
 
 
   /*
-  
+ 
    See the notes in KTBYTEDEV-678
    
    */
@@ -46,14 +46,25 @@ class Bar extends Controller {
     pg.endDraw();
   }
 
+  /*
+    Note: the first added is drawn last
+  */
   void draw() {
-    // if this button doesn't belongs to any parent controller 
-    // then draw directly on the PApplet canvas 
-    if (parentController == null) {
+    drawControllers();  
+    // if this button doesn't belongs to any parent controller then draw it directly on the PApplet canvas 
+    //if (parentController == null) {
       image(pg, posx, posy);
-    }
+    //}
   }
 
+  void drawControllers() {
+    for (Controller controller : controllers) {
+      pg.beginDraw();
+      pg.image(controller.getGraphics(), controller.posx, controller.posy);
+      pg.endDraw();
+    }
+  }
+  
   // process mouseMoved event received from PApplet
   void processMouseMoved() {
     isHovered = isPointInside(mouseX, mouseY) ? true : false;
@@ -112,11 +123,15 @@ class TitleBar extends Bar {
   TitleBar(int x, int y, int w, int h) {
     super(x, y, w, h);
     closeButton = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
+    attachController(closeButton);
+    registerChildController(closeButton);
   }
 
   TitleBar(String title, int x, int y, int w, int h) {
     super(title, x, y, w, h);
-    closeButton = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
+    closeButton = new CloseButton("cb:" + this.title, w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
+    attachController(closeButton);
+    registerChildController(closeButton);
   }
 
 }

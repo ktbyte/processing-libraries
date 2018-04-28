@@ -75,11 +75,11 @@ void setup() {
 
   // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
-  w2 = ktgui.createWindow("Window_2", 400, 220, 300, 200);
+  w2 = ktgui.createWindow("Window_2", 10, 220, 300, 200);
   w2.alignAboutApplet(LEFT, 0);
   s3.registerController(w2);
 
-  w3 = ktgui.createWindow("Window_3", 10, 220, 300, 200);
+  w3 = ktgui.createWindow("Window_3", 400, 220, 300, 200);
   w3.alignAboutApplet(RIGHT, 0); 
   w3.addController(jumpButton, CENTER, CENTER);
   s3.registerController(w3);
@@ -159,25 +159,17 @@ void draw() {
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
     for (Controller controller : ktgui.stageManager.defaultStage.controllers) {
       if (controller.title != null) { 
-        text("defaultStage: " + controller.title.replaceAll("\n", ""), 10, ypos+=YSHIFT);
+        text("defaultStage: " + controller.title + ", posx:" + controller.posx + ", posy:" + controller.posy, 10, ypos+=YSHIFT);
       }
     }
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
     for (Controller controller : ktgui.stageManager.activeStage.controllers) {
       if (controller.title != null) {
-        text("activeStage: " + controller.title, 10, ypos+=YSHIFT);
+        text("activeStage: " + controller.title + ", posx:" + controller.posx + ", posy:" + controller.posy, 10, ypos+=YSHIFT);
       }
     }
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    for (Stage stage : ktgui.stageManager.stages) {
-      for (Controller controller : stage.controllers) {
-        if (controller.title != null) { 
-          text("stage." + stage.name + ": " + controller.title, 10, ypos+=YSHIFT);
-        }
-      }
-    }
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    text("alignStage.controllers.size():" + alignStage.controllers.size(), 10, ypos+=YSHIFT);
+    surface.setTitle(mouseX + ":" + mouseY);
   }
 }
 

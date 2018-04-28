@@ -30,9 +30,9 @@ class Window extends Controller {
   boolean isWindowHovered, isWindowPressed;  
   boolean isBorderHovered, isBorderPressed;  
 
-  CloseButton windowCloseBtn;
+  //CloseButton windowCloseBtn;
   // Border border;
-  Bar titleBar;
+  TitleBar titleBar;
   // MenuBar menuBar;
 
   Window(int posx, int posy, int w, int h) {
@@ -40,16 +40,16 @@ class Window extends Controller {
     this.posy = posy;
     this.w = w;
     this.h = h;
-    updateSize(w, h);
+    pg = createGraphics(w + 1, h + 1);
 
     title = "a Window";
 
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
 
-    windowCloseBtn = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
-    attachController(windowCloseBtn);
-    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+    //windowCloseBtn = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
+    //attachController(windowCloseBtn);
+    //registerChildController(windowCloseBtn);
   }
 
   Window(String title, int posx, int posy, int w, int h) {
@@ -58,51 +58,60 @@ class Window extends Controller {
     this.posy = posy;
     this.w = w;
     this.h = h;
-    updateSize(w, h);
+    pg = createGraphics(w + 1, h + 1);
 
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
 
-    windowCloseBtn = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
+    //windowCloseBtn = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
     setTitle(title);
-    attachController(windowCloseBtn);
-    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+    //attachController(windowCloseBtn);
+    //registerChildController(windowCloseBtn);
     
-    titleBar = new Bar("tb:" + title, 0, 0, w, ktgui.TITLE_BAR_HEIGHT);
-    //attachController(titleBar);
-    //registerChildController(titleBar);
+    titleBar = new TitleBar("tb:" + title, 10, 10 + ktgui.TITLE_BAR_HEIGHT, w, ktgui.TITLE_BAR_HEIGHT);
+    attachController(titleBar);
+    registerChildController(titleBar);
+    //titleBar.stackAbout(this,TOP,LEFT);
+    titleBar.posx = titleBar.parentController.posx;
+    titleBar.posy = titleBar.parentController.posy - ktgui.TITLE_BAR_HEIGHT;
+    titleBar.addEventAdapter(new KTGUIEventAdapter(){
+      void onMouseDragged(){
+        titleBar.parentController.posx += mouseX - pmouseX;
+        titleBar.parentController.posy += mouseY - pmouseY;
+      }
+    });
   }
 
   void setTitle(String string) {
     title = string;
-    windowCloseBtn.setTitle("CloseButton-of:" + title);
-  }
-
-  void updateSize(int wdth, int hght) {
-    pg = createGraphics(wdth + 1, hght + 1);
+    //windowCloseBtn.setTitle("CloseButton-of:" + title);
   }
 
   void draw() {
+    pg.beginDraw();
+    pg.background(200, 200);
+    pg.endDraw();
     drawTitleBar();
     drawBorder();
     drawControllers();
+    
     image(pg, posx, posy);
   }
 
   void drawTitleBar() {
     // drawBar and title
-    pg.beginDraw();
-    pg.background(200, 200);
-    pg.rectMode(CORNER);
-    pg.fill(180);
-    pg.stroke(15);
-    pg.strokeWeight(1);
-    pg.rect(0, 0, w, ktgui.TITLE_BAR_HEIGHT);
-    pg.fill(25);
-    pg.textAlign(LEFT, CENTER);
-    pg.textSize(ktgui.TITLE_BAR_HEIGHT*0.65);
-    pg.text(title, 10, ktgui.TITLE_BAR_HEIGHT*0.5);
-    pg.endDraw();
+    //pg.beginDraw();
+    //pg.background(200, 200);
+    //pg.rectMode(CORNER);
+    //pg.fill(180);
+    //pg.stroke(15);
+    //pg.strokeWeight(1);
+    //pg.rect(0, 0, w, ktgui.TITLE_BAR_HEIGHT);
+    //pg.fill(25);
+    //pg.textAlign(LEFT, CENTER);
+    //pg.textSize(ktgui.TITLE_BAR_HEIGHT*0.65);
+    //pg.text(title, 10, ktgui.TITLE_BAR_HEIGHT*0.5);
+    //pg.endDraw();
   }
 
   void drawBorder() {
@@ -112,14 +121,14 @@ class Window extends Controller {
     pg.strokeWeight(1);
     pg.noFill();
     pg.rectMode(CORNER);
-    pg.rect(0, ktgui.TITLE_BAR_HEIGHT, w, h - ktgui.TITLE_BAR_HEIGHT);
+    pg.rect(0, 0, w, h);
     pg.endDraw();
   }
 
   void drawControllers() {
     for (Controller controller : controllers) {
       pg.beginDraw();
-      pg.image(controller.getGraphics(), controller.getPosX(), controller.getPosY());
+      pg.image(controller.getGraphics(), controller.posx, controller.posy);
       pg.endDraw();
     }
   }
