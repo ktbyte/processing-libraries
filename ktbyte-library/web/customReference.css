@@ -12,12 +12,6 @@ body {
 	line-height	: normal;
 }
 
-a {
-	text-decoration: none;
-	font-weight: normal;
-	color: #2c7bb5;
-}
-
 #container {
 	margin-left:64px;
 	background-color:#f8f8f8;
@@ -77,7 +71,18 @@ div.ref-col {
 	display: block;
 }
 
+.ref-link {
+    margin-top: 4px;
+    text-decoration: none;
+	font-weight: normal;
+	color: #2c7bb5;
+}
+
 .ref-col p { margin-top: -.5em; margin-bottom: 2em; }
+
+.large-header {
+    margin-bottom: 50px;
+}
 
 body {
 	color : #333;
@@ -112,3 +117,6 @@ a:active {
 	color: #333;
 }
 
+#footer a, #menu a {
+	color:#333;
+}

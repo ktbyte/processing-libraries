@@ -35,4 +35,4 @@ Some folders like `examples` or `src` might be missing. After Library Educationa
 
 ### Troubleshooting
 
-If you're having trouble, have a look at the [Processing Wiki](https://github.com/processing/processing/wiki/How-to-Install-a-Contributed-Library) for more information, or contact the author [KTByte](https://www.ktbyte.com).
+If you're having trouble, have a look at the [Processing Wiki](https://github.com/processing/processing/wiki/How-to-Install-a-Contributed-Library) for more information, or contact the author [KTBYTE](https://www.ktbyte.com).

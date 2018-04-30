@@ -122,3 +122,7 @@ a:visited,
 a:link:visited {
 	color: #333;
 }
+
+#footer a, #menu a {
+	color:#333;
+}
