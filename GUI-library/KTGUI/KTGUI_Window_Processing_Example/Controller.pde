@@ -56,7 +56,7 @@ public abstract class Controller extends EventProcessor {
   }
   void attachController(Controller controller) {
     if (isActive) {
-      // detach from existing window first (if exist)
+      // detach from existing controller first (if exist)
       if (controller.parentController != null) {
         Controller pc = (Controller)controller.parentController;
         pc.detachController(controller); // reset parentWindow
@@ -64,10 +64,11 @@ public abstract class Controller extends EventProcessor {
       // add to the list of controllers
       if (!controllers.contains(controller)) {
         controllers.add(controller);
-        controller.setParentController(this);
-        // try to register in parentStage
-        registerChildController(controller);
       }
+      // set 'this' controller as parent
+      controller.setParentController(this);
+      // register in parentStage
+      registerChildController(controller);
     }
   }
   // register child controller and all its childs (recursively)
@@ -114,18 +115,31 @@ public abstract class Controller extends EventProcessor {
   }
 
   // close parent controller recursiveley (upward)
-  void closeParentController(Controller parentController) {
-    if (parentController.parentController != null) closeParentController(parentController.parentController);
-
-    msg("closeParentController(Controller) for component:" + parentController.title + " has been called.");
-    for (Controller controller : parentController.controllers) {
-      msg("Controller:" + controller.title + " 'isActive' variable is set to FALSE");  
-      controller.isActive = false;
-      ktgui.garbageList.put(controller, millis());
+  void closeControllerRecursivelyUpward(Controller controller) {
+    // recursive call, go upwardd
+    if (controller.parentController != null) closeControllerRecursivelyUpward(controller.parentController);
+    // if can't go upward, then close all child controllers
+    for (Controller childController : controller.controllers) {
+      closeController(childController);
     }
+    // close the controller itself
+    closeController(controller);
+  }
 
-    parentController.isActive = false;
-    ktgui.garbageList.put(parentController, millis());
+  //// close parent controller recursiveley (upward)
+  //void closeControllerRecursivelyDownward(Controller controller) {
+  //  for (Controller childController : controller.controllers) {
+  //    if (childController.controllers != null) {
+  //      closeControllerRecursivelyDownward(childController);
+  //    }
+  //    closeController(childController);
+  //  }
+  //  closeController(controller);
+  //}
+
+  void closeController(Controller controller) {
+    controller.isActive = false;
+    ktgui.garbageList.put(controller, millis());
   }
 
   void alignAboutApplet(int hAlign, int vAlign) {
