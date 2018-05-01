@@ -40,15 +40,21 @@ class StageManager {
   }
 
   void closeParentController(Controller parentController) {
-    println("closeParentComponent(Component) for component:" + parentController.title + " has been called.");
-
-    for (Controller controller : parentController.controllers) {
-      println("Controller:" + controller.title + " 'isActive' variable is set to FALSE");  
-      controller.isActive = false;
-      ktgui.garbageList.put(controller, millis());
-    }
-
+    msg("closeParentComponent(Component) for component:" + parentController.title + " has been called.");
     parentController.isActive = false;
     ktgui.garbageList.put(parentController, millis());
+
+    for (Controller controller : parentController.controllers) {
+      msg("Controller:" + controller.title + " 'isActive' variable is set to FALSE");  
+      controller.isActive = false;
+      ktgui.garbageList.put(controller, millis());
+
+      //for (Controller childController : controller.controllers) {
+        closeParentController(controller);
+      //}
+    }
+
+    //parentController.isActive = false;
+    //ktgui.garbageList.put(parentController, millis());
   }
 }

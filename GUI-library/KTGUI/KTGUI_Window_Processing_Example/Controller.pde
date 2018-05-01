@@ -98,6 +98,7 @@ public abstract class Controller extends EventProcessor {
       detachController(controller);
     }
   }
+  // update child controllers positions and all their childs (recursively)
   void updateChildrenPositions(int dx, int dy) {
     for (Controller controller : controllers) {
       controller.posx += dx;

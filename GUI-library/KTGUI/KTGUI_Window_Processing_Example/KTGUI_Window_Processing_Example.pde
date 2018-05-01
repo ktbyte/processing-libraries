@@ -21,14 +21,15 @@ void setup() {
     public void onMousePressed() {
       debug = !debug;
     }
-  });
+  }
+  );
 
   // this button will be visible always because it will be located on default stage
   nextStageBtn = ktgui.createButton("NextStage", width - 120, height - 70, 100, 50);
   nextStageBtn.alignAboutApplet(RIGHT, BOTTOM);
   nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      println("Callback message: The Next-Stage-Button was pressed!");
+      msg("Callback message: The Next-Stage-Button was pressed!");
       ktgui.stageManager.goToNextStage();
     }
   }
@@ -39,7 +40,7 @@ void setup() {
   anotherButton.alignAboutApplet(LEFT, BOTTOM);
   anotherButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      println("Callback message: The anotherButton (goToStage(1)) was pressed!");
+      msg("Callback message: The anotherButton (goToStage(1)) was pressed!");
       ktgui.stageManager.goToStage(1);
     }
   }
@@ -61,7 +62,7 @@ void setup() {
   jumpButton = ktgui.createButton("Jump!", 50, 50, 100, 50);
   jumpButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      println("Callback message: The Jumping Button was pressed!");
+      msg("Callback message: The Jumping Button was pressed!");
       if (jumpButton.parentController == w3) {
         //w2.attachController(jumpButton);
         w2.addController(jumpButton, 0, TOP);
@@ -160,13 +161,21 @@ void draw() {
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
     for (Controller controller : ktgui.stageManager.defaultStage.controllers) {
       if (controller.title != null) { 
-        text("defaultStage: " + controller.title + ", posx:" + controller.posx + ", posy:" + controller.posy, 10, ypos+=YSHIFT);
+        text("defaultStage: " + controller.title + 
+          ", parent:" + controller.parentController.title + 
+          ", posx:" + controller.posx + 
+          ", posy:" + controller.posy
+          , 10, ypos+=YSHIFT);
       }
     }
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
     for (Controller controller : ktgui.stageManager.activeStage.controllers) {
       if (controller.title != null) {
-        text("activeStage: " + controller.title + ", posx:" + controller.posx + ", posy:" + controller.posy, 10, ypos+=YSHIFT);
+        text("activeStage: " + controller.title + 
+          ", parent:" + controller.parentController.title + 
+          ", posx:" + controller.posx + 
+          ", posy:" + controller.posy, 
+          10, ypos+=YSHIFT);
       }
     }
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
@@ -174,6 +183,8 @@ void draw() {
   }
 }
 
-void keyPressed() {
-  ktgui.stageManager.goToNextStage();
+void msg(String msg) {
+  if (debug) {
+    println(msg);
+  }
 }

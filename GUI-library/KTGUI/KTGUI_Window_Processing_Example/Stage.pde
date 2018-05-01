@@ -27,19 +27,19 @@ public class Stage {
     String controllerClassName = controller.getClass().getName();
     String[] tokens = splitTokens(controllerClassName, ".$");
     if (tokens.length > 1) controllerClassName = tokens[1];
-    println("Trying to register '" + controller.title + "' " + controllerClassName + " in '" + name + "' stage.");
+    msg("Trying to register '" + controller.title + "' " + controllerClassName + " in '" + name + "' stage.");
 
- 
+
     // try to remove controller from default stage then
     if (ktgui.stageManager.defaultStage.controllers.contains(controller)) {
-      println("\tdefaultStage already contains this controller: --> removing from default stage.");
+      msg("\tdefaultStage already contains this controller: --> removing from default stage.");
       ktgui.stageManager.defaultStage.unregisterController(controller);
     }
 
     // try to remove controller from active stage then
     if (ktgui.stageManager.activeStage != null) {
       if (ktgui.stageManager.activeStage.controllers.contains(controller)) {
-      println("\tactiveStage already contains this controller: --> removing from active stage.");
+        msg("\tactiveStage already contains this controller: --> removing from active stage.");
         ktgui.stageManager.activeStage.unregisterController(controller);
       }
     }
@@ -48,7 +48,7 @@ public class Stage {
     if (!controllers.contains(controller)) {
       controllers.add(controller);
       controller.parentStage = this;
-      println("\tAdded to controllers list successfully, new parentStage is (" + name + ")");
+      msg("\tAdded to controllers list successfully, new parentStage is (" + name + ")");
       if (tokens.length > 1) {
         // try to add all child components of controller, if it is of type Window
         if (tokens[1].contains("Window")) {
@@ -61,17 +61,17 @@ public class Stage {
           pane.registerChildControllers();
         }
       } else {
-        println("....Cannot register child controllers of '" + name + "'");
+        msg("....Cannot register child controllers of '" + name + "'");
       }
     } else {
-      println("\talready exist.");
+      msg("\talready exist.");
     }
-    println("------------------------------------------------------------------------------------");
+    msg("------------------------------------------------------------------------------------");
   }
 
   void unregisterController(Controller controller) {
     if (controllers.contains(controller)) {
-      println("\t" + name + " already contains controller '" + controller.title + "': --> removing from '" + name + "' stage.");
+      msg("\t" + name + " already contains controller '" + controller.title + "': --> removing from '" + name + "' stage.");
       controllers.remove(controller);
       controller.parentStage = null;
     }
