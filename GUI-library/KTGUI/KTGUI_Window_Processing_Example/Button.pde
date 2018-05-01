@@ -1,8 +1,6 @@
-
 /**********************************************************************************************************************
- * This is an example of the KTGUI component (controller).
+ * This is a KTGUI component (controller).
  * This class extends the 'Controller' class.
- * This class overrides only the 'mouse-related' methods of the 'Controller' class.
  * The object of this class can be 'Pressed', 'Hovered', 'Released' and 'Dragged'.
  *********************************************************************************************************************/
 class Button extends Controller {
