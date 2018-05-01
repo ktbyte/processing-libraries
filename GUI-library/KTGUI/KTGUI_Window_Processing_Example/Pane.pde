@@ -1,10 +1,5 @@
 /**********************************************************************************************************************
- * There are two points to mention. 
  *
- * The first one: This class should be used with Window class. In particular, the object of this class should be  
- * contained in the 'Window' object as a 'part' of it. 
- *
- * The second one: This class should be possible to use as a standalone object.
  *********************************************************************************************************************/
 class Pane extends Controller {
 
@@ -113,5 +108,19 @@ class Pane extends Controller {
       }
     }
     return isInside;
+  }
+}
+
+class WindowPane extends Pane {
+  Window parentWindow;
+  
+  WindowPane(Window window, int posx, int posy, int w, int h) {
+    super(posx, posy, w, h);
+    this.parentWindow = window;
+  }
+
+  WindowPane(String title, Window window, int posx, int posy, int w, int h) {
+    super(title, posx, posy, w, h);
+    this.parentWindow = window;
   }
 }

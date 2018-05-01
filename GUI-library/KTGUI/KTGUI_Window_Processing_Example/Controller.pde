@@ -56,7 +56,7 @@ public abstract class Controller extends EventProcessor {
   }
   void attachController(Controller controller) {
     if (isActive) {
-      // detach from existing controller first (if exist)
+      // detach from existinler first (if exist)
       if (controller.parentController != null) {
         Controller pc = (Controller)controller.parentController;
         pc.detachController(controller); // reset parentWindow

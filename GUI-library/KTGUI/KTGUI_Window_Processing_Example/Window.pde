@@ -11,36 +11,21 @@
 
 class Window extends Controller {
 
-  boolean isWindowHovered, isWindowPressed;  
-  boolean isBorderHovered, isBorderPressed;  
-
   // Border border;
   TitleBar titleBar;
   // MenuBar menuBar;
+  WindowPane pane;
 
   Window(int posx, int posy, int w, int h) {
+    this.title = "a Window";
     this.posx = posx;
     this.posy = posy;
     this.w = w;
     this.h = h;
     this.pg = createGraphics(w + 1, h + 1);
-
-    this.title = "a Window";
-
     ktgui.stageManager.defaultStage.registerController(this);
-
-    titleBar = new TitleBar("tb:" + title, this, 10, 10 + ktgui.TITLE_BAR_HEIGHT, w, ktgui.TITLE_BAR_HEIGHT);
-    attachController(titleBar);
-    registerChildController(titleBar);
-    titleBar.posx = titleBar.parentController.posx;
-    titleBar.posy = titleBar.parentController.posy - ktgui.TITLE_BAR_HEIGHT;
-    titleBar.addEventAdapter(new KTGUIEventAdapter() {
-      void onMouseDragged() {
-        titleBar.parentController.posx += mouseX - pmouseX;
-        titleBar.parentController.posy += mouseY - pmouseY;
-      }
-    }    
-    );
+    createTitleBar();
+    createPane();
   }
 
   Window(String title, int posx, int posy, int w, int h) {
@@ -49,24 +34,33 @@ class Window extends Controller {
     this.posy = posy;
     this.w = w;
     this.h = h;
-    pg = createGraphics(w + 1, h + 1);
-
+    this.pg = createGraphics(w + 1, h + 1);
     ktgui.stageManager.defaultStage.registerController(this);
-
     setTitle(title);
+    createTitleBar();
+    createPane();
+  }
 
-    titleBar = new TitleBar("tb:" + title, this, 10, 10 + ktgui.TITLE_BAR_HEIGHT, w, ktgui.TITLE_BAR_HEIGHT);
+  void createTitleBar() {
+    titleBar = new TitleBar("tb:" + title, this, posx, posy, w, ktgui.TITLE_BAR_HEIGHT);
     attachController(titleBar);
     registerChildController(titleBar);
-    titleBar.posx = titleBar.parentController.posx;
-    titleBar.posy = titleBar.parentController.posy - ktgui.TITLE_BAR_HEIGHT;
     titleBar.addEventAdapter(new KTGUIEventAdapter() {
-      void onMouseDragged() {
+      public void onMouseDragged() {
         titleBar.parentController.posx += mouseX - pmouseX;
         titleBar.parentController.posy += mouseY - pmouseY;
+        pane.posx += mouseX - pmouseX;
+        pane.posy += mouseY - pmouseY;
       }
     }
     );
+  }
+
+  void createPane() {
+    pane = new WindowPane("pane:" + title, this, posx, posy + titleBar.h, w, h - titleBar.h);
+    pane.isDragable = true;
+    attachController(pane);
+    registerChildController(pane);
   }
 
   void setTitle(String string) {
@@ -74,13 +68,16 @@ class Window extends Controller {
   }
 
   void draw() {
-    pg.beginDraw();
-    pg.background(200, 200);
-    pg.endDraw();
-    drawBorder();
+    //pg.beginDraw();
+    //pg.background(200, 200);
+    //pg.endDraw();
+    //drawBorder();
     drawControllers();
 
     image(pg, posx, posy);
+  }
+
+  void updateGraphics() {
   }
 
   void drawBorder() {
@@ -117,5 +114,4 @@ class Window extends Controller {
   // process mouseDragged event received from PApplet
   void processMouseDragged() {
   }
-
 }

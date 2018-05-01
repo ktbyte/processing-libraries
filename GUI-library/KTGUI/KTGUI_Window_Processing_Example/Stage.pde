@@ -25,10 +25,7 @@ public class Stage {
 
   void registerController(Controller controller) {
     String controllerClassName = controller.getClass().getName();
-    String[] tokens = splitTokens(controllerClassName, ".$");
-    if (tokens.length > 1) controllerClassName = tokens[1];
     msg("Trying to register '" + controller.title + "' " + controllerClassName + " in '" + name + "' stage.");
-
 
     // try to remove controller from default stage then
     if (ktgui.stageManager.defaultStage.controllers.contains(controller)) {
@@ -45,20 +42,26 @@ public class Stage {
     }
 
     // add controller to this stage
+    String[] tokens = splitTokens(controllerClassName, ".$");
+    if (tokens.length > 1) controllerClassName = tokens[1];
     if (!controllers.contains(controller)) {
       controllers.add(controller);
       controller.parentStage = this;
       msg("\tAdded to controllers list successfully, new parentStage is (" + name + ")");
       if (tokens.length > 1) {
         // try to add all child components of controller, if it is of type Window
-        if (tokens[1].contains("Window")) {
+        if (tokens[1].equalsIgnoreCase("Window")) {
           Window window = (Window) controller;
           window.registerChildControllers();
         }
         // try to add all child components of controller, if it is of type Pane
-        if (tokens[1].contains("Pane")) {
+        if (tokens[1].equalsIgnoreCase("Pane")) {
           Pane pane = (Pane) controller;
           pane.registerChildControllers();
+        }
+        if (tokens[1].equalsIgnoreCase("WindowPane")) {
+          WindowPane windowPane = (WindowPane) controller;
+          windowPane.registerChildControllers();
         }
       } else {
         msg("....Cannot register child controllers of '" + name + "'");
