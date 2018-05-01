@@ -119,16 +119,19 @@ class Bar extends Controller {
 
 class TitleBar extends Bar {
   CloseButton closeButton;
+  Window parentWindow;
   
-  TitleBar(int x, int y, int w, int h) {
+  TitleBar(Window window, int x, int y, int w, int h) {
     super(x, y, w, h);
+    this.parentWindow = window;
     closeButton = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
     attachController(closeButton);
     registerChildController(closeButton);
   }
 
-  TitleBar(String title, int x, int y, int w, int h) {
+  TitleBar(String title, Window window, int x, int y, int w, int h) {
     super(title, x, y, w, h);
+    this.parentWindow = window;
     closeButton = new CloseButton("cb:" + this.title, w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
     attachController(closeButton);
     registerChildController(closeButton);

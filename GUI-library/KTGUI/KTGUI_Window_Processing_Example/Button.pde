@@ -159,7 +159,7 @@ class CloseButton extends Button {
   void processMousePressed() {
     super.processMousePressed();
     if (isPressed) {
-      ktgui.stageManager.closeParentController(parentController);
+      closeParentController(parentController);
     }
   }
 }

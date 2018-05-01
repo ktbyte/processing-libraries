@@ -98,6 +98,7 @@ public abstract class Controller extends EventProcessor {
       detachController(controller);
     }
   }
+
   // update child controllers positions and all their childs (recursively)
   void updateChildrenPositions(int dx, int dy) {
     for (Controller controller : controllers) {
@@ -111,6 +112,22 @@ public abstract class Controller extends EventProcessor {
       }
     }
   }
+
+  // close parent controller recursiveley (upward)
+  void closeParentController(Controller parentController) {
+    if (parentController.parentController != null) closeParentController(parentController.parentController);
+
+    msg("closeParentController(Controller) for component:" + parentController.title + " has been called.");
+    for (Controller controller : parentController.controllers) {
+      msg("Controller:" + controller.title + " 'isActive' variable is set to FALSE");  
+      controller.isActive = false;
+      ktgui.garbageList.put(controller, millis());
+    }
+
+    parentController.isActive = false;
+    ktgui.garbageList.put(parentController, millis());
+  }
+
   void alignAboutApplet(int hAlign, int vAlign) {
     switch (hAlign) {
     case LEFT:

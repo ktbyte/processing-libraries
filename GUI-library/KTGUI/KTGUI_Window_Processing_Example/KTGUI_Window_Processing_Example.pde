@@ -162,7 +162,6 @@ void draw() {
     for (Controller controller : ktgui.stageManager.defaultStage.controllers) {
       if (controller.title != null) { 
         text("defaultStage: " + controller.title + 
-          ", parent:" + controller.parentController.title + 
           ", posx:" + controller.posx + 
           ", posy:" + controller.posy
           , 10, ypos+=YSHIFT);
@@ -172,7 +171,7 @@ void draw() {
     for (Controller controller : ktgui.stageManager.activeStage.controllers) {
       if (controller.title != null) {
         text("activeStage: " + controller.title + 
-          ", parent:" + controller.parentController.title + 
+          ", parent:" + ((controller.parentController != null) ? controller.parentController.title : "null") + 
           ", posx:" + controller.posx + 
           ", posy:" + controller.posy, 
           10, ypos+=YSHIFT);

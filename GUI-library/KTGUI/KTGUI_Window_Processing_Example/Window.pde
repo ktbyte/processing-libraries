@@ -68,7 +68,7 @@ class Window extends Controller {
     //attachController(windowCloseBtn);
     //registerChildController(windowCloseBtn);
     
-    titleBar = new TitleBar("tb:" + title, 10, 10 + ktgui.TITLE_BAR_HEIGHT, w, ktgui.TITLE_BAR_HEIGHT);
+    titleBar = new TitleBar("tb:" + title, this, 10, 10 + ktgui.TITLE_BAR_HEIGHT, w, ktgui.TITLE_BAR_HEIGHT);
     attachController(titleBar);
     registerChildController(titleBar);
     //titleBar.stackAbout(this,TOP,LEFT);
