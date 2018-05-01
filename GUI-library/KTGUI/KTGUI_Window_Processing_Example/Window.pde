@@ -41,6 +41,13 @@ class Window extends Controller {
     createPane();
   }
 
+  void addController(Controller controller, int hAlign, int vAlign) {
+    if (isActive) {
+      controller.alignAbout(pane, hAlign, vAlign);
+      pane.attachController(controller);
+    }
+  }
+  
   void createTitleBar() {
     titleBar = new TitleBar("tb:" + title, this, posx, posy, w, ktgui.TITLE_BAR_HEIGHT);
     attachController(titleBar);
@@ -58,37 +65,13 @@ class Window extends Controller {
 
   void createPane() {
     pane = new WindowPane("pane:" + title, this, posx, posy + titleBar.h, w, h - titleBar.h);
-    pane.isDragable = true;
     attachController(pane);
     registerChildController(pane);
   }
 
-  void setTitle(String string) {
-    title = string;
-  }
-
   void draw() {
-    //pg.beginDraw();
-    //pg.background(200, 200);
-    //pg.endDraw();
-    //drawBorder();
     drawControllers();
-
     image(pg, posx, posy);
-  }
-
-  void updateGraphics() {
-  }
-
-  void drawBorder() {
-    // change thickness depending on the user-mouse behavior
-    pg.beginDraw();
-    pg.stroke(0);
-    pg.strokeWeight(1);
-    pg.noFill();
-    pg.rectMode(CORNER);
-    pg.rect(0, 0, w, h);
-    pg.endDraw();
   }
 
   void drawControllers() {

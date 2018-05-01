@@ -6,7 +6,7 @@
  * This allows the sharing of variables between different Stages, by storing/retriving data from the 'context' object
  *********************************************************************************************************************/
 public class Stage {
-  List<Controller> controllers;
+  ArrayList<Controller> controllers;
   String name;
 
   Stage(String name) {
@@ -45,6 +45,7 @@ public class Stage {
     String[] tokens = splitTokens(controllerClassName, ".$");
     if (tokens.length > 1) controllerClassName = tokens[1];
     if (!controllers.contains(controller)) {
+      msg("controllers.size() of controller '" + controller.title + "':" + controllers.size());
       controllers.add(controller);
       controller.parentStage = this;
       msg("\tAdded to controllers list successfully, new parentStage is (" + name + ")");

@@ -5,7 +5,7 @@ Button jumpButton, anotherButton, nextStageBtn;
 Window w1, w2, w3;
 Stage s1, s2, s3;
 Stage alignStage;
-boolean debug = false;
+boolean debug = true;
 Button dbgButton;
 
 /**********************************************************************************************************************
@@ -63,10 +63,10 @@ void setup() {
   jumpButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       msg("Callback message: The Jumping Button was pressed!");
-      if (jumpButton.parentController == w3) {
+      if (jumpButton.parentController == w3.pane) {
         //w2.attachController(jumpButton);
         w2.addController(jumpButton, 0, TOP);
-      } else if (jumpButton.parentController == w2) {
+      } else if (jumpButton.parentController == w2.pane) {
         //w3.attachController(jumpButton);
         w3.addController(jumpButton, 0, BOTTOM);
       }
@@ -77,12 +77,12 @@ void setup() {
   // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
   w2 = ktgui.createWindow("Window_2", 10, 220, 300, 200);
-  //w2.alignAboutApplet(LEFT, BOTTOM);
+  w2.alignAboutApplet(LEFT, BOTTOM);
   s3.registerController(w2);
 
   w3 = ktgui.createWindow("Window_3", 400, 220, 300, 200);
   //w3.alignAboutApplet(RIGHT, 0);
-  //w3.stackAbout(w2, TOP, CENTER);
+  w3.stackAbout(w2, TOP, CENTER);
   w3.addController(jumpButton, CENTER, CENTER);
   s3.registerController(w3);
 
@@ -154,7 +154,7 @@ void draw() {
     text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
     text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
 
-    textSize(10);
+    textSize(11);
     int YSHIFT = 12;  
     int ypos = 0;
     textAlign(LEFT, CENTER);
