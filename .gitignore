@@ -33,3 +33,6 @@ hs_err_pid*
 **/build/**
 *.jsdtscope
 ktbyte-library/.settings/
+
+# .bak files
+**/.bak
