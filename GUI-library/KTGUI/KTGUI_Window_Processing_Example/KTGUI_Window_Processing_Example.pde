@@ -54,6 +54,15 @@ void setup() {
   pane.alignAboutApplet(CENTER, TOP);
   pane.isDragable = true;
   s2.registerController(pane);
+  
+  
+  PGraphics g = createGraphics(pane.w, pane.h);
+  g.beginDraw();
+  g.fill(200);
+  g.stroke(0);
+  g.ellipse(g.width/2, g.height/2, 100, 100);
+  g.endDraw();
+  pane.updateUserDefinedGraphics(g);
 
 
   // Now, the "s2" stage is "active". So, the jumpButton is automatically attached to this stage.

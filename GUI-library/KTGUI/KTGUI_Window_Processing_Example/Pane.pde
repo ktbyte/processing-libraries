@@ -2,16 +2,18 @@
  *
  *********************************************************************************************************************/
 class Pane extends Controller {
-
+  PGraphics userpg;
+  
   Pane(int posx, int posy, int w, int h) {
+    this.title = "a Pane";
     this.posx = posx;
     this.posy = posy;
     this.w = w;
     this.h = h;
     this.isDragable = false;
-    updateSize(w, h);
+    this.pg = createGraphics(w + 1, h + 1);
+    this.userpg = createGraphics(w + 1, h + 1);
 
-    title = "a Pane";
 
     // automatically register the newly created pane in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
@@ -24,31 +26,44 @@ class Pane extends Controller {
     this.w = w;
     this.h = h;
     this.isDragable = false;
-    updateSize(w, h);
+    this.pg = createGraphics(w + 1, h + 1);
+    this.userpg = createGraphics(w + 1, h + 1);
 
     // automatically register the newly created pane in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
 
-  void updateSize(int wdth, int hght) {
-    pg = createGraphics(wdth + 1, hght + 1);
+  void updateUserDefinedGraphics(PGraphics userpg) {
+    this.userpg = userpg;
+  }  
+
+  void drawUserDefinedGraphics() {
+    pg.beginDraw();
+    pg.image(userpg, 0, 0);
+    //pg.fill(200);
+    //pg.stroke(0);
+    //pg.ellipse(w/2, h/2, 100, 100);
+    pg.endDraw();
   }
 
   void draw() {
-    drawBorder();
     drawControllers();
     image(pg, posx, posy);
   }
 
-  void drawBorder() {
+  void updateGraphics() {
     // change thickness depending on the user-mouse behavior
     pg.beginDraw();
+    pg.background(200, 100);
     pg.stroke(0);
     pg.strokeWeight(1);
-    pg.fill(200, 220, 200);
+    //pg.fill(200, 220, 200, 50);
     pg.rectMode(CORNER);
     pg.rect(0, 0, w, h);
+    pg.noFill();
     pg.endDraw();
+    
+    drawUserDefinedGraphics();
   }
 
   void drawControllers() {
