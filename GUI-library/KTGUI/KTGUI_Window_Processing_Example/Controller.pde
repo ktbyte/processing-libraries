@@ -114,30 +114,28 @@ public abstract class Controller extends EventProcessor {
     }
   }
 
-  // close parent controller recursiveley (upward)
-  void closeControllerRecursivelyUpward(Controller controller) {
-    // recursive call, go upwardd
-    if (controller.parentController != null) closeControllerRecursivelyUpward(controller.parentController);
-    // if can't go upward, then close all child controllers
-    for (Controller childController : controller.controllers) {
-      closeController(childController);
-    }
-    // close the controller itself
-    closeController(controller);
+  void closeControllerRecursively(Controller controller) {
+    closeParent(controller);
+    closeChilds(controller);
   }
 
-  //// close parent controller recursiveley (upward)
-  //void closeControllerRecursivelyDownward(Controller controller) {
-  //  for (Controller childController : controller.controllers) {
-  //    if (childController.controllers != null) {
-  //      closeControllerRecursivelyDownward(childController);
-  //    }
-  //    closeController(childController);
-  //  }
-  //  closeController(controller);
-  //}
-
+  void closeParent(Controller controller) {
+    if (controller.parentController != null) closeParent(controller.parentController);
+    for (Controller childController : controllers) {
+      closeChilds(childController);
+    }
+    closeChilds(controller);
+  }
+  
+  void closeChilds(Controller controller) {
+    for (Controller childController : controller.controllers) {
+      closeChilds(childController);
+      closeController(childController);
+    }
+  }
+  
   void closeController(Controller controller) {
+    msg("Closing '" + controller.title + "' controller.");
     controller.isActive = false;
     ktgui.garbageList.put(controller, millis());
   }

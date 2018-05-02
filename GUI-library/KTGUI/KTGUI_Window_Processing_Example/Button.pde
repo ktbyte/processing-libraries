@@ -157,7 +157,8 @@ class CloseButton extends Button {
   void processMousePressed() {
     super.processMousePressed();
     if (isPressed) {
-      closeControllerRecursivelyUpward(parentController); // closeButton --> TitleBar --> Window --> Pane, Button, Button, Window --> TitleBar
+      //closeControllerRecursivelyUpward(parentController); // closeButton --> TitleBar --> Window --> Pane, Button, Button, Window --> TitleBar
+      closeControllerRecursively(this); // closeButton --> TitleBar --> Window --> Pane, Button, Button, Window --> TitleBar
     }
   }
 }
