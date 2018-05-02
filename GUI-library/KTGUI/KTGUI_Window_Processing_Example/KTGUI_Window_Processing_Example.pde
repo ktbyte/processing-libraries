@@ -2,10 +2,12 @@ import java.util.*;
 
 KTGUI ktgui;
 Button jumpButton, anotherButton, nextStageBtn;
+Pane pane;
 Window w1, w2, w3;
 Stage s1, s2, s3;
 Stage alignStage;
-boolean debug = false;
+boolean debug = true;
+Button dbgButton;
 
 /**********************************************************************************************************************
  * 
@@ -14,12 +16,21 @@ void setup() {
   size(800, 500);
   ktgui = new KTGUI(this); // default stage is automatically created
 
+  dbgButton = ktgui.createButton("Debug", 0, 0, 100, 50);
+  dbgButton.alignAboutApplet(CENTER, BOTTOM);
+  dbgButton.addEventAdapter(new KTGUIEventAdapter() {
+    public void onMousePressed() {
+      debug = !debug;
+    }
+  }
+  );
+
   // this button will be visible always because it will be located on default stage
   nextStageBtn = ktgui.createButton("NextStage", width - 120, height - 70, 100, 50);
   nextStageBtn.alignAboutApplet(RIGHT, BOTTOM);
   nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      println("Callback message: The Next-Stage-Button was pressed!");
+      msg("Callback message: The Next-Stage-Button was pressed!");
       ktgui.stageManager.goToNextStage();
     }
   }
@@ -30,7 +41,7 @@ void setup() {
   anotherButton.alignAboutApplet(LEFT, BOTTOM);
   anotherButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      println("Callback message: The anotherButton (goToStage(1)) was pressed!");
+      msg("Callback message: The anotherButton (goToStage(1)) was pressed!");
       ktgui.stageManager.goToStage(1);
     }
   }
@@ -40,8 +51,8 @@ void setup() {
   // Now, the "s1" stage is "active". So, the both 'w1' and 'nextStageButton' are automatically attached to this stage. 
   // We can still use 's1.attachController(Controller) though.
   s2 = ktgui.stageManager.createStage("stage_2");
-  Pane pane = ktgui.createPane((int)(width * 0.5 - 200), 240, 400, 200);  
-  pane.alignAboutApplet(CENTER, BOTTOM);
+  pane = ktgui.createPane((int)(width * 0.5 - 200), 200, 400, 200);  
+  pane.alignAboutApplet(CENTER, TOP);
   pane.isDragable = true;
   s2.registerController(pane);
 
@@ -52,13 +63,13 @@ void setup() {
   jumpButton = ktgui.createButton("Jump!", 50, 50, 100, 50);
   jumpButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      println("Callback message: The Jumping Button was pressed!");
-      if (jumpButton.parentWindow == w3) {
+      msg("Callback message: The Jumping Button was pressed!");
+      if (jumpButton.parentController == w3.pane) {
         //w2.attachController(jumpButton);
-        w2.addController(jumpButton, LEFT, 0);
-      } else if (jumpButton.parentWindow == w2) {
+        w2.addController(jumpButton, 0, TOP);
+      } else if (jumpButton.parentController == w2.pane) {
         //w3.attachController(jumpButton);
-        w3.addController(jumpButton, RIGHT, 0);
+        w3.addController(jumpButton, 0, BOTTOM);
       }
     }
   }
@@ -66,12 +77,13 @@ void setup() {
 
   // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
-  w2 = ktgui.createWindow("Window_2", 400, 220, 300, 200);
-  w2.alignAboutApplet(LEFT, 0);
+  w2 = ktgui.createWindow("Window_2", 10, 220, 300, 200);
+  w2.alignAboutApplet(LEFT, BOTTOM);
   s3.registerController(w2);
 
-  w3 = ktgui.createWindow("Window_3", 10, 220, 300, 200);
-  w3.alignAboutApplet(RIGHT, 0); 
+  w3 = ktgui.createWindow("Window_3", 400, 220, 300, 200);
+  //w3.alignAboutApplet(RIGHT, 0);
+  w3.stackAbout(w2, TOP, CENTER);
   w3.addController(jumpButton, CENTER, CENTER);
   s3.registerController(w3);
 
@@ -125,7 +137,7 @@ void setup() {
   p3b4.stackAbout(p3b3, TOP, RIGHT);
   alignStage.registerController(p3);
 
-  ktgui.stageManager.goToStage(alignStage);
+  ktgui.stageManager.goToStage(s2);
 }
 
 /**********************************************************************************************************************
@@ -134,44 +146,79 @@ void setup() {
 void draw() {
   background(170, 220, 170);
   //
-  fill(0);
-  textSize(20);
-  textAlign(RIGHT, CENTER);
-  textFont(createFont("monospaced", 16));
-  text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
-  text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
-  text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
-
   if (debug) {
-    textSize(10);
+    fill(0);
+    textSize(20);
+    textAlign(RIGHT, CENTER);
+    textFont(createFont("monospaced", 16));
+    text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
+    text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
+    text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
+
+    textSize(11);
     int YSHIFT = 12;  
     int ypos = 0;
     textAlign(LEFT, CENTER);
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
     for (Controller controller : ktgui.stageManager.defaultStage.controllers) {
       if (controller.title != null) { 
-        text("defaultStage: " + controller.title.replaceAll("\n", ""), 10, ypos+=YSHIFT);
+        text("defaultStage: " + controller.title + 
+          ", posx:" + controller.posx + 
+          ", posy:" + controller.posy
+          , 10, ypos+=YSHIFT);
       }
     }
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
     for (Controller controller : ktgui.stageManager.activeStage.controllers) {
       if (controller.title != null) {
-        text("activeStage: " + controller.title, 10, ypos+=YSHIFT);
+        text("activeStage: " + controller.title + 
+          ", parent:" + ((controller.parentController != null) ? controller.parentController.title : "null") + 
+          ", posx:" + controller.posx + 
+          ", posy:" + controller.posy, 
+          10, ypos+=YSHIFT);
       }
     }
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    for (Stage stage : ktgui.stageManager.stages) {
-      for (Controller controller : stage.controllers) {
-        if (controller.title != null) { 
-          text("stage." + stage.name + ": " + controller.title, 10, ypos+=YSHIFT);
-        }
-      }
-    }
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    text("alignStage.controllers.size():" + alignStage.controllers.size(), 10, ypos+=YSHIFT);
+    surface.setTitle(mouseX + ":" + mouseY);
   }
+
+  updatePaneCanvas();
 }
 
-void keyPressed() {
-  ktgui.stageManager.goToNextStage();
+void updatePaneCanvas() {
+  PGraphics g = createGraphics(pane.w, pane.h);
+  g.beginDraw();
+  g.pushMatrix();
+  g.translate(pane.w * 0.5, pane.h * 0.5);
+  g.rotate(frameCount*0.01);
+  g.rectMode(CENTER);
+  g.fill(200);
+  g.stroke(0);
+  g.ellipse(0, 0, 300, 20);
+  g.popMatrix();
+  g.pushMatrix();
+  g.translate(pane.w * 0.25, pane.h * 0.5);
+  g.rotate(-frameCount*0.01);
+  g.rectMode(CENTER);
+  g.fill(200);
+  g.stroke(0);
+  g.rect(0, 0, 100, 20);
+  g.popMatrix();
+  g.pushMatrix();
+  g.translate(pane.w * 0.75, pane.h * 0.5);
+  g.rotate(-frameCount*0.01);
+  g.rectMode(CENTER);
+  g.fill(200);
+  g.stroke(0);
+  g.rect(0, 0, 100, 20);
+  g.popMatrix();
+  g.endDraw();
+
+  pane.updateUserDefinedGraphics(g);
+}
+
+void msg(String msg) {
+  if (debug) {
+    println(msg);
+  }
 }

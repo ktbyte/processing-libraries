@@ -1,9 +1,11 @@
+import java.util.*;
+
 KTGUI ktgui;
 Button jumpButton, anotherButton, nextStageBtn;
 Window w1, w2, w3;
 Stage s1, s2, s3;
 Stage alignStage;
-boolean debug = false;
+boolean debug = true;
 
 /**********************************************************************************************************************
  * 
@@ -16,20 +18,18 @@ void setup() {
   nextStageBtn = ktgui.createButton("NextStage", width - 120, height - 70, 100, 50);
   nextStageBtn.alignAboutApplet(RIGHT, BOTTOM);
   nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
-    void onMousePressed() {
+    public void onMousePressed() {
       println("Callback message: The Next-Stage-Button was pressed!");
       ktgui.stageManager.goToNextStage();
     }
   }
   );
-  // this button will be visible in all stages
-  ktgui.stageManager.defaultStage.registerController(nextStageBtn);
 
   s1 = ktgui.stageManager.createStage("stage_1");
   anotherButton = ktgui.createButton("Go To Stage_2", 50, height - 70, 150, 50);
   anotherButton.alignAboutApplet(LEFT, BOTTOM);
   anotherButton.addEventAdapter(new KTGUIEventAdapter() {
-    void onMousePressed() {
+    public void onMousePressed() {
       println("Callback message: The anotherButton (goToStage(1)) was pressed!");
       ktgui.stageManager.goToStage(1);
     }
@@ -51,7 +51,7 @@ void setup() {
   s3 = ktgui.stageManager.createStage("stage_3");
   jumpButton = ktgui.createButton("Jump!", 50, 50, 100, 50);
   jumpButton.addEventAdapter(new KTGUIEventAdapter() {
-    void onMousePressed() {
+    public void onMousePressed() {
       println("Callback message: The Jumping Button was pressed!");
       if (jumpButton.parentWindow == w3) {
         //w2.attachController(jumpButton);
@@ -134,15 +134,15 @@ void setup() {
 void draw() {
   background(170, 220, 170);
   //
-  if (debug) {
-    fill(0);
-    textSize(20);
-    textAlign(RIGHT, CENTER);
-    textFont(createFont("monospaced", 16));
-    text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
-    text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
-    text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
+  fill(0);
+  textSize(20);
+  textAlign(RIGHT, CENTER);
+  textFont(createFont("monospaced", 16));
+  text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
+  text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
+  text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
 
+  if (debug) {
     textSize(10);
     int YSHIFT = 12;  
     int ypos = 0;
@@ -403,59 +403,54 @@ public class Stage {
   }
 
   void registerController(Controller controller) {
-    println("Trying to register " + controller.title + " in " + name);
+    String controllerClassName = controller.getClass().getName();
+    String[] tokens = splitTokens(controllerClassName, ".$");
+    if (tokens.length > 1) controllerClassName = tokens[1];
+    println("Trying to register '" + controller.title + "' " + controllerClassName + " in '" + name + "' stage.");
 
-    // try to remove controller from default stage first
+ 
+    // try to remove controller from default stage then
     if (ktgui.stageManager.defaultStage.controllers.contains(controller)) {
-      println("\tktgui.stageManager.defaultStage.controllers.contains(controller):" + ktgui.stageManager.defaultStage.controllers.contains(controller) + " -- removing");
-      ktgui.stageManager.defaultStage.controllers.remove(controller);
+      println("\tdefaultStage already contains this controller: --> removing from default stage.");
+      ktgui.stageManager.defaultStage.unregisterController(controller);
     }
 
-    // try to remove controller from active stage first
+    // try to remove controller from active stage then
     if (ktgui.stageManager.activeStage != null) {
       if (ktgui.stageManager.activeStage.controllers.contains(controller)) {
-        println("\tktgui.stageManager.activeStage.controllers.contains(controller):" + ktgui.stageManager.activeStage.controllers.contains(controller) + " -- removing");
-        ktgui.stageManager.activeStage.controllers.remove(controller);
+      println("\tactiveStage already contains this controller: --> removing from active stage.");
+        ktgui.stageManager.activeStage.unregisterController(controller);
       }
-    }
-
-    //// remove from list of controllers of each stage
-    //for (Stage stage : ktgui.stageManager.stages) {
-    //  if (stage.controllers.contains(controller)) {
-    //    println("\t" + stage.name + ".controllers.contains(controller):" + stage.controllers.contains(controller) + " -- removing");
-    //    stage.controllers.remove(controller);
-    //  }
-    //}
-
-    // try to remove controller from parent stage first
-    if (controller.parentStage != null) {
-      println("\tparentStage(" + controller.parentStage.name + ") != null: true");
     }
 
     // add controller to this stage
     if (!controllers.contains(controller)) {
       controllers.add(controller);
       controller.parentStage = this;
-      println("\tsuccessfull. new parentStage is (" + name + ")");
-
-      // try to add all child components of controller, if it is of type Window
-      if (controller.getClass().getName().contains(".Window")) {
-        Window window = (Window) controller;
-        window.registerChildControllers();
-      }
-
-      // try to add all child components of controller, if it is of type Pane
-      if (controller.getClass().getName().contains(".Pane")) {
-        Pane pane = (Pane) controller;
-        pane.registerChildControllers();
+      println("\tAdded to controllers list successfully, new parentStage is (" + name + ")");
+      if (tokens.length > 1) {
+        // try to add all child components of controller, if it is of type Window
+        if (tokens[1].contains("Window")) {
+          Window window = (Window) controller;
+          window.registerChildControllers();
+        }
+        // try to add all child components of controller, if it is of type Pane
+        if (tokens[1].contains("Pane")) {
+          Pane pane = (Pane) controller;
+          pane.registerChildControllers();
+        }
+      } else {
+        println("....Cannot register child controllers of '" + name + "'");
       }
     } else {
       println("\talready exist.");
     }
+    println("------------------------------------------------------------------------------------");
   }
 
   void unregisterController(Controller controller) {
     if (controllers.contains(controller)) {
+      println("\t" + name + " already contains controller '" + controller.title + "': --> removing from '" + name + "' stage.");
       controllers.remove(controller);
       controller.parentStage = null;
     }
@@ -473,6 +468,7 @@ class StageManager {
   StageManager() {
     stages = new ArrayList<Stage>();
     defaultStage = new Stage("Default");
+    activeStage = defaultStage;
   }
 
   Stage createStage(String name) {

@@ -1,24 +1,19 @@
 /**********************************************************************************************************************
- * There are two points to mention. 
  *
- * The first one: This class should be used with Window class. In particular, the object of this class should be  
- * contained in the 'Window' object as a 'part' of it. 
- *
- * The second one: This class should be possible to use as a standalone object.
  *********************************************************************************************************************/
 class Pane extends Controller {
-
-  ArrayList<Controller> controllers = new ArrayList<Controller>();
-
+  PGraphics userpg;
+  
   Pane(int posx, int posy, int w, int h) {
+    this.title = "a Pane";
     this.posx = posx;
     this.posy = posy;
     this.w = w;
     this.h = h;
     this.isDragable = false;
-    updateSize(w, h);
+    this.pg = createGraphics(w + 1, h + 1);
+    this.userpg = createGraphics(w + 1, h + 1);
 
-    title = "a Pane";
 
     // automatically register the newly created pane in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
@@ -31,86 +26,48 @@ class Pane extends Controller {
     this.w = w;
     this.h = h;
     this.isDragable = false;
-    updateSize(w, h);
+    this.pg = createGraphics(w + 1, h + 1);
+    this.userpg = createGraphics(w + 1, h + 1);
 
     // automatically register the newly created pane in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
 
-  void updateSize(int wdth, int hght) {
-    pg = createGraphics(wdth + 1, hght + 1);
+  void updateUserDefinedGraphics(PGraphics userpg) {
+    this.userpg = userpg;
+  }  
+
+  void drawUserDefinedGraphics() {
+    pg.beginDraw();
+    pg.image(userpg, 0, 0);
+    pg.endDraw();
   }
 
   void draw() {
-    drawBorder();
     drawControllers();
     image(pg, posx, posy);
   }
 
-  void drawBorder() {
+  void updateGraphics() {
     // change thickness depending on the user-mouse behavior
     pg.beginDraw();
+    pg.background(200, 100);
     pg.stroke(0);
     pg.strokeWeight(1);
-    pg.fill(200, 220, 200);
+    //pg.fill(200, 220, 200, 50);
     pg.rectMode(CORNER);
     pg.rect(0, 0, w, h);
+    pg.noFill();
     pg.endDraw();
+    
+    drawUserDefinedGraphics();
   }
 
   void drawControllers() {
     for (Controller controller : controllers) {
       pg.beginDraw();
-      pg.image(controller.getGraphics(), controller.getPosX(), controller.getPosY());
+      pg.image(controller.getGraphics(), controller.posx, controller.posy);
       pg.endDraw();
-    }
-  }
-
-  void attachController(Controller controller) {
-    if (isActive) {
-      // detach from existing pane first (if exist)
-      if (controller.parentPane != null) {
-        controller.parentPane.detachController(controller); // reset parentWindow
-      }
-      // add to the list of controllers
-      if (!controllers.contains(controller)) {
-        controllers.add(controller);
-        controller.setParentPane(this);
-        // try to register in parentStage
-        registerChildController(controller);
-      }
-    }
-  }
-
-  void addController(Controller controller, int hAlign, int vAlign) {
-    if (isActive) {
-      controller.alignAbout(this, hAlign, vAlign);
-      attachController(controller);
-    }
-  }
-
-  void detachController(Controller controller) {
-    controller.parentPane = null;
-    controllers.remove(controller);
-  }
-
-  void detachAllControllers() {
-    for (Controller controller : controllers) {
-      detachController(controller);
-    }
-  }
-
-  void registerChildController(Controller controller) {
-    if (parentStage != null) {
-      parentStage.registerController(controller);
-    }
-  }
-
-  void registerChildControllers() {
-    if (parentStage != null) {
-      for (Controller controller : controllers) {
-        registerChildController(controller);
-      }
     }
   }
 
@@ -163,5 +120,19 @@ class Pane extends Controller {
       }
     }
     return isInside;
+  }
+}
+
+class WindowPane extends Pane {
+  Window parentWindow;
+  
+  WindowPane(Window window, int posx, int posy, int w, int h) {
+    super(posx, posy, w, h);
+    this.parentWindow = window;
+  }
+
+  WindowPane(String title, Window window, int posx, int posy, int w, int h) {
+    super(title, posx, posy, w, h);
+    this.parentWindow = window;
   }
 }

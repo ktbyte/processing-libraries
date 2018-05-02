@@ -1,60 +1,31 @@
-// This class should change the type of cursor depending on the type of action
+// This class should contain the Border object that can change 
+// the type of cursor depending on the type of action
 // ARROW - when the pointer is outside the 'window' area or border
 // HAND  - when the pointer is over the 'window' area or border
 // CROSS - when the user is dragging the border of the 'window' 
 // MOVE  - when the user is moving the 'window' 
-
-// Potentially, this class and the KTGUI library class should use the PGraphics in order to 
-// be able to share/switch graphic context. If this is possible, then we will be able
-// to implement the 'minimize' feature.
-
-// We should implement the synchronized motion of both, the parent and the child components.
-// For this, we could draw the border, background ant title bar. Then, we can use the 
-// title bar to move the window and use the border to change the size of the window.
-// When the window has moved, all the 'child' gui elements should receive the 'event'
-// that forces them to change their position the same amount of dx and dy as the 
-// parent window.
-
-// The extents 'clipping' of the gui components which are crossing or even outside the
-// window area is done using the PGraphics.
-
-// In order to register all the 'child' components we are using the ArrayList<Controller>.
-
-// !!! The Window should contain a TitleBar and Panel.
-// !!! The TitleBar should contain a Button.
-// !!! The Panel chould contain a Border.
+/**********************************************************************************************************************
+ * This is a KTGUI component (controller).
+ * This class extends the 'Controller' class.
+ *********************************************************************************************************************/
 
 class Window extends Controller {
-  int TITLE_BAR_HEIGHT = 14;
-  int MENU_BAR_HEIGHT = 20;
-  int BORDER_THICKNESS = 3;
 
-  ArrayList<Controller> controllers = new ArrayList<Controller>();
-
-  boolean isTitleBarHovered, isTitleBarPressed;  
-  boolean isWindowHovered, isWindowPressed;  
-  boolean isBorderHovered, isBorderPressed;  
-
-  CloseButton windowCloseBtn;
   // Border border;
-  // TitleBar titleBar;
+  TitleBar titleBar;
   // MenuBar menuBar;
+  WindowPane pane;
 
   Window(int posx, int posy, int w, int h) {
+    this.title = "a Window";
     this.posx = posx;
     this.posy = posy;
     this.w = w;
     this.h = h;
-    updateSize(w, h);
-
-    title = "a Window";
-
-    // automatically register the newly created window in default stage of stageManager
+    this.pg = createGraphics(w + 1, h + 1);
     ktgui.stageManager.defaultStage.registerController(this);
-
-    windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
-    attachController(windowCloseBtn);
-    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+    createTitleBar();
+    createPane();
   }
 
   Window(String title, int posx, int posy, int w, int h) {
@@ -63,206 +34,67 @@ class Window extends Controller {
     this.posy = posy;
     this.w = w;
     this.h = h;
-    updateSize(w, h);
-
-    // automatically register the newly created window in default stage of stageManager
+    this.pg = createGraphics(w + 1, h + 1);
     ktgui.stageManager.defaultStage.registerController(this);
-
-    windowCloseBtn = new CloseButton(w - TITLE_BAR_HEIGHT + 2, 2, TITLE_BAR_HEIGHT - 4, TITLE_BAR_HEIGHT - 4);
     setTitle(title);
-    attachController(windowCloseBtn);
-    ktgui.stageManager.defaultStage.registerController(windowCloseBtn);
+    createTitleBar();
+    createPane();
   }
 
-  void setTitle(String string) {
-    title = string;
-    windowCloseBtn.setTitle("CloseButton-of:" + title);
+  void addController(Controller controller, int hAlign, int vAlign) {
+    if (isActive) {
+      controller.alignAbout(pane, hAlign, vAlign);
+      pane.attachController(controller);
+    }
+  }
+  
+  void createTitleBar() {
+    titleBar = new TitleBar("tb:" + title, this, posx, posy, w, ktgui.TITLE_BAR_HEIGHT);
+    attachController(titleBar);
+    registerChildController(titleBar);
+    titleBar.addEventAdapter(new KTGUIEventAdapter() {
+      public void onMouseDragged() {
+        titleBar.parentController.posx += mouseX - pmouseX;
+        titleBar.parentController.posy += mouseY - pmouseY;
+        pane.posx += mouseX - pmouseX;
+        pane.posy += mouseY - pmouseY;
+      }
+    }
+    );
   }
 
-  void updateSize(int wdth, int hght) {
-    pg = createGraphics(wdth + 1, hght + 1);
+  void createPane() {
+    pane = new WindowPane("pane:" + title, this, posx, posy + titleBar.h, w, h - titleBar.h);
+    attachController(pane);
+    registerChildController(pane);
   }
 
   void draw() {
-    drawTitleBar();
-    drawBorder();
     drawControllers();
     image(pg, posx, posy);
-  }
-
-  void drawTitleBar() {
-    // drawBar and title
-    pg.beginDraw();
-    pg.background(200, 200);
-    pg.rectMode(CORNER);
-    pg.fill(180);
-    pg.stroke(15);
-    pg.strokeWeight(1);
-    pg.rect(0, 0, w, TITLE_BAR_HEIGHT);
-    pg.fill(25);
-    pg.textAlign(LEFT, CENTER);
-    pg.textSize(TITLE_BAR_HEIGHT*0.65);
-    pg.text(title, 10, TITLE_BAR_HEIGHT*0.5);
-    pg.endDraw();
-  }
-
-  void drawBorder() {
-    // change thickness depending on the user-mouse behavior
-    pg.beginDraw();
-    pg.stroke(0);
-    pg.strokeWeight(1);
-    pg.noFill();
-    pg.rectMode(CORNER);
-    pg.rect(0, TITLE_BAR_HEIGHT, w, h - TITLE_BAR_HEIGHT);
-    pg.endDraw();
   }
 
   void drawControllers() {
     for (Controller controller : controllers) {
       pg.beginDraw();
-      pg.image(controller.getGraphics(), controller.getPosX(), controller.getPosY());
+      pg.image(controller.getGraphics(), controller.posx, controller.posy);
       pg.endDraw();
-    }
-  }
-
-  void attachController(Controller controller) {
-    if (isActive) {
-      // detach from existing window first (if exist)
-      if (controller.parentWindow != null) {
-        controller.parentWindow.detachController(controller); // reset parentWindow
-      }
-      // add to the list of controllers
-      if (!controllers.contains(controller)) {
-        controllers.add(controller);
-        controller.setParentWindow(this);
-        // try to register in parentStage
-        registerChildController(controller);
-      }
-    }
-  }
-
-  void addController(Controller controller, int hAlign, int vAlign) {
-    if (isActive) {
-      controller.alignAbout(this, hAlign, vAlign);
-      attachController(controller);
-    }
-  }
-
-  void registerChildController(Controller controller) {
-    if (parentStage != null) {
-      parentStage.registerController(controller);
-    }
-  }
-
-  void registerChildControllers() {
-    if (parentStage != null) {
-      for (Controller controller : controllers) {
-        registerChildController(controller);
-      }
-    }
-  }
-
-  void detachController(Controller controller) {
-    controller.parentWindow = null;
-    controllers.remove(controller);
-  }
-
-  void detachAllControllers() {
-    for (Controller controller : controllers) {
-      detachController(controller);
     }
   }
 
   // process mouseMoved event received from PApplet
   void processMouseMoved() {
-    isTitleBarHovered = isPointInsideTitleBar(mouseX, mouseY) ? true : false;
-    for (KTGUIEventAdapter adapter : adapters) {
-      adapter.onMouseMoved();
-    }
   }
 
   // process mousePressed event received from PApplet
   void processMousePressed() {
-    if (isTitleBarHovered) {
-      isTitleBarPressed = true;
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMousePressed();
-      }
-    }
   }
 
   // process mouseReleased event received from PApplet
   void processMouseReleased() {
-    isTitleBarPressed = false;
-    if (isTitleBarHovered) {
-      for (KTGUIEventAdapter adapter : adapters) {
-        adapter.onMouseReleased();
-      }
-    }
   }
 
   // process mouseDragged event received from PApplet
   void processMouseDragged() {
-    if (isDragable) {
-      if (isTitleBarPressed) {
-        posx += mouseX - pmouseX;
-        posy += mouseY - pmouseY;
-        for (KTGUIEventAdapter adapter : adapters) {
-          adapter.onMouseDragged();
-        }
-      }
-    }
-  }
-
-  boolean isPointInsideTitleBar(int x, int y) {
-    boolean isInside = false;
-    if (x > posx && x < posx + this.w) {
-      if (y > posy && y < posy + TITLE_BAR_HEIGHT) {
-        isInside = true;
-      }
-    }
-    return isInside;
-  }
-}
-
-
-/*****************************************************************************************************
- * 
- ****************************************************************************************************/
-class CloseButton extends Button {
-
-  CloseButton(int posx, int posy, int w, int h) {
-    super(posx, posy, w, h);
-  }
-
-  CloseButton(String title, int posx, int posy, int w, int h) {
-    super(title, posx, posy, w, h);
-  }
-
-  void updateGraphics() {
-    pg.beginDraw();
-    pg.rectMode(CORNER);
-    if (isHovered && !isPressed) {
-      pg.fill(ktgui.COLOR_FG_HOVERED);
-    } else if (isHovered && isPressed) {
-      pg.fill(ktgui.COLOR_FG_PRESSED);
-    } else {
-      //pg.fill(ktgui.COLOR_FG_PASSIVE);
-      pg.fill(200, 200);
-    }
-    pg.stroke(0);
-    pg.strokeWeight(1);
-    pg.rectMode(CORNER);
-    pg.rect(0, 0, w, h);
-    pg.line(w * 0.2, h * 0.2, w * 0.8, h * 0.8);
-    pg.line(w * 0.2, h * 0.8, w * 0.8, h * 0.2);
-    pg.endDraw();
-  }
-
-  void processMousePressed() {
-    super.processMousePressed();
-    if (isPressed) {
-      ktgui.stageManager.closeWindow(parentWindow);
-    }
   }
 }

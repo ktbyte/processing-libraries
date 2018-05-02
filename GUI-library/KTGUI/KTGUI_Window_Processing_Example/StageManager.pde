@@ -1,4 +1,4 @@
-/**********************************************************************************************************************
+/********************************************************************************************************************** 
  * 
  *********************************************************************************************************************/
 class StageManager {
@@ -10,6 +10,7 @@ class StageManager {
   StageManager() {
     stages = new ArrayList<Stage>();
     defaultStage = new Stage("Default");
+    activeStage = defaultStage;
   }
 
   Stage createStage(String name) {
@@ -38,16 +39,5 @@ class StageManager {
     }
   }
 
-  void closeWindow(Window window) {
-    println("closeWindow(Window) for window:" + window.title + " has been called.");
-    
-    for (Controller controller : window.controllers) {
-      println("Controller:" + controller.title + " 'isActive' variable is set to FALSE");  
-      controller.isActive = false;
-      ktgui.garbageList.put(controller, millis());
-    }
-    
-    window.isActive = false;
-    ktgui.garbageList.put(window, millis());
-  } //<>//
+
 }
