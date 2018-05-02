@@ -2,6 +2,7 @@ import java.util.*;
 
 KTGUI ktgui;
 Button jumpButton, anotherButton, nextStageBtn;
+Pane pane;
 Window w1, w2, w3;
 Stage s1, s2, s3;
 Stage alignStage;
@@ -50,19 +51,10 @@ void setup() {
   // Now, the "s1" stage is "active". So, the both 'w1' and 'nextStageButton' are automatically attached to this stage. 
   // We can still use 's1.attachController(Controller) though.
   s2 = ktgui.stageManager.createStage("stage_2");
-  Pane pane = ktgui.createPane((int)(width * 0.5 - 200), 200, 400, 200);  
+  pane = ktgui.createPane((int)(width * 0.5 - 200), 200, 400, 200);  
   pane.alignAboutApplet(CENTER, TOP);
   pane.isDragable = true;
   s2.registerController(pane);
-  
-  
-  PGraphics g = createGraphics(pane.w, pane.h);
-  g.beginDraw();
-  g.fill(200);
-  g.stroke(0);
-  g.ellipse(g.width/2, g.height/2, 100, 100);
-  g.endDraw();
-  pane.updateUserDefinedGraphics(g);
 
 
   // Now, the "s2" stage is "active". So, the jumpButton is automatically attached to this stage.
@@ -145,7 +137,7 @@ void setup() {
   p3b4.stackAbout(p3b3, TOP, RIGHT);
   alignStage.registerController(p3);
 
-  ktgui.stageManager.goToStage(s3);
+  ktgui.stageManager.goToStage(s2);
 }
 
 /**********************************************************************************************************************
@@ -189,6 +181,40 @@ void draw() {
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
     surface.setTitle(mouseX + ":" + mouseY);
   }
+
+  updatePaneCanvas();
+}
+
+void updatePaneCanvas() {
+  PGraphics g = createGraphics(pane.w, pane.h);
+  g.beginDraw();
+  g.pushMatrix();
+  g.translate(pane.w * 0.5, pane.h * 0.5);
+  g.rotate(frameCount*0.01);
+  g.rectMode(CENTER);
+  g.fill(200);
+  g.stroke(0);
+  g.ellipse(0, 0, 300, 20);
+  g.popMatrix();
+  g.pushMatrix();
+  g.translate(pane.w * 0.25, pane.h * 0.5);
+  g.rotate(-frameCount*0.01);
+  g.rectMode(CENTER);
+  g.fill(200);
+  g.stroke(0);
+  g.rect(0, 0, 100, 20);
+  g.popMatrix();
+  g.pushMatrix();
+  g.translate(pane.w * 0.75, pane.h * 0.5);
+  g.rotate(-frameCount*0.01);
+  g.rectMode(CENTER);
+  g.fill(200);
+  g.stroke(0);
+  g.rect(0, 0, 100, 20);
+  g.popMatrix();
+  g.endDraw();
+
+  pane.updateUserDefinedGraphics(g);
 }
 
 void msg(String msg) {

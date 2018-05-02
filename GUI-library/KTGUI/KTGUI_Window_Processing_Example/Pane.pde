@@ -40,9 +40,6 @@ class Pane extends Controller {
   void drawUserDefinedGraphics() {
     pg.beginDraw();
     pg.image(userpg, 0, 0);
-    //pg.fill(200);
-    //pg.stroke(0);
-    //pg.ellipse(w/2, h/2, 100, 100);
     pg.endDraw();
   }
 
