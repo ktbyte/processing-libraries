@@ -7,14 +7,16 @@
 # BlueJ files
 *.ctxt
 
+# Eclipse files
+.classpath
+.project
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
-*.zip
 *.tar.gz
 *.rar
 
@@ -29,3 +31,5 @@ hs_err_pid*
 
 # Brackets 'Processing' plugin build folder
 **/build/**
+*.jsdtscope
+ktbyte-library/.settings/
