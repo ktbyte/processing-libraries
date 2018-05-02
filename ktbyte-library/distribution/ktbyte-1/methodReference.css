@@ -42,7 +42,6 @@ body {
 
 .ref-col .is-disabled, .ref-col .is-disabled a, .ref-col .is-disabled h5 {color: #dddddd;}
 
-.ref-item td h3 {margin: -11px 0 0 0;}
 .ref-item td b {
 	font-weight: normal;
 	font-family			: monaco, "Courier New", Courier, monospace; 
@@ -80,6 +79,11 @@ h1 {
 #menu ul li, #subMenu ul li {
 	float:left;
 	padding-right:6px;
+}
+
+.functions {
+    list-style-type: circle;
+    margin-left: 20px;
 }
 
 

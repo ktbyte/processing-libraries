@@ -254,7 +254,9 @@ public class Console implements PConstants {
 		String textInput = inputBox.getText();
 		splitCommandBasedOnConsoleWidth(new Command(textInput, true));
 		dict.put(lastVariableName, textInput);
-		consoleInputListener.onConsoleInput(lastVariableName, textInput);
+		if (consoleInputListener != null) {
+			consoleInputListener.onConsoleInput(lastVariableName, textInput);
+		}
 		inputBox.setText("");
 	}
 

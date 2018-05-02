@@ -38,12 +38,26 @@
                         <td>
                             <div class="example"><img src="images/console_setTextSize1.png" alt="example pic" />
                                 <pre class="margin">
-                                setTextSize(16);
+
+Console console;
+void setup() {
+  size(600, 600);
+  console = new Console(this, 100, 100, 200, 200);
+  console.setTextSize(16);
+  console.write("A B C D E F G");
+}
                             </pre>
                             </div>
                             <div class="example"><img src="images/console_setTextSize2.png" alt="example pic" />
                                 <pre class="margin">
-                                setTextSize(26);
+
+Console console;
+void setup() {
+  size(600, 600);
+  console = new Console(this, 100, 100, 200, 200);
+  console.setTextSize(26);
+  console.write("A B C D E F G");
+}
                             </pre>
                             </div>
                         </td>
@@ -65,10 +79,16 @@
                         </table></td>	
                     </tr>
                     <tr class=""><th scope="row">Returns</th><td class="code">void</td></tr>
-                    <tr class=""><th scope="row">Related</th><td>
-                        <a class="code" href="setInputTextColor.html">setInputTextColor()</a><br />
-                        <a class="code" href="setOutputTextColor.html">setOutputTextColor()</a><br />
-                        <a class="code" href="write.html">	write()</a><br />
+                    <tr class=""><th scope="row">Related</th>
+                        <td>
+                            <a class="code" href="getValue.html">getValue()</a><br />
+                            <a class="code" href="readInput.html">readInput()</a><br />
+                            <a class="code" href="setConsoleInputListener.html">setConsoleInputListener()</a><br />
+                            <a class="code" href="setInputTextColor.html">setInputTextColor()</a><br />
+                            <a class="code" href="setOutputTextColor.html">setOutputTextColor()</a><br />
+                            <a class="code" href="write.html">write()</a><br />
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>

@@ -84,6 +84,11 @@ div.ref-col {
     margin-bottom: 50px;
 }
 
+.component-header {
+    font-size: 1.4em;
+    text-decoration: underline;
+}
+
 body {
 	color : #333;
 	background-color :#fff;

@@ -187,7 +187,7 @@ public class TextBox implements PConstants {
 	 * @param isFocused
 	 *   <code>true</code> to make the element to be focused; <code>false</code> otherwise
 	 */
-	void setIsFocused(boolean isFocused) {
+	public void setIsFocused(boolean isFocused) {
 		this.isFocused = isFocused;
 	}
 	
@@ -221,6 +221,12 @@ public class TextBox implements PConstants {
 		return this.textInput;
 	}
 	
+	/**
+	 * Sets whether the handling of the box focus will be manual or automatic. By default the focus handling is automatic.
+	 * 
+	 * @param handleFocus
+	 * 	true = automatic handling, false = manual handling
+	 */
 	public void setHandleFocus(boolean handleFocus) {
 		this.handleFocus = handleFocus;
 	}
