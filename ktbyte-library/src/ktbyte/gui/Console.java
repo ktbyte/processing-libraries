@@ -50,8 +50,6 @@ public class Console implements PConstants {
 	 */
 	public Console(PApplet pap, int x, int y, int width, int height) {
 		this.parent = pap;
-		this.parent.registerMethod("draw", this);
-		this.parent.registerMethod("mouseEvent", this);
 		this.inputTextColor = pap.color(255);
 		this.outputTextColor = pap.color(170);
 		this.x = x;
@@ -62,16 +60,18 @@ public class Console implements PConstants {
 		this.inputBoxHeight = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
 		this.lines = new ArrayList<>();
 		this.dict = new HashMap<String, String>();
-		inputBox = new TextBox(this.parent, x, y + h - inputBoxHeight, w, inputBoxHeight);
-		inputBox.setHandleFocus(true);
-		inputBox.setBorderRoundings(0, 0, 7, 7);
-		inputBox.setKeyEventListener(new KeyEventListener() {
+		this.inputBox = new TextBox(this.parent, x, y + h - inputBoxHeight, w, inputBoxHeight);
+		this.inputBox.setHandleFocus(true);
+		this.inputBox.setBorderRoundings(0, 0, 7, 7);
+		this.inputBox.setKeyEventListener(new KeyEventListener() {
 	
 			@Override
 			public void onEnterKey() {
 				handleConsoleInput();
 			}
 		});
+		this.parent.registerMethod("draw", this);
+		this.parent.registerMethod("mouseEvent", this);
 		computeDefaultAttributes();
 	}
 
