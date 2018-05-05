@@ -138,6 +138,8 @@ void setup() {
   alignStage.registerController(p3);
 
   ktgui.stageManager.goToStage(s2);
+  
+  msg(w2.pane.w + ":" + w2.pane.h);
 }
 
 /**********************************************************************************************************************
@@ -183,6 +185,7 @@ void draw() {
   }
 
   updatePaneCanvas();
+  updateSecondWindowCanvas();
 }
 
 void updatePaneCanvas() {
@@ -213,8 +216,31 @@ void updatePaneCanvas() {
   g.rect(0, 0, 100, 20);
   g.popMatrix();
   g.endDraw();
-
   pane.updateUserDefinedGraphics(g);
+}
+
+
+void updateSecondWindowCanvas() {
+  PGraphics g = createGraphics(w2.pane.w, w2.pane.h);
+  g.beginDraw();
+  g.translate(w2.pane.w * 0.5, w2.pane.h * 0.5);
+  g.rotate(frameCount*0.05);
+  g.translate(w2.pane.w * 0.25, 0);
+  g.rotate(-frameCount*0.2);
+  g.pushMatrix();
+  g.stroke(0);
+  g.strokeWeight(1);
+  g.line(-5, 5, 0, 45);
+  g.line(0, 45, 5, 5);
+  g.line(5, 5, 45, 0);
+  g.line(45, 0, 5, -5);
+  g.line(5, -5, 0, -45);
+  g.line(0, -45, -5, -5);
+  g.line(-5, -5, -45, 0);
+  g.line(-45, 0, -5, 5);
+  g.popMatrix();
+  g.endDraw();
+  w2.pane.updateUserDefinedGraphics(g);
 }
 
 void msg(String msg) {

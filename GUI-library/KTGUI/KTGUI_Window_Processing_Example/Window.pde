@@ -22,7 +22,8 @@ class Window extends Controller {
     this.posy = posy;
     this.w = w;
     this.h = h;
-    this.pg = createGraphics(w + 1, h + 1);
+    pg = createGraphics(w + 1, h + 1);
+    userpg = createGraphics(w + 1, h + 1);
     ktgui.stageManager.defaultStage.registerController(this);
     createTitleBar();
     createPane();
@@ -34,7 +35,8 @@ class Window extends Controller {
     this.posy = posy;
     this.w = w;
     this.h = h;
-    this.pg = createGraphics(w + 1, h + 1);
+    pg = createGraphics(w + 1, h + 1);
+    userpg = createGraphics(w + 1, h + 1);
     ktgui.stageManager.defaultStage.registerController(this);
     setTitle(title);
     createTitleBar();
@@ -47,7 +49,7 @@ class Window extends Controller {
       pane.attachController(controller);
     }
   }
-  
+
   void createTitleBar() {
     titleBar = new TitleBar("tb:" + title, this, posx, posy, w, ktgui.TITLE_BAR_HEIGHT);
     attachController(titleBar);
@@ -67,19 +69,6 @@ class Window extends Controller {
     pane = new WindowPane("pane:" + title, this, posx, posy + titleBar.h, w, h - titleBar.h);
     attachController(pane);
     registerChildController(pane);
-  }
-
-  void draw() {
-    drawControllers();
-    image(pg, posx, posy);
-  }
-
-  void drawControllers() {
-    for (Controller controller : controllers) {
-      pg.beginDraw();
-      pg.image(controller.getGraphics(), controller.posx, controller.posy);
-      pg.endDraw();
-    }
   }
 
   // process mouseMoved event received from PApplet

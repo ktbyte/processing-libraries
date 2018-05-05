@@ -15,6 +15,7 @@ class Bar extends Controller {
     this.h = h;
     this.title = "a Bar";
     pg = createGraphics(w + 1, h + 1);
+    userpg = createGraphics(w + 1, h + 1);
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
@@ -26,6 +27,7 @@ class Bar extends Controller {
     this.w  = w;
     this.h = h;
     pg = createGraphics(w + 1, h + 1);
+    userpg = createGraphics(w + 1, h + 1);
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
@@ -46,16 +48,16 @@ class Bar extends Controller {
     pg.endDraw();
   }
 
-  /*
-    Note: the first added is drawn last
-  */
-  void draw() {
-    drawControllers();  
-    // if this button doesn't belongs to any parent controller then draw it directly on the PApplet canvas 
-    //if (parentController == null) {
-      image(pg, posx, posy);
-    //}
-  }
+  ///*
+  //  Note: the first added is drawn last
+  //*/
+  //void draw() {
+  //  drawControllers();  
+  //  // if this button doesn't belongs to any parent controller then draw it directly on the PApplet canvas 
+  //  //if (parentController == null) {
+  //    image(pg, posx, posy);
+  //  //}
+  //}
 
   void drawControllers() {
     for (Controller controller : controllers) {

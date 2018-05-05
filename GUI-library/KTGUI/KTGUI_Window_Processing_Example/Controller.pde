@@ -14,14 +14,33 @@ public abstract class Controller extends EventProcessor {
   Stage parentStage = null;
 
   PGraphics pg;
-
+  PGraphics userpg;
+  
   color hoveredColor = ktgui.COLOR_FG_HOVERED;
   color pressedColor = ktgui.COLOR_FG_PRESSED;
   color passiveColor = ktgui.COLOR_FG_PASSIVE;
-
+  
   void updateGraphics() {
   }
+  void updateUserDefinedGraphics(PGraphics userpg) {
+    this.userpg = userpg;
+  } 
+  void drawUserDefinedGraphics() {
+    pg.beginDraw();
+    pg.image(userpg, 0, 0);
+    pg.endDraw();
+  }
+  void drawControllers() {
+    for (Controller controller : controllers) {
+      pg.beginDraw();
+      pg.image(controller.getGraphics(), controller.posx, controller.posy);
+      pg.endDraw();
+    }
+  }
   void draw() {
+    drawControllers();
+    drawUserDefinedGraphics();
+    image(pg, posx, posy);
   }
   void setParentController(Controller controller) {
     this.parentController = controller;

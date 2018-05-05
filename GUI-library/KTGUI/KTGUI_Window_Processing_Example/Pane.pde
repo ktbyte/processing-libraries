@@ -2,7 +2,6 @@
  *
  *********************************************************************************************************************/
 class Pane extends Controller {
-  PGraphics userpg;
   
   Pane(int posx, int posy, int w, int h) {
     this.title = "a Pane";
@@ -32,21 +31,8 @@ class Pane extends Controller {
     // automatically register the newly created pane in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
+ 
 
-  void updateUserDefinedGraphics(PGraphics userpg) {
-    this.userpg = userpg;
-  }  
-
-  void drawUserDefinedGraphics() {
-    pg.beginDraw();
-    pg.image(userpg, 0, 0);
-    pg.endDraw();
-  }
-
-  void draw() {
-    drawControllers();
-    image(pg, posx, posy);
-  }
 
   void updateGraphics() {
     // change thickness depending on the user-mouse behavior
@@ -59,17 +45,9 @@ class Pane extends Controller {
     pg.rect(0, 0, w, h);
     pg.noFill();
     pg.endDraw();
-    
-    drawUserDefinedGraphics();
   }
 
-  void drawControllers() {
-    for (Controller controller : controllers) {
-      pg.beginDraw();
-      pg.image(controller.getGraphics(), controller.posx, controller.posy);
-      pg.endDraw();
-    }
-  }
+
 
   // process mouseMoved event received from PApplet
   void processMouseMoved() {
