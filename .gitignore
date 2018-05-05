@@ -35,10 +35,6 @@ hs_err_pid*
 *.jsdtscope
 ktbyte-library/.settings/
 
-# .bak files
-**/.bak
-=======
-
 # Backup files
 **/*.bak
->>>>>>> develop
+
