@@ -138,7 +138,7 @@ void setup() {
   alignStage.registerController(p3);
 
   ktgui.stageManager.goToStage(s2);
-  
+
   msg(w2.pane.w + ":" + w2.pane.h);
 }
 
@@ -148,42 +148,7 @@ void setup() {
 void draw() {
   background(170, 220, 170);
   //
-  if (debug) {
-    fill(0);
-    textSize(20);
-    textAlign(RIGHT, CENTER);
-    textFont(createFont("monospaced", 16));
-    text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
-    text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
-    text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
-
-    textSize(11);
-    int YSHIFT = 12;  
-    int ypos = 0;
-    textAlign(LEFT, CENTER);
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    for (Controller controller : ktgui.stageManager.defaultStage.controllers) {
-      if (controller.title != null) { 
-        text("defaultStage: " + controller.title + 
-          ", posx:" + controller.posx + 
-          ", posy:" + controller.posy
-          , 10, ypos+=YSHIFT);
-      }
-    }
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    for (Controller controller : ktgui.stageManager.activeStage.controllers) {
-      if (controller.title != null) {
-        text("activeStage: " + controller.title + 
-          ", parent:" + ((controller.parentController != null) ? controller.parentController.title : "null") + 
-          ", posx:" + controller.posx + 
-          ", posy:" + controller.posy, 
-          10, ypos+=YSHIFT);
-      }
-    }
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    surface.setTitle(mouseX + ":" + mouseY);
-  }
-
+  updateDebugInfo();
   updatePaneCanvas();
   updateSecondWindowCanvas();
 }
@@ -191,6 +156,10 @@ void draw() {
 void updatePaneCanvas() {
   PGraphics g = createGraphics(pane.w, pane.h);
   g.beginDraw();
+  g.fill(200, 100, 100);
+  g.textSize(36);
+  g.textAlign(CENTER);
+  g.text("Drag this pane!", pane.w * 0.5, 40);
   g.pushMatrix();
   g.translate(pane.w * 0.5, pane.h * 0.5);
   g.rotate(frameCount*0.01);
@@ -246,5 +215,43 @@ void updateSecondWindowCanvas() {
 void msg(String msg) {
   if (debug) {
     println(msg);
+  }
+}
+
+void updateDebugInfo() {
+  if (debug) {
+    fill(0);
+    textSize(20);
+    textAlign(RIGHT, CENTER);
+    textFont(createFont("monospaced", 16));
+    text("activeStage.name:" + ktgui.stageManager.activeStage.name, width - 10, 10);
+    text("activeStage.index:" + ktgui.stageManager.stages.indexOf(ktgui.stageManager.activeStage), width - 10, 30);
+    text("size():" + ktgui.stageManager.stages.size(), width - 10, 50);
+
+    textSize(11);
+    int YSHIFT = 12;  
+    int ypos = 0;
+    textAlign(LEFT, CENTER);
+    text("----------------------------------------------------", 10, ypos+=YSHIFT);
+    for (Controller controller : ktgui.stageManager.defaultStage.controllers) {
+      if (controller.title != null) { 
+        text("defaultStage: " + controller.title + 
+          ", posx:" + controller.posx + 
+          ", posy:" + controller.posy
+          , 10, ypos+=YSHIFT);
+      }
+    }
+    text("----------------------------------------------------", 10, ypos+=YSHIFT);
+    for (Controller controller : ktgui.stageManager.activeStage.controllers) {
+      if (controller.title != null) {
+        text("activeStage: " + controller.title + 
+          ", parent:" + ((controller.parentController != null) ? controller.parentController.title : "null") + 
+          ", posx:" + controller.posx + 
+          ", posy:" + controller.posy, 
+          10, ypos+=YSHIFT);
+      }
+    }
+    text("----------------------------------------------------", 10, ypos+=YSHIFT);
+    surface.setTitle(mouseX + ":" + mouseY);
   }
 }
