@@ -14,7 +14,7 @@ Button dbgButton;
  *********************************************************************************************************************/
 void setup() {
   size(800, 500);
-  noSmooth();
+  //noSmooth();
   
   ktgui = new KTGUI(this); // default stage is automatically created
 

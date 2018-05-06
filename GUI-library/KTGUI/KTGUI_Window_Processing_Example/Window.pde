@@ -61,8 +61,6 @@ class Window extends Controller {
     registerChildController(titleBar);
     titleBar.addEventAdapter(new KTGUIEventAdapter() {
       public void onMouseDragged() {
-        titleBar.parentController.posx += mouseX - pmouseX;
-        titleBar.parentController.posy += mouseY - pmouseY;
         pane.posx += mouseX - pmouseX;
         pane.posy += mouseY - pmouseY;
       }
