@@ -14,6 +14,8 @@ Button dbgButton;
  *********************************************************************************************************************/
 void setup() {
   size(800, 500);
+  noSmooth();
+  
   ktgui = new KTGUI(this); // default stage is automatically created
 
   dbgButton = ktgui.createButton("Debug", 0, 0, 100, 50);

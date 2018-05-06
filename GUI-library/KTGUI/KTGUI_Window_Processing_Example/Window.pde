@@ -43,6 +43,11 @@ class Window extends Controller {
     createPane();
   }
 
+  void draw() {
+    // override the 'draw()' method of parent class (Controller)
+    // to prevent drawing the TitleBar and Pane second time.      
+  }
+
   void addController(Controller controller, int hAlign, int vAlign) {
     if (isActive) {
       controller.alignAbout(pane, hAlign, vAlign);
