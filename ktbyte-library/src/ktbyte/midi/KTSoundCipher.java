@@ -1,9 +1,8 @@
 package ktbyte.midi;
 
 
-import processing.core.*;
 import arb.soundcipher.SoundCipher;
-import arb.soundcipher.constants.*;
+import processing.core.PApplet;
 
 /**
  * 
@@ -11,8 +10,8 @@ import arb.soundcipher.constants.*;
  */
 public class KTSoundCipher {
 	
-	private PApplet parent;
 	private SoundCipher soundCipher;
+	private PApplet papplet;
 
 	/**
 	 * a Constructor, usually called in the setup() method in your sketch to
@@ -22,7 +21,7 @@ public class KTSoundCipher {
 	 *   The main PApplet instance
 	 */
 	public KTSoundCipher(PApplet parent) {
-		this.parent = parent;
+		this.papplet = parent;
 		this.soundCipher = new SoundCipher(parent);
 	}
 	

@@ -1,7 +1,8 @@
 package ktbyte.sound;
 
-import processing.core.*;
-import ddf.minim.*;
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
+import processing.core.PApplet;
 
 /**
  * 
@@ -9,10 +10,10 @@ import ddf.minim.*;
  */
 public class SoundFile {
 
-	private PApplet parent;
 	private String path;
 	private Minim minim;
 	private AudioPlayer sound;
+	private PApplet papplet;
 
 	/**
 	 * This constructs a SoundFile object within the current context (PApplet),
@@ -23,7 +24,7 @@ public class SoundFile {
 	 *   Path can be either a file path or and URL in the browser environment. In PDE environment, it only accepts a file path
 	 */
 	public SoundFile(PApplet parent, String path) {
-		this.parent = parent;
+		this.papplet = parent;
 		this.path = path;
 		this.minim = new Minim(parent);
 	}
