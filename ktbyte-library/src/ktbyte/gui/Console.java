@@ -42,6 +42,8 @@ public class Console implements PConstants {
 	 * This constructs a new Console object within the current context (PApplet),
 	 *  starting from the x and y coordinates, having a given width and height
 	 * 
+	 * @param pap
+	 *   reference to the parent PApplet
 	 * @param x
 	 *   x coordinate
 	 * @param y

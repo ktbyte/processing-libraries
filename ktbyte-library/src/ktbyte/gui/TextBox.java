@@ -1,7 +1,9 @@
 package ktbyte.gui;
 
-import processing.event.*;
-import processing.core.*;
+import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.event.KeyEvent;
+import processing.event.MouseEvent;
 
 /**
  * 
@@ -28,6 +30,8 @@ public class TextBox implements PConstants {
 	 * This constructs a new TextBox object within the current context (PApplet),
 	 *  starting from the x and y coordinates, having the specified width and height.
 	 * 
+	 * @param pap
+	 *   reference to the parent PApplet
 	 * @param x
 	 *   x coordinate
 	 * @param y
