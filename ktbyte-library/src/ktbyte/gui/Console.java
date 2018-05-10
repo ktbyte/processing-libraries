@@ -1,9 +1,12 @@
 package ktbyte.gui;
 
-import processing.event.*;
-import processing.core.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.event.MouseEvent;
+
 
 /**
  * 
