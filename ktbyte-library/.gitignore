@@ -1,1 +1,4 @@
 /bin/
+
+# distribution folder
+**/distribution/**
