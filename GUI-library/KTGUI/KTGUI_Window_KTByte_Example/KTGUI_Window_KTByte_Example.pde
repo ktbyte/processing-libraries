@@ -451,7 +451,6 @@ public class KTGUI {
   color COLOR_BG_PASSIVE = color(100); 
   color COLOR_BG_PRESSED = color(200);
   
-  int TITLE_BAR_HEIGHT = 14;
   int MENU_BAR_HEIGHT = 20;
   int BORDER_THICKNESS = 3;
   
@@ -1076,7 +1075,7 @@ class Window extends Controller {
   }
 
   void createTitleBar() {
-    titleBar = new TitleBar("tb:" + title, this, posx, posy, w, ktgui.TITLE_BAR_HEIGHT);
+    titleBar = new TitleBar("tb:" + title, this, posx, posy, w, Bar.HEIGHT);
     attachController(titleBar);
     registerChildController(titleBar);
     titleBar.addEventAdapter(new KTGUIEventAdapter() {
@@ -1084,7 +1083,7 @@ class Window extends Controller {
         // pane.posx += mouseX - pmouseX;
         // pane.posy += mouseY - pmouseY;
         pane.posx = titleBar.posx;
-        pane.posy = titleBar.posy + ktgui.TITLE_BAR_HEIGHT;
+        pane.posy = titleBar.posy + Bar.HEIGHT;
       }
     }
     ); 
@@ -1420,6 +1419,8 @@ class WindowPane extends Pane {
  *********************************************************************************************************************/
 class Bar extends Controller {
 
+  final static int HEIGHT = 14;
+
   Bar(int x, int y, int w, int h) {
     this.posx = x;
     this.posy = y;
@@ -1452,11 +1453,11 @@ class Bar extends Controller {
     pg.fill(180);
     pg.stroke(15);
     pg.strokeWeight(1);
-    pg.rect(0, 0, w, ktgui.TITLE_BAR_HEIGHT);
+    pg.rect(0, 0, w, Bar.HEIGHT);
     pg.fill(25);
     pg.textAlign(LEFT, CENTER);
-    pg.textSize(ktgui.TITLE_BAR_HEIGHT*0.65);
-    pg.text(title, 10, ktgui.TITLE_BAR_HEIGHT*0.5);
+    pg.textSize(Bar.HEIGHT*0.65);
+    pg.text(title, 10, Bar.HEIGHT*0.5);
     pg.endDraw();
   }
 
@@ -1542,7 +1543,7 @@ class TitleBar extends Bar {
   TitleBar(Window window, int x, int y, int w, int h) {
     super(x, y, w, h);
     this.parentWindow = window;
-    closeButton = new CloseButton(w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
+    closeButton = new CloseButton(w - HEIGHT + 2, 2, HEIGHT - 4, HEIGHT - 4);
     attachController(closeButton);
     registerChildController(closeButton);
   }
@@ -1550,7 +1551,7 @@ class TitleBar extends Bar {
   TitleBar(String title, Window window, int x, int y, int w, int h) {
     super(title, x, y, w, h);
     this.parentWindow = window;
-    closeButton = new CloseButton("cb:" + this.title, w - ktgui.TITLE_BAR_HEIGHT + 2, 2, ktgui.TITLE_BAR_HEIGHT - 4, ktgui.TITLE_BAR_HEIGHT - 4);
+    closeButton = new CloseButton("cb:" + this.title, w - HEIGHT + 2, 2, HEIGHT - 4, HEIGHT - 4);
     attachController(closeButton);
     registerChildController(closeButton);
   }

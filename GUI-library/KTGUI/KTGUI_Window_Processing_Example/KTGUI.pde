@@ -20,7 +20,7 @@ public class KTGUI {
   color COLOR_BG_PASSIVE = color(100); 
   color COLOR_BG_PRESSED = color(200);
   
-  int TITLE_BAR_HEIGHT = 14;
+
   int MENU_BAR_HEIGHT = 20;
   int BORDER_THICKNESS = 3;
   
