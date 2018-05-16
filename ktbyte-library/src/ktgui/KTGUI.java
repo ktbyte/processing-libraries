@@ -3,7 +3,6 @@ package ktgui;
 import java.util.HashMap;
 import java.util.Map;
 
-import ddf.minim.Controller;
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
@@ -19,198 +18,206 @@ import processing.event.MouseEvent;
  * components list and 'transfers' the events to each component.
  *********************************************************************************************************************/
 public class KTGUI {
-  PApplet pa;
-  //StageManager stageManager;
-  HashMap<Controller, Integer> garbageList = new HashMap<Controller, Integer>();
+	PApplet							pa;
 
-  int COLOR_FG_HOVERED = pa.color(10, 150, 10); 
-  int COLOR_FG_PRESSED = pa.color(10, 200, 10);
-  int COLOR_FG_PASSIVE = pa.color(100, 100, 200); 
-  int COLOR_BG_HOVERED = pa.color(100); 
-  int COLOR_BG_PASSIVE = pa.color(100); 
-  int COLOR_BG_PRESSED = pa.color(200);
-  
-  int TITLE_BAR_HEIGHT = 14;
-  int MENU_BAR_HEIGHT = 20;
-  int BORDER_THICKNESS = 3;
-  
-  int ALIGN_GAP = 20;
+	StageManager					stageManager;
+	HashMap<Controller, Integer>	garbageList			= new HashMap<Controller, Integer>();
 
-  /*
-  * The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
-   * thread.
-   */
-  public KTGUI(PApplet pa) {
-    this.pa = pa;
-    this.pa.registerMethod("draw", this);
-    this.pa.registerMethod("mouseEvent", this);
-    this.pa.registerMethod("keyEvent", this);
+	int								COLOR_FG_HOVERED	= pa.color(10, 150, 10);
+	int								COLOR_FG_PRESSED	= pa.color(10, 200, 10);
+	int								COLOR_FG_PASSIVE	= pa.color(100, 100, 200);
+	int								COLOR_BG_HOVERED	= pa.color(100);
+	int								COLOR_BG_PASSIVE	= pa.color(100);
+	int								COLOR_BG_PRESSED	= pa.color(200);
 
-    //stageManager = new StageManager();
-  }
+	int								TITLE_BAR_HEIGHT	= 14;
+	int								MENU_BAR_HEIGHT		= 20;
+	int								BORDER_THICKNESS	= 3;
 
-  //-------------------------------------------------------------------------------------------------------------------
-  // Transfer 'draw' event from PApplet to KTGUI components. 
-  // This method will be called at the end of the PApplet.draw().
-  //-------------------------------------------------------------------------------------------------------------------
-  void draw() {
-    //stageManager.defaultStage.draw();
-    //stageManager.activeStage.draw();
-    collectGarbage();
-  }
+	int								ALIGN_GAP			= 20;
 
-  void collectGarbage() {
-    for (Map.Entry me : garbageList.entrySet()) {
-      Controller controller = (Controller)me.getKey();
-      int time = (Integer)me.getValue();
-      if (pa.millis() - time > 100) {
-        //if (controller.parentStage != null) { 
-        //  controller.parentStage.unregisterController(controller);
-        //}
-      }
-    }
-  }
+	private boolean					debug;
 
-//  //-------------------------------------------------------------------------------------------------------------------
-//  // This is a 'factory' method
-//  //-------------------------------------------------------------------------------------------------------------------
-//  Button createButton(int x, int y, int w, int h) {
-//    Button btn = new Button(x, y, w, h);
-//    return btn;
-//  }
-//  Button createButton(String title, int x, int y, int w, int h) {
-//    Button btn = new Button(title, x, y, w, h);
-//    return btn;
-//  }
-//  //-------------------------------------------------------------------------------------------------------------------
-//  // This is a 'factory' method
-//  //-------------------------------------------------------------------------------------------------------------------
-//  Window createWindow(int x, int y, int w, int h) {
-//    Window window = new Window(x, y, w, h);
-//    return window;
-//  }
-//  Window createWindow(String title, int x, int y, int w, int h) {
-//    Window window = new Window(title, x, y, w, h);
-//    return window;
-//  }
-//
-//  //-------------------------------------------------------------------------------------------------------------------
-//  // This is a 'factory' method
-//  //-------------------------------------------------------------------------------------------------------------------
-//  Pane createPane(int x, int y, int w, int h) {
-//    Pane pane = new Pane(x, y, w, h);
-//    return pane;
-//  }
-//  Pane createPane(String title, int x, int y, int w, int h) {
-//    Pane pane = new Pane(title, x, y, w, h);
-//    return pane;
-//  }
+	/*
+	* The constructor automatically registers the 'draw', 'mouseEvent' and 'keyEvent' of this class in PApplet's EDT 
+	 * thread.
+	 */
+	public KTGUI(PApplet pa) {
+		this.pa = pa;
+		this.pa.registerMethod("draw", this);
+		this.pa.registerMethod("mouseEvent", this);
+		this.pa.registerMethod("keyEvent", this);
 
-  //-------------------------------------------------------------------------------------------------------------------
-  // This method 'redirects' the incoming mouse events from PApplet to 'transfer' methods.
-  // This method will be called when the PApplet.mouseEvent is happening.
-  //-------------------------------------------------------------------------------------------------------------------
-  void mouseEvent(MouseEvent e) {
-    switch (e.getAction()) {
-    case MouseEvent.PRESS:
-//      this.mousePressed();
-      break;
-    case MouseEvent.RELEASE:
-//      this.mouseReleased();
-      break;
-    case MouseEvent.DRAG:
-//      this.mouseDragged();
-      break;
-    case MouseEvent.MOVE:
-//      this.mouseMoved();
-      break;
-    }
-  }
+		stageManager = new StageManager(this);
+	}
 
-  //-------------------------------------------------------------------------------------------------------------------
-  // This method 'redirects' the incoming keyboard events from PApplet to 'transfer' methods.
-  // This method will be called when the PApplet.keyEvent is happening.
-  //-------------------------------------------------------------------------------------------------------------------
-  void keyEvent(KeyEvent e) {
-    switch (e.getAction()) {
-    case KeyEvent.PRESS:
-//      this.keyPressed();
-      break;
-    case KeyEvent.RELEASE:
-//      this.keyReleased();
-      break;
-    }
-  }
+	//-------------------------------------------------------------------------------------------------------------------
+	// Transfer 'draw' event from PApplet to KTGUI components. 
+	// This method will be called at the end of the PApplet.draw().
+	//-------------------------------------------------------------------------------------------------------------------
+	void draw() {
+		//stageManager.defaultStage.draw();
+		//stageManager.activeStage.draw();
+		collectGarbage();
+	}
 
-//  //-------------------------------------------------------------------------------------------------------------------
-//  // This is a 'transfer' method - it 'redirects' the PApplet.mouseDragged event to KTGUI components (controllers)
-//  //-------------------------------------------------------------------------------------------------------------------
-//  void mouseDragged() {
-//    for (Controller controller : stageManager.activeStage.controllers) {
-//      controller.processMouseDragged();
-//    }
-//    for (Controller controller : stageManager.defaultStage.controllers) {
-//      controller.processMouseDragged();
-//    }
-//  }
-//
-//  //-------------------------------------------------------------------------------------------------------------------
-//  // This is a 'transfer' method - it 'redirects' the PApplet.mousePressed event to KTGUI components (controllers)
-//  //-------------------------------------------------------------------------------------------------------------------
-//  void mousePressed() {
-//    for (Controller controller : stageManager.activeStage.controllers) {
-//      controller.processMousePressed();
-//    }
-//    for (Controller controller : stageManager.defaultStage.controllers) {
-//      controller.processMousePressed();
-//    }
-//  }
-//
-//  //-------------------------------------------------------------------------------------------------------------------
-//  // This is a 'transfer' method - it 'redirects' the PApplet.mouseReleased event to KTGUI components (controllers)
-//  //-------------------------------------------------------------------------------------------------------------------
-//  void mouseReleased() { 
-//    for (Controller controller : stageManager.activeStage.controllers) {
-//      controller.processMouseReleased();
-//    }
-//    for (Controller controller : stageManager.defaultStage.controllers) {
-//      controller.processMouseReleased();
-//    }
-//  }
-//
-//  //-------------------------------------------------------------------------------------------------------------------
-//  // This is a 'transfer' method - it 'redirects' the PApplet.mouseMoved event to KTGUI components (controllers)
-//  //-------------------------------------------------------------------------------------------------------------------
-//  void mouseMoved() {
-//    for (Controller controller : stageManager.activeStage.controllers) {
-//      controller.processMouseMoved();
-//    }
-//    for (Controller controller : stageManager.defaultStage.controllers) {
-//      controller.processMouseMoved();
-//    }
-//  }
-//
-//  //-------------------------------------------------------------------------------------------------------------------
-//  // This is a 'transfer' method - it 'redirects' the PApplet.keyPressed event to KTGUI components (controllers)
-//  //-------------------------------------------------------------------------------------------------------------------
-//  void keyPressed() {
-//    for (Controller controller : stageManager.activeStage.controllers) {
-//      controller.processKeyPressed();
-//    }
-//    for (Controller controller : stageManager.defaultStage.controllers) {
-//      controller.processKeyPressed();
-//    }
-//  }
-//
-//  //-------------------------------------------------------------------------------------------------------------------
-//  // This is a 'transfer' method - it 'redirects' the PApplet.keyReleased event to KTGUI components (controllers)
-//  //-------------------------------------------------------------------------------------------------------------------
-//  void keyReleased() {
-//    for (Controller controller : stageManager.activeStage.controllers) {
-//      controller.processKeyReleased();
-//    }
-//    for (Controller controller : stageManager.defaultStage.controllers) {
-//      controller.processKeyReleased();
-//    }
-//  }
+	@SuppressWarnings("rawtypes") void collectGarbage() {
+		for (Map.Entry me : garbageList.entrySet()) {
+			Controller controller = (Controller) me.getKey();
+			int time = (Integer) me.getValue();
+			if (pa.millis() - time > 100) {
+				if (controller.parentStage != null) { 
+				  controller.parentStage.unregisterController(controller);
+				}
+			}
+		}
+	}
+
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  // This is a 'factory' method
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  Button createButton(int x, int y, int w, int h) {
+	//    Button btn = new Button(x, y, w, h);
+	//    return btn;
+	//  }
+	//  Button createButton(String title, int x, int y, int w, int h) {
+	//    Button btn = new Button(title, x, y, w, h);
+	//    return btn;
+	//  }
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  // This is a 'factory' method
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  Window createWindow(int x, int y, int w, int h) {
+	//    Window window = new Window(x, y, w, h);
+	//    return window;
+	//  }
+	//  Window createWindow(String title, int x, int y, int w, int h) {
+	//    Window window = new Window(title, x, y, w, h);
+	//    return window;
+	//  }
+	//
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  // This is a 'factory' method
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  Pane createPane(int x, int y, int w, int h) {
+	//    Pane pane = new Pane(x, y, w, h);
+	//    return pane;
+	//  }
+	//  Pane createPane(String title, int x, int y, int w, int h) {
+	//    Pane pane = new Pane(title, x, y, w, h);
+	//    return pane;
+	//  }
+
+	//-------------------------------------------------------------------------------------------------------------------
+	// This method 'redirects' the incoming mouse events from PApplet to 'transfer' methods.
+	// This method will be called when the PApplet.mouseEvent is happening.
+	//-------------------------------------------------------------------------------------------------------------------
+	void mouseEvent(MouseEvent e) {
+		switch (e.getAction()) {
+		case MouseEvent.PRESS:
+			//      this.mousePressed();
+			break;
+		case MouseEvent.RELEASE:
+			//      this.mouseReleased();
+			break;
+		case MouseEvent.DRAG:
+			//      this.mouseDragged();
+			break;
+		case MouseEvent.MOVE:
+			//      this.mouseMoved();
+			break;
+		}
+	}
+
+	//-------------------------------------------------------------------------------------------------------------------
+	// This method 'redirects' the incoming keyboard events from PApplet to 'transfer' methods.
+	// This method will be called when the PApplet.keyEvent is happening.
+	//-------------------------------------------------------------------------------------------------------------------
+	void keyEvent(KeyEvent e) {
+		switch (e.getAction()) {
+		case KeyEvent.PRESS:
+			//      this.keyPressed();
+			break;
+		case KeyEvent.RELEASE:
+			//      this.keyReleased();
+			break;
+		}
+	}
+
+	public void msg(String string) {
+		if (debug)
+			PApplet.println(string);
+	}
+
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  // This is a 'transfer' method - it 'redirects' the PApplet.mouseDragged event to KTGUI components (controllers)
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  void mouseDragged() {
+	//    for (Controller controller : stageManager.activeStage.controllers) {
+	//      controller.processMouseDragged();
+	//    }
+	//    for (Controller controller : stageManager.defaultStage.controllers) {
+	//      controller.processMouseDragged();
+	//    }
+	//  }
+	//
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  // This is a 'transfer' method - it 'redirects' the PApplet.mousePressed event to KTGUI components (controllers)
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  void mousePressed() {
+	//    for (Controller controller : stageManager.activeStage.controllers) {
+	//      controller.processMousePressed();
+	//    }
+	//    for (Controller controller : stageManager.defaultStage.controllers) {
+	//      controller.processMousePressed();
+	//    }
+	//  }
+	//
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  // This is a 'transfer' method - it 'redirects' the PApplet.mouseReleased event to KTGUI components (controllers)
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  void mouseReleased() { 
+	//    for (Controller controller : stageManager.activeStage.controllers) {
+	//      controller.processMouseReleased();
+	//    }
+	//    for (Controller controller : stageManager.defaultStage.controllers) {
+	//      controller.processMouseReleased();
+	//    }
+	//  }
+	//
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  // This is a 'transfer' method - it 'redirects' the PApplet.mouseMoved event to KTGUI components (controllers)
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  void mouseMoved() {
+	//    for (Controller controller : stageManager.activeStage.controllers) {
+	//      controller.processMouseMoved();
+	//    }
+	//    for (Controller controller : stageManager.defaultStage.controllers) {
+	//      controller.processMouseMoved();
+	//    }
+	//  }
+	//
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  // This is a 'transfer' method - it 'redirects' the PApplet.keyPressed event to KTGUI components (controllers)
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  void keyPressed() {
+	//    for (Controller controller : stageManager.activeStage.controllers) {
+	//      controller.processKeyPressed();
+	//    }
+	//    for (Controller controller : stageManager.defaultStage.controllers) {
+	//      controller.processKeyPressed();
+	//    }
+	//  }
+	//
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  // This is a 'transfer' method - it 'redirects' the PApplet.keyReleased event to KTGUI components (controllers)
+	//  //-------------------------------------------------------------------------------------------------------------------
+	//  void keyReleased() {
+	//    for (Controller controller : stageManager.activeStage.controllers) {
+	//      controller.processKeyReleased();
+	//    }
+	//    for (Controller controller : stageManager.defaultStage.controllers) {
+	//      controller.processKeyReleased();
+	//    }
+	//  }
 }
