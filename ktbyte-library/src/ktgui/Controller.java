@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
-
 /**********************************************************************************************************************
  * This class automatically receives events from PApplet when they happen.
  * Every KTGUI component (controller) should extend this class in order to be able to receive the mouse and keyboard 
@@ -104,7 +103,7 @@ public abstract class Controller extends EventProcessor {
 		if (isActive) {
 			// detach from existinler first (if exist)
 			if (controller.parentController != null) {
-				Controller pc = (Controller) controller.parentController;
+				Controller pc = controller.parentController;
 				pc.detachController(controller); // reset parentWindow
 			}
 			// add to the list of controllers
