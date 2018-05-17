@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
+
 /**********************************************************************************************************************
  * This class automatically receives events from PApplet when they happen.
  * Every KTGUI component (controller) should extend this class in order to be able to receive the mouse and keyboard 
@@ -12,26 +13,26 @@ import processing.core.PGraphics;
  * One should override only the 'needed' event methods. This allows to save time and decrease the amount of code.
  * One should always overridde the 'draw' method.
  *********************************************************************************************************************/
-public abstract class Controller extends EventProcessor {
-	String					title;
-	int						posx, posy, w, h;
+public abstract class Controller extends EventProcessor implements PConstants {
+	public String					title;
+	public int						posx, posy, w, h;
 
-	ArrayList<Controller>	controllers			= new ArrayList<Controller>();
-	PApplet					pa;
-	KTGUI					ktgui;
-	Controller				parentController	= null;
-	Stage					parentStage			= null;
+	public ArrayList<Controller>	controllers			= new ArrayList<Controller>();
+	public PApplet					pa;
+	public KTGUI					ktgui;
+	public Controller				parentController	= null;
+	public Stage					parentStage			= null;
 
-	PGraphics				pg;
-	PGraphics				userpg;
+	public PGraphics				pg;
+	public PGraphics				userpg;
 
-	int						hoveredColor		= ktgui.COLOR_FG_HOVERED;
-	int						pressedColor		= ktgui.COLOR_FG_PRESSED;
-	int						passiveColor		= ktgui.COLOR_FG_PASSIVE;
+	public int						hoveredColor		= ktgui.COLOR_FG_HOVERED;
+	public int						pressedColor		= ktgui.COLOR_FG_PRESSED;
+	public int						passiveColor		= ktgui.COLOR_FG_PASSIVE;
 
 	Controller(KTGUI ktgui) {
 		this.ktgui = ktgui;
-		this.pa = ktgui.pa;
+		this.pa = ktgui.getPa();
 	}
 
 	void updateGraphics() {}
@@ -187,7 +188,7 @@ public abstract class Controller extends EventProcessor {
 	void closeController(Controller controller) {
 		PApplet.println("Closing '" + controller.title + "' controller.");
 		controller.isActive = false;
-		ktgui.garbageList.put(controller, pa.millis());
+		ktgui.addToGarbage(controller, pa.millis());
 	}
 
 	void alignAboutApplet(int hAlign, int vAlign) {

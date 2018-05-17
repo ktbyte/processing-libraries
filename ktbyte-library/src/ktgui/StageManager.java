@@ -28,6 +28,14 @@ class StageManager {
 		return stage;
 	}
 
+	public Stage getDefaultStage() {
+		return defaultStage;
+	}
+
+	public Stage getActiveStage() {
+		return activeStage;
+	}
+
 	void goToStage(Stage stage) {
 		activeStage = stage;
 	}

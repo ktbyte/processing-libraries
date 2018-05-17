@@ -19,7 +19,7 @@ public class Stage {
 
 	Stage(KTGUI ktgui, String name) {
 		this.ktgui = ktgui;
-		this.pa = ktgui.pa;
+		this.pa = ktgui.getPa();
 		this.name = name;
 		this.controllers = new ArrayList<Controller>();
 	}
@@ -38,16 +38,16 @@ public class Stage {
 		ktgui.msg("Trying to register '" + controller.title + "' " + controllerClassName + " in '" + name + "' stage.");
 
 		// try to remove controller from default stage then
-		if (ktgui.stageManager.defaultStage.controllers.contains(controller)) {
+		if (ktgui.getStageManager().getDefaultStage().controllers.contains(controller)) {
 			ktgui.msg("\tdefaultStage already contains this controller: --> removing from default stage.");
-			ktgui.stageManager.defaultStage.unregisterController(controller);
+			ktgui.getStageManager().defaultStage.unregisterController(controller);
 		}
 
 		// try to remove controller from active stage then
-		if (ktgui.stageManager.activeStage != null) {
-			if (ktgui.stageManager.activeStage.controllers.contains(controller)) {
+		if (ktgui.getStageManager().getActiveStage() != null) {
+			if (ktgui.getStageManager().activeStage.controllers.contains(controller)) {
 				ktgui.msg("\tactiveStage already contains this controller: --> removing from active stage.");
-				ktgui.stageManager.activeStage.unregisterController(controller);
+				ktgui.getStageManager().activeStage.unregisterController(controller);
 			}
 		}
 
@@ -61,20 +61,20 @@ public class Stage {
 			controller.parentStage = this;
 			ktgui.msg("\tAdded to controllers list successfully, new parentStage is (" + name + ")");
 			if (tokens.length > 1) {
-//				// try to add all child components of controller, if it is of type Window
-//				if (tokens[1].equalsIgnoreCase("Window")) {
-//				}
-//					Window window = (Window) controller;
-//					window.registerChildControllers();
-//				}
-//				// try to add all child components of controller, if it is of type Pane
-//				if (tokens[1].equalsIgnoreCase("Pane")) {
-//					Pane pane = (Pane) controller;
-//					pane.registerChildControllers();
-//				if (tokens[1].equalsIgnoreCase("WindowPane")) {
-//					WindowPane windowPane = (WindowPane) controller;
-//					windowPane.registerChildControllers();
-//				}
+				//				// try to add all child components of controller, if it is of type Window
+				//				if (tokens[1].equalsIgnoreCase("Window")) {
+				//				}
+				//					Window window = (Window) controller;
+				//					window.registerChildControllers();
+				//				}
+				//				// try to add all child components of controller, if it is of type Pane
+				//				if (tokens[1].equalsIgnoreCase("Pane")) {
+				//					Pane pane = (Pane) controller;
+				//					pane.registerChildControllers();
+				//				if (tokens[1].equalsIgnoreCase("WindowPane")) {
+				//					WindowPane windowPane = (WindowPane) controller;
+				//					windowPane.registerChildControllers();
+				//				}
 			} else {
 				ktgui.msg("....Cannot register child controllers of '" + name + "'");
 			}

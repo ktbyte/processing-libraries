@@ -9,19 +9,19 @@ class EventProcessor {
 
 	ArrayList<KTGUIEventAdapter>	adapters	= new ArrayList<KTGUIEventAdapter>();
 
-	void processMouseMoved() {}
+	public void processMouseMoved() {}
 
-	void processMousePressed() {}
+	public void processMousePressed() {}
 
-	void processMouseReleased() {}
+	public void processMouseReleased() {}
 
-	void processMouseDragged() {}
+	public void processMouseDragged() {}
 
-	void processKeyPressed() {}
+	public void processKeyPressed() {}
 
-	void processKeyReleased() {}
+	public void processKeyReleased() {}
 
-	void addEventAdapter(KTGUIEventAdapter adapter) {
+	public void addEventAdapter(KTGUIEventAdapter adapter) {
 		adapters.add(adapter);
 	}
 }
