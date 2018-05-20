@@ -13,7 +13,7 @@ import processing.core.PGraphics;
  * One should override only the 'needed' event methods. This allows to save time and decrease the amount of code.
  * One should always overridde the 'draw' method.
  *********************************************************************************************************************/
-public abstract class Controller extends EventProcessor implements PConstants {
+public class Controller extends KTGUIEventProcessor implements PConstants {
 	public String					title;
 	public int						posx, posy, w, h;
 
@@ -26,28 +26,35 @@ public abstract class Controller extends EventProcessor implements PConstants {
 	public PGraphics				pg;
 	public PGraphics				userpg;
 
-	public int						hoveredColor		= ktgui.COLOR_FG_HOVERED;
-	public int						pressedColor		= ktgui.COLOR_FG_PRESSED;
-	public int						passiveColor		= ktgui.COLOR_FG_PASSIVE;
+	public int						hoveredColor;
+	public int						pressedColor;
+	public int						passiveColor;
 
-	Controller(KTGUI ktgui) {
+	public Controller(KTGUI ktgui) {
 		this.ktgui = ktgui;
 		this.pa = ktgui.getPa();
+		init();
 	}
 
-	void updateGraphics() {}
+	public void init() {
+		hoveredColor = ktgui.COLOR_FG_HOVERED;
+		pressedColor = ktgui.COLOR_FG_PRESSED;
+		passiveColor = ktgui.COLOR_FG_PASSIVE;
+	}
 
-	void updateUserDefinedGraphics(PGraphics userpg) {
+	public void updateGraphics() {}
+
+	public void updateUserDefinedGraphics(PGraphics userpg) {
 		this.userpg = userpg;
 	}
 
-	void drawUserDefinedGraphics() {
+	public void drawUserDefinedGraphics() {
 		pg.beginDraw();
 		pg.image(userpg, 0, 0);
 		pg.endDraw();
 	}
 
-	void drawControllers() {
+	public void drawControllers() {
 		for (Controller controller : controllers) {
 			pg.beginDraw();
 			pg.image(controller.getGraphics(), controller.posx, controller.posy);
@@ -55,52 +62,52 @@ public abstract class Controller extends EventProcessor implements PConstants {
 		}
 	}
 
-	void draw() {
+	public void draw() {
 		drawControllers();
 		drawUserDefinedGraphics();
 		pa.image(pg, posx, posy);
 	}
 
-	void setParentController(Controller controller) {
+	public void setParentController(Controller controller) {
 		this.parentController = controller;
 	}
 
-	void setTitle(String title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	void setWidth(int w) {
+	public void setWidth(int w) {
 		this.w = w;
 	}
 
-	void setHeight(int h) {
+	public void setHeight(int h) {
 		this.h = h;
 	}
 
-	void setHoveredColor(int c) {
+	public void setHoveredColor(int c) {
 		hoveredColor = c;
 	}
 
-	void setPressedColor(int c) {
+	public void setPressedColor(int c) {
 		pressedColor = c;
 	}
 
-	void setPassiveColor(int c) {
+	public void setPassiveColor(int c) {
 		passiveColor = c;
 	}
 
-	PGraphics getGraphics() {
+	public PGraphics getGraphics() {
 		return pg;
 	}
 
-	void addController(Controller controller, int hAlign, int vAlign) {
+	public void addController(Controller controller, int hAlign, int vAlign) {
 		if (isActive) {
 			controller.alignAbout(this, hAlign, vAlign);
 			attachController(controller);
 		}
 	}
 
-	void attachController(Controller controller) {
+	public void attachController(Controller controller) {
 		if (isActive) {
 			// detach from existinler first (if exist)
 			if (controller.parentController != null) {
@@ -119,7 +126,7 @@ public abstract class Controller extends EventProcessor implements PConstants {
 	}
 
 	// register child controller and all its childs (recursively)
-	void registerChildController(Controller controller) {
+	public void registerChildController(Controller controller) {
 		if (parentStage != null) {
 			parentStage.registerController(controller);
 			if (controller.controllers.size() > 0) {
@@ -131,7 +138,7 @@ public abstract class Controller extends EventProcessor implements PConstants {
 		}
 	}
 
-	void registerChildControllers() {
+	public void registerChildControllers() {
 		if (parentStage != null) {
 			for (Controller controller : controllers) {
 				registerChildController(controller);
@@ -139,19 +146,19 @@ public abstract class Controller extends EventProcessor implements PConstants {
 		}
 	}
 
-	void detachController(Controller controller) {
+	public void detachController(Controller controller) {
 		controller.parentController = null;
 		controllers.remove(controller);
 	}
 
-	void detachAllControllers() {
+	public void detachAllControllers() {
 		for (Controller controller : controllers) {
 			detachController(controller);
 		}
 	}
 
 	// update child controllers positions and all their childs (recursively)
-	void updateChildrenPositions(int dx, int dy) {
+	public void updateChildrenPositions(int dx, int dy) {
 		for (Controller controller : controllers) {
 			controller.posx += dx;
 			controller.posy += dy;
@@ -164,12 +171,12 @@ public abstract class Controller extends EventProcessor implements PConstants {
 		}
 	}
 
-	void closeControllerRecursively(Controller controller) {
+	public void closeControllerRecursively(Controller controller) {
 		closeParent(controller);
 		closeChilds(controller);
 	}
 
-	void closeParent(Controller controller) {
+	public void closeParent(Controller controller) {
 		if (controller.parentController != null)
 			closeParent(controller.parentController);
 		for (Controller childController : controllers) {
@@ -178,20 +185,20 @@ public abstract class Controller extends EventProcessor implements PConstants {
 		closeChilds(controller);
 	}
 
-	void closeChilds(Controller controller) {
+	public void closeChilds(Controller controller) {
 		for (Controller childController : controller.controllers) {
 			closeChilds(childController);
 			closeController(childController);
 		}
 	}
 
-	void closeController(Controller controller) {
+	public void closeController(Controller controller) {
 		PApplet.println("Closing '" + controller.title + "' controller.");
 		controller.isActive = false;
 		ktgui.addToGarbage(controller, pa.millis());
 	}
 
-	void alignAboutApplet(int hAlign, int vAlign) {
+	public void alignAboutApplet(int hAlign, int vAlign) {
 		switch (hAlign) {
 		case PConstants.LEFT:
 			updateChildrenPositions(ktgui.ALIGN_GAP - this.posx, 0);
@@ -227,7 +234,7 @@ public abstract class Controller extends EventProcessor implements PConstants {
 		}
 	}
 
-	void alignAbout(Controller controller, int hAlign, int vAlign) {
+	public void alignAbout(Controller controller, int hAlign, int vAlign) {
 		switch (hAlign) {
 		case PConstants.LEFT:
 			updateChildrenPositions(ktgui.ALIGN_GAP - this.posx, 0);
@@ -263,7 +270,7 @@ public abstract class Controller extends EventProcessor implements PConstants {
 		}
 	}
 
-	void stackAbout(Controller controller, int direction, int align) {
+	public void stackAbout(Controller controller, int direction, int align) {
 		switch (direction) {
 
 		case PConstants.TOP: // stack this controller above the given controller

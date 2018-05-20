@@ -9,6 +9,7 @@ public class Button extends Controller {
 
 	public Button(KTGUI ktgui, int posx, int posy, int w, int h) {
 		super(ktgui);
+
 		this.posx = posx;
 		this.posy = posy;
 		this.w = w;
@@ -25,6 +26,7 @@ public class Button extends Controller {
 
 	public Button(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 		super(ktgui);
+		
 		this.title = title;
 		this.posx = posx;
 		this.posy = posy;

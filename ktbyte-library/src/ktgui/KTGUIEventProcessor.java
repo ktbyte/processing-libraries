@@ -2,12 +2,12 @@ package ktgui;
 
 import java.util.ArrayList;
 
-class EventProcessor {
-	boolean							isPressed, isHovered;
-	boolean							isActive	= true;
-	boolean							isDragable	= true;
+public class KTGUIEventProcessor {
+	public boolean							isPressed, isHovered;
+	public boolean							isActive	= true;
+	public boolean							isDragable	= true;
 
-	ArrayList<KTGUIEventAdapter>	adapters	= new ArrayList<KTGUIEventAdapter>();
+	public ArrayList<KTGUIEventAdapter>	adapters	= new ArrayList<KTGUIEventAdapter>();
 
 	public void processMouseMoved() {}
 

@@ -17,14 +17,14 @@ public class Stage {
 	PApplet					pa;
 	KTGUI					ktgui;
 
-	Stage(KTGUI ktgui, String name) {
+	public Stage(KTGUI ktgui, String name) {
 		this.ktgui = ktgui;
 		this.pa = ktgui.getPa();
 		this.name = name;
 		this.controllers = new ArrayList<Controller>();
 	}
 
-	void draw() {
+	public void draw() {
 		for (Controller controller : controllers) {
 			if (controller.isActive) {
 				controller.updateGraphics();
@@ -33,7 +33,7 @@ public class Stage {
 		}
 	}
 
-	void registerController(Controller controller) {
+	public void registerController(Controller controller) {
 		String controllerClassName = controller.getClass().getName();
 		ktgui.msg("Trying to register '" + controller.title + "' " + controllerClassName + " in '" + name + "' stage.");
 
@@ -84,7 +84,7 @@ public class Stage {
 		ktgui.msg("------------------------------------------------------------------------------------");
 	}
 
-	void unregisterController(Controller controller) {
+	public void unregisterController(Controller controller) {
 		if (controllers.contains(controller)) {
 			ktgui.msg("\t" + name + " already contains controller '"
 					+ controller.title + "': --> removing from '" + name

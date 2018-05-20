@@ -8,20 +8,20 @@ import processing.core.PApplet;
 /********************************************************************************************************************** 
  * 
  *********************************************************************************************************************/
-class StageManager {
+public class StageManager {
 
-	List<Stage>	stages;			// replace 'List' with 'Set' to prevent duplicates
-	Stage		activeStage;
-	Stage		defaultStage;
-	PApplet		pa;
+	public List<Stage>	stages;			// replace 'List' with 'Set' to prevent duplicates
+	public Stage		activeStage;
+	public Stage		defaultStage;
+	public PApplet		pa;
 
-	StageManager(KTGUI ktgui) {
+	public StageManager(KTGUI ktgui) {
 		stages = new ArrayList<Stage>();
 		defaultStage = new Stage(ktgui, "Default");
 		activeStage = defaultStage;
 	}
 
-	Stage createStage(KTGUI ktgui, String name) {
+	public Stage createStage(KTGUI ktgui, String name) {
 		Stage stage = new Stage(ktgui, name);
 		stages.add(stage);
 		activeStage = stage;
@@ -36,17 +36,17 @@ class StageManager {
 		return activeStage;
 	}
 
-	void goToStage(Stage stage) {
+	public void goToStage(Stage stage) {
 		activeStage = stage;
 	}
 
-	void goToStage(int numStage) {
+	public void goToStage(int numStage) {
 		if (numStage > 0 && numStage < stages.size()) {
 			activeStage = stages.get(numStage);
 		}
 	}
 
-	void goToNextStage() {
+	public void goToNextStage() {
 		int indexOfCurrentStage = stages.indexOf(activeStage);
 		if (indexOfCurrentStage < stages.size() - 1) {
 			activeStage = stages.get(indexOfCurrentStage + 1);

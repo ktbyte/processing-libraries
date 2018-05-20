@@ -123,10 +123,17 @@ public class KTGUI {
 		return btn;
 	}
 
-	public Button createButton(String title, int x, int y, int w, int h) {
-		Button btn = new Button(this, title, x, y, w, h);
+	public Button createButton(KTGUI ktgui, String title, int x, int y, int w, int h) {
+		System.out.println("Inside factory method...");
+		//Button btn = new Button(this, title, x, y, w, h);
+		Button btn = new Button(ktgui, title, x, y, w, h);
 		return btn;
 	}
+	
+	public void testMethod() {
+		System.out.println("Test Message!");
+	}
+	
 	//  //-------------------------------------------------------------------------------------------------------------------
 	//  // This is a 'factory' method
 	//  //-------------------------------------------------------------------------------------------------------------------
