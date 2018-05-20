@@ -26,7 +26,7 @@ public class Button extends Controller {
 
 	public Button(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 		super(ktgui);
-		
+
 		this.title = title;
 		this.posx = posx;
 		this.posy = posy;
@@ -55,7 +55,7 @@ public class Button extends Controller {
 		pg.fill(255);
 		pg.textAlign(CENTER, CENTER);
 		pg.textSize(14);
-		pg.text(title, (int)(w * 0.5), (int)(h * 0.5));
+		pg.text(title, (int) (w * 0.5), (int) (h * 0.5));
 		pg.endDraw();
 	}
 
@@ -67,7 +67,13 @@ public class Button extends Controller {
 		}
 	}
 
-	// process mouseMoved event received from PApplet
+	/*   
+	 *  This method overrides the Controller's `mouseMoved()` method and implements
+	 *  its own behaviour for when this event is received from the parent PApplet. 
+	 *  In particular, this implementation defines the <b>"hovering"</b> behaviour.
+	 *  (the <i>"hovered"</i> state is  defined by the <b>isHovered</b> variable, which 
+	 *  can be set to true or false).
+	 */
 	public void processMouseMoved() {
 		if (isPointInside(pa.mouseX, pa.mouseY)) {
 			isHovered = true;
@@ -79,7 +85,13 @@ public class Button extends Controller {
 		}
 	}
 
-	// process mousePressed event received from PApplet
+	/*   
+	 *  This method overrides the Controller's `mousePressed()` method and implements
+	 *  its own behaviour for when this event is received from the parent PApplet. 
+	 *  In particular, this implementation decides when the state of this button is
+	 *  changing from <b>Pressed</b> to <b>Released</b> and vice versa (the state is 
+	 *  defined by the  <i>isPressed</i> variable, which can be set to true or false).
+	 */
 	public void processMousePressed() {
 		if (isActive) {
 			if (isPointInside(pa.mouseX, pa.mouseY)) {
@@ -93,7 +105,12 @@ public class Button extends Controller {
 		}
 	}
 
-	// process mouseReleased event received from PApplet
+	/*   
+	 *  This method overrides the Controller's `mouseReleased` method and implements
+	 *  its own behaviour for when this event is received from the parent PApplet. 
+	 *  In particular, this implementation always sets the <i>isPressed</i> variable 
+	 *  to false.
+	 */
 	public void processMouseReleased() {
 		isPressed = false;
 		for (KTGUIEventAdapter adapter : adapters) {
@@ -101,10 +118,16 @@ public class Button extends Controller {
 		}
 	}
 
-	// process mouseDragged event received from PApplet
+	/*   
+	 *  This method overrides the Controller's `mouseDragged` method and implements
+	 *  its own behaviour for when this event is received from the parent PApplet. 
+	 *  In particular, this implementation defines the <i>"dragging"</i> behaviour.
+	 */
 	public void processMouseDragged() {
 		if (isDragable) {
 			if (isPressed) {
+				posx += pa.mouseX - pa.pmouseX;
+				posy += pa.mouseY - pa.pmouseY;
 				for (KTGUIEventAdapter adapter : adapters) {
 					adapter.onMouseDragged();
 				}

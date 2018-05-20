@@ -201,8 +201,10 @@ public class KTGUI {
 		for (Controller controller : stageManager.getActiveStage().controllers) {
 			controller.processMouseDragged();
 		}
-		for (Controller controller : stageManager.getDefaultStage().controllers) {
-			controller.processMouseDragged();
+		if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+			for (Controller controller : stageManager.getDefaultStage().controllers) {
+				controller.processMouseDragged();
+			}
 		}
 	}
 
