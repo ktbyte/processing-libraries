@@ -2,10 +2,11 @@
 
 # distribution folder
 **/distribution/**
-
+!**/distribution/ktbyte-1/download/**
 # distribution folder
 **/tmp/**
 
 # buil-related files that are dependent on the particular user desktop environment settings
 **/resources/build.xml
 **/resources/build.properties
+
