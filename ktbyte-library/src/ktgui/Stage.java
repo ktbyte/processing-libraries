@@ -24,6 +24,10 @@ public class Stage {
 		this.controllers = new ArrayList<Controller>();
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public void draw() {
 		for (Controller controller : controllers) {
 			if (controller.isActive) {
