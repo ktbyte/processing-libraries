@@ -38,7 +38,7 @@ Drawing inside this method is allowed because mouse events are queued, unless th
 Drawing is allowed because key events are queued, unless the sketch has called <code>noLoop()</code>.</li>
  *********************************************************************************************************************/
 public class KTGUI {
-	private PApplet							pa;
+	private static PApplet					parentPApplet;
 	private StageManager					stageManager;
 	private HashMap<Controller, Integer>	garbageList;
 
@@ -64,10 +64,10 @@ public class KTGUI {
 	}
 
 	private void init(PApplet pa) {
-		this.pa = pa;
-		this.pa.registerMethod("draw", this);
-		this.pa.registerMethod("mouseEvent", this);
-		this.pa.registerMethod("keyEvent", this);
+		KTGUI.parentPApplet = pa;
+		KTGUI.parentPApplet.registerMethod("draw", this);
+		KTGUI.parentPApplet.registerMethod("mouseEvent", this);
+		KTGUI.parentPApplet.registerMethod("keyEvent", this);
 
 		garbageList = new HashMap<Controller, Integer>();
 
@@ -82,11 +82,12 @@ public class KTGUI {
 		BORDER_THICKNESS = 3;
 		ALIGN_GAP = 20;
 
-		stageManager = new StageManager(this);
+		stageManager = StageManager.getInstance();
+		stageManager.init(this);
 	}
 
-	public PApplet getPa() {
-		return pa;
+	public static PApplet getParentPApplet() {
+		return parentPApplet;
 	}
 
 	public StageManager getStageManager() {
@@ -107,7 +108,7 @@ public class KTGUI {
 		for (Map.Entry me : garbageList.entrySet()) {
 			Controller controller = (Controller) me.getKey();
 			int time = (Integer) me.getValue();
-			if (pa.millis() - time > 100) {
+			if (parentPApplet.millis() - time > 100) {
 				if (controller.parentStage != null) {
 					controller.parentStage.unregisterController(controller);
 				}

@@ -10,19 +10,28 @@ import processing.core.PApplet;
  *********************************************************************************************************************/
 public class StageManager {
 
-	public List<Stage>	stages;			// replace 'List' with 'Set' to prevent duplicates
-	public Stage		activeStage;
-	public Stage		defaultStage;
-	public PApplet		pa;
+	public List<Stage>		stages;			// replace 'List' with 'Set' to prevent duplicates
+	public Stage			activeStage;
+	public Stage			defaultStage;
+	public PApplet			pa;
+	private static StageManager	instance;
+
+	static {
+		instance = new StageManager();
+	}
+
+	public static StageManager getInstance() {
+		return instance;
+	}
 	
-	public StageManager(KTGUI ktgui) {
+	public void init(KTGUI ktgui) {
 		stages = new ArrayList<Stage>();
-		defaultStage = new Stage(ktgui, "Default");
+		defaultStage = new Stage("Default");
 		activeStage = defaultStage;
 	}
 
 	public Stage createStage(KTGUI ktgui, String name) {
-		Stage stage = new Stage(ktgui, name);
+		Stage stage = new Stage(name);
 		stages.add(stage);
 		activeStage = stage;
 		return stage;

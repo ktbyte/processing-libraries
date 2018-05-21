@@ -32,7 +32,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	public Controller(KTGUI ktgui) {
 		this.ktgui = ktgui;
-		this.pa = ktgui.getPa();
+		this.pa = KTGUI.getParentPApplet();
 		init();
 	}
 

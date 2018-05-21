@@ -3,6 +3,7 @@ import ktgui.*;
 KTGUI ktgui;
 Button button, changeStateButton;
 int counter = 0;
+String txt = "Try to drag the button.";
 
 /***************************************************************************************************
  * 
@@ -21,6 +22,7 @@ void setup() {
       println("The Button is pressed!");
       counter++;
       button.setTitle(str(counter));
+      txt = "Press `isDragable` button";
     }
     public void onMouseReleased() {
       println("The Button is released!");
@@ -34,6 +36,7 @@ void setup() {
   changeStateButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       button.isDragable = !button.isDragable;
+      txt = "Try to drag again";
     }
   });
 }
@@ -59,6 +62,6 @@ void drawDebugInfo(){
   text("btn.isHovered :" + str(button.isHovered), 20, 50);
   text("btn.isPressed :" + str(button.isPressed), 20, 65);
   textSize(24);
-  text("Try to drag the button.", 20, 90);
+  text(txt, 20, 90);
   popStyle();
 }
