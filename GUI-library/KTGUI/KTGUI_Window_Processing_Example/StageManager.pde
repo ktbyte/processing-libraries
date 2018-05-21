@@ -39,5 +39,11 @@ class StageManager {
     }
   }
 
-
+  public Stage getActiveStage() {
+    return activeStage;
+  }
+  
+  public Stage getDefaultStage() {
+    return defaultStage;
+  }
 }

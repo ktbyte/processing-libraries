@@ -19,11 +19,11 @@ public class KTGUI {
   color COLOR_BG_HOVERED = color(100); 
   color COLOR_BG_PASSIVE = color(100); 
   color COLOR_BG_PRESSED = color(200);
-  
+
   int TITLE_BAR_HEIGHT = 14;
   int MENU_BAR_HEIGHT = 20;
   int BORDER_THICKNESS = 3;
-  
+
   int ALIGN_GAP = 20;
 
   /*
@@ -139,8 +139,10 @@ public class KTGUI {
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processMouseDragged();
     }
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processMouseDragged();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processMouseDragged();
+      }
     }
   }
 
@@ -151,8 +153,10 @@ public class KTGUI {
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processMousePressed();
     }
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processMousePressed();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processMousePressed();
+      }
     }
   }
 
@@ -163,8 +167,10 @@ public class KTGUI {
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processMouseReleased();
     }
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processMouseReleased();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processMouseReleased();
+      }
     }
   }
 
@@ -175,8 +181,10 @@ public class KTGUI {
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processMouseMoved();
     }
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processMouseMoved();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processMouseMoved();
+      }
     }
   }
 
@@ -187,8 +195,10 @@ public class KTGUI {
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processKeyPressed();
     }
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processKeyPressed();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processKeyPressed();
+      }
     }
   }
 
@@ -199,8 +209,10 @@ public class KTGUI {
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processKeyReleased();
     }
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processKeyReleased();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processKeyReleased();
+      }
     }
   }
 }

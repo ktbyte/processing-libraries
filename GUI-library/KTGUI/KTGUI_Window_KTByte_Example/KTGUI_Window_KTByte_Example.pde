@@ -86,59 +86,59 @@ void setup() {
   w3.addController(jumpButton, CENTER, CENTER);
   s3.registerController(w3);
 
-//   alignStage = ktgui.stageManager.createStage("Aligning");
+  //   alignStage = ktgui.stageManager.createStage("Aligning");
 
-//   Pane p1 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
-//   p1.alignAboutApplet(LEFT, TOP);
-//   Button p1b1 = ktgui.createButton("Top", 10, 10, 180, 40);
-//   p1b1.setPassiveColor(color(200, 120, 50));
-//   p1.addController(p1b1, CENTER, TOP);
-//   Button p1b2 = ktgui.createButton("Below & Center", 10, 10, 160, 40);
-//   p1.attachController(p1b2);
-//   p1b2.stackAbout(p1b1, BOTTOM, CENTER);
-//   Button p1b3 = ktgui.createButton("Below & Left", 10, 10, 140, 40);
-//   p1.attachController(p1b3);
-//   p1b3.stackAbout(p1b2, BOTTOM, LEFT);
-//   Button p1b4 = ktgui.createButton("Below & Right", 10, 10, 120, 40);
-//   p1.attachController(p1b4);
-//   p1b4.stackAbout(p1b3, BOTTOM, RIGHT);
-//   alignStage.registerController(p1);
+  //   Pane p1 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
+  //   p1.alignAboutApplet(LEFT, TOP);
+  //   Button p1b1 = ktgui.createButton("Top", 10, 10, 180, 40);
+  //   p1b1.setPassiveColor(color(200, 120, 50));
+  //   p1.addController(p1b1, CENTER, TOP);
+  //   Button p1b2 = ktgui.createButton("Below & Center", 10, 10, 160, 40);
+  //   p1.attachController(p1b2);
+  //   p1b2.stackAbout(p1b1, BOTTOM, CENTER);
+  //   Button p1b3 = ktgui.createButton("Below & Left", 10, 10, 140, 40);
+  //   p1.attachController(p1b3);
+  //   p1b3.stackAbout(p1b2, BOTTOM, LEFT);
+  //   Button p1b4 = ktgui.createButton("Below & Right", 10, 10, 120, 40);
+  //   p1.attachController(p1b4);
+  //   p1b4.stackAbout(p1b3, BOTTOM, RIGHT);
+  //   alignStage.registerController(p1);
 
-//   Pane p2 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
-//   p2.alignAboutApplet(CENTER, TOP);
-//   Button p2b1 = ktgui.createButton("Center", 10, 10, 180, 40);
-//   p2b1.setPassiveColor(color(20, 200, 150));
-//   p2.addController(p2b1, CENTER, CENTER);
-//   Button p2b2 = ktgui.createButton("Below & Center", 10, 10, 160, 40);
-//   p2.attachController(p2b2);
-//   p2b2.stackAbout(p2b1, BOTTOM, CENTER);
-//   Button p2b3 = ktgui.createButton("Below & Left", 10, 10, 140, 40);
-//   p2.attachController(p2b3);
-//   p2b3.stackAbout(p2b2, BOTTOM, LEFT);
-//   Button p2b4 = ktgui.createButton("Below & Right", 10, 10, 120, 40);
-//   p2.attachController(p2b4);
-//   p2b4.stackAbout(p2b3, BOTTOM, RIGHT);
-//   alignStage.registerController(p2);
+  //   Pane p2 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
+  //   p2.alignAboutApplet(CENTER, TOP);
+  //   Button p2b1 = ktgui.createButton("Center", 10, 10, 180, 40);
+  //   p2b1.setPassiveColor(color(20, 200, 150));
+  //   p2.addController(p2b1, CENTER, CENTER);
+  //   Button p2b2 = ktgui.createButton("Below & Center", 10, 10, 160, 40);
+  //   p2.attachController(p2b2);
+  //   p2b2.stackAbout(p2b1, BOTTOM, CENTER);
+  //   Button p2b3 = ktgui.createButton("Below & Left", 10, 10, 140, 40);
+  //   p2.attachController(p2b3);
+  //   p2b3.stackAbout(p2b2, BOTTOM, LEFT);
+  //   Button p2b4 = ktgui.createButton("Below & Right", 10, 10, 120, 40);
+  //   p2.attachController(p2b4);
+  //   p2b4.stackAbout(p2b3, BOTTOM, RIGHT);
+  //   alignStage.registerController(p2);
 
-//   Pane p3 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
-//   p3.alignAboutApplet(RIGHT, TOP);
-//   Button p3b1 = ktgui.createButton("Bottom", 10, 10, 180, 40);
-//   p3b1.setPassiveColor(color(250, 20, 200));
-//   p3.addController(p3b1, CENTER, BOTTOM);
-//   Button p3b2 = ktgui.createButton("Above & Center", 10, 10, 160, 40);
-//   p3.attachController(p3b2);
-//   p3b2.stackAbout(p3b1, TOP, CENTER);
-//   Button p3b3 = ktgui.createButton("Above & Left", 10, 10, 140, 40);
-//   p3.attachController(p3b3);
-//   p3b3.stackAbout(p3b2, TOP, LEFT);
-//   Button p3b4 = ktgui.createButton("Above & Right", 10, 10, 120, 40);
-//   p3.attachController(p3b4);
-//   p3b4.stackAbout(p3b3, TOP, RIGHT);
-//   alignStage.registerController(p3);
+  //   Pane p3 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
+  //   p3.alignAboutApplet(RIGHT, TOP);
+  //   Button p3b1 = ktgui.createButton("Bottom", 10, 10, 180, 40);
+  //   p3b1.setPassiveColor(color(250, 20, 200));
+  //   p3.addController(p3b1, CENTER, BOTTOM);
+  //   Button p3b2 = ktgui.createButton("Above & Center", 10, 10, 160, 40);
+  //   p3.attachController(p3b2);
+  //   p3b2.stackAbout(p3b1, TOP, CENTER);
+  //   Button p3b3 = ktgui.createButton("Above & Left", 10, 10, 140, 40);
+  //   p3.attachController(p3b3);
+  //   p3b3.stackAbout(p3b2, TOP, LEFT);
+  //   Button p3b4 = ktgui.createButton("Above & Right", 10, 10, 120, 40);
+  //   p3.attachController(p3b4);
+  //   p3b4.stackAbout(p3b3, TOP, RIGHT);
+  //   alignStage.registerController(p3);
 
   //ktgui.stageManager.goToStage(s1);
 
-//   msg(w2.pane.w + ":" + w2.pane.h);
+  //   msg(w2.pane.w + ":" + w2.pane.h);
   //msg("Ready!");
 }
 
@@ -157,15 +157,14 @@ void draw() {
   fill(0);
 }
 
-    
+
 void updateWarning() {
   textFont(createFont("monospaced", 26));
   textAlign(CENTER, CENTER);
   fill(0);
-  text("DON'T FORGET TO RESIZE\n THE CODER 'OUTPUT AREA' \n TO MATCH THE SKETCH \n CANVAS SIZE", width * 0.5, height * 0.5);
-  text("GO TO STAGE_2 TO SEE THE DYNAMIC SHAPES\n DRAWING ON THE PANE'S CANVAS", width * 0.5, height * 0.75);
+  text("GO TO STAGE_2 TO SEE THE DYNAMIC SHAPES\n DRAWED ON THE PANE'S CANVAS", width * 0.5, height * 0.75);
 }
-    
+
 void updatePaneCanvas() {
   PGraphics g = createGraphics(pane.w, pane.h);
   g.beginDraw();
@@ -283,7 +282,7 @@ void updateDebugInfo() {
 
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
     for (Stage stage : ktgui.stageManager.stages) {
-        text("stage: " + stage.name, 10, ypos+=YSHIFT);
+      text("stage: " + stage.name, 10, ypos+=YSHIFT);
     }
     text("----------------------------------------------------", 10, ypos+=YSHIFT);
   }
@@ -357,8 +356,8 @@ public class Stage {
         //   WindowPane windowPane = (WindowPane) controller;
         //   windowPane.registerChildControllers();
         // }
-        if(controller.controllers.size() > 0) {
-            controller.registerChildControllers();
+        if (controller.controllers.size() > 0) {
+          controller.registerChildControllers();
         }
         msg("After: controllers.size() of stage '" + name + "':" + this.controllers.size());
       } else {
@@ -406,7 +405,7 @@ public class StageManager {
   }
 
   void goToStage(Stage stage) {
-    if(stage != null) {
+    if (stage != null) {
       activeStage = stage;
     }
   }
@@ -426,6 +425,15 @@ public class StageManager {
       activeStage = stages.get(0);
     }
     msg("The name of the actveStage is '" + activeStage.name + "'");
+  }
+
+
+  public Stage getActiveStage() {
+    return activeStage;
+  }
+
+  public Stage getDefaultStage() {
+    return defaultStage;
   }
 }
 
@@ -450,11 +458,11 @@ public class KTGUI {
   color COLOR_BG_HOVERED = color(100); 
   color COLOR_BG_PASSIVE = color(100); 
   color COLOR_BG_PRESSED = color(200);
-  
+
   int TITLE_BAR_HEIGHT = 14;
   int MENU_BAR_HEIGHT = 20;
   int BORDER_THICKNESS = 3;
-  
+
   int ALIGN_GAP = 20;
 
   /*
@@ -589,8 +597,10 @@ public class KTGUI {
       controller.processMousePressed();
     }
     msg(" in defaultStage(" + stageManager.defaultStage.name + ") ... ");
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processMousePressed();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processMousePressed();
+      }
     }
   }
 
@@ -601,8 +611,10 @@ public class KTGUI {
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processMouseReleased();
     }
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processMouseReleased();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processMouseReleased();
+      }
     }
   }
 
@@ -613,8 +625,10 @@ public class KTGUI {
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processMouseMoved();
     }
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processMouseMoved();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processMouseMoved();
+      }
     }
   }
 
@@ -625,8 +639,10 @@ public class KTGUI {
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processKeyPressed();
     }
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processKeyPressed();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processKeyPressed();
+      }
     }
   }
 
@@ -637,8 +653,10 @@ public class KTGUI {
     for (Controller controller : stageManager.activeStage.controllers) {
       controller.processKeyReleased();
     }
-    for (Controller controller : stageManager.defaultStage.controllers) {
-      controller.processKeyReleased();
+    if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+      for (Controller controller : stageManager.defaultStage.controllers) {
+        controller.processKeyReleased();
+      }
     }
   }
 }
@@ -689,11 +707,11 @@ public abstract class Controller extends EventProcessor {
 
   PGraphics pg;
   PGraphics userpg;
-  
+
   color hoveredColor = ktgui.COLOR_FG_HOVERED;
   color pressedColor = ktgui.COLOR_FG_PRESSED;
   color passiveColor = ktgui.COLOR_FG_PASSIVE;
-  
+
   void updateGraphics() {
   }
   void updateUserDefinedGraphics(PGraphics userpg) {
@@ -819,14 +837,14 @@ public abstract class Controller extends EventProcessor {
     }
     closeChilds(controller);
   }
-  
+
   void closeChilds(Controller controller) {
     for (Controller childController : controller.controllers) {
       closeChilds(childController);
       closeController(childController);
     }
   }
-  
+
   void closeController(Controller controller) {
     msg("Closing '" + controller.title + "' controller.");
     controller.isActive = false;
@@ -1014,7 +1032,7 @@ public abstract class KTGUIEventAdapter {
   }
   void onKeyPressed() {
   }
-  void println(String string){
+  void println(String string) {
     PApplet.println(string);
   }
 }
@@ -1087,7 +1105,7 @@ class Window extends Controller {
         pane.posy = titleBar.posy + ktgui.TITLE_BAR_HEIGHT;
       }
     }
-    ); 
+    );
   }
 
   void createPane() {
@@ -1096,12 +1114,12 @@ class Window extends Controller {
     attachController(pane);
     registerChildController(pane);
   }
-    
+
   void draw() {
     // override the 'draw()' method of parent class (Controller)
-    // to prevent drawing the TitleBar and Pane second time.      
+    // to prevent drawing the TitleBar and Pane second time.
   }
-  
+
   // process mouseMoved event received from PApplet
   void processMouseMoved() {
   }
@@ -1136,7 +1154,7 @@ public class Button extends Controller {
     title = "a Button";
     pg = createGraphics(w + 1, h + 1);
     userpg = createGraphics(w + 1, h + 1);
-     
+
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
@@ -1151,13 +1169,13 @@ public class Button extends Controller {
 
     pg = createGraphics(w + 1, h + 1);
     userpg = createGraphics(w + 1, h + 1); 
-    
+
     // automatically register the newly created window in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
-    
+
     msg("Button '" + title + "' has been created. posx:" + posx + ", posy:" + posy + ", w:" + w + ", h:" + h);
   }
-  
+
   void updateGraphics() {
     pg.beginDraw();
     pg.rectMode(CORNER);
@@ -1236,7 +1254,7 @@ public class Button extends Controller {
 
   boolean isPointInside(int x, int y) {
     boolean isInside = false;
-    
+
     int px = (parentController == null) ? 0 : parentController.posx;
     int py = (parentController == null) ? 0 : parentController.posy;
 
@@ -1299,7 +1317,7 @@ class CloseButton extends Button {
  * 
  *********************************************************************************************************************/
 class Pane extends Controller {
-  
+
   Pane(int posx, int posy, int w, int h) {
     this.title = "a Pane";
     this.posx = posx;
@@ -1326,7 +1344,7 @@ class Pane extends Controller {
     // automatically register the newly created pane in default stage of stageManager
     ktgui.stageManager.defaultStage.registerController(this);
   }
- 
+
   void updateGraphics() {
     // change thickness depending on the user-mouse behavior
     pg.beginDraw();
@@ -1400,7 +1418,7 @@ class Pane extends Controller {
 
 class WindowPane extends Pane {
   Window parentWindow;
-  
+
   WindowPane(Window window, int posx, int posy, int w, int h) {
     super(posx, posy, w, h);
     this.parentWindow = window;
@@ -1478,7 +1496,7 @@ class Bar extends Controller {
       pg.endDraw();
     }
   }
-  
+
   // process mouseMoved event received from PApplet
   void processMouseMoved() {
     isHovered = isPointInside(mouseX, mouseY) ? true : false;
@@ -1506,7 +1524,7 @@ class Bar extends Controller {
       }
     }
   }
-  
+
   // process mouseDragged event received from PApplet
   void processMouseDragged() {
     if (isDragable) {
@@ -1519,7 +1537,7 @@ class Bar extends Controller {
       }
     }
   }
-  
+
   boolean isPointInside(int x, int y) {
     boolean isInside = false;
     if (x > posx && x < posx + this.w) {
@@ -1538,7 +1556,7 @@ class Bar extends Controller {
 class TitleBar extends Bar { 
   CloseButton closeButton;
   Window parentWindow;
-  
+
   TitleBar(Window window, int x, int y, int w, int h) {
     super(x, y, w, h);
     this.parentWindow = window;
@@ -1554,5 +1572,4 @@ class TitleBar extends Bar {
     attachController(closeButton);
     registerChildController(closeButton);
   }
-
 }
