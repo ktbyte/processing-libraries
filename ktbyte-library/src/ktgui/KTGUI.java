@@ -42,16 +42,16 @@ public class KTGUI {
 	private StageManager					stageManager;
 	private HashMap<Controller, Integer>	garbageList;
 
-	public int								COLOR_FG_HOVERED;
-	public int								COLOR_FG_PRESSED;
-	public int								COLOR_FG_PASSIVE;
-	public int								COLOR_BG_HOVERED;
-	public int								COLOR_BG_PASSIVE;
-	public int								COLOR_BG_PRESSED;
-	public int								TITLE_BAR_HEIGHT;
-	public int								MENU_BAR_HEIGHT;
-	public int								BORDER_THICKNESS;
-	public int								ALIGN_GAP;
+	public static int						COLOR_FG_HOVERED;
+	public static int						COLOR_FG_PRESSED;
+	public static int						COLOR_FG_PASSIVE;
+	public static int						COLOR_BG_HOVERED;
+	public static int						COLOR_BG_PASSIVE;
+	public static int						COLOR_BG_PRESSED;
+	public static int						TITLE_BAR_HEIGHT;
+	public static int						MENU_BAR_HEIGHT;
+	public static int						BORDER_THICKNESS;
+	public static int						ALIGN_GAP;
 	private boolean							debug;
 
 	/*************************************************************************************************************************
@@ -71,11 +71,15 @@ public class KTGUI {
 
 		garbageList = new HashMap<Controller, Integer>();
 
-		COLOR_FG_HOVERED = pa.color(10, 150, 10);
+		//COLOR_FG_PASSIVE = pa.color(100, 100, 200);
+		COLOR_FG_PASSIVE = pa.color(50, 180, 50);
+		//COLOR_FG_HOVERED = pa.color(10, 150, 10);
+		COLOR_FG_HOVERED = pa.color(50, 220, 50);
 		COLOR_FG_PRESSED = pa.color(10, 200, 10);
-		COLOR_FG_PASSIVE = pa.color(100, 100, 200);
-		COLOR_BG_HOVERED = pa.color(100);
-		COLOR_BG_PASSIVE = pa.color(100);
+		//COLOR_BG_HOVERED = pa.color(100);
+		COLOR_BG_HOVERED = pa.color(220);
+		//COLOR_BG_PASSIVE = pa.color(100);
+		COLOR_BG_PASSIVE = pa.color(180);
 		COLOR_BG_PRESSED = pa.color(200);
 		TITLE_BAR_HEIGHT = 14;
 		MENU_BAR_HEIGHT = 20;
@@ -120,16 +124,17 @@ public class KTGUI {
 	// This is a 'factory' method
 	//-------------------------------------------------------------------------------------------------------------------
 	public Button createButton(int x, int y, int w, int h) {
-		Button btn = new Button(this, x, y, w, h);
-		return btn;
+		return new Button(this, x, y, w, h);
 	}
 
 	public Button createButton(String title, int x, int y, int w, int h) {
-		System.out.println("Inside factory method...");
-		Button btn = new Button(this, title, x, y, w, h);
-		return btn;
+		return new Button(this, title, x, y, w, h);
 	}
 
+	public Slider createSlider(int posx, int posy, int w, int h, int sr, int er) {
+		return new Slider(this, posx, posy, w, h, sr, er);
+	}
+	
 	//  //-------------------------------------------------------------------------------------------------------------------
 	//  // This is a 'factory' method
 	//  //-------------------------------------------------------------------------------------------------------------------
@@ -283,4 +288,5 @@ public class KTGUI {
 	public void addToGarbage(Controller controller, int millis) {
 		garbageList.put(controller, millis);
 	}
+
 }

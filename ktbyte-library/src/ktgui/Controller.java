@@ -37,9 +37,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void init() {
-		hoveredColor = ktgui.COLOR_FG_HOVERED;
-		pressedColor = ktgui.COLOR_FG_PRESSED;
-		passiveColor = ktgui.COLOR_FG_PASSIVE;
+		hoveredColor = KTGUI.COLOR_FG_HOVERED;
+		pressedColor = KTGUI.COLOR_FG_PRESSED;
+		passiveColor = KTGUI.COLOR_FG_PASSIVE;
 	}
 
 	public void updateGraphics() {}
@@ -201,12 +201,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void alignAboutApplet(int hAlign, int vAlign) {
 		switch (hAlign) {
 		case PConstants.LEFT:
-			updateChildrenPositions(ktgui.ALIGN_GAP - this.posx, 0);
-			this.posx = ktgui.ALIGN_GAP;
+			updateChildrenPositions(KTGUI.ALIGN_GAP - this.posx, 0);
+			this.posx = KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.RIGHT:
-			updateChildrenPositions(pa.width - this.w - ktgui.ALIGN_GAP - this.posx, 0);
-			this.posx = pa.width - this.w - ktgui.ALIGN_GAP;
+			updateChildrenPositions(pa.width - this.w - KTGUI.ALIGN_GAP - this.posx, 0);
+			this.posx = pa.width - this.w - KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.CENTER:
 			updateChildrenPositions((int) (pa.width * 0.5 - this.w * 0.5) - this.posx, 0);
@@ -218,12 +218,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		//
 		switch (vAlign) {
 		case PConstants.TOP:
-			updateChildrenPositions(0, ktgui.ALIGN_GAP - this.posy);
-			this.posy = ktgui.ALIGN_GAP;
+			updateChildrenPositions(0, KTGUI.ALIGN_GAP - this.posy);
+			this.posy = KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.BOTTOM:
-			updateChildrenPositions(0, pa.height - this.h - ktgui.ALIGN_GAP - this.posy);
-			this.posy = pa.height - this.h - ktgui.ALIGN_GAP;
+			updateChildrenPositions(0, pa.height - this.h - KTGUI.ALIGN_GAP - this.posy);
+			this.posy = pa.height - this.h - KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.CENTER:
 			updateChildrenPositions(0, (int) (pa.height * 0.5 - this.h * 0.5) - this.posy);
@@ -237,12 +237,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void alignAbout(Controller controller, int hAlign, int vAlign) {
 		switch (hAlign) {
 		case PConstants.LEFT:
-			updateChildrenPositions(ktgui.ALIGN_GAP - this.posx, 0);
-			this.posx = ktgui.ALIGN_GAP;
+			updateChildrenPositions(KTGUI.ALIGN_GAP - this.posx, 0);
+			this.posx = KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.RIGHT:
-			updateChildrenPositions(controller.w - this.w - ktgui.ALIGN_GAP - this.posx, 0);
-			this.posx = controller.w - this.w - ktgui.ALIGN_GAP;
+			updateChildrenPositions(controller.w - this.w - KTGUI.ALIGN_GAP - this.posx, 0);
+			this.posx = controller.w - this.w - KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.CENTER:
 			updateChildrenPositions((int) (controller.w * 0.5 - this.w * 0.5) - this.posx, 0);
@@ -254,12 +254,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		//
 		switch (vAlign) {
 		case PConstants.TOP:
-			updateChildrenPositions(0, ktgui.ALIGN_GAP - this.posy);
-			this.posy = ktgui.ALIGN_GAP;
+			updateChildrenPositions(0, KTGUI.ALIGN_GAP - this.posy);
+			this.posy = KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.BOTTOM:
-			updateChildrenPositions(0, controller.h - this.h - ktgui.ALIGN_GAP - this.posy);
-			this.posy = controller.h - this.h - ktgui.ALIGN_GAP;
+			updateChildrenPositions(0, controller.h - this.h - KTGUI.ALIGN_GAP - this.posy);
+			this.posy = controller.h - this.h - KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.CENTER:
 			updateChildrenPositions(0, (int) (controller.h * 0.5 - this.h * 0.5) - this.posy);

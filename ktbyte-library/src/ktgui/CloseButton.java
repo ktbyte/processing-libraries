@@ -18,9 +18,9 @@ public class CloseButton extends Button {
 		pg.beginDraw();
 		pg.rectMode(CORNER);
 		if (isHovered && !isPressed) {
-			pg.fill(ktgui.COLOR_FG_HOVERED);
+			pg.fill(KTGUI.COLOR_FG_HOVERED);
 		} else if (isHovered && isPressed) {
-			pg.fill(ktgui.COLOR_FG_PRESSED);
+			pg.fill(KTGUI.COLOR_FG_PRESSED);
 		} else {
 			//pg.fill(ktgui.COLOR_FG_PASSIVE);
 			pg.fill(200, 200);
@@ -29,8 +29,8 @@ public class CloseButton extends Button {
 		pg.strokeWeight(1);
 		pg.rectMode(CORNER);
 		pg.rect(0, 0, w, h);
-		pg.line((int)(w * 0.2), (int)(h * 0.2), (int)(w * 0.8), (int)(h * 0.8));
-		pg.line((int)(w * 0.2), (int)(h * 0.8), (int)(w * 0.8), (int)(h * 0.2));
+		pg.line(w * 0.2f, h * 0.2f, w * 0.8f, h * 0.8f);
+		pg.line(w * 0.2f, h * 0.8f, w * 0.8f, h * 0.2f);
 		pg.endDraw();
 	}
 

@@ -10,13 +10,12 @@ public class Button extends Controller {
 	public Button(KTGUI ktgui, int posx, int posy, int w, int h) {
 		super(ktgui);
 
+		this.title = "a Button";
 		this.posx = posx;
 		this.posy = posy;
 		this.w = w;
 		this.h = h;
-		isActive = true;
 
-		title = "a Button";
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 
@@ -32,7 +31,6 @@ public class Button extends Controller {
 		this.posy = posy;
 		this.w = w;
 		this.h = h;
-		isActive = true;
 
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);

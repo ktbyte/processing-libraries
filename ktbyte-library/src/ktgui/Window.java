@@ -49,7 +49,7 @@ class Window extends Controller {
 	}
 
 	private void createTitleBar() {
-		titleBar = new TitleBar(ktgui, "tb:" + title, this, posx, posy, w, Bar.HEIGHT);
+		titleBar = new TitleBar(ktgui, "tb:" + title, this, posx, posy, w, KTGUI.TITLE_BAR_HEIGHT);
 		attachController(titleBar);
 		registerChildController(titleBar);
 		titleBar.addEventAdapter(new KTGUIEventAdapter() {
