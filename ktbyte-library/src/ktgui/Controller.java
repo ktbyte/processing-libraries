@@ -13,7 +13,7 @@ import processing.core.PGraphics;
  * One should override only the 'needed' event methods. This allows to save time and decrease the amount of code.
  * One should always overridde the 'draw' method.
  *********************************************************************************************************************/
-public class Controller extends KTGUIEventProcessor implements PConstants {
+public abstract class Controller extends KTGUIEventProcessor implements PConstants {
 	public String					title;
 	public int						posx, posy, w, h;
 

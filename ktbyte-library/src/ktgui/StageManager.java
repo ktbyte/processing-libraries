@@ -14,7 +14,7 @@ public class StageManager {
 	public Stage		activeStage;
 	public Stage		defaultStage;
 	public PApplet		pa;
-
+	
 	public StageManager(KTGUI ktgui) {
 		stages = new ArrayList<Stage>();
 		defaultStage = new Stage(ktgui, "Default");
