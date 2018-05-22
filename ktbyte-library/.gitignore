@@ -1,7 +1,7 @@
 # ktbyte-library #
 ##################
 /bin/
-/distribution/ktbyte-1/examples/
+#/distribution/ktbyte-1/examples/
 /distribution/ktbyte-1/gui/
 /distribution/ktbyte-1/midi/
 /distribution/ktbyte-1/reference/
