@@ -30,7 +30,7 @@ public class StageManager {
 		activeStage = defaultStage;
 	}
 
-	public Stage createStage(KTGUI ktgui, String name) {
+	public Stage createStage(String name) {
 		Stage stage = new Stage(name);
 		stages.add(stage);
 		activeStage = stage;

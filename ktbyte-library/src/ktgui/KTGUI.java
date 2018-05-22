@@ -121,7 +121,7 @@ public class KTGUI {
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------
-	// This is a 'factory' method
+	// These are a 'factory' methods
 	//-------------------------------------------------------------------------------------------------------------------
 	public Button createButton(int x, int y, int w, int h) {
 		return new Button(this, x, y, w, h);
@@ -135,29 +135,25 @@ public class KTGUI {
 		return new Slider(this, posx, posy, w, h, sr, er);
 	}
 	
-	//  //-------------------------------------------------------------------------------------------------------------------
-	//  // This is a 'factory' method
-	//  //-------------------------------------------------------------------------------------------------------------------
-	//  Window createWindow(int x, int y, int w, int h) {
-	//    Window window = new Window(x, y, w, h);
-	//    return window;
-	//  }
-	//  Window createWindow(String title, int x, int y, int w, int h) {
-	//    Window window = new Window(title, x, y, w, h);
-	//    return window;
-	//  }
-	//
-	//  //-------------------------------------------------------------------------------------------------------------------
-	//  // This is a 'factory' method
-	//  //-------------------------------------------------------------------------------------------------------------------
-	//  Pane createPane(int x, int y, int w, int h) {
-	//    Pane pane = new Pane(x, y, w, h);
-	//    return pane;
-	//  }
-	//  Pane createPane(String title, int x, int y, int w, int h) {
-	//    Pane pane = new Pane(title, x, y, w, h);
-	//    return pane;
-	//  }
+	public Window createWindow(int x, int y, int w, int h) {
+		Window window = new Window(this, x, y, w, h);
+		return window;
+	}
+
+	public Window createWindow(String title, int x, int y, int w, int h) {
+		Window window = new Window(this, title, x, y, w, h);
+		return window;
+	}
+
+	public Pane createPane(int x, int y, int w, int h) {
+		Pane pane = new Pane(this, x, y, w, h);
+		return pane;
+	}
+
+	public Pane createPane(String title, int x, int y, int w, int h) {
+		Pane pane = new Pane(this, title, x, y, w, h);
+		return pane;
+	}
 
 	/**
 	 * This method 'redirects' the emitted mouse event from PApplet to KTGUI 'transfer' methods.

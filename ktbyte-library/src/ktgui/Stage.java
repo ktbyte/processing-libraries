@@ -84,4 +84,8 @@ public class Stage {
 			controller.parentStage = null;
 		}
 	}
+
+	public ArrayList<Controller> getControllers() {
+		return controllers;
+	}
 }

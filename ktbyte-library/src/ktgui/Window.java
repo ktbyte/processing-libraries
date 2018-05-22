@@ -1,6 +1,6 @@
 package ktgui;
 
-class Window extends Controller {
+public class Window extends Controller {
 
 	// Border border;
 	TitleBar	titleBar;
@@ -66,4 +66,7 @@ class Window extends Controller {
 		registerChildController(pane);
 	}
 
+	public Pane getPane() {
+		return pane;
+	}
 }
