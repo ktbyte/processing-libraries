@@ -5,7 +5,7 @@
 #/distribution/*.html
 #/distribution/*.css
 #/distribution/*.md
-/distribution/
+/distribution/ktbyte-1/
 #/distribution/examples/**
 #/distribution/gui/**
 #/distribution/midi/**
@@ -20,3 +20,4 @@
 # buil-related files that are dependent on the particular user desktop environment settings
 /resources/build.xml
 /resources/build.properties
+/distribution/
