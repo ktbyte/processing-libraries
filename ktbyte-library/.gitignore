@@ -1,12 +1,21 @@
+# bin folder
 /bin/
 
 # distribution folder
-**/distribution/**
-!/ktbyte-library/distribution/ktbyte-1/download/**
-# distribution folder
+#/distribution/*.html
+#/distribution/*.css
+#/distribution/*.md
+#/distribution/examples/**
+#/distribution/gui/**
+#/distribution/midi/**
+#/distribution/reference/**
+#/distribution/sound/**
+/distribution/**
+!/distribution/ktbyte-1/download/**
+
+# temporary folders
 **/tmp/**
 
 # buil-related files that are dependent on the particular user desktop environment settings
-**/resources/build.xml
-**/resources/build.properties
-
+/resources/build.xml
+/resources/build.properties
