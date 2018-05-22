@@ -1,50 +1,58 @@
-# Compiled class file
+# Compiled class files #
+########################
 *.class
 
-# Log file
+# Log files #
+#############
 *.log
 
-# BlueJ files
+# BlueJ files #
+###############
 *.ctxt
 
-# Eclipse files
+# Eclipse files #
+#################
 .classpath
 .project
 
-# Mobile Tools for Java (J2ME)
+# Mobile Tools for Java (J2ME) #
+################################
 .mtj.tmp/
 
 # Package Files #
+#################
 *.war
 *.ear
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml #
+##########################################################################################
 hs_err_pid*
 
-# VS hidden folder, out folder and autosave files
-/.vscode/*
+# VS hidden folder, out folder and autosave files #
+###################################################
 **/.vscode/**
 **/out/**
-*.autosave
+**/.autosave
 
-# Brackets 'Processing' plugin build folder
+# Brackets 'Processing' plugin build folder #
+#############################################
 **/build/**
 
-*.jsdtscope
-ktbyte-library/.settings/
+# Eclipse JavaScript development data files #
+#############################################
+**/*.jsdtscope
 
-# Backup files
+# Eclipse settings folder #
+###########################
+**/.settings/**
+
+# Backup files #
+################
 **/*.bak
 
-# temporary folders
+# temporary folders #
+#####################
 **/tmp/**
 
-# ktbyte-library 
-**/ktbyte-library/bin/
-**/ktbyte-library/distribution/ktbyte-1/
-!**/ktbyte-library/distribution/ktbyte-1/download/
-# buil-related files that are dependent on the particular user desktop environment settings
-**/ktbyte-library/resources/build.xml
-**/ktbyte-library/resources/build.properties

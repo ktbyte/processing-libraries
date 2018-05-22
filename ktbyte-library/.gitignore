@@ -1,0 +1,11 @@
+# ktbyte-library #
+##################
+/bin/**
+/distribution/ktbyte-1/**
+!/distribution/ktbyte-1/download/
+
+# build-related files that are dependent on the particular user desktop environment settings #
+##############################################################################################
+/resources/build.xml
+/resources/build.properties
+
