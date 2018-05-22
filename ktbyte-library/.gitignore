@@ -1,11 +1,19 @@
+# ktbyte-library #
+##################
 /bin/
+#/distribution/ktbyte-1/examples/
+/distribution/ktbyte-1/gui/
+/distribution/ktbyte-1/midi/
+/distribution/ktbyte-1/reference/
+/distribution/ktbyte-1/sound/
+/distribution/ktbyte-1/*.css
+/distribution/ktbyte-1/*.html
+/distribution/ktbyte-1/*.md
+!/distribution/ktbyte-1/download/
 
-# distribution folder
-**/distribution/**
+# build-related files that are dependent on the particular user desktop environment settings #
+##############################################################################################
+#/resources/build.xml
+#/resources/build.properties
 
-# distribution folder
-**/tmp/**
 
-# buil-related files that are dependent on the particular user desktop environment settings
-**/resources/build.xml
-**/resources/build.properties

@@ -1,40 +1,58 @@
-# Compiled class file
+# Compiled class files #
+########################
 *.class
 
-# Log file
+# Log files #
+#############
 *.log
 
-# BlueJ files
+# BlueJ files #
+###############
 *.ctxt
 
-# Eclipse files
+# Eclipse files #
+#################
 .classpath
 .project
 
-# Mobile Tools for Java (J2ME)
+# Mobile Tools for Java (J2ME) #
+################################
 .mtj.tmp/
 
 # Package Files #
+#################
 *.war
 *.ear
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml #
+##########################################################################################
 hs_err_pid*
 
-# VS hidden folder, out folder and autosave files
-/.vscode/*
+# VS hidden folder, out folder and autosave files #
+###################################################
 **/.vscode/**
 **/out/**
-*.autosave
+**/.autosave
 
-# Brackets 'Processing' plugin build folder
+# Brackets 'Processing' plugin build folder #
+#############################################
 **/build/**
-<<<<<<< HEAD
-*.jsdtscope
-ktbyte-library/.settings/
 
-# Backup files
+# Eclipse JavaScript development data files #
+#############################################
+**/*.jsdtscope
+
+# Eclipse settings folder #
+###########################
+**/.settings/**
+
+# Backup files #
+################
 **/*.bak
+
+# temporary folders #
+#####################
+**/tmp/**
 
