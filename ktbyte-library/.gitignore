@@ -2,7 +2,7 @@
 
 # distribution folder
 **/distribution/**
-!**/distribution/ktbyte-1/download/**
+!/ktbyte-library/distribution/ktbyte-1/download/**
 # distribution folder
 **/tmp/**
 

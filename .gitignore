@@ -31,7 +31,7 @@ hs_err_pid*
 
 # Brackets 'Processing' plugin build folder
 **/build/**
-<<<<<<< HEAD
+
 *.jsdtscope
 ktbyte-library/.settings/
 
