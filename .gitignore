@@ -42,19 +42,9 @@ ktbyte-library/.settings/
 **/tmp/**
 
 # ktbyte-library 
-ktbyte-library/bin/
-/distribution/ktbyte-1/
-!/distribution/ktbyte-1/download/
-#ktbyte-library/distribution/*.html
-#ktbyte-library/distribution/*.css
-#ktbyte-library/distribution/*.md
-#ktbyte-library/distribution/ktbyte-1/
-#ktbyte-library/distribution/examples/**
-#ktbyte-library/distribution/gui/**
-#ktbyte-library/distribution/midi/**
-#ktbyte-library/distribution/reference/**
-#ktbyte-library/distribution/sound/**
-#ktbyte-library/distribution/**
+/ktbyte-library/bin/
+/ktbyte-library/distribution/ktbyte-1/
+!/ktbyte-library/distribution/ktbyte-1/download/
 # buil-related files that are dependent on the particular user desktop environment settings
-ktbyte-library/resources/build.xml
-ktbyte-library/resources/build.properties
+/ktbyte-library/resources/build.xml
+/ktbyte-library/resources/build.properties
