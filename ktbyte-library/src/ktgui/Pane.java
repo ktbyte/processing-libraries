@@ -12,7 +12,6 @@ public class Pane extends Controller {
 		this.posy = posy;
 		this.w = w;
 		this.h = h;
-		this.isDragable = false;
 		this.pg = pa.createGraphics(w + 1, h + 1);
 		this.userpg = pa.createGraphics(w + 1, h + 1);
 
@@ -27,7 +26,6 @@ public class Pane extends Controller {
 		this.posy = posy;
 		this.w = w;
 		this.h = h;
-		this.isDragable = false;
 		this.pg = pa.createGraphics(w + 1, h + 1);
 		this.userpg = pa.createGraphics(w + 1, h + 1);
 
@@ -99,3 +97,19 @@ public class Pane extends Controller {
 		return isInside;
 	}
 }
+
+class WindowPane extends Pane {
+	  Window parentWindow;
+	  
+	  WindowPane(KTGUI ktgui, Window window, int posx, int posy, int w, int h) {
+	    super(ktgui, posx, posy, w, h);
+	    this.parentWindow = window;
+	    //isDragable = false;
+	  }
+
+	  WindowPane(KTGUI ktgui, String title, Window window, int posx, int posy, int w, int h) {
+	    super(ktgui, title, posx, posy, w, h);
+	    this.parentWindow = window;
+	    //isDragable = false;
+	  }
+	}

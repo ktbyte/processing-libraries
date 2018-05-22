@@ -11,6 +11,9 @@ public class Bar extends Controller {
 		this.w = w;
 		this.h = h;
 		this.title = "a Bar";
+		
+		this.isDragable = true;
+
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 		// automatically register the newly created window in default stage of stageManager
@@ -24,6 +27,9 @@ public class Bar extends Controller {
 		this.posy = y;
 		this.w = w;
 		this.h = h;
+		
+		this.isDragable = true;
+
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 		// automatically register the newly created window in default stage of stageManager

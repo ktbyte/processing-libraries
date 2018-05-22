@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class KTGUIEventProcessor {
 	public boolean							isPressed, isHovered;
 	public boolean							isActive	= true;
-	public boolean							isDragable	= false;
+	public boolean							isDragable	= true;
 
 	public ArrayList<KTGUIEventAdapter>	adapters	= new ArrayList<KTGUIEventAdapter>();
 

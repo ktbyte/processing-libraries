@@ -14,6 +14,9 @@ public class Window extends Controller {
 		this.posy = posy;
 		this.w = w;
 		this.h = h;
+		
+		this.isDragable = true;
+		
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 		ktgui.getStageManager().defaultStage.registerController(this);
@@ -28,6 +31,9 @@ public class Window extends Controller {
 		this.posy = posy;
 		this.w = w;
 		this.h = h;
+		
+		this.isDragable = true;
+		
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 		ktgui.getStageManager().defaultStage.registerController(this);
@@ -62,6 +68,7 @@ public class Window extends Controller {
 
 	private void createPane() {
 		pane = new WindowPane(ktgui, "pane:" + title, this, posx, posy + titleBar.h, w, h - titleBar.h);
+		pane.isDragable = false;
 		attachController(pane);
 		registerChildController(pane);
 	}
