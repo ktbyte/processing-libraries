@@ -13,6 +13,6 @@
 
 # build-related files that are dependent on the particular user desktop environment settings #
 ##############################################################################################
-/resources/build.xml
-/resources/build.properties
+#/resources/build.xml
+#/resources/build.properties
 
