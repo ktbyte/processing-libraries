@@ -42,9 +42,9 @@ ktbyte-library/.settings/
 **/tmp/**
 
 # ktbyte-library 
-/ktbyte-library/bin/
-/ktbyte-library/distribution/ktbyte-1/
-!/ktbyte-library/distribution/ktbyte-1/download/
+**/ktbyte-library/bin/
+**/ktbyte-library/distribution/ktbyte-1/
+!**/ktbyte-library/distribution/ktbyte-1/download/
 # buil-related files that are dependent on the particular user desktop environment settings
-/ktbyte-library/resources/build.xml
-/ktbyte-library/resources/build.properties
+**/ktbyte-library/resources/build.xml
+**/ktbyte-library/resources/build.properties
