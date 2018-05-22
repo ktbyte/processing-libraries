@@ -2,16 +2,17 @@
 /bin/
 
 # distribution folder
-/distribution/*.html
-/distribution/*.css
-/distribution/*.md
-/distribution/examples/**
-/distribution/gui/**
-/distribution/midi/**
-/distribution/reference/**
-/distribution/sound/**
+#/distribution/*.html
+#/distribution/*.css
+#/distribution/*.md
+/distribution/
+#/distribution/examples/**
+#/distribution/gui/**
+#/distribution/midi/**
+#/distribution/reference/**
+#/distribution/sound/**
 #/distribution/**
-#!/distribution/ktbyte-1/download/**
+!/distribution/ktbyte-1/download/
 
 # temporary folders
 **/tmp/**
