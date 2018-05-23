@@ -1,4 +1,13 @@
-[TOC]
+- [Import to Eclipse](#import-to-eclipse)
+  * [Option A: GitHub](#option-a-github)
+  * [Option B: Downloaded Package](#option-b-downloaded-package)
+- [Set Up and Compile](#set-up-and-compile)
+- [Source code](#source-code)
+- [<a name='AddingJARs'/>Adding core.jar and other .jar files to your classpath</a>](#-a-name--addingjars---adding-corejar-and-other-jar-files-to-your-classpath--a-)
+- [What is the difference between JDK and JRE?](#what-is-the-difference-between-jdk-and-jre-)
+- [The JRE System Library](#the-jre-system-library)
+- [Compiling with Ant and javadoc](#compiling-with-ant-and-javadoc)
+  * [Adding examples folders and files by modifying the build.xml](#adding-examples-folders-and-files-by-modifying-the-build-xml)
 
 The following describes how to set up a Processing Library project in Eclipse and build it successfully, and to make your Library ready for distribution.
 
@@ -101,7 +110,7 @@ Ant is a Java-based build tool. For [more information](http://ant.apache.org/faq
 
 Javadoc is an application that creates an HTML-based API documentation of Java code. You can check for its existence by typing `javadoc` on the command line. On Mac OS X, it is installed by default. On Windows and Linux, installing the JDK will also install the Javadoc tool. 
 
-### Adding _examples_ folders and files by modifying the build.xml
+### Adding examples folders and files by modifying the build xml
 
 It seems that the original build.xml (inside the [eclipse-processing-template](https://github.com/processing/processing-library-template/releases)) was designed to create the list of example files under the assumption that all the .pde files will be stored inside the root of the `examples` folder, i.e.
 
