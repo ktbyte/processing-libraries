@@ -79,11 +79,10 @@ public class KTGUITextBox extends Controller {
 			return;
 		}
 
-		if (!isFocused) {
-			setText("");
-		}
-
 		if (this.isPointInside(pa.mouseX, pa.mouseY)) {
+			if (!isFocused) {
+				setText("");
+			}
 			this.isFocused = true;
 		} else {
 			this.isFocused = false;
@@ -99,13 +98,13 @@ public class KTGUITextBox extends Controller {
 			textInput = textInput.substring(0, textInput.length() - 1);
 		}
 		if ((int) pa.key == ENTER_ASCII_CODE) {
-//			if (keyEventListener != null) {
-//				keyEventListener.onEnterKey();
-//				if (handleFocus) {
-//					isFocused = false;
-//				}
-//			}
-			for(KTGUIEventAdapter adapter: adapters) {
+			//			if (keyEventListener != null) {
+			//				keyEventListener.onEnterKey();
+			//				if (handleFocus) {
+			//					isFocused = false;
+			//				}
+			//			}
+			for (KTGUIEventAdapter adapter : adapters) {
 				adapter.onEnterKeyPressed();
 			}
 		} else if ((int) pa.key >= BASIC_ASCII_LOWER_LIMIT && (int) pa.key <= BASIC_ASCII_UPPER_LIMIT) {
@@ -132,7 +131,7 @@ public class KTGUITextBox extends Controller {
 	public String getText() {
 		return textInput;
 	}
-	
+
 	/**
 	 * Sets the text size
 	 * 
