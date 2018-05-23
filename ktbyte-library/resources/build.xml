@@ -166,6 +166,8 @@ ${line}
   		<copy todir="${project.tmp}/${project.name}/examples">
   			<fileset dir="${project.examples}">
 	  			<exclude name="**/*README*"/>
+	  			<exclude name="**/.vscode/**"/>
+	  			<exclude name="**/out/**"/>
   			</fileset>
 	  	</copy>
   		<copy todir="${project.tmp}/${project.name}/src">
@@ -329,7 +331,10 @@ ${line}
 	
 	<!-- parsing the examples folder -->
 	<target name="processExamples">
-		<dirset id="examples.contents" dir="${project.examples}" excludes="*/*"/>
+		<!-- <dirset id="examples.contents" dir="${project.examples}" excludes="*/*"/> -->
+		<dirset id="examples.contents" dir="${project.examples}">
+			<exclude name="**/.vscode"/>
+		</dirset>
 		<property name="examples.list" refid="examples.contents"/>
 		<foreach list="${examples.list}" target="addExamples" param="exampleDir" delimiter=";">
 		</foreach>
