@@ -1,7 +1,9 @@
 package ktbyte.gui;
 
-import processing.event.*;
-import processing.core.*;
+import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.event.KeyEvent;
+import processing.event.MouseEvent;
 
 /**
  * 
@@ -173,7 +175,7 @@ public class TextBox implements PConstants {
 	}
 
 	/**
-	 * Returns the whether the elements is focused or not
+	 * Returns whether the elements is focused or not
 	 * 
 	 * @return <code>true</code> if the element is focused; <code>false</code> otherwise
 	 */
