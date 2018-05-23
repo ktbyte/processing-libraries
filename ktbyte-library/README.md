@@ -174,10 +174,10 @@ This leads to incorrect parsing of `build.xml` and in order to fix this one woul
 	<!-- parsing the examples folder -->
 	<target name="processExamples">
 		<dirset id="examples.contents" dir="${project.examples}">
-			<!-- these are the folders we excluding -->
-             <exclude name="**/.vscode/**" />
+                        <!-- these are the folders we excluding -->
+                        <exclude name="**/.vscode/**" />
 			<exclude name="**/out/**" />
-             <!-- these are the folders we including -->
+                        <!-- these are the folders we including -->
 			<include name="**/TextBoxExample/**" /> 
 			<include name="**/ButtonExample/**" />
 			<include name="**/SliderExample/**" />
