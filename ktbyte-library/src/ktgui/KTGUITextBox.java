@@ -1,6 +1,5 @@
 package ktgui;
 
-import ktbyte.gui.KeyEventListener;
 import processing.core.PApplet;
 
 public class KTGUITextBox extends Controller {
@@ -15,7 +14,6 @@ public class KTGUITextBox extends Controller {
 	private String				textInput;
 	private int					textSize;
 	private float				textHeight;
-	private KeyEventListener	keyEventListener;
 	private float				padding;
 
 	public KTGUITextBox(KTGUI ktgui, String title, int x, int y, int w, int h) {
@@ -70,6 +68,7 @@ public class KTGUITextBox extends Controller {
 			float cursorX = PApplet.min(w - padding, pa.textWidth(textInput) + padding);
 			pg.beginDraw();
 			pg.stroke(0);
+			pg.strokeWeight(2);
 			pg.line(cursorX, h * 0.5f - textHeight * 0.5f, cursorX, h * 0.5f + textHeight * 0.5f);
 			pg.endDraw();
 		}
@@ -83,11 +82,36 @@ public class KTGUITextBox extends Controller {
 		if (!isFocused) {
 			setText("");
 		}
-		
+
 		if (this.isPointInside(pa.mouseX, pa.mouseY)) {
 			this.isFocused = true;
 		} else {
 			this.isFocused = false;
+		}
+	}
+
+	public void processKeyPressed() {
+		if (!isFocused) {
+			return;
+		}
+
+		if ((int) pa.key == BACKSPACE_ASCII_CODE && textInput.length() > 0) {
+			textInput = textInput.substring(0, textInput.length() - 1);
+		}
+		if ((int) pa.key == ENTER_ASCII_CODE) {
+//			if (keyEventListener != null) {
+//				keyEventListener.onEnterKey();
+//				if (handleFocus) {
+//					isFocused = false;
+//				}
+//			}
+			for(KTGUIEventAdapter adapter: adapters) {
+				adapter.onEnterKeyPressed();
+			}
+		} else if ((int) pa.key >= BASIC_ASCII_LOWER_LIMIT && (int) pa.key <= BASIC_ASCII_UPPER_LIMIT) {
+			byte b = (byte) pa.key;
+			char ch = (char) b;
+			textInput += ch;
 		}
 	}
 
@@ -105,6 +129,10 @@ public class KTGUITextBox extends Controller {
 		this.textInput = text;
 	}
 
+	public String getText() {
+		return textInput;
+	}
+	
 	/**
 	 * Sets the text size
 	 * 
