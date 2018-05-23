@@ -10,11 +10,8 @@ public class KTGUITextBox extends Controller {
 	private final static int	BASIC_ASCII_LOWER_LIMIT	= 32;
 	private final static int	BASIC_ASCII_UPPER_LIMIT	= 126;
 
-	//private PApplet				pa; // handled by super() 
-	//private int					x, y, w, h; // handled by super() 
 	private int					r1, r2, r3, r4;					// box rounding parameters
 	private boolean				handleFocus				= true;
-	private boolean				isFocused;
 	private String				textInput;
 	private int					textSize;
 	private float				textHeight;
@@ -40,24 +37,14 @@ public class KTGUITextBox extends Controller {
 	}
 
 	/**
-	 * This is a automatically registered method and it should not be called directly
+	 * This is an automatically registered method and it should not be called directly
 	 */
 	public void draw() {
-		//		pa.pushStyle();
-		//		pa.fill(255);
-		//		pa.noStroke();
-		//		pa.rect(posx, posy, w, h, r1, r2, r3, r4);
-		//		pa.fill(0);
-		//		pa.textSize(textSize);
-		//		pa.textAlign(LEFT, CENTER);
-		//		pa.text(getTrimmedInputText(textInput), posx + padding, posy + h * 0.5f);
-		//		drawBlinkingInputCursor();
-		//		pa.popStyle();
 		// if this button don't belongs to any window or pane 
-		// then draw directly on the PApplet canvas 
-		//if (parentController == null) {
+		// then draw it directly on the PApplet canvas 
+		if (parentController == null) {
 			pa.image(pg, posx, posy);
-		//}
+		}
 	}
 
 	public void updateGraphics() {
@@ -79,11 +66,6 @@ public class KTGUITextBox extends Controller {
 		if (!isFocused) {
 			return;
 		}
-		//		pa.stroke(0);
-		//		if (pa.frameCount % 60 < 30) {
-		//			float cursorX = PApplet.min(posx + w - padding, posx + pa.textWidth(textInput) + padding);
-		//			pa.line(cursorX, posy + h * 0.5f - textHeight * 0.5f, cursorX, posy + h * 0.5f + textHeight * 0.5f);
-		//		}
 		if (pa.frameCount % 60 < 30) {
 			float cursorX = PApplet.min(w - padding, pa.textWidth(textInput) + padding);
 			pg.beginDraw();
@@ -91,6 +73,26 @@ public class KTGUITextBox extends Controller {
 			pg.line(cursorX, h * 0.5f - textHeight * 0.5f, cursorX, h * 0.5f + textHeight * 0.5f);
 			pg.endDraw();
 		}
+	}
+
+	public void processMousePressed() {
+		if (!handleFocus) {
+			return;
+		}
+
+		if (!isFocused) {
+			setText("");
+		}
+		
+		if (this.isPointInside(pa.mouseX, pa.mouseY)) {
+			this.isFocused = true;
+		} else {
+			this.isFocused = false;
+		}
+	}
+
+	private boolean isPointInside(int x, int y) {
+		return x > posx && x < posx + w && y > posy && y < posy + h;
 	}
 
 	/**

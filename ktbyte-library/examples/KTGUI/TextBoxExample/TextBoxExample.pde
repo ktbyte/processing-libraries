@@ -12,6 +12,7 @@ void setup() {
 
   textBox1.setText("Enter first name...");
   textBox1.setTextSize(16);
+  textBox1.setBorderRoundings(10, 10, 0, 0);
 //   textBox1.setKeyEventListener(new KeyEventListener() {
 //     public void onEnterKey() {
 //       println(textBox1.getText());
