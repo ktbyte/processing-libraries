@@ -1,3 +1,5 @@
+[TOC]
+
 The following describes how to set up a Processing Library project in Eclipse and build it successfully, and to make your Library ready for distribution.
 
 ## Import to Eclipse
@@ -98,3 +100,97 @@ To change the JRE used to compile your Java project:
 Ant is a Java-based build tool. For [more information](http://ant.apache.org/faq.html#what-is-ant) visit the [Ant web site](http://ant.apache.org/). Ant uses a file named `build.xml` to store build settings for a project.
 
 Javadoc is an application that creates an HTML-based API documentation of Java code. You can check for its existence by typing `javadoc` on the command line. On Mac OS X, it is installed by default. On Windows and Linux, installing the JDK will also install the Javadoc tool. 
+
+### Adding _examples_ folders and files by modifying the build.xml
+
+It seems that the original build.xml (inside the [eclipse-processing-template](https://github.com/processing/processing-library-template/releases)) was designed to create the list of example files under the assumption that all the .pde files will be stored inside the root of the `examples` folder, i.e.
+
+```bash
+/examples                                                                                       
+│                                                                                            
+├───/Console_basicQA                                                                      
+│       Console_basicQA.pde                                                              
+│                                                                                        
+├───/Console_guessTheNumber                                                               
+│       Console_guessTheNumber.pde                                                       
+│                                                                                     
+├───/ButtonExample                                                                        
+│       ButtonExample.pde                                                                
+│                                                                                        
+├───/SliderExample                                                                        
+│       SliderExample.pde                                                                
+│                                                                                        
+├───/TextBoxExample                                                                       
+│       TextBoxExample.pde                                                               
+│                                                                                        
+└───/WindowExample                                                                        
+        WindowExample.pde     
+    
+```
+
+While in our case, we are storing each _group_ of examples (corresponding to a particular feature of __ktbyte__ library) in a separate folder
+
+```bash
+/examles
+│
+├───/Console
+│   │
+│   ├───/Console_basicQA
+│   │       Console_basicQA.pde
+│   │
+│   └───/Console_guessTheNumber
+│           Console_guessTheNumber.pde
+│       
+├───/KTGUI
+│   │
+│   ├───/ButtonExample
+│   │       ButtonExample.pde
+│   │   
+│   ├───/SliderExample
+│   │       SliderExample.pde
+│   │
+│   ├───/TextBoxExample
+│   │       TextBoxExample.pde
+│   │
+│   └───/WindowExample
+│           WindowExample.pde
+│
+└───/KTSoundCipher
+    │
+    ├───/KTSoundCipher_keyboard
+    │       KTSoundCipher_keyboard.pde
+    │
+    ├───/KTSoundCipher_playMultipleNotes
+    │       KTSoundCipher_playMultipleNotes.pde
+    │
+    └───/KTSoundCipher_playNote
+            KTSoundCipher_playNote.pde
+```
+
+This leads to incorrect parsing of `build.xml` and in order to fix this one would need to modify its content. In particular, one would need to add `<include>` tags as following:
+
+```xml
+
+	<!-- parsing the examples folder -->
+	<target name="processExamples">
+		<dirset id="examples.contents" dir="${project.examples}">
+			<!-- these are the folders we excluding --><!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<-->
+             <exclude name="**/.vscode/**" />
+			<exclude name="**/out/**" />
+             <!-- these are the folders we including --><!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<-->
+			<include name="**/TextBoxExample/**" /> 
+			<include name="**/ButtonExample/**" />
+			<include name="**/SliderExample/**" />
+			<include name="**/WindowExample/**" />
+			<include name="**/KTSoundCipher_*/**" />
+			<include name="**/Console_*/**" />
+			<include name="**/SoundFile_*/**" />
+			<include name="**/TextBox_*/**" />
+		</dirset>
+		<property name="examples.list" refid="examples.contents" />
+		<foreach list="${examples.list}" target="addExamples" param="exampleDir" delimiter=";">
+		</foreach>
+	</target>
+```
+
+ If one adds another new _example_ folder, it should be added in here too in order to be properly processed (included in _index.html_ as links).
