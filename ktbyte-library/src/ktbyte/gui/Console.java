@@ -1,9 +1,11 @@
 package ktbyte.gui;
 
-import processing.event.*;
-import processing.core.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.event.MouseEvent;
 
 /**
  * 
@@ -66,7 +68,6 @@ public class Console implements PConstants {
 		inputBox.setHandleFocus(true);
 		inputBox.setBorderRoundings(0, 0, 7, 7);
 		inputBox.setKeyEventListener(new KeyEventListener() {
-	
 			@Override
 			public void onEnterKey() {
 				handleConsoleInput();
