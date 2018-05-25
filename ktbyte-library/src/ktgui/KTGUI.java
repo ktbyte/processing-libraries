@@ -173,6 +173,9 @@ public class KTGUI {
 		case MouseEvent.MOVE:
 			this.mouseMoved();
 			break;
+		case MouseEvent.WHEEL:
+			this.mouseWheel(e);
+			break;
 		}
 	}
 
@@ -249,6 +252,17 @@ public class KTGUI {
 		if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
 			for (Controller controller : stageManager.getDefaultStage().controllers) {
 				controller.processMouseMoved();
+			}
+		}
+	}
+
+	private void mouseWheel(MouseEvent me) {
+		for (Controller controller : stageManager.getActiveStage().controllers) {
+			controller.processMouseWheel(me);
+		}
+		if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+			for (Controller controller : stageManager.getDefaultStage().controllers) {
+				controller.processMouseWheel(me);
 			}
 		}
 	}

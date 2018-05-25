@@ -2,6 +2,8 @@ package ktgui;
 
 import java.util.ArrayList;
 
+import processing.event.MouseEvent;
+
 public class KTGUIEventProcessor {
 	public boolean						isPressed, isHovered;
 	public boolean						isActive	= true;
@@ -17,6 +19,8 @@ public class KTGUIEventProcessor {
 	public void processMouseReleased() {}
 
 	public void processMouseDragged() {}
+	
+	public void processMouseWheel(MouseEvent me) {}
 
 	public void processKeyPressed() {}
 

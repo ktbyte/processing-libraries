@@ -118,13 +118,21 @@ public class KTGUITextBox extends Controller {
 		return x > posx && x < posx + w && y > posy && y < posy + h;
 	}
 
+	public void setIsFocused(boolean val) {
+		isFocused = val;
+	}
+
+	public void setHandleFocus(boolean val) {
+		handleFocus = val;
+	};
+	
 	/**
 	 * Sets the current text
 	 * 
 	 * @param text
 	 *   The text that should be displayed inside the box
 	 */
-	public void setText(String text) {
+ 	public void setText(String text) {
 		this.textInput = text;
 	}
 
@@ -188,5 +196,6 @@ public class KTGUITextBox extends Controller {
 			}
 		}
 		return trimmedTextInput;
-	};
+	}
+
 }
