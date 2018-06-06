@@ -48,6 +48,11 @@ public class InputTextBox extends Controller {
 	}
 
 	public void updateGraphics() {
+		updateTextBox();
+		updateBlinkingCursorGraphics();
+	}
+
+	private void updateTextBox() {
 		pg.beginDraw();
 		pg.pushStyle();
 		pg.fill(255);
@@ -59,8 +64,6 @@ public class InputTextBox extends Controller {
 		pg.text(getTrimmedInputText(textInput), padding, h * 0.5f);
 		pg.popStyle();
 		pg.endDraw();
-
-		updateBlinkingCursorGraphics();
 	}
 
 	private void updateBlinkingCursorGraphics() {
