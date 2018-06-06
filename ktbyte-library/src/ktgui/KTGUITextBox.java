@@ -55,9 +55,10 @@ public class KTGUITextBox extends Controller {
 		pg.textSize(textSize);
 		pg.textAlign(LEFT, CENTER);
 		pg.text(getTrimmedInputText(textInput), padding, h * 0.5f);
-		updateBlinkingCursorGraphics();
 		pg.popStyle();
 		pg.endDraw();
+
+		updateBlinkingCursorGraphics();
 	}
 
 	private void updateBlinkingCursorGraphics() {
