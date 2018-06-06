@@ -71,14 +71,10 @@ public class KTGUI {
 
 		garbageList = new HashMap<Controller, Integer>();
 
-		//COLOR_FG_PASSIVE = pa.color(100, 100, 200);
 		COLOR_FG_PASSIVE = pa.color(50, 180, 50);
-		//COLOR_FG_HOVERED = pa.color(10, 150, 10);
 		COLOR_FG_HOVERED = pa.color(50, 220, 50);
 		COLOR_FG_PRESSED = pa.color(10, 200, 10);
-		//COLOR_BG_HOVERED = pa.color(100);
 		COLOR_BG_HOVERED = pa.color(220);
-		//COLOR_BG_PASSIVE = pa.color(100);
 		COLOR_BG_PASSIVE = pa.color(180);
 		COLOR_BG_PRESSED = pa.color(200);
 		TITLE_BAR_HEIGHT = 14;
@@ -92,10 +88,6 @@ public class KTGUI {
 
 	public static PApplet getParentPApplet() {
 		return parentPApplet;
-	}
-
-	public StageManager getStageManager() {
-		return stageManager;
 	}
 
 	/*************************************************************************************************************************
@@ -121,7 +113,7 @@ public class KTGUI {
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------
-	// These are a 'factory' methods
+	// These are the 'factory' methods
 	//-------------------------------------------------------------------------------------------------------------------
 	public Button createButton(int x, int y, int w, int h) {
 		return new Button(this, x, y, w, h);

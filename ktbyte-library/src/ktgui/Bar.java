@@ -17,7 +17,7 @@ public class Bar extends Controller {
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 		// automatically register the newly created window in default stage of stageManager
-		ktgui.getStageManager().defaultStage.registerController(this);
+		StageManager.getInstance().defaultStage.registerController(this);
 	}
 
 	public Bar(KTGUI ktgui, String title, int x, int y, int w, int h) {
@@ -33,7 +33,7 @@ public class Bar extends Controller {
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 		// automatically register the newly created window in default stage of stageManager
-		ktgui.getStageManager().defaultStage.registerController(this);
+		StageManager.getInstance().defaultStage.registerController(this);
 	}
 
 	public void updateGraphics() {

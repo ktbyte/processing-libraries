@@ -31,7 +31,7 @@ public class KTGUITextBox extends Controller {
 		userpg = pa.createGraphics(w + 1, h + 1);
 
 		// automatically register the newly created window in default stage of stageManager
-		ktgui.getStageManager().getDefaultStage().registerController(this);
+		StageManager.getInstance().getDefaultStage().registerController(this);
 	}
 
 	/**

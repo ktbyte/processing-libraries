@@ -19,7 +19,7 @@ public class Window extends Controller {
 		
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
-		ktgui.getStageManager().defaultStage.registerController(this);
+		StageManager.getInstance().defaultStage.registerController(this);
 		createTitleBar();
 		createPane();
 	}
@@ -36,7 +36,7 @@ public class Window extends Controller {
 		
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
-		ktgui.getStageManager().defaultStage.registerController(this);
+		StageManager.getInstance().defaultStage.registerController(this);
 		setTitle(title);
 		createTitleBar();
 		createPane();
