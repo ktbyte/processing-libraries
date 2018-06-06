@@ -7,7 +7,7 @@ void setup() {
   size(800, 600);
   ktgui = new KTGUI(this);
 
-  console = new KTGUIConsole(ktgui, 100, 100, 600, 400);
+  console = new KTGUIConsole(ktgui, "A Console", 100, 100, 600, 400);
 //   console.setInputTextColor(color(255, 10, 100));
 //   console.setOutputTextColor(color(130, 90, 190));
 //   console.write("Hello there! What's your name?");

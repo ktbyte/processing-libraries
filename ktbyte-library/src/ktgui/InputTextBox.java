@@ -2,7 +2,7 @@ package ktgui;
 
 import processing.core.PApplet;
 
-public class KTGUITextBox extends Controller {
+public class InputTextBox extends Controller {
 
 	private final static int	BACKSPACE_ASCII_CODE	= 8;
 	private final static int	ENTER_ASCII_CODE		= 10;
@@ -16,8 +16,9 @@ public class KTGUITextBox extends Controller {
 	private float				textHeight;
 	private float				padding;
 
-	public KTGUITextBox(KTGUI ktgui, String title, int x, int y, int w, int h) {
+	public InputTextBox(KTGUI ktgui, String title, int x, int y, int w, int h) {
 		super(ktgui);
+		
 		this.title = title;
 		this.posx = x;
 		this.posy = y;
@@ -25,6 +26,7 @@ public class KTGUITextBox extends Controller {
 		this.h = h;
 		this.textInput = "";
 		this.textSize = 18;
+		
 		computeDefaultAttributes();
 
 		pg = pa.createGraphics(w + 1, h + 1);
@@ -99,12 +101,6 @@ public class KTGUITextBox extends Controller {
 			textInput = textInput.substring(0, textInput.length() - 1);
 		}
 		if ((int) pa.key == ENTER_ASCII_CODE) {
-			//			if (keyEventListener != null) {
-			//				keyEventListener.onEnterKey();
-			//				if (handleFocus) {
-			//					isFocused = false;
-			//				}
-			//			}
 			for (KTGUIEventAdapter adapter : adapters) {
 				adapter.onEnterKeyPressed();
 			}
@@ -175,6 +171,8 @@ public class KTGUITextBox extends Controller {
 		this.padding = 0.08f * h;
 		pa.textSize(this.textSize);
 		this.textHeight = pa.textAscent() + pa.textDescent();
+		System.out.println("textSize in computeDefaultAttributes: " + textSize);
+		System.out.println("textHeight in computeDefaultAttributes: " + textHeight);
 		computeTextSize();
 	}
 
@@ -184,6 +182,8 @@ public class KTGUITextBox extends Controller {
 			pa.textSize(this.textSize);
 			this.textHeight = pa.textAscent() + pa.textDescent();
 		}
+		System.out.println("textSize in computeTextSize: " + textSize);
+		System.out.println("textHeight in computeTextSize: " + textHeight);
 	}
 
 	private String getTrimmedInputText(String textInput) {

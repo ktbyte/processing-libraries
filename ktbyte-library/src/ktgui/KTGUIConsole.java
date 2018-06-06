@@ -27,21 +27,27 @@ public class KTGUIConsole extends Controller {
 	//	private String lastVariableName;
 	//	private ArrowButton upBtn;
 	//	private ArrowButton downBtn;
-	private KTGUITextBox			inputBox;
+	private InputTextBox			inputBox;
 
-	public KTGUIConsole(KTGUI ktgui, int x, int y, int width, int height) {
+	public KTGUIConsole(KTGUI ktgui, String title, int x, int y, int width, int height) {
 		super(ktgui);
-		this.inputTextColor = pa.color(255);
-		this.outputTextColor = pa.color(170);
+		this.title = title;
 		this.posx = x;
 		this.posy = y;
 		this.w = width;
 		this.h = height;
-		this.globalPadding = 10;
-		this.inputBoxHeight = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
-		this.lines = new ArrayList<>();
-		this.dict = new HashMap<String, String>();
-		inputBox = new KTGUITextBox(ktgui, "ConsoleTextBox", x, y + h - inputBoxHeight, w, inputBoxHeight);
+		this.inputTextColor = pa.color(255);
+		this.outputTextColor = pa.color(170);
+
+		globalPadding = 10;
+
+		inputBoxHeight = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
+
+		lines = new ArrayList<>();
+
+		dict = new HashMap<String, String>();
+
+		inputBox = new InputTextBox(ktgui, "ConsoleTextBox", x, y + h - inputBoxHeight, w, inputBoxHeight);
 		inputBox.setHandleFocus(true);
 		inputBox.setBorderRoundings(0, 0, 7, 7);
 		inputBox.addEventAdapter(new KTGUIEventAdapter() {
@@ -56,6 +62,7 @@ public class KTGUIConsole extends Controller {
 		//				handleConsoleInput();
 		//			}
 		//		});
+
 		computeDefaultAttributes();
 
 		pg = pa.createGraphics(w + 1, h + 1);
@@ -121,17 +128,19 @@ public class KTGUIConsole extends Controller {
 	}
 
 	private void computeDefaultAttributes() {
-		if (h < 400) {
-			this.textSize = 18;
-		} else if (h < 900) {
-			this.textSize = 22;
-		} else {
-			this.textSize = 24;
-		}
+		//		if (h < 400) {
+		this.textSize = 18;
+		//		} else if (h < 900) {
+		//			this.textSize = 22;
+		//		} else {
+		//			this.textSize = 24;
+		//		}
 		pa.textSize(this.textSize);
 		this.textHeight = pa.textAscent() + pa.textDescent();
 		this.maxLinesToDisplay = computeMaxLinesToDisplay();
 		this.scrollBarMaxHeight = h - inputBoxHeight - SCROLL_BAR_WIDTH * 2;
+		System.out.println("textSize in computeDefaultAttributes: " + textSize);
+		System.out.println("textHeight in computeDefaultAttributes: " + textHeight);
 	}
 
 	private int computeMaxLinesToDisplay() {
@@ -177,8 +186,8 @@ public class KTGUIConsole extends Controller {
 	}
 
 	private void handleConsoleInput() {
-		//		String textInput = inputBox.getText();
-		//		splitCommandBasedOnConsoleWidth(new Command(textInput, true));
+		String textInput = inputBox.getText();
+		splitCommandBasedOnConsoleWidth(new Command(textInput, true));
 		//		dict.put(lastVariableName, textInput);
 		//		if (consoleInputListener != null) {
 		//			consoleInputListener.onConsoleInput(lastVariableName, textInput);
@@ -188,6 +197,34 @@ public class KTGUIConsole extends Controller {
 
 	private boolean isPointInside(int x, int y) {
 		return x > posx && x < posx + w && y > posy && y < posy + h;
+	}
+
+	private void splitCommandBasedOnConsoleWidth(Command command) {
+		Line line = new Line();
+		pa.textSize(textSize);
+		String[] wordsFromCommand = PApplet.split(command.text, " ");
+		int i = 0;
+		while (i < wordsFromCommand.length) {
+			if (pa.textWidth(line.text + " ") + pa.textWidth(wordsFromCommand[i]) < w - SCROLL_BAR_WIDTH) {
+				line.text += wordsFromCommand[i] + " ";
+				line.textColor = (command.isInput ? inputTextColor : outputTextColor);
+				i++;
+			} else {
+				lines.add(line);
+				line = new Line();
+			}
+		}
+		lines.add(line);
+	}
+
+	private class Command {
+		public String	text;
+		public boolean	isInput;
+
+		Command(String text, boolean isInput) {
+			this.text = text;
+			this.isInput = isInput;
+		}
 	}
 
 	private class Line {
