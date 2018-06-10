@@ -49,7 +49,7 @@ public class Button extends Controller {
 		} else {
 			pg.fill(passiveColor);
 		}
-		pg.rect(0, 0, w, h);
+		pg.rect(0, 0, w, h, r1, r2, r3, r4);
 		pg.fill(255);
 		pg.textAlign(CENTER, CENTER);
 		pg.textSize(14);

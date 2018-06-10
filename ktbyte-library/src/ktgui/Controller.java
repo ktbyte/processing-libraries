@@ -15,7 +15,7 @@ import processing.core.PGraphics;
  *********************************************************************************************************************/
 public abstract class Controller extends KTGUIEventProcessor implements PConstants {
 	public String					title;
-	public int						posx, posy, w, h;
+	public int						posx, posy, w, h, r1, r2, r3, r4;
 
 	public ArrayList<Controller>	controllers			= new ArrayList<Controller>();
 	public PApplet					pa;
@@ -96,6 +96,13 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		passiveColor = c;
 	}
 
+	public void setRoundings(int r1, int r2, int r3, int r4) {
+		this.r1 = r1;
+		this.r2 = r2;
+		this.r3 = r3;
+		this.r4 = r4;
+	}
+	
 	public PGraphics getGraphics() {
 		return pg;
 	}

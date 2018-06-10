@@ -8,13 +8,12 @@ public class ScrollableTextArea extends Controller {
 	private final static int	SCROLL_BAR_WIDTH	= 20;
 	private final static int	BOX_ROUNDING		= 8;
 
-	private int					r1, r2, r3, r4;
-
-	private float				textSize			= 14;
+	public float				textSize			= 14;
 	//private float				padding;
-	public float				padding;
+	public float				padding				= 12;
 
-	public ArrayList<Line>		textLines;
+	public ArrayList<Line>		textLines			= new ArrayList<>();
+	public ArrayList<String>	textBlocks			= new ArrayList<>();
 	//	private ArrayList<Line>		textLines;
 	public int					startLine			= 0;
 	//	private int					startLine			= 0;
@@ -29,11 +28,10 @@ public class ScrollableTextArea extends Controller {
 		this.w = w;
 		this.h = h;
 
-		padding = 8;
+		setPadding(8);
 
-		textLines = new ArrayList<>();
-		addTextBlock("A first line.");
-		addTextBlock("A HashMap stores a collection of objects, each referenced by a key."
+		appendTextBlock("A first line.");
+		appendTextBlock("A HashMap stores a collection of objects, each referenced by a key."
 				+ " This is similar to an Array, only instead of accessing elements with "
 				+ "a numeric index, a String is used. (If you are familiar with associative "
 				+ "arrays from other languages, this is the same idea.) The above example "
@@ -41,7 +39,7 @@ public class ScrollableTextArea extends Controller {
 				+ "Processing examples. In addition, for simple pairings of Strings and "
 				+ "integers, Strings and floats, or Strings and Strings, you can now use the "
 				+ "simpler IntDict, FloatDict, and StringDict classes.");
-		addTextBlock("A third line.");
+		appendTextBlock("A third line.");
 
 		System.out.println("textLines.size():" + textLines.size());
 		System.out.println("getMaxLinesToDisplay():" + getMaxLinesToDisplay());
@@ -53,14 +51,30 @@ public class ScrollableTextArea extends Controller {
 		StageManager.getInstance().getDefaultStage().registerController(this);
 	}
 
-	private void addTextBlock(String string) {
+	public void appendTextBlock(String string) {
+		textBlocks.add(string);
+		appendWrappedBlockAsLines(string);
+	}
+
+	private void updateWrappedLines() {
+		textLines = new ArrayList<Line>();
+		for (String block : textBlocks) {
+			appendWrappedBlockAsLines(block);
+		}
+	}
+
+	private void appendWrappedBlockAsLines(String string) {
 		StringBuilder sb = new StringBuilder();
 
 		boolean isHeadAlreadyMarked = false;
 		// go through all the characters in the text block splitting it by text
 		// chunks which has the width equals to the textarea.width - padding - padding 
+		int paddedWidth = (int) (w - padding - padding);
+		pa.textSize(textSize); // update the PApplet's value in order to accurately 
+		// calculate the text width
 		for (int i = 0; i < string.length(); i++) {
-			if (pa.textWidth(sb.toString()) > (w - 2 * padding)) {
+			int chunkWidth = (int) (pa.textWidth(sb.toString()));
+			if (chunkWidth > paddedWidth) {
 				if (!isHeadAlreadyMarked) {
 					textLines.add(new Line(sb.toString(), true)); // add last line
 					isHeadAlreadyMarked = true;
@@ -98,7 +112,7 @@ public class ScrollableTextArea extends Controller {
 	private void updateTextAreaGraphics() {
 		pg.beginDraw();
 		pg.pushStyle();
-		pg.fill(255, 100);
+		pg.fill(220);
 		pg.stroke(100, 100, 0);
 		pg.rect(0, 0, w, h, r1, r2, r3, r4);
 
@@ -107,6 +121,7 @@ public class ScrollableTextArea extends Controller {
 			Line line = textLines.get(i + startLine);
 			pg.fill(line.textColor);
 			pg.textAlign(LEFT, BOTTOM);
+			pg.textSize(this.textSize);
 			pg.text(line.text, padding, (int) (padding * 0.5) + (i + 1) * getTextHeight());
 			if (line.isHead) {
 				pg.strokeWeight(2);
@@ -118,8 +133,18 @@ public class ScrollableTextArea extends Controller {
 		pg.endDraw();
 	}
 
-	private int getMaxLinesToDisplay() {
-		return (int) ((h - padding - padding) / getTextHeight() + 1);
+	public void setPadding(float padding) {
+		this.padding = padding;
+		updateWrappedLines();
+	}
+
+	public void setTextSize(float textSize) {
+		this.textSize = textSize;
+		updateWrappedLines();
+	}
+
+	public int getMaxLinesToDisplay() {
+		return (int) ((h - padding - padding) / getTextHeight());
 	}
 
 	private float getTextHeight() {
@@ -133,25 +158,6 @@ public class ScrollableTextArea extends Controller {
 
 	private void updateScrollBarGraphics() {
 
-	}
-
-	/**
-	 * Sets the rounding of the rectangle's border. The parameters should be entered in a clockwise order
-	 * 
-	 * @param r1
-	 * 	Upper Left
-	 * @param r2
-	 * 	Upper Right
-	 * @param r3
-	 * 	Bottom Right
-	 * @param r4
-	 * 	Bottome Left
-	 */
-	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
-		this.r1 = r1;
-		this.r2 = r2;
-		this.r3 = r3;
-		this.r4 = r4;
 	}
 
 	private class Line {
