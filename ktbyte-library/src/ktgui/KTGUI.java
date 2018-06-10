@@ -61,6 +61,7 @@ public class KTGUI {
 	public KTGUI(PApplet pa) {
 		System.out.println("Creating the KTGUI instance...");
 		init(pa);
+		System.out.println("Done.\n");
 	}
 
 	private void init(PApplet pa) {
@@ -198,7 +199,7 @@ public class KTGUI {
 		for (Controller controller : stageManager.getActiveStage().controllers) {
 			controller.processMouseDragged();
 		}
-		if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
 			for (Controller controller : stageManager.getDefaultStage().controllers) {
 				controller.processMouseDragged();
 			}
@@ -213,7 +214,7 @@ public class KTGUI {
 			controller.processMousePressed();
 		}
 
-		if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
 			for (Controller controller : stageManager.getDefaultStage().controllers) {
 				controller.processMousePressed();
 			}
@@ -227,7 +228,7 @@ public class KTGUI {
 		for (Controller controller : stageManager.getActiveStage().controllers) {
 			controller.processMouseReleased();
 		}
-		if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
 			for (Controller controller : stageManager.getDefaultStage().controllers) {
 				controller.processMouseReleased();
 			}
@@ -241,7 +242,7 @@ public class KTGUI {
 		for (Controller controller : stageManager.getActiveStage().controllers) {
 			controller.processMouseMoved();
 		}
-		if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
 			for (Controller controller : stageManager.getDefaultStage().controllers) {
 				controller.processMouseMoved();
 			}
@@ -252,7 +253,7 @@ public class KTGUI {
 		for (Controller controller : stageManager.getActiveStage().controllers) {
 			controller.processMouseWheel(me);
 		}
-		if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
 			for (Controller controller : stageManager.getDefaultStage().controllers) {
 				controller.processMouseWheel(me);
 			}
@@ -266,7 +267,7 @@ public class KTGUI {
 		for (Controller controller : stageManager.getActiveStage().controllers) {
 			controller.processKeyPressed();
 		}
-		if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
 			for (Controller controller : stageManager.getDefaultStage().controllers) {
 				controller.processKeyPressed();
 			}
@@ -280,7 +281,7 @@ public class KTGUI {
 		for (Controller controller : stageManager.getActiveStage().controllers) {
 			controller.processKeyReleased();
 		}
-		if (stageManager.getActiveStage() != stageManager.getDefaultStage()) {
+		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
 			for (Controller controller : stageManager.getDefaultStage().controllers) {
 				controller.processKeyReleased();
 			}

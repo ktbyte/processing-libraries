@@ -135,9 +135,6 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			controller.setParentController(this);
 			// register in parentStage
 			registerChildController(controller);
-			// prevent the child controller from being dragged 
-			// while it's inside the parent controller
-			controller.isDragable = false;
 		}
 	}
 

@@ -12,7 +12,7 @@ public class ScrollableTextArea extends Controller {
 	private ArrayList<TextLine>		textLines	= new ArrayList<>();
 	private ArrayList<TextBlock>	textBlocks	= new ArrayList<>();
 	private int						startLine	= 0;
-	
+
 	public ScrollableTextArea(KTGUI ktgui, String title, int x, int y, int w, int h) {
 		super(ktgui);
 
@@ -66,7 +66,7 @@ public class ScrollableTextArea extends Controller {
 	private void updateTextAreaGraphics() {
 		pg.beginDraw();
 		pg.pushStyle();
-		if(isFocused) {
+		if (isFocused) {
 			pg.fill(bgPressedColor);
 			pg.stroke(50);
 			pg.strokeWeight(3f);
@@ -109,7 +109,7 @@ public class ScrollableTextArea extends Controller {
 		} else {
 			isFocused = false;
 		}
-		
+
 	}
 
 	public void mouseScrolled(int mouseWheelDelta) {
@@ -186,7 +186,7 @@ public class ScrollableTextArea extends Controller {
 		public int		textColor	= pa.color(0, 10, 30);
 		public boolean	isHead;
 
-		public TextLine(String content, boolean isHead) {
+		@SuppressWarnings("unused") public TextLine(String content, boolean isHead) {
 			this.content = content;
 			this.isHead = isHead;
 		}

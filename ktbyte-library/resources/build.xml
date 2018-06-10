@@ -346,6 +346,7 @@ ${line}
 			<include name="**/ScrollableTextAreaExample/**" />
 			<include name="**/SliderExample/**" />
 			<include name="**/WindowExample/**" />
+			<include name="**/GUIShowcase/**" />
 			<include name="**/KTSoundCipher_*/**" />
 			<include name="**/Console_*/**" />
 			<include name="**/SoundFile_*/**" />
