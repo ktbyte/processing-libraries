@@ -3,21 +3,15 @@ package ktgui;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
+import processing.event.MouseEvent;
 
 public class ScrollableTextArea extends Controller {
-	private final static int	SCROLL_BAR_WIDTH	= 20;
-	private final static int	BOX_ROUNDING		= 8;
+	private float					textSize	= 14;
+	private float					padding		= 6;
 
-	public float				textSize			= 14;
-	//private float				padding;
-	public float				padding				= 12;
-
-	public ArrayList<TextLine>	textLines			= new ArrayList<>();
-	public ArrayList<TextBlock>	textBlocks			= new ArrayList<>();
-	//	private ArrayList<Line>		textLines;
-	public int					startLine			= 0;
-	//	private int					startLine			= 0;
-	//	private int					endLine;
+	private ArrayList<TextLine>		textLines	= new ArrayList<>();
+	private ArrayList<TextBlock>	textBlocks	= new ArrayList<>();
+	private int						startLine	= 0;
 
 	public ScrollableTextArea(KTGUI ktgui, String title, int x, int y, int w, int h) {
 		super(ktgui);
@@ -45,7 +39,7 @@ public class ScrollableTextArea extends Controller {
 		textBlocks.add(textBlock);
 		textBlock.appendAsWrappedLines();
 	}
-	
+
 	private void updateWrappedLines() {
 		textLines = new ArrayList<TextLine>();
 		for (TextBlock block : textBlocks) {
@@ -93,6 +87,56 @@ public class ScrollableTextArea extends Controller {
 		pg.endDraw();
 	}
 
+	private void updateScrollBarGraphics() {
+
+	}
+
+	public void processMouseWheel(MouseEvent me) {
+		mouseScrolled(me.getCount());
+	}
+
+	public void mouseScrolled(int mouseWheelDelta) {
+		if (isFocused) {
+			if (mouseWheelDelta < 0) {
+				if (startLine > 0) {
+					decrementStartLine();
+				}
+			} else if (mouseWheelDelta > 0) {
+				if (startLine < textLines.size() - getMaxLinesToDisplay()) {
+					incrementStartLine();
+				}
+			}
+		}
+	}
+
+	public void incrementStartLine() {
+		if(startLine < textLines.size() - getMaxLinesToDisplay()) {
+			startLine++;
+		}
+	}
+
+	public void decrementStartLine() {
+		if(startLine > 0) {
+			startLine--;
+		}
+	}
+
+	public ArrayList<TextLine> getTextLines() {
+		return textLines;
+	}
+
+	public ArrayList<TextBlock> getTextBlocks() {
+		return textBlocks;
+	}
+
+	public float getTextSize() {
+		return textSize;
+	}
+
+	public float getPadding() {
+		return padding;
+	}
+
 	public void setPadding(float padding) {
 		this.padding = padding;
 		updateWrappedLines();
@@ -104,7 +148,7 @@ public class ScrollableTextArea extends Controller {
 	}
 
 	public int getMaxLinesToDisplay() {
-		return (int) ((h - padding - padding) / getTextHeight());
+		return (int) ((h - padding - padding) / getTextHeight()) + 1;
 	}
 
 	private float getTextHeight() {
@@ -112,12 +156,12 @@ public class ScrollableTextArea extends Controller {
 		return pa.textAscent() + pa.textDescent();
 	}
 
-	public void setStartLine(int startLine) {
-		this.startLine = startLine;
+	public int getStartLine() {
+		return startLine;
 	}
 
-	private void updateScrollBarGraphics() {
-
+	public void setStartLine(int startLine) {
+		this.startLine = startLine;
 	}
 
 	private class TextLine {
@@ -129,7 +173,7 @@ public class ScrollableTextArea extends Controller {
 			this.content = content;
 			this.isHead = isHead;
 		}
-		
+
 		public TextLine(String content, int textColor, boolean isHead) {
 			this.content = content;
 			this.isHead = isHead;
@@ -146,7 +190,7 @@ public class ScrollableTextArea extends Controller {
 		public TextBlock(String content) {
 			this.content = content;
 		}
-		
+
 		public TextBlock(String content, int textColor) {
 			this.content = content;
 			this.textColor = textColor;
