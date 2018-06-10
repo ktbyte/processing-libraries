@@ -43,11 +43,11 @@ public class Button extends Controller {
 		pg.beginDraw();
 		pg.rectMode(CORNER);
 		if (isHovered && !isPressed) {
-			pg.fill(hoveredColor);
+			pg.fill(fgHoveredColor);
 		} else if (isHovered && isPressed) {
-			pg.fill(pressedColor);
+			pg.fill(fgPressedColor);
 		} else {
-			pg.fill(passiveColor);
+			pg.fill(fgPassiveColor);
 		}
 		pg.rect(0, 0, w, h, r1, r2, r3, r4);
 		pg.fill(255);

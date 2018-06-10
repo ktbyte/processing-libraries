@@ -26,9 +26,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public PGraphics				pg;
 	public PGraphics				userpg;
 
-	public int						hoveredColor;
-	public int						pressedColor;
-	public int						passiveColor;
+	public int						fgHoveredColor;
+	public int						fgPressedColor;
+	public int						fgPassiveColor;
+	public int						bgHoveredColor;
+	public int						bgPressedColor;
+	public int						bgPassiveColor;
 
 	public Controller(KTGUI ktgui) {
 		this.ktgui = ktgui;
@@ -37,9 +40,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void init() {
-		hoveredColor = KTGUI.COLOR_FG_HOVERED;
-		pressedColor = KTGUI.COLOR_FG_PRESSED;
-		passiveColor = KTGUI.COLOR_FG_PASSIVE;
+		fgHoveredColor = KTGUI.COLOR_FG_HOVERED;
+		fgPressedColor = KTGUI.COLOR_FG_PRESSED;
+		fgPassiveColor = KTGUI.COLOR_FG_PASSIVE;
+		bgHoveredColor = KTGUI.COLOR_BG_HOVERED;
+		bgPressedColor = KTGUI.COLOR_BG_PRESSED;
+		bgPassiveColor = KTGUI.COLOR_BG_PASSIVE;
 	}
 
 	public void updateGraphics() {}
@@ -85,15 +91,15 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void setHoveredColor(int c) {
-		hoveredColor = c;
+		fgHoveredColor = c;
 	}
 
 	public void setPressedColor(int c) {
-		pressedColor = c;
+		fgPressedColor = c;
 	}
 
 	public void setPassiveColor(int c) {
-		passiveColor = c;
+		fgPassiveColor = c;
 	}
 
 	public void setRoundings(int r1, int r2, int r3, int r4) {
@@ -102,7 +108,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		this.r3 = r3;
 		this.r4 = r4;
 	}
-	
+
 	public PGraphics getGraphics() {
 		return pg;
 	}

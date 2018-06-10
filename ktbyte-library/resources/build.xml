@@ -341,8 +341,9 @@ ${line}
 		<dirset id="examples.contents" dir="${project.examples}">
 			<exclude name="**/.vscode/**" />
 			<exclude name="**/out/**" />
-			<include name="**/TextBoxExample/**" />
 			<include name="**/ButtonExample/**" />
+			<include name="**/InputTextBoxExample/**" />
+			<include name="**/ScrollableTextAreaExample/**" />
 			<include name="**/SliderExample/**" />
 			<include name="**/WindowExample/**" />
 			<include name="**/KTSoundCipher_*/**" />

@@ -12,7 +12,7 @@ public class ScrollableTextArea extends Controller {
 	private ArrayList<TextLine>		textLines	= new ArrayList<>();
 	private ArrayList<TextBlock>	textBlocks	= new ArrayList<>();
 	private int						startLine	= 0;
-
+	
 	public ScrollableTextArea(KTGUI ktgui, String title, int x, int y, int w, int h) {
 		super(ktgui);
 
@@ -66,8 +66,15 @@ public class ScrollableTextArea extends Controller {
 	private void updateTextAreaGraphics() {
 		pg.beginDraw();
 		pg.pushStyle();
-		pg.fill(220);
-		pg.stroke(100, 100, 0);
+		if(isFocused) {
+			pg.fill(bgPressedColor);
+			pg.stroke(50);
+			pg.strokeWeight(3f);
+		} else {
+			pg.fill(bgPassiveColor);
+			pg.stroke(0, 50, 0);
+			pg.strokeWeight(1f);
+		}
 		pg.rect(0, 0, w, h, r1, r2, r3, r4);
 
 		int consoleEndLine = PApplet.min(textLines.size() - 1, startLine + getMaxLinesToDisplay());
@@ -78,7 +85,7 @@ public class ScrollableTextArea extends Controller {
 			pg.textSize(this.textSize);
 			pg.text(line.content, padding, (int) (padding * 0.5) + (i + 1) * getTextHeight());
 			if (line.isHead) {
-				pg.strokeWeight(2);
+				pg.strokeWeight(3);
 				pg.point(padding - 5, (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
 			}
 		}
@@ -93,6 +100,16 @@ public class ScrollableTextArea extends Controller {
 
 	public void processMouseWheel(MouseEvent me) {
 		mouseScrolled(me.getCount());
+	}
+
+	public void processMousePressed() {
+		if (pa.mouseX > posx && pa.mouseX < posx + w
+				&& pa.mouseY > posy && pa.mouseY < posy + h) {
+			isFocused = true;
+		} else {
+			isFocused = false;
+		}
+		
 	}
 
 	public void mouseScrolled(int mouseWheelDelta) {
@@ -110,13 +127,13 @@ public class ScrollableTextArea extends Controller {
 	}
 
 	public void incrementStartLine() {
-		if(startLine < textLines.size() - getMaxLinesToDisplay()) {
+		if (startLine < textLines.size() - getMaxLinesToDisplay()) {
 			startLine++;
 		}
 	}
 
 	public void decrementStartLine() {
-		if(startLine > 0) {
+		if (startLine > 0) {
 			startLine--;
 		}
 	}
