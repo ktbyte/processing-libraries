@@ -12,8 +12,8 @@ public class ScrollableTextArea extends Controller {
 	//private float				padding;
 	public float				padding				= 12;
 
-	public ArrayList<Line>		textLines			= new ArrayList<>();
-	public ArrayList<String>	textBlocks			= new ArrayList<>();
+	public ArrayList<TextLine>	textLines			= new ArrayList<>();
+	public ArrayList<TextBlock>	textBlocks			= new ArrayList<>();
 	//	private ArrayList<Line>		textLines;
 	public int					startLine			= 0;
 	//	private int					startLine			= 0;
@@ -28,68 +28,28 @@ public class ScrollableTextArea extends Controller {
 		this.w = w;
 		this.h = h;
 
-		setPadding(8);
-
-		appendTextBlock("A first line.");
-		appendTextBlock("A HashMap stores a collection of objects, each referenced by a key."
-				+ " This is similar to an Array, only instead of accessing elements with "
-				+ "a numeric index, a String is used. (If you are familiar with associative "
-				+ "arrays from other languages, this is the same idea.) The above example "
-				+ "covers basic use, but there's a more extensive example included with the "
-				+ "Processing examples. In addition, for simple pairings of Strings and "
-				+ "integers, Strings and floats, or Strings and Strings, you can now use the "
-				+ "simpler IntDict, FloatDict, and StringDict classes.");
-		appendTextBlock("A third line.");
-
-		System.out.println("textLines.size():" + textLines.size());
-		System.out.println("getMaxLinesToDisplay():" + getMaxLinesToDisplay());
-		System.out.println("getTextHeight():" + getTextHeight());
-
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 
 		StageManager.getInstance().getDefaultStage().registerController(this);
 	}
 
-	public void appendTextBlock(String string) {
-		textBlocks.add(string);
-		appendWrappedBlockAsLines(string);
+	public void appendTextBlock(String text) {
+		TextBlock textBlock = new TextBlock(text);
+		textBlocks.add(textBlock);
+		textBlock.appendAsWrappedLines();
 	}
 
+	public void appendTextBlock(String text, int color) {
+		TextBlock textBlock = new TextBlock(text, color);
+		textBlocks.add(textBlock);
+		textBlock.appendAsWrappedLines();
+	}
+	
 	private void updateWrappedLines() {
-		textLines = new ArrayList<Line>();
-		for (String block : textBlocks) {
-			appendWrappedBlockAsLines(block);
-		}
-	}
-
-	private void appendWrappedBlockAsLines(String string) {
-		StringBuilder sb = new StringBuilder();
-
-		boolean isHeadAlreadyMarked = false;
-		// go through all the characters in the text block splitting it by text
-		// chunks which has the width equals to the textarea.width - padding - padding 
-		int paddedWidth = (int) (w - padding - padding);
-		pa.textSize(textSize); // update the PApplet's value in order to accurately 
-		// calculate the text width
-		for (int i = 0; i < string.length(); i++) {
-			int chunkWidth = (int) (pa.textWidth(sb.toString()));
-			if (chunkWidth > paddedWidth) {
-				if (!isHeadAlreadyMarked) {
-					textLines.add(new Line(sb.toString(), true)); // add last line
-					isHeadAlreadyMarked = true;
-				} else {
-					textLines.add(new Line(sb.toString(), false)); // add last line
-				}
-				sb = new StringBuilder();
-			}
-			sb.append(string.charAt(i));
-		}
-		if (!isHeadAlreadyMarked) {
-			textLines.add(new Line(sb.toString(), true)); // add last line
-			isHeadAlreadyMarked = true;
-		} else {
-			textLines.add(new Line(sb.toString(), false)); // add last line
+		textLines = new ArrayList<TextLine>();
+		for (TextBlock block : textBlocks) {
+			block.appendAsWrappedLines();
 		}
 	}
 
@@ -118,11 +78,11 @@ public class ScrollableTextArea extends Controller {
 
 		int consoleEndLine = PApplet.min(textLines.size() - 1, startLine + getMaxLinesToDisplay());
 		for (int i = 0; i <= consoleEndLine - startLine; i++) {
-			Line line = textLines.get(i + startLine);
+			TextLine line = textLines.get(i + startLine);
 			pg.fill(line.textColor);
 			pg.textAlign(LEFT, BOTTOM);
 			pg.textSize(this.textSize);
-			pg.text(line.text, padding, (int) (padding * 0.5) + (i + 1) * getTextHeight());
+			pg.text(line.content, padding, (int) (padding * 0.5) + (i + 1) * getTextHeight());
 			if (line.isHead) {
 				pg.strokeWeight(2);
 				pg.point(padding - 5, (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
@@ -160,30 +120,69 @@ public class ScrollableTextArea extends Controller {
 
 	}
 
-	private class Line {
-		public String	text;
+	private class TextLine {
+		public String	content;
 		public int		textColor	= pa.color(0, 10, 30);
 		public boolean	isHead;
 
-		public Line() {
-			this.text = "";
-		}
-
-		public Line(String string) {
-			this.text = string;
-		}
-
-		public Line(String string, boolean isHead) {
-			this.text = string;
+		public TextLine(String content, boolean isHead) {
+			this.content = content;
 			this.isHead = isHead;
 		}
+		
+		public TextLine(String content, int textColor, boolean isHead) {
+			this.content = content;
+			this.isHead = isHead;
+			this.textColor = textColor;
+		}
+	}
 
-		public void setText(String text) {
-			this.text = text;
+	private class TextBlock {
+		private String			content;
+		private StringBuilder	sb;
+		private boolean			isHeadAlreadyMarked;
+		private int				textColor	= pa.color(0);
+
+		public TextBlock(String content) {
+			this.content = content;
+		}
+		
+		public TextBlock(String content, int textColor) {
+			this.content = content;
+			this.textColor = textColor;
 		}
 
-		public void setTextColor(int textColor) {
-			this.textColor = textColor;
+		public void appendAsWrappedLines() {
+			// reset the flag and 'sb' after previous call to this method 
+			// in order to allow correct head marking in case the padding 
+			// or text size will change
+			isHeadAlreadyMarked = false;
+			sb = new StringBuilder();
+			// calculate the wrapped width of the line as it will be shown
+			int wrappedWidth = (int) (w - padding - padding);
+			// update the PApplet's textSize value in order to accurately
+			// calculate text width
+			pa.textSize(textSize);
+			// go through all the characters in the text block splitting it
+			// by text chunks which has the width equals to the 'paddedWidth' 
+			for (int i = 0; i < content.length(); i++) {
+				int chunkWidth = (int) (pa.textWidth(sb.toString()));
+				if (chunkWidth > wrappedWidth) {
+					addWrappedLine();
+					sb = new StringBuilder();
+				}
+				sb.append(content.charAt(i));
+			}
+			addWrappedLine();
+		}
+
+		private void addWrappedLine() {
+			if (!isHeadAlreadyMarked) {
+				textLines.add(new TextLine(sb.toString(), textColor, true)); // add last line
+				isHeadAlreadyMarked = true;
+			} else {
+				textLines.add(new TextLine(sb.toString(), textColor, false)); // add last line
+			}
 		}
 	}
 }
