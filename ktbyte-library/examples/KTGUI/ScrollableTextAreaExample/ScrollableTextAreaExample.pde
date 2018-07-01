@@ -12,7 +12,7 @@ void setup() {
 	sta.setRoundings(15, 0, 15, 0);
 	sta.setPadding(20);
 	sta.setTextSize(14);
-	sta.alignAboutApplet(CENTER, CENTER);
+	sta.alignAboutCanvas(CENTER, CENTER);
 	sta.appendTextBlock("A first line.", color(20, 20, 200));
 	sta.appendTextBlock("A HashMap: ", color(200, 20, 20));
 	sta.appendTextBlock("stores a collection of objects, each referenced by a key."

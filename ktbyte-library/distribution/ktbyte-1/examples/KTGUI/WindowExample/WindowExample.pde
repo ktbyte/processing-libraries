@@ -25,10 +25,10 @@ void setup() {
   );
 
   w1 = ktgui.createWindow("Window_1", 10, 220, 300, 200);
-  w1.alignAboutApplet(LEFT, BOTTOM);
+  w1.alignAboutCanvas(LEFT, BOTTOM);
 
   w2 = ktgui.createWindow("Window_2", 400, 220, 300, 200);
-  w2.stackAbout(w2, TOP, CENTER);
+  w2.stackAbout(w1, TOP, CENTER);
   w2.addController(jumpButton, CENTER, CENTER);
 }
 

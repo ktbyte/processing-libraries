@@ -11,7 +11,7 @@ void setup() {
   textBox1 = new InputTextBox(ktgui, "Upper TextBox", 50, 50, 300, 40);
 
   textBox1.setText("Enter some text in here ...");
-  textBox1.alignAboutApplet(CENTER, 0);
+  textBox1.alignAboutCanvas(CENTER, 0);
   textBox1.setTextSize(16);
   textBox1.setBorderRoundings(10, 10, 0, 0);
   textBox1.addEventAdapter(new KTGUIEventAdapter() {
@@ -24,7 +24,7 @@ void setup() {
 
   textBox2 = new InputTextBox(ktgui, "Lower TextBox", 50, 150, 300, 40);
   textBox2.setBorderRoundings(0, 0, 10, 10);
-  textBox2.alignAboutApplet(CENTER, 0);
+  textBox2.alignAboutCanvas(CENTER, 0);
   textBox2.setText("Or here ...");
   textBox2.setTextSize(16);
   textBox2.addEventAdapter(new KTGUIEventAdapter() {

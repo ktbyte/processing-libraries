@@ -16,7 +16,10 @@ void setup() {
   ktgui = new KTGUI(this);
 
   button = ktgui.createButton("A Button", 10, 10, 150, 60);
-  button.alignAboutApplet(LEFT, CENTER);
+  button.alignAboutCanvas(LEFT, CENTER);
+  button.setPassiveColor(color(200, 100, 150));
+  button.setHoveredColor(color(100, 150, 200));
+  button.setPressedColor(color(100, 100, 150));
   button.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       println("The Button is pressed!");
@@ -31,12 +34,13 @@ void setup() {
   );
 
   changeStateButton = ktgui.createButton("isDragable", 0, 0, 150, 60);
-  changeStateButton.alignAboutApplet(LEFT, BOTTOM);
+  changeStateButton.alignAboutCanvas(LEFT, BOTTOM);
   changeStateButton.isDragable = false;
   changeStateButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       button.isDragable = !button.isDragable;
       txt = "Try to drag again";
+      button.setPassiveColor( button.isDragable ? color(50, 200, 50) : color(200, 100, 150) );
     }
   });
 }

@@ -20,7 +20,7 @@ void setup() {
   ktgui = new KTGUI(this); // default stage is automatically created
 
   dbgButton = ktgui.createButton("Debug", 0, 0, 100, 50);
-  dbgButton.alignAboutApplet(CENTER, BOTTOM);
+  dbgButton.alignAboutCanvas(CENTER, BOTTOM);
   dbgButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       debug = !debug;
@@ -30,7 +30,7 @@ void setup() {
 
   // this button will be visible always because it will be located on default stage
   nextStageBtn = ktgui.createButton("NextStage", width - 120, height - 70, 100, 50);
-  nextStageBtn.alignAboutApplet(RIGHT, BOTTOM);
+  nextStageBtn.alignAboutCanvas(RIGHT, BOTTOM);
   nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       msg("Callback message: The Next-Stage-Button was pressed!");
@@ -41,7 +41,7 @@ void setup() {
 
   s1 = StageManager.getInstance().createStage("stage_1");
   anotherButton = ktgui.createButton("Go To Stage_2", 50, height - 70, 150, 50);
-  anotherButton.alignAboutApplet(LEFT, BOTTOM);
+  anotherButton.alignAboutCanvas(LEFT, BOTTOM);
   anotherButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
       msg("Callback message: The anotherButton (goToStage(1)) was pressed!");
@@ -55,7 +55,7 @@ void setup() {
   // We can still use 's1.attachController(Controller) though.
   s2 = StageManager.getInstance().createStage("stage_2");
   pane = ktgui.createPane((int)(width * 0.5 - 200), 200, 400, 200);  
-  pane.alignAboutApplet(CENTER, TOP);
+  pane.alignAboutCanvas(CENTER, TOP);
   pane.isDragable = true;
   s2.registerController(pane);
 
@@ -81,11 +81,11 @@ void setup() {
   // The "s2" stage is still "active". So, the both windows are automatically attached to this stage.
   // We can still use 's2.attachController(Controller) though.
   w2 = ktgui.createWindow("Window_2", 10, 220, 300, 200);
-  w2.alignAboutApplet(LEFT, BOTTOM);
+  w2.alignAboutCanvas(LEFT, BOTTOM);
   s3.registerController(w2);
 
   w3 = ktgui.createWindow("Window_3", 400, 220, 300, 200);
-  //w3.alignAboutApplet(RIGHT, 0);
+  //w3.alignAboutCanvas(RIGHT, 0);
   w3.stackAbout(w2, TOP, CENTER);
   w3.addController(jumpButton, CENTER, CENTER);
   s3.registerController(w3);
@@ -94,7 +94,7 @@ void setup() {
 
   Pane p1 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
   p1.isDragable = true;
-  p1.alignAboutApplet(LEFT, TOP);
+  p1.alignAboutCanvas(LEFT, TOP);
   Button p1b1 = ktgui.createButton("Top", 10, 10, 180, 40);
   p1b1.setPassiveColor(color(200, 120, 50));
   p1.addController(p1b1, CENTER, TOP);
@@ -111,7 +111,7 @@ void setup() {
 
   Pane p2 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
   p2.isDragable = true;
-  p2.alignAboutApplet(CENTER, TOP);
+  p2.alignAboutCanvas(CENTER, TOP);
   Button p2b1 = ktgui.createButton("Center", 10, 10, 180, 40);
   p2b1.setPassiveColor(color(20, 200, 150));
   p2.addController(p2b1, CENTER, CENTER);
@@ -128,7 +128,7 @@ void setup() {
 
   Pane p3 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
   p3.isDragable = true;
-  p3.alignAboutApplet(RIGHT, TOP);
+  p3.alignAboutCanvas(RIGHT, TOP);
   Button p3b1 = ktgui.createButton("Bottom", 10, 10, 180, 40);
   p3b1.setPassiveColor(color(250, 20, 200));
   p3.addController(p3b1, CENTER, BOTTOM);

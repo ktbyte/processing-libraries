@@ -211,7 +211,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		ktgui.addToGarbage(controller, pa.millis());
 	}
 
-	public void alignAboutApplet(int hAlign, int vAlign) {
+	public void alignAboutCanvas(int hAlign, int vAlign) {
 		switch (hAlign) {
 		case PConstants.LEFT:
 			updateChildrenPositions(KTGUI.ALIGN_GAP - this.posx, 0);
