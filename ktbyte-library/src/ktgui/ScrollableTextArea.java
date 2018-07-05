@@ -12,6 +12,7 @@ public class ScrollableTextArea extends Controller {
 	private ArrayList<TextLine>		textLines	= new ArrayList<>();
 	private ArrayList<TextBlock>	textBlocks	= new ArrayList<>();
 	private int						startLine	= 0;
+	private boolean					enableLineStartMarks;
 
 	public ScrollableTextArea(KTGUI ktgui, String title, int x, int y, int w, int h) {
 		super(ktgui);
@@ -84,7 +85,7 @@ public class ScrollableTextArea extends Controller {
 			pg.textAlign(LEFT, BOTTOM);
 			pg.textSize(this.textSize);
 			pg.text(line.content, padding, (int) (padding * 0.5) + (i + 1) * getTextHeight());
-			if (line.isHead) {
+			if (line.isHead && enableLineStartMarks) {
 				pg.strokeWeight(3);
 				pg.point(padding - 5, (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
 			}
@@ -145,11 +146,11 @@ public class ScrollableTextArea extends Controller {
 	}
 
 	public void scrollToBottom() {
-		while(startLine < textLines.size() - getMaxLinesToDisplay()) {
+		while (startLine < textLines.size() - getMaxLinesToDisplay()) {
 			startLine++;
 		}
 	}
-	
+
 	public ArrayList<TextLine> getTextLines() {
 		return textLines;
 	}
@@ -191,6 +192,10 @@ public class ScrollableTextArea extends Controller {
 
 	public void setStartLine(int startLine) {
 		this.startLine = startLine;
+	}
+
+	public void enableLineStartMarks(boolean val) {
+		enableLineStartMarks = val;
 	}
 
 	private class TextLine {
