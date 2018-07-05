@@ -81,9 +81,17 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+	public int getWidth() {
+		return w;
+	}
 
 	public void setWidth(int w) {
 		this.w = w;
+	}
+	
+	public int getHeight() {
+		return h;
 	}
 
 	public void setHeight(int h) {

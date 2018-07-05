@@ -28,14 +28,15 @@ public class KTGUIConsole extends Controller {
 	//	private ArrowButton upBtn;
 	//	private ArrowButton downBtn;
 	private InputTextBox			inputBox;
-
-	public KTGUIConsole(KTGUI ktgui, String title, int x, int y, int width, int height) {
+	private ScrollableTextArea		textArea;
+	
+	public KTGUIConsole(KTGUI ktgui, String title, int x, int y, int w, int h) {
 		super(ktgui);
 		this.title = title;
 		this.posx = x;
 		this.posy = y;
-		this.w = width;
-		this.h = height;
+		this.w = w;
+		this.h = h;
 		this.inputTextColor = pa.color(255);
 		this.outputTextColor = pa.color(170);
 
@@ -55,14 +56,10 @@ public class KTGUIConsole extends Controller {
 				handleConsoleInput();
 			}
 		});
-		//		inputBox.setKeyEventListener(new KeyEventListener() {
-		//	
-		//			@Override
-		//			public void onEnterKey() {
-		//				handleConsoleInput();
-		//			}
-		//		});
 
+		textArea = new ScrollableTextArea(ktgui, "sta:" + title, x, y, w, h - inputBox.getHeight());
+		textArea.setRoundings(7, 0, 0, 0);
+		
 		computeDefaultAttributes();
 
 		pg = pa.createGraphics(w + 1, h + 1);
@@ -77,8 +74,8 @@ public class KTGUIConsole extends Controller {
 	 */
 	public void draw() {
 		pa.pushStyle();
-		drawConsoleTextBox();
-		drawScrollBar();
+		//drawConsoleTextBox();
+		//drawScrollBar();
 		pa.popStyle();
 	}
 
@@ -187,7 +184,11 @@ public class KTGUIConsole extends Controller {
 
 	private void handleConsoleInput() {
 		String textInput = inputBox.getText();
-		splitCommandBasedOnConsoleWidth(new Command(textInput, true));
+		//splitCommandBasedOnConsoleWidth(new Command(textInput, true));
+		textArea.appendTextBlock(textInput);
+		textArea.scrollToBottom();
+		inputBox.setText("");
+		
 		//		dict.put(lastVariableName, textInput);
 		//		if (consoleInputListener != null) {
 		//			consoleInputListener.onConsoleInput(lastVariableName, textInput);

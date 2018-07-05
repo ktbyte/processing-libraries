@@ -138,16 +138,24 @@ public class ScrollableTextArea extends Controller {
 		}
 	}
 
+	public void scrollToTop() {
+		while (startLine > 0) {
+			startLine--;
+		}
+	}
+
+	public void scrollToBottom() {
+		while(startLine < textLines.size() - getMaxLinesToDisplay()) {
+			startLine++;
+		}
+	}
+	
 	public ArrayList<TextLine> getTextLines() {
 		return textLines;
 	}
 
 	public ArrayList<TextBlock> getTextBlocks() {
 		return textBlocks;
-	}
-
-	public float getTextSize() {
-		return textSize;
 	}
 
 	public float getPadding() {
@@ -157,6 +165,10 @@ public class ScrollableTextArea extends Controller {
 	public void setPadding(float padding) {
 		this.padding = padding;
 		updateWrappedLines();
+	}
+
+	public float getTextSize() {
+		return textSize;
 	}
 
 	public void setTextSize(float textSize) {
