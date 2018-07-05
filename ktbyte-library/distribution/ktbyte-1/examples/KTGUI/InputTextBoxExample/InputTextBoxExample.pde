@@ -12,7 +12,7 @@ void setup() {
 
   textBox1.setText("Enter some text in here ...");
   textBox1.alignAboutCanvas(CENTER, 0);
-  textBox1.setTextSize(16);
+  textBox1.setTextSize(12);
   textBox1.setBorderRoundings(10, 10, 0, 0);
   textBox1.addEventAdapter(new KTGUIEventAdapter() {
       public void onEnterKeyPressed() {

@@ -71,6 +71,7 @@ public class InputTextBox extends Controller {
 			return;
 		}
 		if (pa.frameCount % 60 < 30) {
+			pa.textSize(textSize);
 			float cursorX = PApplet.min(w - padding, pa.textWidth(textInput) + padding);
 			pg.beginDraw();
 			pg.stroke(0);

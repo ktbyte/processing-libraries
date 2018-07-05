@@ -48,8 +48,10 @@ public class KTGUIConsole extends Controller {
 
 		dict = new HashMap<String, String>();
 
-		inputBox = new InputTextBox(ktgui, "ConsoleTextBox", x, y + h - inputBoxHeight, w, inputBoxHeight);
+		//inputBox = new InputTextBox(ktgui, "ConsoleTextBox", x, y + h - inputBoxHeight, w, inputBoxHeight);
+		inputBox = new InputTextBox(ktgui, "ConsoleTextBox", x, y + h - 40, w, 40);
 		inputBox.setHandleFocus(true);
+		inputBox.setTextSize(16);
 		inputBox.setBorderRoundings(0, 0, 7, 7);
 		inputBox.addEventAdapter(new KTGUIEventAdapter() {
 			public void onEnterKeyPressed() {
