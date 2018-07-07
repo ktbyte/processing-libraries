@@ -117,6 +117,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		this.r4 = r4;
 	}
 
+	public void setHandleFocus(boolean val) {
+		handleFocus = val;
+	}
+	
 	public PGraphics getGraphics() {
 		return pg;
 	}

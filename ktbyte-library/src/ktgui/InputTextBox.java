@@ -119,14 +119,6 @@ public class InputTextBox extends Controller {
 		return x > posx && x < posx + w && y > posy && y < posy + h;
 	}
 
-	public void setIsFocused(boolean val) {
-		isFocused = val;
-	}
-
-	public void setHandleFocus(boolean val) {
-		handleFocus = val;
-	};
-	
 	/**
 	 * Sets the current text
 	 * 

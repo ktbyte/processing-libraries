@@ -10,6 +10,7 @@ public class KTGUIEventProcessor {
 	public boolean						isHovered;
 	public boolean						isDragable;
 	public boolean						isFocused;
+	public boolean						handleFocus;
 
 	public ArrayList<KTGUIEventAdapter>	adapters	= new ArrayList<KTGUIEventAdapter>();
 
