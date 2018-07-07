@@ -9,7 +9,6 @@ public class InputTextBox extends Controller {
 	private final static int	BASIC_ASCII_LOWER_LIMIT	= 32;
 	private final static int	BASIC_ASCII_UPPER_LIMIT	= 126;
 
-	private int					r1, r2, r3, r4;					// box rounding parameters
 	private boolean				handleFocus				= true;
 	private String				textInput;
 	private int					textSize;
@@ -56,7 +55,8 @@ public class InputTextBox extends Controller {
 		pg.beginDraw();
 		pg.pushStyle();
 		pg.fill(255);
-		pg.noStroke();
+		pg.stroke(0);
+		pg.strokeWeight(1f);
 		pg.rect(0, 0, w, h, r1, r2, r3, r4);
 		pg.fill(0);
 		pg.textSize(textSize);
@@ -152,24 +152,24 @@ public class InputTextBox extends Controller {
 		computeDefaultAttributes();
 	}
 
-	/**
-	 * Sets the rounding of the rectangle's border. The parameters should be entered in a clockwise order
-	 * 
-	 * @param r1
-	 * 	Up
-	 * @param r2
-	 * 	Right
-	 * @param r3
-	 * 	Down
-	 * @param r4
-	 * 	Left
-	 */
-	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
-		this.r1 = r1;
-		this.r2 = r2;
-		this.r3 = r3;
-		this.r4 = r4;
-	}
+//	/**
+//	 * Sets the rounding of the rectangle's border. The parameters should be entered in a clockwise order
+//	 * 
+//	 * @param r1
+//	 * 	Up
+//	 * @param r2
+//	 * 	Right
+//	 * @param r3
+//	 * 	Down
+//	 * @param r4
+//	 * 	Left
+//	 */
+//	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
+//		this.r1 = r1;
+//		this.r2 = r2;
+//		this.r3 = r3;
+//		this.r4 = r4;
+//	}
 
 	private void computeDefaultAttributes() {
 		this.padding = 0.08f * h;

@@ -110,7 +110,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		fgPassiveColor = c;
 	}
 
-	public void setRoundings(int r1, int r2, int r3, int r4) {
+	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
 		this.r1 = r1;
 		this.r2 = r2;
 		this.r3 = r3;

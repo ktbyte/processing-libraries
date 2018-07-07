@@ -8,6 +8,7 @@ void setup() {
   ktgui = new KTGUI(this);
 
   console = new KTGUIConsole(ktgui, "A Console", 100, 100, 600, 400);
+  console.setBorderRoundings(10, 10, 5, 5);
   // console.enableLineStartMarks(true);
 //   console.setInputTextColor(color(255, 10, 100));
 //   console.setOutputTextColor(color(130, 90, 190));

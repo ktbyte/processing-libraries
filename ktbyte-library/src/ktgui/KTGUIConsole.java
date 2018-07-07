@@ -7,8 +7,6 @@ public class KTGUIConsole extends Controller {
 	private final static int		SCROLL_BAR_WIDTH			= 20;
 	private final static float		INPUT_BOX_HEIGHT_PERCENTAGE	= 0.1f;
 
-
-
 	private HashMap<String, String>	dict;
 	//	private ConsoleInputListener consoleInputListener;
 	//	private String lastVariableName;
@@ -40,7 +38,7 @@ public class KTGUIConsole extends Controller {
 		});
 
 		textArea = new ScrollableTextArea(ktgui, "sta:" + title, x, y, w, h - inputBox.getHeight());
-		textArea.setRoundings(BOX_ROUNDING, 0, 0, 0);
+		textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
 		
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
@@ -58,7 +56,15 @@ public class KTGUIConsole extends Controller {
 		//drawScrollBar();
 		//pa.popStyle();
 	}
-
+	
+	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
+		textArea.setBorderRoundings(r1, r2, 0, 0);
+		inputBox.setBorderRoundings(0, 0, r3, r4);
+//		inputBox.setRoundings(0, 0, 0, r4);
+//		textArea.setRoundings(r1, 0, 0, 0);
+//		scrollBar.setRoundings(0, r2, r3, 0);
+	}
+	
 	private void drawScrollBar() {
 //		int consoleTextBoxHeight = h - inputBoxHeight;
 //		int consoleTextBoxWidth = w - SCROLL_BAR_WIDTH;
@@ -123,5 +129,5 @@ public class KTGUIConsole extends Controller {
 		//		}
 		//		inputBox.setText("");
 	}
-
 }
+
