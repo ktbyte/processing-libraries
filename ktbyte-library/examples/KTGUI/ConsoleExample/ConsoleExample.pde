@@ -12,7 +12,7 @@ void setup() {
   console.setBorderRoundings(10, 10, 5, 5);
   console.setInputTextColor(color(255, 10, 100));
   console.setOutputTextColor(color(130, 90, 190));
-  console.setOutputTextSize(30);
+  console.setOutputTextSize(42);
 
 
   console.writeOutput("Hello there! What's your name?");
@@ -42,6 +42,4 @@ void setup() {
 void draw() {
   background(144);
   textSize(18);
-  text("Previous input (line):" + console.getLastLine(), 10, 20);
-  text("Previous input (block):" + console.getLastBlock(), 10, 40);
 }

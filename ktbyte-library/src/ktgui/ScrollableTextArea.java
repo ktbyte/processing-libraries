@@ -178,7 +178,7 @@ public class ScrollableTextArea extends Controller {
 	}
 
 	public int getMaxLinesToDisplay() {
-		return (int) ((h - padding - padding) / getTextHeight()) + 1;
+		return (int) PApplet.floor((h - padding - padding) / getTextHeight());
 	}
 
 	private float getTextHeight() {

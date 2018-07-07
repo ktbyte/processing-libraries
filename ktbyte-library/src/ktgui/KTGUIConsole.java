@@ -108,6 +108,7 @@ public class KTGUIConsole extends Controller {
 	
 	public void writeOutput(String textBlock) {
 		textArea.appendTextBlock(textBlock, outputTextColor);
+		textArea.scrollToBottom();
 	}
 
 	public void setInputTextColor(int c) {
