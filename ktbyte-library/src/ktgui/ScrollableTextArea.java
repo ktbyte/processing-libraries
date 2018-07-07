@@ -194,10 +194,34 @@ public class ScrollableTextArea extends Controller {
 		this.startLine = startLine;
 	}
 
-	public void enableLineStartMarks(boolean val) {
+	public void enableTextBlockStartMarks(boolean val) {
 		enableLineStartMarks = val;
 	}
 
+	public String getTextLine(int index) {
+		String textLine = "-= textLine: out of range =-";
+		if (textLines.size() - index > 0) {
+			textLine = textLines.get(index).content;
+		}
+		return textLine;
+	}
+
+	public String getTextBlock(int index) {
+		String textBlock = "-= textBlock: out of range =-";
+		if (textBlocks.size() - index > 0) {
+			textBlock = textBlocks.get(index).content;
+		}
+		return textBlock;
+	}
+	
+	public int getLineNumbers() {
+		return textLines.size();
+	}
+	
+	public int getBlockNumbers() {
+		return textBlocks.size();
+	}
+	
 	private class TextLine {
 		public String	content;
 		public int		textColor	= pa.color(0, 10, 30);

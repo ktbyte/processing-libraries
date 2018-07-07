@@ -1394,7 +1394,7 @@ mentioned list. It is intended two purposes:
 stage. If the user registers some controller in 
 other stage, then this controller is removed 
 from the default stage.
-  3.2. To have an ability to always draw some 
+  3.2. To have an ability always draw some 
 controllers even when the stages are 
 switched/changed.<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
@@ -1817,10 +1817,10 @@ Stage defaultStage;</y:AttributeLabel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="162.2866817155757" width="287.5064017508628" x="1353.5337628646396" y="974.681105989207"/>
+          <y:Geometry height="236.2000225769665" width="315.8647216464626" x="1339.3546029168397" y="900.7677651278161"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="102.99169921875" x="92.25735126605639" y="3.0">EventProcessor<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="102.99169921875" x="106.4365112138563" y="3.0">EventProcessor<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -1831,8 +1831,14 @@ Stage defaultStage;</y:AttributeLabel>
             <y:AttributeLabel>boolean isPressed, isHovered, isActive, isDragable;
 ArrayList&lt;KTGUIEventAdapters&gt; adapters;
 </y:AttributeLabel>
-            <y:MethodLabel>void updateGraphics();
-void processMousePressed()</y:MethodLabel>
+            <y:MethodLabel>void processMouseMoved() 
+void processMousePressed() 
+void processMouseReleased() 
+void processMouseDragged() 
+void processMouseWheel(MouseEvent me) 
+void processKeyPressed() 
+void processKeyReleased() 
+void addEventAdapter(KTGUIEventAdapter adapter) </y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -1938,6 +1944,33 @@ void processMousePressed()</y:MethodLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel/>
             <y:MethodLabel/>
+          </y:UML>
+        </y:UMLClassNode>
+      </data>
+    </node>
+    <node id="n103">
+      <data key="d4"/>
+      <data key="d6">
+        <y:UMLClassNode>
+          <y:Geometry height="162.2866817155757" width="168.66631232025748" x="1774.493170288765" y="937.7244355585116"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="88.51904296875" x="40.07363467575374" y="3.0">EventAdapter<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="-0.03703090122767855" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
+            <y:AttributeLabel/>
+            <y:MethodLabel>void onMousePressed()
+void onMouseReleased()
+void onMouseMoved()
+void onMouseDragged()
+void onAnyKeyReleased()
+void onAnyKeyPressed() 
+void onEnterKeyPressed()</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -2772,7 +2805,7 @@ void processMousePressed()</y:MethodLabel>
     <edge id="e69" source="n19" target="n97">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:Path sx="0.0" sy="-56.00229968825056" tx="0.0" ty="112.00459937650066"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
           <y:BendStyle smoothed="false"/>
@@ -2873,6 +2906,17 @@ void processMousePressed()</y:MethodLabel>
           <y:Path sx="37.776958090195876" sy="0.0" tx="37.7769580901961" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e78" source="n103" target="n97">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="-63.79035372988369" tx="86.4365554695464" ty="-63.79035372988369"/>
+          <y:LineStyle color="#000000" type="dashed" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>

@@ -1,20 +1,17 @@
 package ktgui;
 
-import java.util.HashMap;
-
 public class KTGUIConsole extends Controller {
-	private final static int		BOX_ROUNDING				= 7;
-	private final static int		SCROLL_BAR_WIDTH			= 20;
-	private final static float		INPUT_BOX_HEIGHT_PERCENTAGE	= 0.1f;
+	private final static int	BOX_ROUNDING				= 7;
+	private final static int	SCROLL_BAR_WIDTH			= 20;
+	private final static float	INPUT_BOX_HEIGHT_PERCENTAGE	= 0.1f;
 
-	private HashMap<String, String>	dict;
-	//	private ConsoleInputListener consoleInputListener;
-	//	private String lastVariableName;
-	//	private ArrowButton upBtn;
-	//	private ArrowButton downBtn;
-	private InputTextBox			inputBox;
-	private ScrollableTextArea		textArea;
-	
+	private InputTextBox		inputBox;
+	private ScrollableTextArea	textArea;
+	//private ScrollBar scrollBar;
+
+	private int					inputTextColor  = 0xBBFFAA; 
+	private int					outputTextColor = 0x000000;
+
 	public KTGUIConsole(KTGUI ktgui, String title, int x, int y, int w, int h) {
 		super(ktgui);
 		this.title = title;
@@ -24,8 +21,6 @@ public class KTGUIConsole extends Controller {
 		this.h = h;
 
 		int inputBoxHeight = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
-
-		dict = new HashMap<String, String>();
 
 		inputBox = new InputTextBox(ktgui, "ConsoleTextBox", x, y + h - inputBoxHeight, w, inputBoxHeight);
 		inputBox.setHandleFocus(true);
@@ -39,7 +34,7 @@ public class KTGUIConsole extends Controller {
 
 		textArea = new ScrollableTextArea(ktgui, "sta:" + title, x, y, w, h - inputBox.getHeight());
 		textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
-		
+
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 
@@ -56,78 +51,88 @@ public class KTGUIConsole extends Controller {
 		//drawScrollBar();
 		//pa.popStyle();
 	}
-	
+
 	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
 		textArea.setBorderRoundings(r1, r2, 0, 0);
 		inputBox.setBorderRoundings(0, 0, r3, r4);
-//		inputBox.setRoundings(0, 0, 0, r4);
-//		textArea.setRoundings(r1, 0, 0, 0);
-//		scrollBar.setRoundings(0, r2, r3, 0);
+		//		inputBox.setRoundings(0, 0, 0, r4);
+		//		textArea.setRoundings(r1, 0, 0, 0);
+		//		scrollBar.setRoundings(0, r2, r3, 0);
 	}
-	
+
 	private void drawScrollBar() {
-//		int consoleTextBoxHeight = h - inputBoxHeight;
-//		int consoleTextBoxWidth = w - SCROLL_BAR_WIDTH;
-//		pa.noStroke();
-//		pa.fill(50);
-//		pa.rect(posx + consoleTextBoxWidth, posy, SCROLL_BAR_WIDTH, consoleTextBoxHeight, 0, BOX_ROUNDING, 0, 0);
-//		//upBtn = new ArrowButton(x + consoleTextBoxWidth, y, SCROLL_BAR_WIDTH, UP, 0, BOX_RONDING, 0, 0);
-//		//downBtn = new ArrowButton(x + consoleTextBoxWidth, y + consoleTextBoxHeight - 20, SCROLL_BAR_WIDTH, DOWN);
-//		pa.fill(120);
-//
-//		float scrollBarHeight = scrollBarMaxHeight;
-//		if (lines.size() > maxLinesToDisplay) {
-//			scrollBarHeight = PApplet.max(25, ((float) maxLinesToDisplay / lines.size()) * scrollBarMaxHeight);
-//		}
-//		int consoleScrollableLines = lines.size() - maxLinesToDisplay;
-//		float scrollableAreaHeight = consoleTextBoxHeight - SCROLL_BAR_WIDTH * 2 - scrollBarHeight;
-//		float scrollBarYCoordinate = posy + SCROLL_BAR_WIDTH + scrollableAreaHeight;
-//		if (lines.size() > maxLinesToDisplay) {
-//			scrollBarYCoordinate = posy + SCROLL_BAR_WIDTH + scrollableAreaHeight
-//					+ (lineScrollOffset * (scrollableAreaHeight / consoleScrollableLines));
-//		}
-//		pa.rectMode(CORNER);
-//		pa.rect(posx + consoleTextBoxWidth, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
+		//		int consoleTextBoxHeight = h - inputBoxHeight;
+		//		int consoleTextBoxWidth = w - SCROLL_BAR_WIDTH;
+		//		pa.noStroke();
+		//		pa.fill(50);
+		//		pa.rect(posx + consoleTextBoxWidth, posy, SCROLL_BAR_WIDTH, consoleTextBoxHeight, 0, BOX_ROUNDING, 0, 0);
+		//		//upBtn = new ArrowButton(x + consoleTextBoxWidth, y, SCROLL_BAR_WIDTH, UP, 0, BOX_RONDING, 0, 0);
+		//		//downBtn = new ArrowButton(x + consoleTextBoxWidth, y + consoleTextBoxHeight - 20, SCROLL_BAR_WIDTH, DOWN);
+		//		pa.fill(120);
+		//
+		//		float scrollBarHeight = scrollBarMaxHeight;
+		//		if (lines.size() > maxLinesToDisplay) {
+		//			scrollBarHeight = PApplet.max(25, ((float) maxLinesToDisplay / lines.size()) * scrollBarMaxHeight);
+		//		}
+		//		int consoleScrollableLines = lines.size() - maxLinesToDisplay;
+		//		float scrollableAreaHeight = consoleTextBoxHeight - SCROLL_BAR_WIDTH * 2 - scrollBarHeight;
+		//		float scrollBarYCoordinate = posy + SCROLL_BAR_WIDTH + scrollableAreaHeight;
+		//		if (lines.size() > maxLinesToDisplay) {
+		//			scrollBarYCoordinate = posy + SCROLL_BAR_WIDTH + scrollableAreaHeight
+		//					+ (lineScrollOffset * (scrollableAreaHeight / consoleScrollableLines));
+		//		}
+		//		pa.rectMode(CORNER);
+		//		pa.rect(posx + consoleTextBoxWidth, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
 
 		//upBtn.drawButton();
 		//downBtn.drawButton();
 	}
 
 	public void enableLineStartMarks(boolean val) {
-		textArea.enableLineStartMarks(val);
+		textArea.enableTextBlockStartMarks(val);
 	}
-	
-	public void processMousePressed() {
-//		if (isPointInside(pa.mouseX, pa.mouseY)) {
-//			isFocused = true;
-//			inputBox.setIsFocused(true);
-//		} else {
-//			isFocused = false;
-//			inputBox.setIsFocused(false);
-//		}
-//		//		if (upBtn.isPressed(pa.mouseX, pa.mouseY)) {
-//		//			if (-lineScrollOffset < lines.size() - maxLinesToDisplay) {
-//		//				lineScrollOffset--;
-//		//			}
-//		//		} else if (downBtn.isPressed(pa.mouseX, pa.mouseY)) {
-//		//			if (lineScrollOffset < 0) {
-//		//				lineScrollOffset++;
-//		//			}
-//		//		}
-	}
-	
+
 	private void handleConsoleInput() {
 		String textInput = inputBox.getText();
-		//splitCommandBasedOnConsoleWidth(new Command(textInput, true));
-		textArea.appendTextBlock(textInput);
+		for (KTGUIEventAdapter adapter : adapters) {
+			adapter.onConsoleInput(textInput);
+		}
+		textArea.appendTextBlock(textInput, inputTextColor);
 		textArea.scrollToBottom();
 		inputBox.setText("");
-		
-		//		dict.put(lastVariableName, textInput);
-		//		if (consoleInputListener != null) {
-		//			consoleInputListener.onConsoleInput(lastVariableName, textInput);
-		//		}
-		//		inputBox.setText("");
+	}
+
+	public void writeOutput(String textBlock) {
+		textArea.appendTextBlock(textBlock, outputTextColor);
+	}
+	
+	public String getLine(int index) {
+		return textArea.getTextLine(index);
+	}
+
+	public String getBlock(int index) {
+		return textArea.getTextBlock(index);
+	}
+
+	public int getLineCount() {
+		return textArea.getLineNumbers();
+	}
+
+	public int getBlockCount() {
+		return textArea.getBlockNumbers();
+	}
+
+	public String getLastLine() {
+		String textLine = "";
+		if (getLineCount() > 0)
+			textLine = getLine(getLineCount() - 1);
+		return textLine;
+	}
+
+	public String getLastBlock() {
+		String textBlock = "";
+		if (getBlockCount() > 0)
+			textBlock = getBlock(getBlockCount() - 1);
+		return textBlock;
 	}
 }
-

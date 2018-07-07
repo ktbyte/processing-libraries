@@ -8,7 +8,13 @@ void setup() {
   ktgui = new KTGUI(this);
 
   console = new KTGUIConsole(ktgui, "A Console", 100, 100, 600, 400);
+  // console.alignAboutCanvas(LEFT, TOP);
   console.setBorderRoundings(10, 10, 5, 5);
+  console.addEventAdapter(new KTGUIEventAdapter() {
+    public void onConsoleInput(String text) {
+      println("onConsoleIput():" + text);
+    }
+  });
   // console.enableLineStartMarks(true);
 //   console.setInputTextColor(color(255, 10, 100));
 //   console.setOutputTextColor(color(130, 90, 190));
@@ -40,4 +46,6 @@ void setup() {
 
 void draw() {
   background(144);
+  text("Previous input (line):" + console.getLastLine(), 10, 20);
+  text("Previous input (block):" + console.getLastBlock(), 10, 40);
 }

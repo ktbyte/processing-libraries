@@ -13,15 +13,16 @@ public abstract class KTGUIEventAdapter {
 	public void onMouseMoved() {}
 
 	public void onMouseDragged() {}
-
+	
 	public void onAnyKeyReleased() {}
 
 	public void onAnyKeyPressed() {}
 
 	public void onEnterKeyPressed() {}
-
+	
+	public void onConsoleInput(String text) {}
+	
 	public void println(String string) {
 		PApplet.println(string);
 	}
-
 }
