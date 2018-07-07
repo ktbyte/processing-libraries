@@ -152,25 +152,6 @@ public class InputTextBox extends Controller {
 		computeDefaultAttributes();
 	}
 
-//	/**
-//	 * Sets the rounding of the rectangle's border. The parameters should be entered in a clockwise order
-//	 * 
-//	 * @param r1
-//	 * 	Up
-//	 * @param r2
-//	 * 	Right
-//	 * @param r3
-//	 * 	Down
-//	 * @param r4
-//	 * 	Left
-//	 */
-//	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
-//		this.r1 = r1;
-//		this.r2 = r2;
-//		this.r3 = r3;
-//		this.r4 = r4;
-//	}
-
 	private void computeDefaultAttributes() {
 		this.padding = 0.08f * h;
 		pa.textSize(this.textSize);
