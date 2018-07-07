@@ -1,16 +1,21 @@
 package ktgui;
 
-public class KTGUIConsole extends Controller {
-	private final static int	BOX_ROUNDING				= 7;
-	private final static int	SCROLL_BAR_WIDTH			= 20;
-	private final static float	INPUT_BOX_HEIGHT_PERCENTAGE	= 0.1f;
+import java.util.HashMap;
 
-	private InputTextBox		inputBox;
-	private ScrollableTextArea	textArea;
+public class KTGUIConsole extends Controller {
+	private final static int		BOX_ROUNDING				= 7;
+	private final static int		SCROLL_BAR_WIDTH			= 20;
+	private final static float		INPUT_BOX_HEIGHT_PERCENTAGE	= 0.1f;
+
+	private InputTextBox			inputBox;
+	private ScrollableTextArea		textArea;
 	//private ScrollBar scrollBar;
 
-	private int					inputTextColor  = 0xBBFFAA; 
-	private int					outputTextColor = 0x000000;
+	private int						inputTextColor				= 0xFFFFFF;
+	private int						outputTextColor				= 0x000000;
+
+	private HashMap<String, String>	dict;
+	private String					lastVariableName;
 
 	public KTGUIConsole(KTGUI ktgui, String title, int x, int y, int w, int h) {
 		super(ktgui);
@@ -19,6 +24,7 @@ public class KTGUIConsole extends Controller {
 		this.posy = y;
 		this.w = w;
 		this.h = h;
+		this.dict = new HashMap<String, String>();
 
 		int inputBoxHeight = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
 
@@ -28,6 +34,7 @@ public class KTGUIConsole extends Controller {
 		inputBox.setBorderRoundings(0, 0, BOX_ROUNDING, BOX_ROUNDING);
 		inputBox.addEventAdapter(new KTGUIEventAdapter() {
 			public void onEnterKeyPressed() {
+				println("Processing input...");
 				handleConsoleInput();
 			}
 		});
@@ -42,14 +49,30 @@ public class KTGUIConsole extends Controller {
 		StageManager.getInstance().getDefaultStage().registerController(this);
 	}
 
+	// overrides the 'draw()' method of parent class (Controller)
+	// to prevent drawing the TitleBar and Pane second time.   	
+	public void draw() {}
+
 	/**
-	 * This is a register method and should not be called directly
+	 * Returns a stored value from the console's memory
+	 * 
+	 * @param name
+	 *          the key of the stored entry
+	 *          
+	 * @return a stored value from the console's memory
 	 */
-	public void draw() {
-		//pa.pushStyle();
-		//drawConsoleTextBox();
-		//drawScrollBar();
-		//pa.popStyle();
+	public String getValue(String name) {
+		return dict.get(name);
+	}
+
+	/**
+	 * Sets the name of the next console's entry
+	 * 
+	 * @param name
+	 *          the key of the next stored entry
+	 */
+	public void readInput(String name) {
+		lastVariableName = name;
 	}
 
 	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
@@ -60,50 +83,39 @@ public class KTGUIConsole extends Controller {
 		//		scrollBar.setRoundings(0, r2, r3, 0);
 	}
 
-	private void drawScrollBar() {
-		//		int consoleTextBoxHeight = h - inputBoxHeight;
-		//		int consoleTextBoxWidth = w - SCROLL_BAR_WIDTH;
-		//		pa.noStroke();
-		//		pa.fill(50);
-		//		pa.rect(posx + consoleTextBoxWidth, posy, SCROLL_BAR_WIDTH, consoleTextBoxHeight, 0, BOX_ROUNDING, 0, 0);
-		//		//upBtn = new ArrowButton(x + consoleTextBoxWidth, y, SCROLL_BAR_WIDTH, UP, 0, BOX_RONDING, 0, 0);
-		//		//downBtn = new ArrowButton(x + consoleTextBoxWidth, y + consoleTextBoxHeight - 20, SCROLL_BAR_WIDTH, DOWN);
-		//		pa.fill(120);
-		//
-		//		float scrollBarHeight = scrollBarMaxHeight;
-		//		if (lines.size() > maxLinesToDisplay) {
-		//			scrollBarHeight = PApplet.max(25, ((float) maxLinesToDisplay / lines.size()) * scrollBarMaxHeight);
-		//		}
-		//		int consoleScrollableLines = lines.size() - maxLinesToDisplay;
-		//		float scrollableAreaHeight = consoleTextBoxHeight - SCROLL_BAR_WIDTH * 2 - scrollBarHeight;
-		//		float scrollBarYCoordinate = posy + SCROLL_BAR_WIDTH + scrollableAreaHeight;
-		//		if (lines.size() > maxLinesToDisplay) {
-		//			scrollBarYCoordinate = posy + SCROLL_BAR_WIDTH + scrollableAreaHeight
-		//					+ (lineScrollOffset * (scrollableAreaHeight / consoleScrollableLines));
-		//		}
-		//		pa.rectMode(CORNER);
-		//		pa.rect(posx + consoleTextBoxWidth, scrollBarYCoordinate, SCROLL_BAR_WIDTH, scrollBarHeight);
-
-		//upBtn.drawButton();
-		//downBtn.drawButton();
-	}
-
 	public void enableLineStartMarks(boolean val) {
 		textArea.enableTextBlockStartMarks(val);
 	}
 
 	private void handleConsoleInput() {
 		String textInput = inputBox.getText();
-		for (KTGUIEventAdapter adapter : adapters) {
-			adapter.onConsoleInput(textInput);
-		}
 		textArea.appendTextBlock(textInput, inputTextColor);
 		textArea.scrollToBottom();
 		inputBox.setText("");
+		dict.put(lastVariableName, textInput);
+		for (KTGUIEventAdapter adapter : adapters) {
+			adapter.onConsoleInput(textInput, lastVariableName);
+		}
 	}
 
+	public void setInputTextSize(int size) {
+		inputBox.setTextSize(size);
+	}
+	
+	public void setOutputTextSize(int size) {
+		textArea.setTextSize(size);
+	}
+	
 	public void writeOutput(String textBlock) {
 		textArea.appendTextBlock(textBlock, outputTextColor);
+	}
+
+	public void setInputTextColor(int c) {
+		inputTextColor = c;
+	}
+	
+	public void setOutputTextColor(int c) {
+		outputTextColor = c;
 	}
 	
 	public String getLine(int index) {

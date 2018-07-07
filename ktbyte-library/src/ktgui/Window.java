@@ -43,8 +43,6 @@ public class Window extends Controller {
 	}
 
 	public void draw() {
-		// overrides the 'draw()' method of parent class (Controller)
-		// to prevent drawing the TitleBar and Pane second time.      
 	}
 
 	public void addController(Controller controller, int hAlign, int vAlign) {

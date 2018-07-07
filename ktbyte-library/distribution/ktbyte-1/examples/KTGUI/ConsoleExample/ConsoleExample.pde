@@ -10,38 +10,31 @@ void setup() {
   console = new KTGUIConsole(ktgui, "A Console", 100, 100, 600, 400);
   // console.alignAboutCanvas(LEFT, TOP);
   console.setBorderRoundings(10, 10, 5, 5);
+  console.setInputTextColor(color(255, 10, 100));
+  console.setOutputTextColor(color(130, 90, 190));
+  
+  console.writeOutput("Hello there! What's your name?");
+  console.readInput("name");
   console.addEventAdapter(new KTGUIEventAdapter() {
-    public void onConsoleInput(String text) {
-      println("onConsoleIput():" + text);
+    public void onConsoleInput(String value, String variable) {
+      if (variable.equals("name")) {
+        console.writeOutput("Nice to meet you " + value + "!");
+        console.writeOutput("How old are you?");
+        console.readInput("age");
+      } else if (variable.equals("age")) {
+        console.writeOutput(value + "...  nice! !");
+        console.writeOutput("Boy or girl?");
+        console.readInput("gender");
+      } else if (variable.equals("gender")) {
+        if (value.equals("boy") || value.equals("girl")) {
+          console.writeOutput("Cool..");
+        } else {
+          console.writeOutput("Please answer my question! Choose from: boy or girl.");
+          console.readInput("gender");
+        }
+      }
     }
   });
-  // console.enableLineStartMarks(true);
-//   console.setInputTextColor(color(255, 10, 100));
-//   console.setOutputTextColor(color(130, 90, 190));
-//   console.write("Hello there! What's your name?");
-//   console.readInput("name");
-//   console.setConsoleInputListener(new ConsoleInputListener() {
-
-//     public void onConsoleInput(String variable, String value) {
-//       if (variable.equals("name")) {
-//         console.write("Nice to meet you " + value + "!");
-//         console.write("How old are you?");
-//         console.readInput("age");
-//       } else if (variable.equals("age")) {
-//         console.write(value + "...  nice! !");
-//         console.write("Boy or girl?");
-//         console.readInput("gender");
-//       } else if (variable.equals("gender")) {
-//         if (value.equals("boy") || value.equals("girl")) {
-//           console.write("Cool..");
-//         } else {
-//           console.write("Please answer my question! Choose from: boy or girl.");
-//           console.readInput("gender");
-//         }
-//       }
-//     }
-//   }
-//   );
 }
 
 void draw() {
