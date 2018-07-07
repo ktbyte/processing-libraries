@@ -261,7 +261,7 @@ public class ScrollableTextArea extends Controller {
 			isHeadAlreadyMarked = false;
 			sb = new StringBuilder();
 			// calculate the wrapped width of the line as it will be shown
-			int wrappedWidth = (int) (w - padding - padding);
+			int wrappedWidth = (int) PApplet.floor(w - padding - padding);
 			// update the PApplet's textSize value in order to accurately
 			// calculate text width
 			pa.textSize(textSize);
