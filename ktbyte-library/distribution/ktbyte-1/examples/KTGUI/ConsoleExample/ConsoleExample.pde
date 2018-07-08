@@ -21,9 +21,9 @@ void setup() {
     "Antichrist--I really believe he is Antichrist--I will have nothing more " +
     "to do with you and you are no longer my friend, no longer my 'faithful " +
     "slave,' as you call yourself! But how do you do? I see I have frightened " +
-    "you--sit down\t and tell \tme all the news.\n");
-
-  console.writeOutput("Hello there! What's your name?");
+    "you--sit down\t and tell \tme all the news...\n");
+  console.writeOutput("");
+  console.writeOutput("Ohhh... Hello there! What's your name?");
   console.readInput("name");
   console.addEventAdapter(new KTGUIEventAdapter() {
     public void onConsoleInput(String value, String variable) {
