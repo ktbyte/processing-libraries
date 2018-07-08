@@ -32,11 +32,16 @@ void setup() {
         console.writeOutput("How old are you?");
         console.readInput("age");
       } else if (variable.equals("age")) {
-        console.writeOutput(value + "...  nice! !");
-        console.writeOutput("Boy or girl?");
-        console.readInput("gender");
+        if(!isNumber(value)){
+          console.writeOutput("Please enter your age as integer.");
+          console.readInput("age");
+        } else {
+          console.writeOutput(value + " ...  nice!!");
+          console.writeOutput("Are you a Boy or girl?");
+          console.readInput("gender");
+        }
       } else if (variable.equals("gender")) {
-        if (value.equals("boy") || value.equals("girl")) {
+        if (value.equalsIgnoreCase("boy") || value.equalsIgnoreCase("girl")) {
           console.writeOutput("Cool..");
         } else {
           console.writeOutput("Please answer my question! Choose from: boy or girl.");
@@ -50,4 +55,15 @@ void setup() {
 void draw() {
   background(144);
   textSize(18);
+}
+
+boolean isNumber(String value){
+  boolean isNumber;
+  try {
+    Integer.parseUnsignedInt(value);
+    isNumber = true;
+  }catch(NumberFormatException nfe){
+    isNumber = false;
+  }
+  return isNumber;
 }
