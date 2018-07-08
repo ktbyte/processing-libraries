@@ -249,11 +249,13 @@ public class ScrollableTextArea extends Controller {
 		private int				textColor	= pa.color(0);
 
 		public TextBlock(String content) {
-			this.content = content;
+			this.content = content.trim()
+					.replaceAll("\n\t\r", " ");
 		}
 
 		public TextBlock(String content, int textColor) {
-			this.content = content;
+			this.content = content.trim()
+					.replaceAll("\n\t\r", " ");
 			this.textColor = textColor;
 		}
 
