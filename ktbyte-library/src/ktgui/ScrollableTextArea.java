@@ -22,7 +22,9 @@ public class ScrollableTextArea extends Controller {
 		this.posy = y;
 		this.w = w;
 		this.h = h;
-
+		
+		setPadding(getTextSize() * 0.75f);
+		
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 
@@ -67,6 +69,7 @@ public class ScrollableTextArea extends Controller {
 	private void updateTextAreaGraphics() {
 		pg.beginDraw();
 		pg.pushStyle();
+		
 		if (isFocused) {
 			pg.fill(bgPressedColor);
 			pg.stroke(50);
@@ -241,7 +244,7 @@ public class ScrollableTextArea extends Controller {
 
 	private class TextBlock {
 		private String			content;
-		private StringBuilder	sb;
+		//private StringBuilder	sb;
 		private boolean			isHeadAlreadyMarked;
 		private int				textColor	= pa.color(0);
 
@@ -259,7 +262,7 @@ public class ScrollableTextArea extends Controller {
 			// in order to allow correct head marking in case the padding 
 			// or text size will change
 			isHeadAlreadyMarked = false;
-			sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 			// calculate the wrapped width of the line as it will be shown
 			int wrappedWidth = (int) PApplet.floor(w - padding - padding);
 			// update the PApplet's textSize value in order to accurately
@@ -268,17 +271,17 @@ public class ScrollableTextArea extends Controller {
 			// go through all the characters in the text block splitting it
 			// by text chunks which has the width equals to the 'paddedWidth' 
 			for (int i = 0; i < content.length(); i++) {
-				int chunkWidth = (int) (pa.textWidth(sb.toString()));
-				if (chunkWidth > wrappedWidth) {
-					addWrappedLine();
+				int chunkWidth = (int) PApplet.ceil(pa.textWidth(sb.toString()));
+				if (chunkWidth >= wrappedWidth) {
+					addWrappedLine(sb);
 					sb = new StringBuilder();
 				}
 				sb.append(content.charAt(i));
 			}
-			addWrappedLine();
+			addWrappedLine(sb);
 		}
 
-		private void addWrappedLine() {
+		private void addWrappedLine(StringBuilder sb) {
 			if (!isHeadAlreadyMarked) {
 				textLines.add(new TextLine(sb.toString(), textColor, true)); // add last line
 				isHeadAlreadyMarked = true;

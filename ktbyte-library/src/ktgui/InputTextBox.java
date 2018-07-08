@@ -148,8 +148,6 @@ public class InputTextBox extends Controller {
 		this.padding = 0.08f * h;
 		pa.textSize(this.textSize);
 		this.textHeight = pa.textAscent() + pa.textDescent();
-		System.out.println("textSize in computeDefaultAttributes: " + textSize);
-		System.out.println("textHeight in computeDefaultAttributes: " + textHeight);
 		computeTextSize();
 	}
 
@@ -159,8 +157,6 @@ public class InputTextBox extends Controller {
 			pa.textSize(this.textSize);
 			this.textHeight = pa.textAscent() + pa.textDescent();
 		}
-		System.out.println("textSize in computeTextSize: " + textSize);
-		System.out.println("textHeight in computeTextSize: " + textHeight);
 	}
 
 	private String getTrimmedInputText(String textInput) {
