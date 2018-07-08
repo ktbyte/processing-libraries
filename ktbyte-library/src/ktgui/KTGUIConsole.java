@@ -7,8 +7,10 @@ public class KTGUIConsole extends Controller {
 	private final static int		SCROLL_BAR_WIDTH			= 20;
 	private final static float		INPUT_BOX_HEIGHT_PERCENTAGE	= 0.1f;
 
-	private InputTextBox			inputBox;
-	private ScrollableTextArea		textArea;
+	//	private InputTextBox			inputBox;
+	//	private ScrollableTextArea		textArea;
+	public InputTextBox				inputBox;
+	public ScrollableTextArea		textArea;
 	//private ScrollBar scrollBar;
 
 	private int						inputTextColor				= 0xFFFFFF;
@@ -101,11 +103,11 @@ public class KTGUIConsole extends Controller {
 	public void setInputTextSize(int size) {
 		inputBox.setTextSize(size);
 	}
-	
+
 	public void setOutputTextSize(int size) {
 		textArea.setTextSize(size);
 	}
-	
+
 	public void writeOutput(String textBlock) {
 		textArea.appendTextBlock(textBlock, outputTextColor);
 		textArea.scrollToBottom();
@@ -114,11 +116,11 @@ public class KTGUIConsole extends Controller {
 	public void setInputTextColor(int c) {
 		inputTextColor = c;
 	}
-	
+
 	public void setOutputTextColor(int c) {
 		outputTextColor = c;
 	}
-	
+
 	public String getLine(int index) {
 		return textArea.getTextLine(index);
 	}

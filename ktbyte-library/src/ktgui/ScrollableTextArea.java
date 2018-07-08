@@ -31,25 +31,6 @@ public class ScrollableTextArea extends Controller {
 		StageManager.getInstance().getDefaultStage().registerController(this);
 	}
 
-	public void appendTextBlock(String text) {
-		TextBlock textBlock = new TextBlock(text);
-		textBlocks.add(textBlock);
-		textBlock.appendAsWrappedLines();
-	}
-
-	public void appendTextBlock(String text, int color) {
-		TextBlock textBlock = new TextBlock(text, color);
-		textBlocks.add(textBlock);
-		textBlock.appendAsWrappedLines();
-	}
-
-	private void updateWrappedLines() {
-		textLines = new ArrayList<TextLine>();
-		for (TextBlock block : textBlocks) {
-			block.appendAsWrappedLines();
-		}
-	}
-
 	/**
 	 * This is an automatically registered method and it should not be called directly
 	 */
@@ -63,7 +44,6 @@ public class ScrollableTextArea extends Controller {
 
 	public void updateGraphics() {
 		updateTextAreaGraphics();
-		updateScrollBarGraphics();
 	}
 
 	private void updateTextAreaGraphics() {
@@ -96,10 +76,6 @@ public class ScrollableTextArea extends Controller {
 
 		pg.popStyle();
 		pg.endDraw();
-	}
-
-	private void updateScrollBarGraphics() {
-
 	}
 
 	public void processMouseWheel(MouseEvent me) {
@@ -180,6 +156,27 @@ public class ScrollableTextArea extends Controller {
 		updateWrappedLines();
 	}
 
+	public void appendTextBlock(String text) {
+		TextBlock textBlock = new TextBlock(text);
+		textBlocks.add(textBlock);
+		textBlock.appendAsWrappedLines(textSize);
+	}
+
+	public void appendTextBlock(String text, int color) {
+		TextBlock textBlock = new TextBlock(text, color);
+		textBlocks.add(textBlock);
+		textBlock.appendAsWrappedLines(textSize);
+	}
+
+	private void updateWrappedLines() {
+		// reset current list of TextLines
+		textLines = new ArrayList<TextLine>();
+		// create the updated list of TextLines
+		for (TextBlock block : textBlocks) {
+			block.appendAsWrappedLines(textSize);
+		}
+	}
+
 	public int getMaxLinesToDisplay() {
 		return (int) PApplet.floor((h - padding - padding) / getTextHeight());
 	}
@@ -249,17 +246,15 @@ public class ScrollableTextArea extends Controller {
 		private int				textColor	= pa.color(0);
 
 		public TextBlock(String content) {
-			this.content = content.trim()
-					.replaceAll("\n\t\r", " ");
+			this.content = content.trim().replaceAll("\n\t\r", " ");
 		}
 
 		public TextBlock(String content, int textColor) {
-			this.content = content.trim()
-					.replaceAll("\n\t\r", " ");
+			this.content = content.trim().replaceAll("\n\t\r", " ");
 			this.textColor = textColor;
 		}
 
-		public void appendAsWrappedLines() {
+		public void appendAsWrappedLines(float _textSize) {
 			// reset the flag and 'sb' after previous call to this method 
 			// in order to allow correct head marking in case the padding 
 			// or text size will change
@@ -267,9 +262,9 @@ public class ScrollableTextArea extends Controller {
 			StringBuilder sb = new StringBuilder();
 			// calculate the wrapped width of the line as it will be shown
 			int wrappedWidth = (int) PApplet.floor(w - padding - padding);
-			// update the PApplet's textSize value in order to accurately
-			// calculate text width
-			pa.textSize(textSize);
+			// update the PApplet's textSize value in order to accurately calculate text width
+			// !!! textSize variable belongs to ScrollableTextArea 
+			pa.textSize(_textSize);
 			// go through all the characters in the text block splitting it
 			// by text chunks which has the width equals to the 'paddedWidth' 
 			for (int i = 0; i < content.length(); i++) {

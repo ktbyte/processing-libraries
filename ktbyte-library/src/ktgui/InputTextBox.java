@@ -17,7 +17,7 @@ public class InputTextBox extends Controller {
 
 	public InputTextBox(KTGUI ktgui, String title, int x, int y, int w, int h) {
 		super(ktgui);
-		
+
 		this.title = title;
 		this.posx = x;
 		this.posy = y;
@@ -25,8 +25,8 @@ public class InputTextBox extends Controller {
 		this.h = h;
 		this.textInput = "";
 		this.textSize = 18;
-		
-		computeDefaultAttributes();
+
+		updateTextAttributes();
 
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
@@ -61,7 +61,7 @@ public class InputTextBox extends Controller {
 		pg.fill(0);
 		pg.textSize(textSize);
 		pg.textAlign(LEFT, CENTER);
-		pg.text(getTrimmedInputText(textInput), padding, h * 0.5f);
+		pg.text(getTrimmedInputText(), padding, h * 0.5f);
 		pg.popStyle();
 		pg.endDraw();
 	}
@@ -71,8 +71,9 @@ public class InputTextBox extends Controller {
 			return;
 		}
 		if (pa.frameCount % 60 < 30) {
-			pa.textSize(textSize);
-			float cursorX = PApplet.min(w - padding, pa.textWidth(textInput) + padding);
+			// update the parent PApplet's textSize value in order to accurately calculate text width
+			pa.textSize(this.textSize);
+			float cursorX = PApplet.min(w - padding, padding + pa.textWidth(textInput));
 			pg.beginDraw();
 			pg.stroke(0);
 			pg.strokeWeight(2);
@@ -125,7 +126,7 @@ public class InputTextBox extends Controller {
 	 * @param text
 	 *   The text that should be displayed inside the box
 	 */
- 	public void setText(String text) {
+	public void setText(String text) {
 		this.textInput = text;
 	}
 
@@ -140,36 +141,35 @@ public class InputTextBox extends Controller {
 	 *   The text size
 	 */
 	public void setTextSize(int textSize) {
-		this.textSize = textSize;
-		computeDefaultAttributes();
-	}
-
-	private void computeDefaultAttributes() {
-		this.padding = 0.08f * h;
+		// update the parent PApplet's textSize value in order to accurately calculate text width
 		pa.textSize(this.textSize);
-		this.textHeight = pa.textAscent() + pa.textDescent();
-		computeTextSize();
+		// update the local text attributes (padding and text height)
+		updateTextAttributes();
 	}
 
-	private void computeTextSize() {
-		while (textHeight > h - padding * 2) {
+	private void updateTextAttributes() {
+		this.padding = 0.08f * h;
+		// update text height
+		this.textHeight = pa.textAscent() + pa.textDescent();
+		while (textHeight > h - padding - padding) {
 			this.textSize--;
-			pa.textSize(this.textSize);
 			this.textHeight = pa.textAscent() + pa.textDescent();
 		}
 	}
 
-	private String getTrimmedInputText(String textInput) {
-		String trimmedTextInput = "";
-		char[] textInputCharArray = textInput.toCharArray();
-		for (int i = textInputCharArray.length - 1; i >= 0; i--) {
-			if (pa.textWidth(trimmedTextInput) + pa.textWidth(textInputCharArray[i]) < w - padding * 2) {
-				trimmedTextInput = textInputCharArray[i] + trimmedTextInput;
-			} else {
+	private String getTrimmedInputText() {
+		StringBuilder sb = new StringBuilder();
+		int wrappedWidth = (int) PApplet.floor(w - padding);
+		// update the parent PApplet's textSize value in order to accurately calculate text width
+		pa.textSize(this.textSize);
+		for (int i = textInput.length() - 1; i >= 0; i--) {
+			int chunkWidth = (int) PApplet.ceil(pa.textWidth(sb.toString() + ":")); // + additional temp character
+			if (chunkWidth >= wrappedWidth) {
 				break;
 			}
+			sb.append(textInput.charAt(i));
 		}
-		return trimmedTextInput;
+		return sb.reverse().toString();
 	}
-
+	
 }

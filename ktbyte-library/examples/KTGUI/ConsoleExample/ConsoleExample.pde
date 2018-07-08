@@ -33,7 +33,7 @@ void setup() {
         console.readInput("age");
       } else if (variable.equals("age")) {
         if(!isNumber(value)){
-          console.writeOutput("Please enter your age as integer.");
+          console.writeOutput("Please enter your age as unsigned integer.");
           console.readInput("age");
         } else {
           console.writeOutput(value + " ...  nice!!");
@@ -43,10 +43,13 @@ void setup() {
       } else if (variable.equals("gender")) {
         if (value.equalsIgnoreCase("boy") || value.equalsIgnoreCase("girl")) {
           console.writeOutput("Cool..");
+          console.readInput("other");
         } else {
           console.writeOutput("Please answer my question! Choose from: boy or girl.");
           console.readInput("gender");
         }
+      } else if (variable.equals("other")) {
+        console.writeOutput(value + " you say... ok, go on...");
       }
     }
   });
