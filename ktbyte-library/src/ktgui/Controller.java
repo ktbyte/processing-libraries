@@ -145,8 +145,6 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			}
 			// set 'this' controller as parent
 			controller.setParentController(this);
-			// register in parentStage
-			registerChildController(controller);
 		}
 	}
 
@@ -187,6 +185,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		for (Controller controller : controllers) {
 			controller.posx += dx;
 			controller.posy += dy;
+			
 			if (controller.controllers.size() > 0) {
 				ArrayList<Controller> childControllers = controller.controllers;
 				for (Controller child : childControllers) {
