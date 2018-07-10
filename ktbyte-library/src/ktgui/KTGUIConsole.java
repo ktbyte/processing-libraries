@@ -11,7 +11,7 @@ public class KTGUIConsole extends Controller {
 	//	private ScrollableTextArea		textArea;
 	public InputTextBox				inputBox;
 	public ScrollableTextArea		textArea;
-	//private ScrollBar scrollBar;
+	private ScrollBar				scrollBar;
 
 	private int						inputTextColor				= 0xFFFFFF;
 	private int						outputTextColor				= 0x000000;
@@ -40,10 +40,18 @@ public class KTGUIConsole extends Controller {
 				handleConsoleInput();
 			}
 		});
-
-		textArea = new ScrollableTextArea(ktgui, "sta:" + title, x, y, w, h - inputBox.getHeight());
+		//attachController(inputBox);
+		//registerChildController(inputBox);
+		
+		textArea = new ScrollableTextArea(ktgui, "sta:" + title, x, y, w - inputBoxHeight, h - inputBoxHeight);
 		textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
-
+		//attachController(textArea);
+		//registerChildController(textArea);
+		
+		scrollBar = new ScrollBar(ktgui, "scrollbar:" + title, x + w - inputBoxHeight, y, inputBoxHeight, h - inputBoxHeight);
+		//attachController(scrollBar);
+		//registerChildController(scrollBar);
+		
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 
@@ -153,7 +161,7 @@ public class KTGUIConsole extends Controller {
 
 	private class ScrollBar extends Controller {
 		DirectionButton scrollUpButton, scrollDownButton;
-		
+
 		public ScrollBar(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 			super(ktgui);
 
@@ -167,11 +175,16 @@ public class KTGUIConsole extends Controller {
 			userpg = pa.createGraphics(w + 1, h + 1);
 
 			createButtons();
-			
+
 			// automatically register the newly created window in default stage of stageManager
-			StageManager.getInstance().getDefaultStage().registerController(this);	
+			StageManager.getInstance().getDefaultStage().registerController(this);
 		}
 
+		public void draw() {
+			// add the background shape drawing here
+			drawControllers();
+		}
+		
 		private void createButtons() {
 			scrollUpButton = new DirectionButton(ktgui, "db-up:" + title, posx, posy, w, w);
 			scrollUpButton.setDirection(UP);
@@ -182,7 +195,7 @@ public class KTGUIConsole extends Controller {
 			});
 			attachController(scrollUpButton);
 			registerChildController(scrollUpButton);
-			
+
 			scrollDownButton = new DirectionButton(ktgui, "db-down:" + title, posx, posy - w, w, w);
 			scrollDownButton.setDirection(DOWN);
 			scrollDownButton.addEventAdapter(new KTGUIEventAdapter() {
@@ -193,13 +206,13 @@ public class KTGUIConsole extends Controller {
 			attachController(scrollDownButton);
 			registerChildController(scrollDownButton);
 		}
-		
+
 	}
-	
+
 	private class DirectionButton extends Button {
 
 		int direction = UP;
-		
+
 		public DirectionButton(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 			super(ktgui, title, posx, posy, w, h);
 		}
@@ -220,7 +233,7 @@ public class KTGUIConsole extends Controller {
 			pg.rect(0, 0, w, h, r1, r2, r3, r4);
 			pg.pushMatrix();
 			pg.translate(w * 0.5f, h * 0.5f);
-			if(direction == UP) {
+			if (direction == UP) {
 				pg.rotate(PI);
 			} else if (direction == RIGHT) {
 				pg.rotate(PI + HALF_PI);
@@ -234,9 +247,9 @@ public class KTGUIConsole extends Controller {
 			pg.popMatrix();
 			pg.endDraw();
 		}
-		
+
 		public void setDirection(int direction) {
 			this.direction = direction;
-		}		
+		}
 	}
 }
