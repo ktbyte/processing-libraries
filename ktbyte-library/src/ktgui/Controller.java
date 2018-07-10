@@ -201,8 +201,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void closeParent(Controller controller) {
-		if (controller.parentController != null)
+		if (controller.parentController != null) {
 			closeParent(controller.parentController);
+			closeController(controller.parentController);
+		}
 		for (Controller childController : controllers) {
 			closeChilds(childController);
 		}

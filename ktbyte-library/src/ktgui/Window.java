@@ -43,13 +43,21 @@ public class Window extends Controller {
 	}
 
 	public void draw() {
-		drawUserDefinedGraphics();
-		pa.image(pg, posx, posy);
-		pa.pushMatrix();
-		pa.stroke(0);
-		pa.rectMode(CORNER);
-		pa.rect(posx, posy, w, h);
-		pa.popMatrix();
+		//
+		// the following code block is only for debuggin purposes
+		// START OF DEBUGGIN BLOCK;
+		//
+		//		drawUserDefinedGraphics();
+		//		pa.image(pg, posx, posy);
+		//		pa.pushMatrix();
+		//		pa.stroke(0);
+		//		pa.rectMode(CORNER);
+		//		pa.rect(posx, posy, w, h);
+		//		pa.popMatrix();
+		//
+		// the above code is only for debuggin purposes
+		// END OF DEBUGGIN BLOCK;
+		//
 	}
 
 	public void addController(Controller controller, int hAlign, int vAlign) {
