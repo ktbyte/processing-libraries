@@ -70,7 +70,6 @@
 	</path>
 
 
-
 	<!-- Create the time stamp -->
 	<tstamp>
 		<format property="date" pattern="MM/dd/yyyy" offset="0" unit="hour" />
@@ -85,6 +84,11 @@ ${line}
 	classpath.local	${classpath.local.location}
 	sketchbook      ${sketchbook.location}
 	java version    ${java.target.version}
+${line}
+${line}
+	classpath.local.locatioin = ${classpath.local.location}
+	classpath.libraries.location = ${classpath.libraries.location}
+	project.lib = ${project.lib}
 ${line}
 	</echo>
 
@@ -341,10 +345,12 @@ ${line}
 		<dirset id="examples.contents" dir="${project.examples}">
 			<exclude name="**/.vscode/**" />
 			<exclude name="**/out/**" />
-			<include name="**/TextBoxExample/**" />
 			<include name="**/ButtonExample/**" />
+			<include name="**/InputTextBoxExample/**" />
+			<include name="**/ScrollableTextAreaExample/**" />
 			<include name="**/SliderExample/**" />
 			<include name="**/WindowExample/**" />
+			<include name="**/GUIShowcase/**" />
 			<include name="**/KTSoundCipher_*/**" />
 			<include name="**/Console_*/**" />
 			<include name="**/SoundFile_*/**" />

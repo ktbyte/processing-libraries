@@ -19,9 +19,9 @@ public class Window extends Controller {
 		
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
-		ktgui.getStageManager().defaultStage.registerController(this);
 		createTitleBar();
 		createPane();
+		StageManager.getInstance().defaultStage.registerController(this);
 	}
 
 	public Window(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
@@ -36,15 +36,13 @@ public class Window extends Controller {
 		
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
-		ktgui.getStageManager().defaultStage.registerController(this);
-		setTitle(title);
 		createTitleBar();
 		createPane();
+		setTitle(title);
+		StageManager.getInstance().defaultStage.registerController(this);
 	}
 
 	public void draw() {
-		// overrides the 'draw()' method of parent class (Controller)
-		// to prevent drawing the TitleBar and Pane second time.      
 	}
 
 	public void addController(Controller controller, int hAlign, int vAlign) {
@@ -56,13 +54,14 @@ public class Window extends Controller {
 
 	private void createTitleBar() {
 		titleBar = new TitleBar(ktgui, "tb:" + title, this, posx, posy, w, KTGUI.TITLE_BAR_HEIGHT);
+		titleBar.isDragable = true;
 		attachController(titleBar);
 		registerChildController(titleBar);
 		titleBar.addEventAdapter(new KTGUIEventAdapter() {
 			public void onMouseDragged() {
 				pane.posx += pa.mouseX - pa.pmouseX;
 				pane.posy += pa.mouseY - pa.pmouseY;
-			}
+			}	
 		});
 	}
 

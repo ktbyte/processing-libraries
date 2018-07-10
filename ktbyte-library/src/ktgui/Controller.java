@@ -15,7 +15,7 @@ import processing.core.PGraphics;
  *********************************************************************************************************************/
 public abstract class Controller extends KTGUIEventProcessor implements PConstants {
 	public String					title;
-	public int						posx, posy, w, h;
+	public int						posx, posy, w, h, r1, r2, r3, r4;
 
 	public ArrayList<Controller>	controllers			= new ArrayList<Controller>();
 	public PApplet					pa;
@@ -26,9 +26,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public PGraphics				pg;
 	public PGraphics				userpg;
 
-	public int						hoveredColor;
-	public int						pressedColor;
-	public int						passiveColor;
+	public int						fgHoveredColor;
+	public int						fgPressedColor;
+	public int						fgPassiveColor;
+	public int						bgHoveredColor;
+	public int						bgPressedColor;
+	public int						bgPassiveColor;
 
 	public Controller(KTGUI ktgui) {
 		this.ktgui = ktgui;
@@ -37,9 +40,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void init() {
-		hoveredColor = KTGUI.COLOR_FG_HOVERED;
-		pressedColor = KTGUI.COLOR_FG_PRESSED;
-		passiveColor = KTGUI.COLOR_FG_PASSIVE;
+		fgHoveredColor = KTGUI.COLOR_FG_HOVERED;
+		fgPressedColor = KTGUI.COLOR_FG_PRESSED;
+		fgPassiveColor = KTGUI.COLOR_FG_PASSIVE;
+		bgHoveredColor = KTGUI.COLOR_BG_HOVERED;
+		bgPressedColor = KTGUI.COLOR_BG_PRESSED;
+		bgPassiveColor = KTGUI.COLOR_BG_PASSIVE;
 	}
 
 	public void updateGraphics() {}
@@ -75,9 +81,17 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+	public int getWidth() {
+		return w;
+	}
 
 	public void setWidth(int w) {
 		this.w = w;
+	}
+	
+	public int getHeight() {
+		return h;
 	}
 
 	public void setHeight(int h) {
@@ -85,17 +99,28 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void setHoveredColor(int c) {
-		hoveredColor = c;
+		fgHoveredColor = c;
 	}
 
 	public void setPressedColor(int c) {
-		pressedColor = c;
+		fgPressedColor = c;
 	}
 
 	public void setPassiveColor(int c) {
-		passiveColor = c;
+		fgPassiveColor = c;
 	}
 
+	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
+		this.r1 = r1;
+		this.r2 = r2;
+		this.r3 = r3;
+		this.r4 = r4;
+	}
+
+	public void setHandleFocus(boolean val) {
+		handleFocus = val;
+	}
+	
 	public PGraphics getGraphics() {
 		return pg;
 	}
@@ -122,9 +147,6 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			controller.setParentController(this);
 			// register in parentStage
 			registerChildController(controller);
-			// prevent the child controller from being dragged 
-			// while it's inside the parent controller
-			controller.isDragable = false;
 		}
 	}
 
@@ -201,7 +223,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		ktgui.addToGarbage(controller, pa.millis());
 	}
 
-	public void alignAboutApplet(int hAlign, int vAlign) {
+	public void alignAboutCanvas(int hAlign, int vAlign) {
 		switch (hAlign) {
 		case PConstants.LEFT:
 			updateChildrenPositions(KTGUI.ALIGN_GAP - this.posx, 0);
@@ -368,4 +390,5 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			break;
 		}
 	}
+
 }

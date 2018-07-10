@@ -2,22 +2,22 @@ package ktgui;
 
 import processing.core.PApplet;
 
-public class KTGUITextBox extends Controller {
+public class InputTextBox extends Controller {
 
 	private final static int	BACKSPACE_ASCII_CODE	= 8;
 	private final static int	ENTER_ASCII_CODE		= 10;
 	private final static int	BASIC_ASCII_LOWER_LIMIT	= 32;
 	private final static int	BASIC_ASCII_UPPER_LIMIT	= 126;
 
-	private int					r1, r2, r3, r4;					// box rounding parameters
 	private boolean				handleFocus				= true;
 	private String				textInput;
 	private int					textSize;
 	private float				textHeight;
 	private float				padding;
 
-	public KTGUITextBox(KTGUI ktgui, String title, int x, int y, int w, int h) {
+	public InputTextBox(KTGUI ktgui, String title, int x, int y, int w, int h) {
 		super(ktgui);
+
 		this.title = title;
 		this.posx = x;
 		this.posy = y;
@@ -25,13 +25,14 @@ public class KTGUITextBox extends Controller {
 		this.h = h;
 		this.textInput = "";
 		this.textSize = 18;
-		computeDefaultAttributes();
+
+		updateTextAttributes();
 
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 
 		// automatically register the newly created window in default stage of stageManager
-		ktgui.getStageManager().getDefaultStage().registerController(this);
+		StageManager.getInstance().getDefaultStage().registerController(this);
 	}
 
 	/**
@@ -46,16 +47,21 @@ public class KTGUITextBox extends Controller {
 	}
 
 	public void updateGraphics() {
+		updateTextBox();
+		updateBlinkingCursorGraphics();
+	}
+
+	private void updateTextBox() {
 		pg.beginDraw();
 		pg.pushStyle();
 		pg.fill(255);
-		pg.noStroke();
+		pg.stroke(0);
+		pg.strokeWeight(1f);
 		pg.rect(0, 0, w, h, r1, r2, r3, r4);
 		pg.fill(0);
 		pg.textSize(textSize);
 		pg.textAlign(LEFT, CENTER);
-		pg.text(getTrimmedInputText(textInput), padding, h * 0.5f);
-		updateBlinkingCursorGraphics();
+		pg.text(getTrimmedInputText(), padding, h * 0.5f);
 		pg.popStyle();
 		pg.endDraw();
 	}
@@ -65,7 +71,9 @@ public class KTGUITextBox extends Controller {
 			return;
 		}
 		if (pa.frameCount % 60 < 30) {
-			float cursorX = PApplet.min(w - padding, pa.textWidth(textInput) + padding);
+			// update the parent PApplet's textSize value in order to accurately calculate text width
+			pa.textSize(this.textSize);
+			float cursorX = PApplet.min(w - padding, padding + pa.textWidth(textInput));
 			pg.beginDraw();
 			pg.stroke(0);
 			pg.strokeWeight(2);
@@ -98,12 +106,6 @@ public class KTGUITextBox extends Controller {
 			textInput = textInput.substring(0, textInput.length() - 1);
 		}
 		if ((int) pa.key == ENTER_ASCII_CODE) {
-			//			if (keyEventListener != null) {
-			//				keyEventListener.onEnterKey();
-			//				if (handleFocus) {
-			//					isFocused = false;
-			//				}
-			//			}
 			for (KTGUIEventAdapter adapter : adapters) {
 				adapter.onEnterKeyPressed();
 			}
@@ -139,54 +141,35 @@ public class KTGUITextBox extends Controller {
 	 *   The text size
 	 */
 	public void setTextSize(int textSize) {
-		this.textSize = textSize;
-		computeDefaultAttributes();
-	}
-
-	/**
-	 * Sets the rounding of the rectangle's border. The parameters should be entered in a clockwise order
-	 * 
-	 * @param r1
-	 * 	Up
-	 * @param r2
-	 * 	Right
-	 * @param r3
-	 * 	Down
-	 * @param r4
-	 * 	Left
-	 */
-	public void setBorderRoundings(int r1, int r2, int r3, int r4) {
-		this.r1 = r1;
-		this.r2 = r2;
-		this.r3 = r3;
-		this.r4 = r4;
-	}
-
-	private void computeDefaultAttributes() {
-		this.padding = 0.08f * h;
+		// update the parent PApplet's textSize value in order to accurately calculate text width
 		pa.textSize(this.textSize);
-		this.textHeight = pa.textAscent() + pa.textDescent();
-		computeTextSize();
+		// update the local text attributes (padding and text height)
+		updateTextAttributes();
 	}
 
-	private void computeTextSize() {
-		while (textHeight > h - padding * 2) {
+	private void updateTextAttributes() {
+		this.padding = 0.08f * h;
+		// update text height
+		this.textHeight = pa.textAscent() + pa.textDescent();
+		while (textHeight > h - padding - padding) {
 			this.textSize--;
-			pa.textSize(this.textSize);
 			this.textHeight = pa.textAscent() + pa.textDescent();
 		}
 	}
 
-	private String getTrimmedInputText(String textInput) {
-		String trimmedTextInput = "";
-		char[] textInputCharArray = textInput.toCharArray();
-		for (int i = textInputCharArray.length - 1; i >= 0; i--) {
-			if (pa.textWidth(trimmedTextInput) + pa.textWidth(textInputCharArray[i]) < w - padding * 2) {
-				trimmedTextInput = textInputCharArray[i] + trimmedTextInput;
-			} else {
+	private String getTrimmedInputText() {
+		StringBuilder sb = new StringBuilder();
+		int wrappedWidth = (int) PApplet.floor(w - padding);
+		// update the parent PApplet's textSize value in order to accurately calculate text width
+		pa.textSize(this.textSize);
+		for (int i = textInput.length() - 1; i >= 0; i--) {
+			int chunkWidth = (int) PApplet.ceil(pa.textWidth(sb.toString() + ":")); // + additional temp character
+			if (chunkWidth >= wrappedWidth) {
 				break;
 			}
+			sb.append(textInput.charAt(i));
 		}
-		return trimmedTextInput;
-	};
+		return sb.reverse().toString();
+	}
+	
 }

@@ -16,7 +16,8 @@ void setup() {
 
   // instance of the KTGUI 'Button' component
   btn = ktgui.createButton(0, (int)(height * 0.25f), 150, 40);
-  btn.alignAboutApplet(CENTER, 0);
+  btn.alignAboutCanvas(CENTER, 0);
+  btn.setPressedColor(color(200, 150, 150));
   btn.setTitle("The Button");
   btn.addEventAdapter(new KTGUIEventAdapter() {
     // we can override only those callback methods which we really need
@@ -44,7 +45,7 @@ void setup() {
 
   // instance of the KTGUI 'Button' component
   slider = ktgui.createSlider(0, 0, 380, 40, 0, 1000);
-  slider.alignAboutApplet(CENTER, TOP);
+  slider.alignAboutCanvas(CENTER, TOP);
   slider.setTitle("The Slider");
   slider.addEventAdapter(new KTGUIEventAdapter() {
     // we can override only those callback methods which we really need

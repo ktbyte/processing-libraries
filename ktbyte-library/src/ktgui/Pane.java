@@ -16,7 +16,7 @@ public class Pane extends Controller {
 		this.userpg = pa.createGraphics(w + 1, h + 1);
 
 		// automatically register the newly created pane in default stage of stageManager
-		ktgui.getStageManager().defaultStage.registerController(this);
+		StageManager.getInstance().defaultStage.registerController(this);
 	}
 
 	public Pane(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
@@ -30,7 +30,7 @@ public class Pane extends Controller {
 		this.userpg = pa.createGraphics(w + 1, h + 1);
 
 		// automatically register the newly created pane in default stage of stageManager
-		ktgui.getStageManager().defaultStage.registerController(this);
+		StageManager.getInstance().defaultStage.registerController(this);
 	}
 
 	public void updateGraphics() {
@@ -98,18 +98,3 @@ public class Pane extends Controller {
 	}
 }
 
-class WindowPane extends Pane {
-	  Window parentWindow;
-	  
-	  WindowPane(KTGUI ktgui, Window window, int posx, int posy, int w, int h) {
-	    super(ktgui, posx, posy, w, h);
-	    this.parentWindow = window;
-	    //isDragable = false;
-	  }
-
-	  WindowPane(KTGUI ktgui, String title, Window window, int posx, int posy, int w, int h) {
-	    super(ktgui, title, posx, posy, w, h);
-	    this.parentWindow = window;
-	    //isDragable = false;
-	  }
-	}

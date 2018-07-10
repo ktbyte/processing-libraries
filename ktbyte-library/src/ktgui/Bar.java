@@ -11,13 +11,13 @@ public class Bar extends Controller {
 		this.w = w;
 		this.h = h;
 		this.title = "a Bar";
-		
+
 		this.isDragable = true;
 
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 		// automatically register the newly created window in default stage of stageManager
-		ktgui.getStageManager().defaultStage.registerController(this);
+		StageManager.getInstance().defaultStage.registerController(this);
 	}
 
 	public Bar(KTGUI ktgui, String title, int x, int y, int w, int h) {
@@ -27,13 +27,13 @@ public class Bar extends Controller {
 		this.posy = y;
 		this.w = w;
 		this.h = h;
-		
+
 		this.isDragable = true;
 
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 		// automatically register the newly created window in default stage of stageManager
-		ktgui.getStageManager().defaultStage.registerController(this);
+		StageManager.getInstance().defaultStage.registerController(this);
 	}
 
 	public void updateGraphics() {
@@ -41,7 +41,7 @@ public class Bar extends Controller {
 		pg.beginDraw();
 		pg.background(200, 200);
 		pg.rectMode(CORNER);
-		pg.fill(180);
+		pg.fill(bgPassiveColor);
 		pg.stroke(15);
 		pg.strokeWeight(1);
 		pg.rect(0, 0, w, KTGUI.TITLE_BAR_HEIGHT);
@@ -79,13 +79,15 @@ public class Bar extends Controller {
 		}
 	}
 
-	public // process mousePressed event received from PApplet
-	void processMousePressed() {
+	// process mousePressed event received from PApplet
+	public void processMousePressed() {
 		if (isHovered) {
 			isPressed = true;
 			for (KTGUIEventAdapter adapter : adapters) {
 				adapter.onMousePressed();
 			}
+		} else {
+			isPressed = false;
 		}
 	}
 
@@ -123,25 +125,3 @@ public class Bar extends Controller {
 	}
 }
 
-class TitleBar extends Bar {
-
-	CloseButton	closeButton;
-	Window		parentWindow;
-
-	TitleBar(KTGUI ktgui, Window window, int x, int y, int w, int h) {
-		super(ktgui, x, y, w, h);
-		this.parentWindow = window;
-		closeButton = new CloseButton(ktgui, w - KTGUI.TITLE_BAR_HEIGHT + 2, 2, KTGUI.TITLE_BAR_HEIGHT - 4, KTGUI.TITLE_BAR_HEIGHT - 4);
-		attachController(closeButton);
-		registerChildController(closeButton);
-	}
-
-	TitleBar(KTGUI ktgui, String title, Window window, int x, int y, int w, int h) {
-		super(ktgui, title, x, y, w, h);
-		this.parentWindow = window;
-		closeButton = new CloseButton(ktgui, "cb:" + this.title, w - KTGUI.TITLE_BAR_HEIGHT + 2, 2, KTGUI.TITLE_BAR_HEIGHT - 4, KTGUI.TITLE_BAR_HEIGHT - 4);
-		attachController(closeButton);
-		registerChildController(closeButton);
-	}
-
-}

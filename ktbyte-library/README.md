@@ -1,9 +1,9 @@
 - [Import to Eclipse](#import-to-eclipse)
-  * [Option A: GitHub](#option-a-github)
-  * [Option B: Downloaded Package](#option-b-downloaded-package)
+  * [Option A: GitHub](#option-a--github)
+  * [Option B: Downloaded Package](#option-b--downloaded-package)
 - [Set Up and Compile](#set-up-and-compile)
 - [Source code](#source-code)
-- [<a name='AddingJARs'/>Adding core.jar and other .jar files to your classpath</a>](#-a-name--addingjars---adding-corejar-and-other-jar-files-to-your-classpath--a-)
+- [Adding core jar and other jar files to your classpath](#adding-core-jar-and-other-jar-files-to-your-classpath)
 - [What is the difference between JDK and JRE?](#what-is-the-difference-between-jdk-and-jre-)
 - [The JRE System Library](#the-jre-system-library)
 - [Compiling with Ant and javadoc](#compiling-with-ant-and-javadoc)
@@ -77,7 +77,7 @@ To distribute your Library please refer to the [Library Guidelines](https://gith
 
 If you want to share your Library's source code, we recommend using an online repository available for free at [GitHub](https://github.com/).
 
-## <a name='AddingJARs'/>Adding core.jar and other .jar files to your classpath</a>
+## Adding core jar and other jar files to your classpath ##
 
 The `core.jar` file contains the core classes of Processing and has to be part of your classpath when building a Library. On Windows and Linux, this file is located in the Processing distribution folder inside a folder named `lib`. On Mac OS X, right-click the Processing.app and use "Show Package Contents" to see the guts. The `core.jar` file is inside Contents → Resources → Java. For further information about the classes in `core.jar`, you can see the source [here](http://code.google.com/p/processing/source/browse/trunk/processing#processing/core) and the developer documentation [here](http://processing.googlecode.com/svn/trunk/processing/build/javadoc/core/index.html).
 

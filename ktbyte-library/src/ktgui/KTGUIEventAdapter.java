@@ -20,8 +20,11 @@ public abstract class KTGUIEventAdapter {
 
 	public void onEnterKeyPressed() {}
 
+	public void onConsoleInput(String textInput, String lastVariableName) {}
+
 	public void println(String string) {
 		PApplet.println(string);
 	}
+
 
 }

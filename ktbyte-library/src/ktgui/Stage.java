@@ -36,50 +36,63 @@ public class Stage {
 	}
 
 	public void registerController(Controller controller) {
-		String controllerClassName = controller.getClass().getName();
+		System.out.println("Adding controller (" + controller.title + ") to stage (" + name + ").");
 
-		// try to remove controller from default stage then
+		// check if controller already exist in 'this' stage
+		if (controllers.contains(controller)) {
+			System.out.println("\tController (" + controller.title + ") already exist in stage (" + name + "). Interrupting.");
+			return;
+		}
+
+		// try to remove controller from default stage before adding it to 'this' stage
 		if (StageManager.getInstance().getDefaultStage().controllers.contains(controller)) {
 			StageManager.getInstance().defaultStage.unregisterController(controller);
 		}
 
-		// try to remove controller from active stage then
+		// try to remove controller from active stage before adding it to 'this' stage
 		if (StageManager.getInstance().getActiveStage() != null) {
 			if (StageManager.getInstance().activeStage.controllers.contains(controller)) {
 				StageManager.getInstance().activeStage.unregisterController(controller);
 			}
 		}
-
+		
 		// add controller to this stage
+		controllers.add(controller);
+		controller.parentStage = this;
+		
+		// debug info
+		System.out.println("\tDone. Now, stage (" + name + ") contains " + controllers.size() + " controllers.");
+		for (Controller c : controllers) {
+			System.out.println("\t\t" + controllers.indexOf(c) + ": " + c.title);
+		}
+		System.out.println("\tController (" + controller.title + ") contains " + controller.controllers.size()
+				+ " child controllers.");
+		for (Controller c : controller.controllers) {
+			System.out.println("\t\t" + controller.controllers.indexOf(c) + ": " + c.title);
+		}
+
+		String controllerClassName = controller.getClass().getName();
 		String[] tokens = PApplet.splitTokens(controllerClassName, ".$");
-	    if (tokens.length > 1) controllerClassName = tokens[1];
-	    if (!controllers.contains(controller)) {
-	      System.out.println("controllers.size() of controller '" + controller.title + "':" + controllers.size());
-	      controllers.add(controller);
-	      controller.parentStage = this;
-	      System.out.println("\tAdded to controllers list successfully, new parentStage is (" + name + ")");
-	      if (tokens.length > 1) {
-	        // try to add all child components of controller, if it is of type Window
-	        if (tokens[1].equalsIgnoreCase("Window")) {
-	          Window window = (Window) controller;
-	          window.registerChildControllers();
-	        }
-	        // try to add all child components of controller, if it is of type Pane
-	        if (tokens[1].equalsIgnoreCase("Pane")) {
-	          Pane pane = (Pane) controller;
-	          pane.registerChildControllers();
-	        }
-	        if (tokens[1].equalsIgnoreCase("WindowPane")) {
-	          WindowPane windowPane = (WindowPane) controller;
-	          windowPane.registerChildControllers();
-	        }
-	      } else {
-	        System.out.println("....Cannot register child controllers of '" + name + "'");
-	      }
-	    } else {
-	      System.out.println("\talready exist.");
-	    }
-	    System.out.println("------------------------------------------------------------------------------------");
+		//if (tokens.length > 1) controllerClassName = tokens[1];
+		if (tokens.length > 1) {
+			// try to add all child components of controller, if it is of type Window
+			if (tokens[1].equalsIgnoreCase("Window")) {
+				Window window = (Window) controller;
+				window.registerChildControllers();
+			}
+			// try to add all child components of controller, if it is of type Pane
+			if (tokens[1].equalsIgnoreCase("Pane")) {
+				Pane pane = (Pane) controller;
+				pane.registerChildControllers();
+			}
+			if (tokens[1].equalsIgnoreCase("WindowPane")) {
+				WindowPane windowPane = (WindowPane) controller;
+				windowPane.registerChildControllers();
+			}
+		} else {
+			System.out.println("....Cannot register child controllers of '" + name + "'");
+		}
+		System.out.println("------------------------------------------------------------------------------------");
 	}
 
 	public void unregisterController(Controller controller) {
