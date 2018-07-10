@@ -43,6 +43,13 @@ public class Window extends Controller {
 	}
 
 	public void draw() {
+		drawUserDefinedGraphics();
+		pa.image(pg, posx, posy);
+		pa.pushMatrix();
+		pa.stroke(0);
+		pa.rectMode(CORNER);
+		pa.rect(posx, posy, w, h);
+		pa.popMatrix();
 	}
 
 	public void addController(Controller controller, int hAlign, int vAlign) {
@@ -59,8 +66,12 @@ public class Window extends Controller {
 		registerChildController(titleBar);
 		titleBar.addEventAdapter(new KTGUIEventAdapter() {
 			public void onMouseDragged() {
-				pane.posx += pa.mouseX - pa.pmouseX;
-				pane.posy += pa.mouseY - pa.pmouseY;
+				int dx = pa.mouseX - pa.pmouseX;
+				int dy = pa.mouseY - pa.pmouseY;
+				pane.posx += dx;
+				pane.posy += dy;
+				posx += dx;
+				posy += dy;
 			}	
 		});
 	}

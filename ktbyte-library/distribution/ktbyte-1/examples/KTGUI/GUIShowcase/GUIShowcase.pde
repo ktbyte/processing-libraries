@@ -127,18 +127,22 @@ void setup() {
   alignStage.registerController(p2);
 
   Pane p3 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
-  p3.isDragable = true;
+  p3.isDragable = false;
   p3.alignAboutCanvas(RIGHT, TOP);
   Button p3b1 = ktgui.createButton("Bottom", 10, 10, 180, 40);
+  p3b1.isDragable = true;
   p3b1.setPassiveColor(color(250, 20, 200));
   p3.addController(p3b1, CENTER, BOTTOM);
   Button p3b2 = ktgui.createButton("Above & Center", 10, 10, 160, 40);
+  p3b2.isDragable = true;
   p3.attachController(p3b2);
   p3b2.stackAbout(p3b1, TOP, CENTER);
   Button p3b3 = ktgui.createButton("Above & Left", 10, 10, 140, 40);
+  p3b3.isDragable = true;
   p3.attachController(p3b3);
   p3b3.stackAbout(p3b2, TOP, LEFT);
   Button p3b4 = ktgui.createButton("Above & Right", 10, 10, 120, 40);
+  p3b4.isDragable = true;
   p3.attachController(p3b4);
   p3b4.stackAbout(p3b3, TOP, RIGHT);
   alignStage.registerController(p3);
