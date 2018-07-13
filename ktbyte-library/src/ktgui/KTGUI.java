@@ -116,35 +116,36 @@ public class KTGUI {
 	//-------------------------------------------------------------------------------------------------------------------
 	// These are the 'factory' methods
 	//-------------------------------------------------------------------------------------------------------------------
-	public Button createButton(int x, int y, int w, int h) {
-		return new Button(this, x, y, w, h);
-	}
 
 	public Button createButton(String title, int x, int y, int w, int h) {
 		return new Button(this, title, x, y, w, h);
 	}
+	public Button createButton(int x, int y, int w, int h) {
+		return new Button(this, "A Button", x, y, w, h);
+	}
 
+	public Slider createSlider(String title, int posx, int posy, int w, int h, int sr, int er) {
+		return new Slider(this, title, posx, posy, w, h, sr, er);
+	}
 	public Slider createSlider(int posx, int posy, int w, int h, int sr, int er) {
-		return new Slider(this, posx, posy, w, h, sr, er);
+		return new Slider(this, "A Slider", posx, posy, w, h, sr, er);
 	}
 	
-	public Window createWindow(int x, int y, int w, int h) {
-		Window window = new Window(this, x, y, w, h);
-		return window;
-	}
-
 	public Window createWindow(String title, int x, int y, int w, int h) {
 		Window window = new Window(this, title, x, y, w, h);
 		return window;
 	}
-
-	public Pane createPane(int x, int y, int w, int h) {
-		Pane pane = new Pane(this, x, y, w, h);
-		return pane;
+	public Window createWindow(int x, int y, int w, int h) {
+		Window window = new Window(this, "A Window", x, y, w, h);
+		return window;
 	}
 
 	public Pane createPane(String title, int x, int y, int w, int h) {
 		Pane pane = new Pane(this, title, x, y, w, h);
+		return pane;
+	}
+	public Pane createPane(int x, int y, int w, int h) {
+		Pane pane = new Pane(this, "A Pane", x, y, w, h);
 		return pane;
 	}
 

@@ -19,18 +19,14 @@ public class KTGUIConsole extends Controller {
 	private HashMap<String, String>	dict;
 	private String					lastVariableName;
 
-	public KTGUIConsole(KTGUI ktgui, String title, int x, int y, int w, int h) {
-		super(ktgui);
-		this.title = title;
-		this.posx = x;
-		this.posy = y;
-		this.w = w;
-		this.h = h;
+	public KTGUIConsole(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+		super(ktgui, title, posx, posy, w, h);
+		
 		this.dict = new HashMap<String, String>();
 
 		int inputBoxHeight = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
-
-		inputBox = new InputTextBox(ktgui, "ConsoleTextBox", x, y + h - inputBoxHeight, w, inputBoxHeight);
+		
+		inputBox = new InputTextBox(ktgui, "ConsoleTextBox", posx, posy + h - inputBoxHeight, w, inputBoxHeight);
 		inputBox.setHandleFocus(true);
 		inputBox.setTextSize(16);
 		inputBox.setBorderRoundings(0, 0, BOX_ROUNDING, BOX_ROUNDING);
@@ -43,12 +39,12 @@ public class KTGUIConsole extends Controller {
 		//attachController(inputBox);
 		//registerChildController(inputBox);
 		
-		textArea = new ScrollableTextArea(ktgui, "sta:" + title, x, y, w - inputBoxHeight, h - inputBoxHeight);
+		textArea = new ScrollableTextArea(ktgui, "sta:" + title, posx, posy, w - inputBoxHeight, h - inputBoxHeight);
 		textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
 		//attachController(textArea);
 		//registerChildController(textArea);
 		
-		scrollBar = new ScrollBar(ktgui, "scrollbar:" + title, x + w - inputBoxHeight, y, inputBoxHeight, h - inputBoxHeight);
+		scrollBar = new ScrollBar(ktgui, "scrollbar:" + title, posx + w - inputBoxHeight, posy, inputBoxHeight, h - inputBoxHeight);
 		//attachController(scrollBar);
 		//registerChildController(scrollBar);
 		
@@ -163,21 +159,8 @@ public class KTGUIConsole extends Controller {
 		DirectionButton scrollUpButton, scrollDownButton;
 
 		public ScrollBar(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-			super(ktgui);
-
-			this.title = title;
-			this.posx = posx;
-			this.posy = posy;
-			this.w = w;
-			this.h = h;
-
-			pg = pa.createGraphics(w + 1, h + 1);
-			userpg = pa.createGraphics(w + 1, h + 1);
-
+			super(ktgui, title, posx, posy, w, h);
 			createButtons();
-
-			// automatically register the newly created window in default stage of stageManager
-			StageManager.getInstance().getDefaultStage().registerController(this);
 		}
 
 		public void draw() {

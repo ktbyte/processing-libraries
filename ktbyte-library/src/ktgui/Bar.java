@@ -1,39 +1,10 @@
 package ktgui;
 
 public class Bar extends Controller {
-	/*
-	 * 
-	 */
-	public Bar(KTGUI ktgui, int x, int y, int w, int h) {
-		super(ktgui);
-		this.posx = x;
-		this.posy = y;
-		this.w = w;
-		this.h = h;
-		this.title = "a Bar";
 
+	public Bar(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+		super(ktgui, title, posx, posy, w, h);
 		this.isDragable = true;
-
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
-		// automatically register the newly created window in default stage of stageManager
-		StageManager.getInstance().defaultStage.registerController(this);
-	}
-
-	public Bar(KTGUI ktgui, String title, int x, int y, int w, int h) {
-		super(ktgui);
-		this.title = title;
-		this.posx = x;
-		this.posy = y;
-		this.w = w;
-		this.h = h;
-
-		this.isDragable = true;
-
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
-		// automatically register the newly created window in default stage of stageManager
-		StageManager.getInstance().defaultStage.registerController(this);
 	}
 
 	public void updateGraphics() {

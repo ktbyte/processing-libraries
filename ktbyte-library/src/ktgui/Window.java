@@ -7,41 +7,14 @@ public class Window extends Controller {
 	// MenuBar menuBar;
 	WindowPane	pane;
 
-	public Window(KTGUI ktgui, int posx, int posy, int w, int h) {
-		super(ktgui);
-		this.title = "a Window";
-		this.posx = posx;
-		this.posy = posy;
-		this.w = w;
-		this.h = h;
-		
-		this.isDragable = true;
-		
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
-		createTitleBar();
-		createPane();
-		StageManager.getInstance().defaultStage.registerController(this);
-	}
-
 	public Window(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-		super(ktgui);
-		this.title = title;
-		this.posx = posx;
-		this.posy = posy;
-		this.w = w;
-		this.h = h;
-		
-		this.isDragable = true;
-		
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
+		super(ktgui, title, posx, posy, w, h);
 		createTitleBar();
 		createPane();
-		setTitle(title);
-		StageManager.getInstance().defaultStage.registerController(this);
+		//setTitle(title);
 	}
 
+	@Override
 	public void draw() {
 		//
 		// the following code block is only for debuggin purposes
@@ -60,15 +33,17 @@ public class Window extends Controller {
 		//
 	}
 
+	@Override
 	public void addController(Controller controller, int hAlign, int vAlign) {
 		if (isActive) {
 			controller.alignAbout(pane, hAlign, vAlign);
 			pane.attachController(controller);
+			pane.registerChildController(controller);
 		}
 	}
 
 	private void createTitleBar() {
-		titleBar = new TitleBar(ktgui, "tb:" + title, this, posx, posy, w, KTGUI.TITLE_BAR_HEIGHT);
+		titleBar = new TitleBar(ktgui, "tb:" + title, posx, posy, w, KTGUI.TITLE_BAR_HEIGHT);
 		titleBar.isDragable = true;
 		attachController(titleBar);
 		registerChildController(titleBar);

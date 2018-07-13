@@ -33,13 +33,25 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public int						bgPressedColor;
 	public int						bgPassiveColor;
 
-	public Controller(KTGUI ktgui) {
+	public Controller(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 		this.ktgui = ktgui;
 		this.pa = KTGUI.getParentPApplet();
-		init();
+		this.title = title;
+		this.posx = posx;
+		this.posy = posy;
+		this.w = w;
+		this.h = h;
+
+		pg = pa.createGraphics(w + 1, h + 1);
+		userpg = pa.createGraphics(w + 1, h + 1);
+
+		// automatically register the newly created window in default stage of stageManager
+		StageManager.getInstance().defaultStage.registerController(this);
+		
+		initColors();
 	}
 
-	public void init() {
+	public void initColors() {
 		fgHoveredColor = KTGUI.COLOR_FG_HOVERED;
 		fgPressedColor = KTGUI.COLOR_FG_PRESSED;
 		fgPassiveColor = KTGUI.COLOR_FG_PASSIVE;
@@ -69,9 +81,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	private void drawGraphics() {
-		if (parentController == null) {
+		//if (parentController == null) {
 			pa.image(pg, posx, posy);
-		}
+		//}
 	}
 
 	public void draw() {
@@ -135,6 +147,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		if (isActive) {
 			controller.alignAbout(this, hAlign, vAlign);
 			attachController(controller);
+			registerChildController(controller);
 		}
 	}
 

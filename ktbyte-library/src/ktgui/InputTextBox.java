@@ -15,24 +15,11 @@ public class InputTextBox extends Controller {
 	private float				textHeight;
 	private float				padding;
 
-	public InputTextBox(KTGUI ktgui, String title, int x, int y, int w, int h) {
-		super(ktgui);
-
-		this.title = title;
-		this.posx = x;
-		this.posy = y;
-		this.w = w;
-		this.h = h;
+	public InputTextBox(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+		super(ktgui, title, posx, posy, w, h);
 		this.textInput = "";
 		this.textSize = 18;
-
 		updateTextAttributes();
-
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
-
-		// automatically register the newly created window in default stage of stageManager
-		StageManager.getInstance().getDefaultStage().registerController(this);
 	}
 
 	/**

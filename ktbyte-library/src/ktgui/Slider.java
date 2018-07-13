@@ -15,23 +15,12 @@ public class Slider extends Controller {
 	//-----------------------------------------------------------------------------------------------
 	//
 	//-----------------------------------------------------------------------------------------------
-	Slider(KTGUI ktgui, int posx, int posy, int width, int height, int sr, int er) {
-		super(ktgui);
-		this.posx = posx;
-		this.posy = posy;
-		this.w = width;
-		this.h = height;
+	Slider(KTGUI ktgui, String title, int posx, int posy, int w, int h, int sr, int er) {
+		super(ktgui, title, posx, posy, w, h);
 		this.rangeStart = sr;
 		this.rangeEnd = er;
-		this.title = "The Slider";
 		updateHandlePositionFromMouse();
 		updateValueFromHandlePosition();
-
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
-
-		// automatically register the newly created window in default stage of stageManager
-		StageManager.getInstance().getDefaultStage().registerController(this);
 	}
 
 	//-----------------------------------------------------------------------------------------------

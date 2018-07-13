@@ -147,7 +147,7 @@ void setup() {
   p3b4.stackAbout(p3b3, TOP, RIGHT);
   alignStage.registerController(p3);
 
-  StageManager.getInstance().goToStage(s2);
+  StageManager.getInstance().goToStage(s3);
 
   msg(w2.getPane().w + ":" + w2.getPane().h);
 }
@@ -246,6 +246,7 @@ void updateDebugInfo() {
     for (Controller controller : StageManager.getInstance().getDefaultStage().getControllers()) {
       if (controller.title != null) { 
         text("defaultStage: " + controller.title + 
+          ", parent:" + ((controller.parentController != null) ? controller.parentController.title : "null") + 
           ", posx:" + controller.posx + 
           ", posy:" + controller.posy
           , 10, ypos+=YSHIFT);

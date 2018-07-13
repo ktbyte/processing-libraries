@@ -14,21 +14,9 @@ public class ScrollableTextArea extends Controller {
 	private int						startLine	= 0;
 	private boolean					enableLineStartMarks;
 
-	public ScrollableTextArea(KTGUI ktgui, String title, int x, int y, int w, int h) {
-		super(ktgui);
-
-		this.title = title;
-		this.posx = x;
-		this.posy = y;
-		this.w = w;
-		this.h = h;
-		
+	public ScrollableTextArea(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+		super(ktgui, title, posx, posy, w, h);
 		setPadding(getTextSize() * 0.75f);
-		
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
-
-		StageManager.getInstance().getDefaultStage().registerController(this);
 	}
 
 	/**

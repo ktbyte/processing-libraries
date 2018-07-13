@@ -5,12 +5,7 @@ package ktgui;
  ****************************************************************************************************/
 class CloseButton extends Button {
 
-	public CloseButton(KTGUI ktgui, int posx, int posy, int w, int h) {
-		super(ktgui, posx, posy, w, h);
-	}
-
 	public CloseButton(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-		//super(ktgui, title, posx, posy, w, h);
 		super(ktgui, title, posx, posy, w, h);
 	}
 

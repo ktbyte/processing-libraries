@@ -7,36 +7,8 @@ package ktgui;
  *********************************************************************************************************************/
 public class Button extends Controller {
 
-	public Button(KTGUI ktgui, int posx, int posy, int w, int h) {
-		super(ktgui);
-
-		this.title = "a Button";
-		this.posx = posx;
-		this.posy = posy;
-		this.w = w;
-		this.h = h;
-
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
-
-		// automatically register the newly created window in default stage of stageManager
-		StageManager.getInstance().getDefaultStage().registerController(this);
-	}
-
 	public Button(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-		super(ktgui);
-
-		this.title = title;
-		this.posx = posx;
-		this.posy = posy;
-		this.w = w;
-		this.h = h;
-
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
-
-		// automatically register the newly created window in default stage of stageManager
-		StageManager.getInstance().getDefaultStage().registerController(this);
+		super(ktgui, title, posx, posy, w, h);
 	}
 
 	public void updateGraphics() {

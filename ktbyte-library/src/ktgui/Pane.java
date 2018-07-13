@@ -4,33 +4,9 @@ package ktgui;
  *
  *********************************************************************************************************************/
 public class Pane extends Controller {
-
-	public Pane(KTGUI ktgui, int posx, int posy, int w, int h) {
-		super(ktgui);
-		this.title = "a Pane";
-		this.posx = posx;
-		this.posy = posy;
-		this.w = w;
-		this.h = h;
-		this.pg = pa.createGraphics(w + 1, h + 1);
-		this.userpg = pa.createGraphics(w + 1, h + 1);
-
-		// automatically register the newly created pane in default stage of stageManager
-		StageManager.getInstance().defaultStage.registerController(this);
-	}
-
+	
 	public Pane(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-		super(ktgui);
-		this.title = title;
-		this.posx = posx;
-		this.posy = posy;
-		this.w = w;
-		this.h = h;
-		this.pg = pa.createGraphics(w + 1, h + 1);
-		this.userpg = pa.createGraphics(w + 1, h + 1);
-
-		// automatically register the newly created pane in default stage of stageManager
-		StageManager.getInstance().defaultStage.registerController(this);
+		super(ktgui, title, posx, posy, w, h);
 	}
 
 	public void updateGraphics() {
