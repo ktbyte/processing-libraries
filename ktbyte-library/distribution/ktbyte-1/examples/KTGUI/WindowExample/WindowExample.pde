@@ -9,6 +9,7 @@ Window w1, w2;
  *********************************************************************************************************************/
 void setup() {
   size(800, 500);
+  //noLoop();
   
   ktgui = new KTGUI(this); // default stage is automatically created
   ktgui.setDebug(true);
@@ -23,7 +24,7 @@ void setup() {
   //   }
   // }
   // );
-
+  
   w1 = ktgui.createWindow("Window_1", 10, 220, 300, 200);
   w1.alignAboutCanvas(LEFT, BOTTOM);
 

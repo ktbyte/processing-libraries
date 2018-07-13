@@ -47,7 +47,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 		// automatically register the newly created window in default stage of stageManager
 		StageManager.getInstance().defaultStage.registerController(this);
-		
+
 		initColors();
 	}
 
@@ -73,17 +73,20 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void drawControllers() {
-		for (Controller controller : controllers) {
+		System.out.println(title + ".drawControllers()");
+		for (Controller child : controllers) {
 			pg.beginDraw();
-			pg.image(controller.getGraphics(), controller.posx, controller.posy);
+			System.out.println("\t" + child.title + ": " + child.posx + ", " + child.posy);
+			pg.image(child.getGraphics(), child.posx, child.posy);
 			pg.endDraw();
 		}
 	}
 
 	private void drawGraphics() {
-		if (parentController == null) {
+		//if (parentController == null) {
+			System.out.println(title + ".drawGraphics()");
 			pa.image(pg, posx, posy);
-		}
+		//}
 	}
 
 	public void draw() {
@@ -163,9 +166,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		this.posx = controller.posx + relativePosx;
 		this.posy = controller.posy + relativePosy;
 	}
-	
+
 	public void attachController(Controller controller) {
 		if (isActive) {
+			System.out.println("Attaching " + controller.title + " to " + title + " ...");
 			// detach from existinler first (if exist)
 			if (controller.parentController != null) {
 				Controller pc = controller.parentController;
@@ -177,6 +181,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			}
 			// set 'this' controller as parent
 			controller.setParentController(this);
+			System.out.println("\t" + controller.title + ".parentController is " + controller.parentController.title);
 		}
 	}
 

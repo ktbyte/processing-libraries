@@ -97,8 +97,12 @@ public class KTGUI implements PConstants {
 	 * This way, the KTGUI class automatically updates all the controllers on the <i>default</i> and <i>active</i> stages.
 	 ************************************************************************************************************************/
 	public void draw() {
-		stageManager.getDefaultStage().draw();
-		stageManager.getActiveStage().draw();
+		if(stageManager.getDefaultStage() != stageManager.getActiveStage()) {
+			stageManager.getDefaultStage().draw();
+			stageManager.getActiveStage().draw();
+		} else {
+			stageManager.getDefaultStage().draw();
+		}
 		collectGarbage();
 		drawDebugInfo();
 	}
@@ -339,7 +343,6 @@ public class KTGUI implements PConstants {
 	public void addToGarbage(Controller controller, int millis) {
 		garbageList.put(controller, millis);
 	}
-
 
 	public void setDebug(boolean debug) {
 		this.debug = debug;

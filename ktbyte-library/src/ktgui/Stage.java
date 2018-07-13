@@ -36,7 +36,7 @@ public class Stage {
 	}
 
 	public void registerController(Controller controller) {
-		System.out.println("Adding controller (" + controller.title + ") to stage (" + name + ").");
+		System.out.println("Registering controller (" + controller.title + ") in stage (" + name + ").");
 
 		// check if controller already exist in 'this' stage
 		if (controllers.contains(controller)) {
@@ -63,12 +63,10 @@ public class Stage {
 		// debug info
 		System.out.println("\tDone. Now, stage (" + name + ") contains " + controllers.size() + " controllers.");
 		for (Controller c : controllers) {
-			System.out.println("\t\t" + controllers.indexOf(c) + ": " + c.title);
-		}
-		System.out.println("\tController (" + controller.title + ") contains " + controller.controllers.size()
-				+ " child controllers.");
-		for (Controller c : controller.controllers) {
-			System.out.println("\t\t" + controller.controllers.indexOf(c) + ": " + c.title);
+			System.out.println("\t\t" + controllers.indexOf(c) + ": " + c.title + " (" + c.controllers.size() + " child controllers)");
+			for(Controller child : c.controllers) {
+				System.out.println("\t\t\t" + c.controllers.indexOf(child) + ": " +  child.title);
+			}
 		}
 
 		String controllerClassName = controller.getClass().getName();
