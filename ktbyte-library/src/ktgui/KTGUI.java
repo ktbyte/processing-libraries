@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 
@@ -37,8 +38,8 @@ Drawing inside this method is allowed because mouse events are queued, unless th
 <li><code>public void keyEvent(KeyEvent e)</code> Method that&#39;s called when a key event occurs in the parent <em>PApplet.</em> 
 Drawing is allowed because key events are queued, unless the sketch has called <code>noLoop()</code>.</li>
  *********************************************************************************************************************/
-public class KTGUI {
-	private static PApplet					parentPApplet;
+public class KTGUI implements PConstants {
+	private static PApplet					pa;
 	private StageManager					stageManager;
 	private HashMap<Controller, Integer>	garbageList;
 
@@ -52,7 +53,7 @@ public class KTGUI {
 	public static int						MENU_BAR_HEIGHT;
 	public static int						BORDER_THICKNESS;
 	public static int						ALIGN_GAP;
-	private boolean							debug;
+	private boolean							debug	= false;
 
 	/*************************************************************************************************************************
 	 * This is a constructor of the KTGUI class.
@@ -65,10 +66,10 @@ public class KTGUI {
 	}
 
 	private void init(PApplet pa) {
-		KTGUI.parentPApplet = pa;
-		KTGUI.parentPApplet.registerMethod("draw", this);
-		KTGUI.parentPApplet.registerMethod("mouseEvent", this);
-		KTGUI.parentPApplet.registerMethod("keyEvent", this);
+		KTGUI.pa = pa;
+		KTGUI.pa.registerMethod("draw", this);
+		KTGUI.pa.registerMethod("mouseEvent", this);
+		KTGUI.pa.registerMethod("keyEvent", this);
 
 		garbageList = new HashMap<Controller, Integer>();
 
@@ -88,7 +89,7 @@ public class KTGUI {
 	}
 
 	public static PApplet getParentPApplet() {
-		return parentPApplet;
+		return pa;
 	}
 
 	/*************************************************************************************************************************
@@ -99,17 +100,59 @@ public class KTGUI {
 		stageManager.getDefaultStage().draw();
 		stageManager.getActiveStage().draw();
 		collectGarbage();
+		drawDebugInfo();
 	}
 
 	@SuppressWarnings("rawtypes") void collectGarbage() {
 		for (Map.Entry me : garbageList.entrySet()) {
 			Controller controller = (Controller) me.getKey();
 			int time = (Integer) me.getValue();
-			if (parentPApplet.millis() - time > 100) {
+			if (pa.millis() - time > 100) {
 				if (controller.parentStage != null) {
 					controller.parentStage.unregisterController(controller);
 				}
 			}
+		}
+	}
+
+	void drawDebugInfo() {
+		if (debug) {
+			pa.fill(0);
+			pa.textSize(20);
+			pa.textAlign(RIGHT, CENTER);
+			pa.textFont(pa.createFont("monospaced", 16));
+			pa.text("activeStage.name:" + StageManager.getInstance().getActiveStage().getName(), pa.width - 10, 10);
+			pa.text("activeStage.index:"
+					+ StageManager.getInstance().stages.indexOf(StageManager.getInstance().getActiveStage()),
+					pa.width - 10, 30);
+			pa.text("size():" + StageManager.getInstance().stages.size(), pa.width - 10, 50);
+
+			pa.textSize(11);
+			int YSHIFT = 12;
+			int ypos = 0;
+			pa.textAlign(LEFT, CENTER);
+			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
+			for (Controller controller : StageManager.getInstance().getDefaultStage().getControllers()) {
+				if (controller.title != null) {
+					pa.text("defaultStage: " + controller.title +
+							", parent:"
+							+ ((controller.parentController != null) ? controller.parentController.title : "null") +
+							", posx:" + controller.posx +
+							", posy:" + controller.posy, 10, ypos += YSHIFT);
+				}
+			}
+			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
+			for (Controller controller : StageManager.getInstance().getActiveStage().getControllers()) {
+				if (controller.title != null) {
+					pa.text("activeStage: " + controller.title +
+							", parent:"
+							+ ((controller.parentController != null) ? controller.parentController.title : "null") +
+							", posx:" + controller.posx +
+							", posy:" + controller.posy,
+							10, ypos += YSHIFT);
+				}
+			}
+			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
 		}
 	}
 
@@ -120,6 +163,7 @@ public class KTGUI {
 	public Button createButton(String title, int x, int y, int w, int h) {
 		return new Button(this, title, x, y, w, h);
 	}
+
 	public Button createButton(int x, int y, int w, int h) {
 		return new Button(this, "A Button", x, y, w, h);
 	}
@@ -127,14 +171,16 @@ public class KTGUI {
 	public Slider createSlider(String title, int posx, int posy, int w, int h, int sr, int er) {
 		return new Slider(this, title, posx, posy, w, h, sr, er);
 	}
+
 	public Slider createSlider(int posx, int posy, int w, int h, int sr, int er) {
 		return new Slider(this, "A Slider", posx, posy, w, h, sr, er);
 	}
-	
+
 	public Window createWindow(String title, int x, int y, int w, int h) {
 		Window window = new Window(this, title, x, y, w, h);
 		return window;
 	}
+
 	public Window createWindow(int x, int y, int w, int h) {
 		Window window = new Window(this, "A Window", x, y, w, h);
 		return window;
@@ -144,6 +190,7 @@ public class KTGUI {
 		Pane pane = new Pane(this, title, x, y, w, h);
 		return pane;
 	}
+
 	public Pane createPane(int x, int y, int w, int h) {
 		Pane pane = new Pane(this, "A Pane", x, y, w, h);
 		return pane;
@@ -291,6 +338,15 @@ public class KTGUI {
 
 	public void addToGarbage(Controller controller, int millis) {
 		garbageList.put(controller, millis);
+	}
+
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+
+	public boolean getDebug() {
+		return debug;
 	}
 
 }

@@ -81,9 +81,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	private void drawGraphics() {
-		//if (parentController == null) {
+		if (parentController == null) {
 			pa.image(pg, posx, posy);
-		//}
+		}
 	}
 
 	public void draw() {
@@ -151,6 +151,19 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
+	public void addController(Controller controller, int hAlign, int vAlign, int gap) {
+		if (isActive) {
+			controller.alignAbout(this, hAlign, vAlign, gap);
+			attachController(controller);
+			registerChildController(controller);
+		}
+	}
+
+	public void positionAboutOtherController(Controller controller, int relativePosx, int relativePosy) {
+		this.posx = controller.posx + relativePosx;
+		this.posy = controller.posy + relativePosy;
+	}
+	
 	public void attachController(Controller controller) {
 		if (isActive) {
 			// detach from existinler first (if exist)

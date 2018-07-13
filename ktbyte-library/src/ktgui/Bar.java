@@ -15,11 +15,11 @@ public class Bar extends Controller {
 		pg.fill(bgPassiveColor);
 		pg.stroke(15);
 		pg.strokeWeight(1);
-		pg.rect(0, 0, w, KTGUI.TITLE_BAR_HEIGHT);
+		pg.rect(0, 0, w, h);
 		pg.fill(25);
 		pg.textAlign(LEFT, CENTER);
-		pg.textSize(KTGUI.TITLE_BAR_HEIGHT * 0.65f);
-		pg.text(title, 10, KTGUI.TITLE_BAR_HEIGHT * 0.5f);
+		pg.textSize(h * 0.65f);
+		pg.text(title, 10, h * 0.5f);
 		pg.endDraw();
 	}
 
