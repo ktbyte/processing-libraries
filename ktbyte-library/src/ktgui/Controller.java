@@ -315,6 +315,42 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
+	public void alignAbout(Controller controller, int hAlign, int vAlign, int gap) {
+		switch (hAlign) {
+		case PConstants.LEFT:
+			updateChildrenPositions(gap - this.posx, 0);
+			this.posx = gap;
+			break;
+		case PConstants.RIGHT:
+			updateChildrenPositions(controller.w - this.w - gap - this.posx, 0);
+			this.posx = controller.w - this.w - gap;
+			break;
+		case PConstants.CENTER:
+			updateChildrenPositions((int) (controller.w * 0.5 - this.w * 0.5) - this.posx, 0);
+			this.posx = (int) (controller.w * 0.5 - this.w * 0.5);
+			break;
+		default:
+			break;
+		}
+		//
+		switch (vAlign) {
+		case PConstants.TOP:
+			updateChildrenPositions(0, gap - this.posy);
+			this.posy = gap;
+			break;
+		case PConstants.BOTTOM:
+			updateChildrenPositions(0, controller.h - this.h - gap - this.posy);
+			this.posy = controller.h - this.h - gap;
+			break;
+		case PConstants.CENTER:
+			updateChildrenPositions(0, (int) (controller.h * 0.5 - this.h * 0.5) - this.posy);
+			this.posy = (int) (controller.h * 0.5 - this.h * 0.5);
+			break;
+		default:
+			break;
+		}
+	}
+
 	public void stackAbout(Controller controller, int direction, int align) {
 		switch (direction) {
 
