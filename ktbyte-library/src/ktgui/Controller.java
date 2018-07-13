@@ -68,10 +68,16 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
+	private void drawGraphics() {
+		if (parentController == null) {
+			pa.image(pg, posx, posy);
+		}
+	}
+
 	public void draw() {
 		drawControllers();
 		drawUserDefinedGraphics();
-		pa.image(pg, posx, posy);
+		drawGraphics();
 	}
 
 	public void setParentController(Controller controller) {
@@ -81,7 +87,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	public int getWidth() {
 		return w;
 	}
@@ -89,7 +95,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void setWidth(int w) {
 		this.w = w;
 	}
-	
+
 	public int getHeight() {
 		return h;
 	}
@@ -120,7 +126,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void setHandleFocus(boolean val) {
 		handleFocus = val;
 	}
-	
+
 	public PGraphics getGraphics() {
 		return pg;
 	}
@@ -185,7 +191,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		for (Controller controller : controllers) {
 			controller.posx += dx;
 			controller.posy += dy;
-			
+
 			if (controller.controllers.size() > 0) {
 				ArrayList<Controller> childControllers = controller.controllers;
 				for (Controller child : childControllers) {

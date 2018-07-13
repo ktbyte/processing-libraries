@@ -52,18 +52,7 @@ public class Bar extends Controller {
 		pg.endDraw();
 	}
 
-	public ///*
-	//  Note: the first added is drawn last
-	//*/
-	//void draw() {
-	//  drawControllers();  
-	//  // if this button doesn't belongs to any parent controller then draw it directly on the PApplet canvas 
-	//  //if (parentController == null) {
-	//    image(pg, posx, posy);
-	//  //}
-	//}
-
-	void drawControllers() {
+	public void drawControllers() {
 		for (Controller controller : controllers) {
 			pg.beginDraw();
 			pg.image(controller.getGraphics(), controller.posx, controller.posy);
