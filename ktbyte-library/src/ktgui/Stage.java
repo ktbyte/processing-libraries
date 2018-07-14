@@ -69,28 +69,28 @@ public class Stage {
 			}
 		}
 
-		String controllerClassName = controller.getClass().getName();
-		String[] tokens = PApplet.splitTokens(controllerClassName, ".$");
-		//if (tokens.length > 1) controllerClassName = tokens[1];
-		if (tokens.length > 1) {
-			// try to add all child components of controller, if it is of type Window
-			if (tokens[1].equalsIgnoreCase("Window")) {
-				Window window = (Window) controller;
-				window.registerChildControllers();
-			}
-			// try to add all child components of controller, if it is of type Pane
-			if (tokens[1].equalsIgnoreCase("Pane")) {
-				Pane pane = (Pane) controller;
-				pane.registerChildControllers();
-			}
-			if (tokens[1].equalsIgnoreCase("WindowPane")) {
-				WindowPane windowPane = (WindowPane) controller;
-				windowPane.registerChildControllers();
-			}
-		} else {
-			System.out.println("....Cannot register child controllers of '" + name + "'");
-		}
-		System.out.println("------------------------------------------------------------------------------------");
+//		String controllerClassName = controller.getClass().getName();
+//		String[] tokens = PApplet.splitTokens(controllerClassName, ".$");
+//		//if (tokens.length > 1) controllerClassName = tokens[1];
+//		if (tokens.length > 1) {
+//			// try to add all child components of controller, if it is of type Window
+//			if (tokens[1].equalsIgnoreCase("Window")) {
+//				Window window = (Window) controller;
+//				window.registerChildControllers();
+//			}
+//			// try to add all child components of controller, if it is of type Pane
+//			if (tokens[1].equalsIgnoreCase("Pane")) {
+//				Pane pane = (Pane) controller;
+//				pane.registerChildControllers();
+//			}
+//			if (tokens[1].equalsIgnoreCase("WindowPane")) {
+//				WindowPane windowPane = (WindowPane) controller;
+//				windowPane.registerChildControllers();
+//			}
+//		} else {
+//			System.out.println("....Cannot register child controllers of '" + name + "'");
+//		}
+//		System.out.println("------------------------------------------------------------------------------------");
 	}
 
 	public void unregisterController(Controller controller) {

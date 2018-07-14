@@ -9,7 +9,7 @@ public class TitleBar extends Bar {
 		closeButton = new CloseButton(ktgui, "cb:" + this.title, w - h + 2, 2,
 				h - 4, h - 4);
 		attachController(closeButton);
-		registerChildController(closeButton);
+		//registerChildController(closeButton);
 	}
 
 }

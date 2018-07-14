@@ -40,14 +40,14 @@ public class Window extends Controller {
 		if (isActive) {
 			controller.alignAbout(pane, hAlign, vAlign);
 			pane.attachController(controller);
-			pane.registerChildController(controller);
+			//pane.registerChildController(controller);
 		}
 	}
 
 	private void createTitleBar() {
 		titleBar = new TitleBar(ktgui, "tb:" + title, posx, posy, w, KTGUI.TITLE_BAR_HEIGHT);
 		attachController(titleBar);
-		registerChildController(titleBar);
+		//registerChildController(titleBar);
 	}
 	
 	private void createPane() {

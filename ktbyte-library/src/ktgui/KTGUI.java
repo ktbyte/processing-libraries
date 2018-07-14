@@ -1,5 +1,6 @@
 package ktgui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +43,7 @@ public class KTGUI implements PConstants {
 	private static PApplet					pa;
 	private StageManager					stageManager;
 	private HashMap<Controller, Integer>	garbageList;
+	public ArrayList<String>				drawCallStack = new ArrayList<String>();
 
 	public static int						COLOR_FG_HOVERED;
 	public static int						COLOR_FG_PRESSED;
@@ -97,7 +99,7 @@ public class KTGUI implements PConstants {
 	 * This way, the KTGUI class automatically updates all the controllers on the <i>default</i> and <i>active</i> stages.
 	 ************************************************************************************************************************/
 	public void draw() {
-		if(stageManager.getDefaultStage() != stageManager.getActiveStage()) {
+		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
 			stageManager.getDefaultStage().draw();
 			stageManager.getActiveStage().draw();
 		} else {
@@ -122,14 +124,14 @@ public class KTGUI implements PConstants {
 	void drawDebugInfo() {
 		if (debug) {
 			pa.fill(0);
-			pa.textSize(20);
+			pa.textSize(12);
 			pa.textAlign(RIGHT, CENTER);
 			pa.textFont(pa.createFont("monospaced", 16));
-			pa.text("activeStage.name:" + StageManager.getInstance().getActiveStage().getName(), pa.width - 10, 10);
+			pa.text("activeStage.name:" + StageManager.getInstance().getActiveStage().getName(), 10, pa.height - 10);
 			pa.text("activeStage.index:"
 					+ StageManager.getInstance().stages.indexOf(StageManager.getInstance().getActiveStage()),
-					pa.width - 10, 30);
-			pa.text("size():" + StageManager.getInstance().stages.size(), pa.width - 10, 50);
+					10, pa.height - 30);
+			pa.text("stages.size():" + StageManager.getInstance().stages.size(), 10, pa.height - 50);
 
 			pa.textSize(11);
 			int YSHIFT = 12;
@@ -157,6 +159,16 @@ public class KTGUI implements PConstants {
 				}
 			}
 			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////
+			/** 
+			 * Display the draw() method calls stack 
+			 */
+			ypos = 0;
+			pa.textAlign(RIGHT, CENTER);
+			for (String msg : drawCallStack) {
+					pa.text(msg, pa.width - 10, ypos += YSHIFT);
+			}
+			drawCallStack = new ArrayList<String>();
 		}
 	}
 

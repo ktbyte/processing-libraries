@@ -177,7 +177,7 @@ public class KTGUIConsole extends Controller {
 				}
 			});
 			attachController(scrollUpButton);
-			registerChildController(scrollUpButton);
+			//registerChildController(scrollUpButton);
 
 			scrollDownButton = new DirectionButton(ktgui, "db-down:" + title, posx, posy - w, w, w);
 			scrollDownButton.setDirection(DOWN);
@@ -187,7 +187,7 @@ public class KTGUIConsole extends Controller {
 				}
 			});
 			attachController(scrollDownButton);
-			registerChildController(scrollDownButton);
+			//registerChildController(scrollDownButton);
 		}
 
 	}
