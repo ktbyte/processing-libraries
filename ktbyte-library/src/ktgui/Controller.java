@@ -68,7 +68,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void drawUserDefinedGraphics() {
-		ktgui.drawCallStack.add(title + ".drawUserDefinedGraphics()");
+		ktgui.drawCallStack.add(title + ".drawUserDefinedGraphics()" + "-'");
 		pg.beginDraw();
 		pg.image(userpg, 0, 0);
 		pg.endDraw();
@@ -76,10 +76,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	public void drawControllers() {
 		if (controllers.size() > 0) {
-			ktgui.drawCallStack.add(title + ".drawControllers()");
+			ktgui.drawCallStack.add(title + ".drawControllers()" + "-'");
 			for (Controller child : controllers) {
+				child.updateGraphics();
 				pg.beginDraw();
-				ktgui.drawCallStack.add("pg.image(" + child.title + ").getGraphics: " + child.posx + ", " + child.posy);
+				ktgui.drawCallStack.add("pg.image(" + child.title + ").getGraphics: " +
+						child.posx + ", " + child.posy + "-'  ");
 				pg.image(child.getGraphics(), child.posx, child.posy);
 				pg.endDraw();
 			}
@@ -88,12 +90,13 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	private void drawGraphics() {
 		if (parentController == null) {
-			ktgui.drawCallStack.add(title + ".drawGraphics()");
+			ktgui.drawCallStack.add(title + ".drawGraphics()" + "-'");
 			pa.image(pg, posx, posy);
 		}
 	}
 
 	public void draw() {
+		ktgui.drawCallStack.add(title + ".draw()" + "|");
 		drawControllers();
 		drawUserDefinedGraphics(); // draw 'userpg' on 'pg' 
 		drawGraphics(); // draw 'pg' on PApplet canvas

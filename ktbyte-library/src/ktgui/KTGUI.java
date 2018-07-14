@@ -43,7 +43,7 @@ public class KTGUI implements PConstants {
 	private static PApplet					pa;
 	private StageManager					stageManager;
 	private HashMap<Controller, Integer>	garbageList;
-	public ArrayList<String>				drawCallStack = new ArrayList<String>();
+	public ArrayList<String>				drawCallStack	= new ArrayList<String>();
 
 	public static int						COLOR_FG_HOVERED;
 	public static int						COLOR_FG_PRESSED;
@@ -55,7 +55,7 @@ public class KTGUI implements PConstants {
 	public static int						MENU_BAR_HEIGHT;
 	public static int						BORDER_THICKNESS;
 	public static int						ALIGN_GAP;
-	private boolean							debug	= false;
+	private boolean							debug			= false;
 
 	/*************************************************************************************************************************
 	 * This is a constructor of the KTGUI class.
@@ -107,6 +107,9 @@ public class KTGUI implements PConstants {
 		}
 		collectGarbage();
 		drawDebugInfo();
+		if (debug) {
+			pa.getSurface().setTitle(pa.mouseX + ", " + pa.mouseY);
+		}
 	}
 
 	@SuppressWarnings("rawtypes") void collectGarbage() {
@@ -140,10 +143,10 @@ public class KTGUI implements PConstants {
 			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
 			for (Controller controller : StageManager.getInstance().getDefaultStage().getControllers()) {
 				if (controller.title != null) {
-					pa.text("defaultStage: " + controller.title + ", pController:" + 
+					pa.text("defaultStage: " + controller.title + ", pController:" +
 							((controller.parentController != null) ? controller.parentController.title : "null") +
 							", controllers.size():" + controller.controllers.size() +
-							", pStage:" + 
+							", pStage:" +
 							((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
 							", posx:" + controller.posx +
 							", posy:" + controller.posy, 10, ypos += YSHIFT);
@@ -152,10 +155,10 @@ public class KTGUI implements PConstants {
 			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
 			for (Controller controller : StageManager.getInstance().getActiveStage().getControllers()) {
 				if (controller.title != null) {
-					pa.text("activeStage: " + controller.title + ", pController:" + 
+					pa.text("activeStage: " + controller.title + ", pController:" +
 							((controller.parentController != null) ? controller.parentController.title : "null") +
 							", controllers.size():" + controller.controllers.size() +
-							", pStage:" + 
+							", pStage:" +
 							((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
 							", posx:" + controller.posx +
 							", posy:" + controller.posy,
@@ -170,7 +173,7 @@ public class KTGUI implements PConstants {
 			ypos = 0;
 			pa.textAlign(RIGHT, CENTER);
 			for (String msg : drawCallStack) {
-					pa.text(msg, pa.width - 10, ypos += YSHIFT);
+				pa.text(msg, pa.width - 10, ypos += YSHIFT);
 			}
 			drawCallStack = new ArrayList<String>();
 		}
