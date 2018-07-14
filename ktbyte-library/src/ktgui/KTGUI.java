@@ -41,7 +41,6 @@ Drawing is allowed because key events are queued, unless the sketch has called <
  *********************************************************************************************************************/
 public class KTGUI implements PConstants {
 	private static PApplet					pa;
-	private StageManager					stageManager;
 	private HashMap<Controller, Integer>	garbageList;
 	public ArrayList<String>				drawCallStack	= new ArrayList<String>();
 
@@ -85,9 +84,6 @@ public class KTGUI implements PConstants {
 		MENU_BAR_HEIGHT = 20;
 		BORDER_THICKNESS = 3;
 		ALIGN_GAP = 20;
-
-		stageManager = StageManager.getInstance();
-		stageManager.init(this);
 	}
 
 	public static PApplet getParentPApplet() {
@@ -99,11 +95,10 @@ public class KTGUI implements PConstants {
 	 * This way, the KTGUI class automatically updates all the controllers on the <i>default</i> and <i>active</i> stages.
 	 ************************************************************************************************************************/
 	public void draw() {
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			stageManager.getDefaultStage().draw();
-			stageManager.getActiveStage().draw();
+		if (StageManager.getDefaultStage() != StageManager.getActiveStage()) {
+			StageManager.getActiveStage().draw();
 		} else {
-			stageManager.getDefaultStage().draw();
+			StageManager.getDefaultStage().draw();
 		}
 		collectGarbage();
 		drawDebugInfo();
@@ -132,40 +127,41 @@ public class KTGUI implements PConstants {
 
 			int YSHIFT = 12;
 			int ypos = pa.height - 10;
-			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
-			pa.text("activeStage.name:" + StageManager.getInstance().getActiveStage().getName(), 10, ypos -= YSHIFT);
-			pa.text("activeStage.index:"
-					+ StageManager.getInstance().stages.indexOf(StageManager.getInstance().getActiveStage()),
+			pa.text("--------------------------------------------------------------------------------------------------------", 10, ypos += YSHIFT);
+			pa.text("aStage.name:" + StageManager.getActiveStage().getName(), 10, ypos -= YSHIFT);
+			pa.text("aStage.index:"
+					+ StageManager.stages.indexOf(StageManager.getActiveStage()),
 					10, ypos -= YSHIFT);
-			pa.text("stages.size():" + StageManager.getInstance().stages.size(), 10, ypos -= YSHIFT);
+			pa.text("stages.size():" + StageManager.stages.size(), 10, ypos -= YSHIFT);
 
 			ypos = 0;
-			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
-			for (Controller controller : StageManager.getInstance().getDefaultStage().getControllers()) {
+			pa.text("--------------------------------------------------------------------------------------------------------", 10, ypos += YSHIFT);
+			for (Controller controller : StageManager.getDefaultStage().getControllers()) {
 				if (controller.title != null) {
-					pa.text("defaultStage: " + controller.title + ", pController:" +
+					pa.text("dStage: " + controller.title + ", pCtrlr:" +
 							((controller.parentController != null) ? controller.parentController.title : "null") +
-							", controllers.size():" + controller.controllers.size() +
+							", ctrlrs.size():" + controller.controllers.size() +
 							", pStage:" +
 							((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
-							", posx:" + controller.posx +
-							", posy:" + controller.posy, 10, ypos += YSHIFT);
+							", rposx:" + controller.posx +
+							", rposy:" + controller.posy, 10, ypos += YSHIFT);
 				}
 			}
-			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
-			for (Controller controller : StageManager.getInstance().getActiveStage().getControllers()) {
-				if (controller.title != null) {
-					pa.text("activeStage: " + controller.title + ", pController:" +
-							((controller.parentController != null) ? controller.parentController.title : "null") +
-							", controllers.size():" + controller.controllers.size() +
-							", pStage:" +
-							((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
-							", posx:" + controller.posx +
-							", posy:" + controller.posy,
-							10, ypos += YSHIFT);
+			pa.text("--------------------------------------------------------------------------------------------------------", 10, ypos += YSHIFT);
+			if (StageManager.getActiveStage() != StageManager.getDefaultStage()) {
+				for (Controller controller : StageManager.getActiveStage().getControllers()) {
+					if (controller.title != null) {
+						pa.text("aStage: " + controller.title + ", pCtrlr:" +
+								((controller.parentController != null) ? controller.parentController.title : "null") +
+								", ctrllrs.size():" + controller.controllers.size() +
+								", pStage:" +
+								((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
+								", rposx:" + controller.posx +
+								", rposy:" + controller.posy, 10, ypos += YSHIFT);
+					}
 				}
+				pa.text("--------------------------------------------------------------------------------------------------------", 10, ypos += YSHIFT);
 			}
-			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////
 			/** 
 			 * Display the draw() method calls stack 
@@ -267,11 +263,11 @@ public class KTGUI implements PConstants {
 	 * This is a 'transfer' method - it 'redirects' the PApplet.mouseDragged event to KTGUI components (controllers)
 	 */
 	private void mouseDragged() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
+		for (Controller controller : StageManager.getActiveStage().controllers) {
 			controller.processMouseDragged();
 		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
+		if (StageManager.getDefaultStage() != StageManager.getActiveStage()) {
+			for (Controller controller : StageManager.getDefaultStage().controllers) {
 				controller.processMouseDragged();
 			}
 		}
@@ -281,12 +277,12 @@ public class KTGUI implements PConstants {
 	 * This is a 'transfer' method - it 'redirects' the PApplet.mousePressed event to KTGUI components (controllers)
 	 */
 	private void mousePressed() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
+		for (Controller controller : StageManager.getActiveStage().controllers) {
 			controller.processMousePressed();
 		}
 
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
+		if (StageManager.getDefaultStage() != StageManager.getActiveStage()) {
+			for (Controller controller : StageManager.getDefaultStage().controllers) {
 				controller.processMousePressed();
 			}
 		}
@@ -296,11 +292,11 @@ public class KTGUI implements PConstants {
 	 * This is a 'transfer' method - it 'redirects' the PApplet.mouseReleased event to KTGUI components (controllers)
 	 */
 	private void mouseReleased() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
+		for (Controller controller : StageManager.getActiveStage().controllers) {
 			controller.processMouseReleased();
 		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
+		if (StageManager.getDefaultStage() != StageManager.getActiveStage()) {
+			for (Controller controller : StageManager.getDefaultStage().controllers) {
 				controller.processMouseReleased();
 			}
 		}
@@ -310,22 +306,22 @@ public class KTGUI implements PConstants {
 	 * This is a 'transfer' method - it 'redirects' the PApplet.mouseMoved event to KTGUI components (controllers)
 	 */
 	private void mouseMoved() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
+		for (Controller controller : StageManager.getActiveStage().controllers) {
 			controller.processMouseMoved();
 		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
+		if (StageManager.getDefaultStage() != StageManager.getActiveStage()) {
+			for (Controller controller : StageManager.getDefaultStage().controllers) {
 				controller.processMouseMoved();
 			}
 		}
 	}
 
 	private void mouseWheel(MouseEvent me) {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
+		for (Controller controller : StageManager.getActiveStage().controllers) {
 			controller.processMouseWheel(me);
 		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
+		if (StageManager.getDefaultStage() != StageManager.getActiveStage()) {
+			for (Controller controller : StageManager.getDefaultStage().controllers) {
 				controller.processMouseWheel(me);
 			}
 		}
@@ -335,11 +331,11 @@ public class KTGUI implements PConstants {
 	 * This is a 'transfer' method - it 'redirects' the PApplet.keyPressed event to KTGUI components (controllers)
 	 */
 	private void keyPressed() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
+		for (Controller controller : StageManager.getActiveStage().controllers) {
 			controller.processKeyPressed();
 		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
+		if (StageManager.getDefaultStage() != StageManager.getActiveStage()) {
+			for (Controller controller : StageManager.getDefaultStage().controllers) {
 				controller.processKeyPressed();
 			}
 		}
@@ -349,11 +345,11 @@ public class KTGUI implements PConstants {
 	 * This is a 'transfer' method - it 'redirects' the PApplet.keyReleased event to KTGUI components (controllers)
 	 */
 	private void keyReleased() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
+		for (Controller controller : StageManager.getActiveStage().controllers) {
 			controller.processKeyReleased();
 		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
+		if (StageManager.getDefaultStage() != StageManager.getActiveStage()) {
+			for (Controller controller : StageManager.getDefaultStage().controllers) {
 				controller.processKeyReleased();
 			}
 		}

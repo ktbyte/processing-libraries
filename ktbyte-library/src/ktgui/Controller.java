@@ -46,8 +46,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 
+		StageManager.getInstance();
 		// automatically register the newly created window in default stage of stageManager
-		StageManager.getInstance().defaultStage.registerController(this);
+		StageManager.getDefaultStage().registerController(this);
 
 		initColors();
 	}
@@ -82,6 +83,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				pg.beginDraw();
 				ktgui.drawCallStack.add("pg.image(" + child.title + ").getGraphics: " +
 						child.posx + ", " + child.posy + "-'  ");
+				ktgui.drawCallStack.add("(" + child.title + ").apos:" +
+						child.getAbsolutePosX() + ", " + child.getAbsolutePosY() + "-'    ");
 				pg.image(child.getGraphics(), child.posx, child.posy);
 				pg.endDraw();
 			}
@@ -122,6 +125,24 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		return h;
 	}
 
+	public float getAbsolutePosX() {
+		float px = 0;
+		if(parentController != null) {
+			px += parentController.getAbsolutePosX();
+		}
+		px += this.posx;
+		return px;
+	}
+
+	public float getAbsolutePosY() {
+		float py = 0;
+		if(parentController != null) {
+			py += parentController.getAbsolutePosY();
+		}
+		py += this.posy;
+		return py;
+	}
+	
 	public void setHeight(int h) {
 		this.h = h;
 	}
@@ -195,27 +216,6 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			StageManager.getInstance().unregisterControllerFromAllStages(controller);
 		}
 	}
-
-	//	// register child controller and all its childs (recursively)
-	//	public void registerChildController(Controller controller) {
-	//		if (parentStage != null) {
-	//			parentStage.registerController(controller);
-	//			if (controller.controllers.size() > 0) {
-	//				ArrayList<Controller> childControllers = controller.controllers;
-	//				for (Controller child : childControllers) {
-	//					registerChildController(child);
-	//				}
-	//			}
-	//		}
-	//	}
-
-	//	public void registerChildControllers() {
-	//		if (parentStage != null) {
-	//			for (Controller controller : controllers) {
-	//				registerChildController(controller);
-	//			}
-	//		}
-	//	}
 
 	public void detachController(Controller controller) {
 		controller.parentController = null;

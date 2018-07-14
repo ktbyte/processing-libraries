@@ -29,14 +29,6 @@ public class Button extends Controller {
 		pg.endDraw();
 	}
 
-//	public void draw() {
-//		// if this button don't belongs to any window or pane 
-//		// then draw directly on the PApplet canvas 
-//		if (parentController == null) {
-//			pa.image(pg, posx, posy);
-//		}
-//	}
-
 	/*   
 	 *  This method overrides the Controller's `mouseMoved()` method and implements
 	 *  its own behaviour for when this event is received from the parent PApplet. 
