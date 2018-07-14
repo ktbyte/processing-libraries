@@ -213,7 +213,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			controller.setParentController(this);
 			System.out.println("\t" + controller.title + ".parentController is " + controller.parentController.title);
 			// unregister the controller from all stages
-			StageManager.getInstance().unregisterControllerFromAllStages(controller);
+			StageManager.unregisterControllerFromAllStages(controller);
 		}
 	}
 
@@ -250,7 +250,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	public void closeParent(Controller controller) {
 		if (controller.parentController != null) {
-			closeParent(controller.parentController);
+			closeParent(controller.parentController); 
 			closeController(controller.parentController);
 		}
 		for (Controller childController : controllers) {
