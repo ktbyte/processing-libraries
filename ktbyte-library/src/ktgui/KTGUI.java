@@ -140,9 +140,11 @@ public class KTGUI implements PConstants {
 			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
 			for (Controller controller : StageManager.getInstance().getDefaultStage().getControllers()) {
 				if (controller.title != null) {
-					pa.text("defaultStage: " + controller.title +
-							", parent:"
-							+ ((controller.parentController != null) ? controller.parentController.title : "null") +
+					pa.text("defaultStage: " + controller.title + ", pController:" + 
+							((controller.parentController != null) ? controller.parentController.title : "null") +
+							", controllers.size():" + controller.controllers.size() +
+							", pStage:" + 
+							((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
 							", posx:" + controller.posx +
 							", posy:" + controller.posy, 10, ypos += YSHIFT);
 				}
@@ -150,9 +152,11 @@ public class KTGUI implements PConstants {
 			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
 			for (Controller controller : StageManager.getInstance().getActiveStage().getControllers()) {
 				if (controller.title != null) {
-					pa.text("activeStage: " + controller.title +
-							", parent:"
-							+ ((controller.parentController != null) ? controller.parentController.title : "null") +
+					pa.text("activeStage: " + controller.title + ", pController:" + 
+							((controller.parentController != null) ? controller.parentController.title : "null") +
+							", controllers.size():" + controller.controllers.size() +
+							", pStage:" + 
+							((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
 							", posx:" + controller.posx +
 							", posy:" + controller.posy,
 							10, ypos += YSHIFT);

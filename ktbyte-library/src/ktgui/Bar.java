@@ -23,13 +23,13 @@ public class Bar extends Controller {
 		pg.endDraw();
 	}
 
-	public void drawControllers() {
-		for (Controller controller : controllers) {
-			pg.beginDraw();
-			pg.image(controller.getGraphics(), controller.posx, controller.posy);
-			pg.endDraw();
-		}
-	}
+//	public void drawControllers() {
+//		for (Controller controller : controllers) {
+//			pg.beginDraw();
+//			pg.image(controller.getGraphics(), controller.posx, controller.posy);
+//			pg.endDraw();
+//		}
+//	}
 
 	// process mouseMoved event received from PApplet
 	public void processMouseMoved() {

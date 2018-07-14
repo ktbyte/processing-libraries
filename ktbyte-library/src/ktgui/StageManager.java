@@ -11,8 +11,8 @@ import processing.core.PApplet;
 public class StageManager {
 
 	public List<Stage>			stages;			// replace 'List' with 'Set' to prevent duplicates
-	public Stage				activeStage;
-	public Stage				defaultStage;
+	public Stage				activeStage;    // this is just a pointer to the currently active stage
+	public Stage				defaultStage;   // this stage is always present regardless of the number of other stages
 	public PApplet				pa;
 	private static StageManager	instance;
 
@@ -33,7 +33,6 @@ public class StageManager {
 	public Stage createStage(String name) {
 		System.out.println("Creating stage '" + name + "'");
 		Stage stage = new Stage(name);
-		stages.add(stage);
 		activeStage = stage;
 		return stage;
 	}
@@ -70,7 +69,8 @@ public class StageManager {
 		for (Stage stage : stages) {
 			System.out.println("\tStage " + stage.getName() + " contains:");
 			for (Controller c : stage.controllers) {
-				System.out.println("\t\t" + c.title + " of type (" + c.getClass().getName() + ")");
+				System.out.println("\t\t" + c.title + " of type (" +
+						c.getClass().getName() + ")");
 			}
 			if (stage.controllers.contains(controller)) {
 				System.out.println("\t\t\t>>> Found (" + controller.title + ") in stage (" +

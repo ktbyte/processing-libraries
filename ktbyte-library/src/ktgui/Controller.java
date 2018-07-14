@@ -68,6 +68,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void drawUserDefinedGraphics() {
+		ktgui.drawCallStack.add(title + ".drawUserDefinedGraphics()");
 		pg.beginDraw();
 		pg.image(userpg, 0, 0);
 		pg.endDraw();
@@ -180,6 +181,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			}
 			// add to the list of controllers
 			if (!controllers.contains(controller)) {
+				System.out.println(title + ".controllers.contains(" +
+						controller.title + ") == " + controllers.contains(controller));
 				controllers.add(controller);
 			}
 			// set 'this' controller as parent
