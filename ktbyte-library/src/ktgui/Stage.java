@@ -20,6 +20,7 @@ public class Stage {
 		this.pa = KTGUI.getParentPApplet();
 		this.name = name;
 		this.controllers = new ArrayList<Controller>();
+		StageManager.getInstance().stages.add(this);
 	}
 
 	public String getName() {

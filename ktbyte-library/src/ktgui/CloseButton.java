@@ -10,6 +10,9 @@ class CloseButton extends Button {
 	}
 
 	public void updateGraphics() {
+		if(parentController != null) {
+			
+		}
 		pg.beginDraw();
 		pg.rectMode(CORNER);
 		if (isHovered && !isPressed) {

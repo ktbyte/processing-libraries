@@ -124,19 +124,19 @@ public class KTGUI implements PConstants {
 	void drawDebugInfo() {
 		if (debug) {
 			pa.fill(0);
-			pa.textSize(12);
-			pa.textAlign(RIGHT, CENTER);
-			pa.textFont(pa.createFont("monospaced", 16));
-			pa.text("activeStage.name:" + StageManager.getInstance().getActiveStage().getName(), 10, pa.height - 10);
+			pa.textFont(pa.createFont("monospaced", 11));
+			pa.textAlign(LEFT, CENTER);
+
+			int YSHIFT = 12;
+			int ypos = pa.height - 10;
+			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
+			pa.text("activeStage.name:" + StageManager.getInstance().getActiveStage().getName(), 10, ypos -= YSHIFT);
 			pa.text("activeStage.index:"
 					+ StageManager.getInstance().stages.indexOf(StageManager.getInstance().getActiveStage()),
-					10, pa.height - 30);
-			pa.text("stages.size():" + StageManager.getInstance().stages.size(), 10, pa.height - 50);
+					10, ypos -= YSHIFT);
+			pa.text("stages.size():" + StageManager.getInstance().stages.size(), 10, ypos -= YSHIFT);
 
-			pa.textSize(11);
-			int YSHIFT = 12;
-			int ypos = 0;
-			pa.textAlign(LEFT, CENTER);
+			ypos = 0;
 			pa.text("----------------------------------------------------", 10, ypos += YSHIFT);
 			for (Controller controller : StageManager.getInstance().getDefaultStage().getControllers()) {
 				if (controller.title != null) {

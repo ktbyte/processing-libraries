@@ -34,6 +34,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public int						bgPassiveColor;
 
 	public Controller(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+		System.out.println("Creating " + title + ".");
 		this.ktgui = ktgui;
 		this.pa = KTGUI.getParentPApplet();
 		this.title = title;
@@ -73,12 +74,14 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void drawControllers() {
-		ktgui.drawCallStack.add(title + ".drawControllers()");
-		for (Controller child : controllers) {
-			pg.beginDraw();
-			ktgui.drawCallStack.add("pg.image(" + child.title + ").getGraphics: " + child.posx + ", " + child.posy);
-			pg.image(child.getGraphics(), child.posx, child.posy);
-			pg.endDraw();
+		if (controllers.size() > 0) {
+			ktgui.drawCallStack.add(title + ".drawControllers()");
+			for (Controller child : controllers) {
+				pg.beginDraw();
+				ktgui.drawCallStack.add("pg.image(" + child.title + ").getGraphics: " + child.posx + ", " + child.posy);
+				pg.image(child.getGraphics(), child.posx, child.posy);
+				pg.endDraw();
+			}
 		}
 	}
 
@@ -183,30 +186,30 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			controller.setParentController(this);
 			System.out.println("\t" + controller.title + ".parentController is " + controller.parentController.title);
 			// unregister the controller from all stages
-			
+			StageManager.getInstance().unregisterControllerFromAllStages(controller);
 		}
 	}
 
-//	// register child controller and all its childs (recursively)
-//	public void registerChildController(Controller controller) {
-//		if (parentStage != null) {
-//			parentStage.registerController(controller);
-//			if (controller.controllers.size() > 0) {
-//				ArrayList<Controller> childControllers = controller.controllers;
-//				for (Controller child : childControllers) {
-//					registerChildController(child);
-//				}
-//			}
-//		}
-//	}
+	//	// register child controller and all its childs (recursively)
+	//	public void registerChildController(Controller controller) {
+	//		if (parentStage != null) {
+	//			parentStage.registerController(controller);
+	//			if (controller.controllers.size() > 0) {
+	//				ArrayList<Controller> childControllers = controller.controllers;
+	//				for (Controller child : childControllers) {
+	//					registerChildController(child);
+	//				}
+	//			}
+	//		}
+	//	}
 
-//	public void registerChildControllers() {
-//		if (parentStage != null) {
-//			for (Controller controller : controllers) {
-//				registerChildController(controller);
-//			}
-//		}
-//	}
+	//	public void registerChildControllers() {
+	//		if (parentStage != null) {
+	//			for (Controller controller : controllers) {
+	//				registerChildController(controller);
+	//			}
+	//		}
+	//	}
 
 	public void detachController(Controller controller) {
 		controller.parentController = null;

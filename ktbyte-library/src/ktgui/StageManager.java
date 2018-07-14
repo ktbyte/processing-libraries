@@ -10,10 +10,10 @@ import processing.core.PApplet;
  *********************************************************************************************************************/
 public class StageManager {
 
-	public List<Stage>		stages;			// replace 'List' with 'Set' to prevent duplicates
-	public Stage			activeStage;
-	public Stage			defaultStage;
-	public PApplet			pa;
+	public List<Stage>			stages;			// replace 'List' with 'Set' to prevent duplicates
+	public Stage				activeStage;
+	public Stage				defaultStage;
+	public PApplet				pa;
 	private static StageManager	instance;
 
 	static {
@@ -23,14 +23,15 @@ public class StageManager {
 	public static StageManager getInstance() {
 		return instance;
 	}
-	
+
 	public void init(KTGUI ktgui) {
 		stages = new ArrayList<Stage>();
-		defaultStage = new Stage("Default");
+		defaultStage = createStage("Default");
 		activeStage = defaultStage;
 	}
 
 	public Stage createStage(String name) {
+		System.out.println("Creating stage '" + name + "'");
 		Stage stage = new Stage(name);
 		stages.add(stage);
 		activeStage = stage;
@@ -64,4 +65,22 @@ public class StageManager {
 		}
 	}
 
+	public void unregisterControllerFromAllStages(Controller controller) {
+		System.out.println("Unregistering " + controller.title + " from all stages ...");
+		for (Stage stage : stages) {
+			System.out.println("\tStage " + stage.getName() + " contains:");
+			for (Controller c : stage.controllers) {
+				System.out.println("\t\t" + c.title + " of type (" + c.getClass().getName() + ")");
+			}
+			if (stage.controllers.contains(controller)) {
+				System.out.println("\t\t\t>>> Found (" + controller.title + ") in stage (" +
+						stage.getName() + "), removing ...");
+				stage.controllers.remove(stage.controllers.indexOf(controller));
+				System.out.println("\t\t\tNow, " + stage.getName() +
+						".controllers.contains(" + controller.title + ") == " + stage.controllers.contains(controller));
+			}
+		}
+		controller.parentStage = null;
+		System.out.println("Done.");
+	}
 }
