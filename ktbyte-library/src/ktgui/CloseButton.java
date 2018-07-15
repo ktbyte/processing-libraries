@@ -7,6 +7,7 @@ class CloseButton extends Button {
 
 	public CloseButton(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 		super(ktgui, title, posx, posy, w, h);
+		this.isDragable = false; // just to make sure
 	}
 
 	public void updateGraphics() {
@@ -33,6 +34,7 @@ class CloseButton extends Button {
 	public void processMousePressed() {
 		super.processMousePressed();
 		if (isPressed) {
+			System.out.println(parentController.title + " closeButton has been pressed!");
 			closeControllerRecursively(this); // closeButton --> TitleBar --> Window --> Pane, Button, Button, Window --> TitleBar
 		}
 	}

@@ -8,7 +8,8 @@ public class Bar extends Controller {
 	}
 
 	public void updateGraphics() {
-		// drawBar and title
+		ktgui.drawCallStack.add(title + ".updateGraphics()");
+		// draw bar and title
 		pg.beginDraw();
 		pg.background(200, 200);
 		pg.rectMode(CORNER);
@@ -23,16 +24,13 @@ public class Bar extends Controller {
 		pg.endDraw();
 	}
 
-//	public void drawControllers() {
-//		for (Controller controller : controllers) {
-//			pg.beginDraw();
-//			pg.image(controller.getGraphics(), controller.posx, controller.posy);
-//			pg.endDraw();
-//		}
-//	}
-
 	// process mouseMoved event received from PApplet
 	public void processMouseMoved() {
+		// transfer mouseMoved event to child controllers
+		for(Controller child : controllers) {
+			child.processMouseMoved();
+		}
+		// process mouseMoved event by own means
 		isHovered = isPointInside(pa.mouseX, pa.mouseY) ? true : false;
 		for (KTGUIEventAdapter adapter : adapters) {
 			adapter.onMouseMoved();
@@ -41,6 +39,11 @@ public class Bar extends Controller {
 
 	// process mousePressed event received from PApplet
 	public void processMousePressed() {
+		// transfer mousePressed event to child controllers
+		for(Controller child : controllers) {
+			child.processMousePressed();
+		}
+		// process mousePressed event by own means
 		if (isHovered) {
 			isPressed = true;
 			for (KTGUIEventAdapter adapter : adapters) {
@@ -53,6 +56,11 @@ public class Bar extends Controller {
 
 	// process mouseReleased event received from PApplet
 	public void processMouseReleased() {
+		// transfer mouseReleased event to child controllers
+		for(Controller child : controllers) {
+			child.processMouseReleased();
+		}
+		// process mouseReleased event by own means
 		isPressed = false;
 		if (isHovered) {
 			for (KTGUIEventAdapter adapter : adapters) {
@@ -63,6 +71,11 @@ public class Bar extends Controller {
 
 	// process mouseDragged event received from PApplet
 	public void processMouseDragged() {
+		// transfer mouseDragged event to child controllers
+		for(Controller child : controllers) {
+			child.processMouseDragged();
+		}
+		// process mouseDragged event by own means
 		if (isDragable) {
 			if (isPressed) {
 				posx += pa.mouseX - pa.pmouseX;

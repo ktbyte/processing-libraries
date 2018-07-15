@@ -12,6 +12,7 @@ public class Button extends Controller {
 	}
 
 	public void updateGraphics() {
+		ktgui.drawCallStack.add(title + ".updateGraphics()");
 		pg.beginDraw();
 		pg.rectMode(CORNER);
 		if (isHovered && !isPressed) {
@@ -100,11 +101,16 @@ public class Button extends Controller {
 	private boolean isPointInside(int x, int y) {
 		boolean isInside = false;
 
-		int px = (parentController == null) ? 0 : parentController.posx;
-		int py = (parentController == null) ? 0 : parentController.posy;
-
-		if (x > px + posx && x < px + posx + w) {
-			if (y > py + posy && y < py + posy + h) {
+//		int px = (parentController == null) ? 0 : parentController.posx;
+//		int py = (parentController == null) ? 0 : parentController.posy;
+//
+//		if (x > px + posx && x < px + posx + w) {
+//			if (y > py + posy && y < py + posy + h) {
+//				isInside = true;
+//			}
+//		}
+		if (x > getAbsolutePosX() && x < getAbsolutePosX() + w) {
+			if (y > getAbsolutePosY() && y < getAbsolutePosY() + h) {
 				isInside = true;
 			}
 		}
