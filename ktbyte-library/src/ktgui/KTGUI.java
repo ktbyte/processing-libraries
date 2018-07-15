@@ -97,11 +97,12 @@ public class KTGUI implements PConstants {
 	public void draw() {
 		if (StageManager.getDefaultStage() != StageManager.getActiveStage()) {
 			StageManager.getActiveStage().draw();
-		} else {
-			StageManager.getDefaultStage().draw();
 		}
+		StageManager.getDefaultStage().draw();
+		
 		collectGarbage();
 		drawDebugInfo();
+		
 		if (debug) {
 			pa.getSurface().setTitle(pa.mouseX + ", " + pa.mouseY);
 		}
@@ -127,7 +128,8 @@ public class KTGUI implements PConstants {
 
 			int YSHIFT = 12;
 			int ypos = pa.height - 10;
-			pa.text("--------------------------------------------------------------------------------------------------------", 10, ypos += YSHIFT);
+			pa.text("--------------------------------------------------------------------------------------------------------",
+					10, ypos += YSHIFT);
 			pa.text("aStage.name:" + StageManager.getActiveStage().getName(), 10, ypos -= YSHIFT);
 			pa.text("aStage.index:"
 					+ StageManager.stages.indexOf(StageManager.getActiveStage()),
@@ -135,7 +137,8 @@ public class KTGUI implements PConstants {
 			pa.text("stages.size():" + StageManager.stages.size(), 10, ypos -= YSHIFT);
 
 			ypos = 0;
-			pa.text("--------------------------------------------------------------------------------------------------------", 10, ypos += YSHIFT);
+			pa.text("--------------------------------------------------------------------------------------------------------",
+					10, ypos += YSHIFT);
 			for (Controller controller : StageManager.getDefaultStage().getControllers()) {
 				if (controller.title != null) {
 					pa.text("dStage: " + controller.title + ", pCtrlr:" +
@@ -149,7 +152,8 @@ public class KTGUI implements PConstants {
 							", rposy:" + controller.posy, 10, ypos += YSHIFT);
 				}
 			}
-			pa.text("--------------------------------------------------------------------------------------------------------", 10, ypos += YSHIFT);
+			pa.text("--------------------------------------------------------------------------------------------------------",
+					10, ypos += YSHIFT);
 			if (StageManager.getActiveStage() != StageManager.getDefaultStage()) {
 				for (Controller controller : StageManager.getActiveStage().getControllers()) {
 					if (controller.title != null) {
@@ -164,7 +168,8 @@ public class KTGUI implements PConstants {
 								", rposy:" + controller.posy, 10, ypos += YSHIFT);
 					}
 				}
-				pa.text("--------------------------------------------------------------------------------------------------------", 10, ypos += YSHIFT);
+				pa.text("--------------------------------------------------------------------------------------------------------",
+						10, ypos += YSHIFT);
 			}
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////
 			/** 

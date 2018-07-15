@@ -76,10 +76,11 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void drawControllers() {
-		if (controllers.size() > 0) {
+//		if (controllers.size() > 0) {
 			ktgui.drawCallStack.add(title + ".drawControllers()" + "-'");
 			for (Controller child : controllers) {
 				child.updateGraphics();
+				child.draw();
 				pg.beginDraw();
 				ktgui.drawCallStack.add("pg.image(" + child.title + ").getGraphics: " +
 						child.posx + ", " + child.posy + "-'  ");
@@ -88,7 +89,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				pg.image(child.getGraphics(), child.posx, child.posy);
 				pg.endDraw();
 			}
-		}
+//		}
 	}
 
 	private void drawGraphics() {
@@ -125,8 +126,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		return h;
 	}
 
-	public float getAbsolutePosX() {
-		float px = 0;
+	public int getAbsolutePosX() {
+		int px = 0;
 		if (parentController != null) {
 			px += parentController.getAbsolutePosX();
 		}
@@ -134,8 +135,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		return px;
 	}
 
-	public float getAbsolutePosY() {
-		float py = 0;
+	public int getAbsolutePosY() {
+		int py = 0;
 		if (parentController != null) {
 			py += parentController.getAbsolutePosY();
 		}
@@ -212,8 +213,13 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			// set 'this' controller as parent
 			controller.setParentController(this);
 			System.out.println("\t" + controller.title + ".parentController is " + controller.parentController.title);
+			
 			// unregister the controller from all stages
 			StageManager.unregisterControllerFromAllStages(controller);
+			
+			for(Controller child : controller.controllers) {
+				
+			}
 		}
 	}
 

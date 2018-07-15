@@ -10,7 +10,8 @@ public class Pane extends Controller {
 	}
 
 	@Override public void updateGraphics() {
-		// change thickness depending on the user-mouse behavior
+		ktgui.drawCallStack.add(title + ".updateGraphics()");
+		// change thickness depending on the user-mouse behavior ???
 		pg.beginDraw();
 		pg.background(200, 100);
 		pg.stroke(0);
