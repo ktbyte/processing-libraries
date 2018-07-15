@@ -143,6 +143,8 @@ public class KTGUI implements PConstants {
 							", ctrlrs.size():" + controller.controllers.size() +
 							", pStage:" +
 							((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
+							", isPrsd:" + controller.isPressed +
+							", isHvrd:" + controller.isHovered +
 							", rposx:" + controller.posx +
 							", rposy:" + controller.posy, 10, ypos += YSHIFT);
 				}
@@ -156,6 +158,8 @@ public class KTGUI implements PConstants {
 								", ctrllrs.size():" + controller.controllers.size() +
 								", pStage:" +
 								((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
+								", isPrsd:" + controller.isPressed +
+								", isHvrd:" + controller.isHovered +
 								", rposx:" + controller.posx +
 								", rposy:" + controller.posy, 10, ypos += YSHIFT);
 					}

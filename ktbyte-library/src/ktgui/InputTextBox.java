@@ -103,7 +103,6 @@ public class InputTextBox extends Controller {
 		}
 	}
 
-
 	/**
 	 * Sets the current text
 	 * 
@@ -155,5 +154,5 @@ public class InputTextBox extends Controller {
 		}
 		return sb.reverse().toString();
 	}
-	
+
 }
