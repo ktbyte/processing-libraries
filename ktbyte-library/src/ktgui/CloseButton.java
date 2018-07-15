@@ -9,7 +9,8 @@ class CloseButton extends Button {
 		super(ktgui, title, posx, posy, w, h);
 		this.isDragable = false; // just to make sure
 	}
-
+	
+	@Override
 	public void updateGraphics() {
 		ktgui.drawCallStack.add(title + ".updateGraphics()");
 		pg.beginDraw();
@@ -31,6 +32,7 @@ class CloseButton extends Button {
 		pg.endDraw();
 	}
 
+	@Override
 	public void processMousePressed() {
 		super.processMousePressed();
 		if (isPressed) {

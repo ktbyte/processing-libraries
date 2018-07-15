@@ -63,14 +63,5 @@ public class Pane extends Controller {
 		}
 	}
 
-	private boolean isPointInside(int x, int y) {
-		boolean isInside = false;
-		if (x > posx && x < posx + this.w) {
-			if (y > posy && y < posy + this.h) {
-				isInside = true;
-			}
-		}
-		return isInside;
-	}
 }
 

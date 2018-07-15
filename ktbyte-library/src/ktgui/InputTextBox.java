@@ -103,9 +103,6 @@ public class InputTextBox extends Controller {
 		}
 	}
 
-	private boolean isPointInside(int x, int y) {
-		return x > posx && x < posx + w && y > posy && y < posy + h;
-	}
 
 	/**
 	 * Sets the current text

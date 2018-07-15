@@ -66,16 +66,6 @@ public class Slider extends Controller {
 		adapters.add(adapter);
 	}
 
-	boolean isPointInside(int ptx, int pty) {
-		boolean isInside = false;
-		if (ptx > this.posx && ptx < this.posx + this.w) {
-			if (pty > this.posy && pty < this.posy + this.h) {
-				isInside = true;
-			}
-		}
-		return isInside;
-	}
-
 	public float getValue() {
 		return value;
 	}

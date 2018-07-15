@@ -127,7 +127,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	public float getAbsolutePosX() {
 		float px = 0;
-		if(parentController != null) {
+		if (parentController != null) {
 			px += parentController.getAbsolutePosX();
 		}
 		px += this.posx;
@@ -136,13 +136,13 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	public float getAbsolutePosY() {
 		float py = 0;
-		if(parentController != null) {
+		if (parentController != null) {
 			py += parentController.getAbsolutePosY();
 		}
 		py += this.posy;
 		return py;
 	}
-	
+
 	public void setHeight(int h) {
 		this.h = h;
 	}
@@ -250,7 +250,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	public void closeParent(Controller controller) {
 		if (controller.parentController != null) {
-			closeParent(controller.parentController); 
+			closeParent(controller.parentController);
 			closeController(controller.parentController);
 		}
 		for (Controller childController : controllers) {
@@ -476,4 +476,113 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
+	/*   
+	 *  This method overrides the KTGUIEventProcessor's `mouseMoved()` method and 
+	 *  implements its own behaviour. In particular, when this event is received 
+	 *  from the parent PApplet, this implementation defines the <b>"hovering"</b> 
+	 *  state/behaviour.(the <i>"hovered"</i> state is  defined by the <b>isHovered</b> 
+	 *  variable, which can be set to true or false).
+	 */
+	@Override
+	public void processMouseMoved() {
+		if (isActive) {
+			// transfer mouseMoved event to child controllers
+			for (Controller child : controllers) {
+				child.processMouseMoved();
+			}
+			// process mouseMoved event by own means
+			isHovered = isPointInside(pa.mouseX, pa.mouseY) ? true : false;
+			if (isHovered) {
+				for (KTGUIEventAdapter adapter : adapters) {
+					adapter.onMouseMoved();
+				}
+			}
+		}
+	}
+
+	/*   
+	 *  This method overrides the KTGUIEventProcessor's `mousePressed()` method and 
+	 *  implements its own behaviour. In particular, when this event is received from 
+	 *  the parent PApplet, this implementation decides when the state of this 
+	 *  controller is changing from <b>Pressed</b> to <b>Released</b> and vice versa 
+	 *  (the state is defined by the  <i>isPressed</i> variable, which can be set 
+	 *  to true or false).
+	 */
+	@Override
+	public void processMousePressed() {
+		if (isActive) {
+			// transfer mousePressed event to child controllers
+			for (Controller child : controllers) {
+				child.processMousePressed();
+			}
+			// process mousePressed event by own means
+			isPressed = isHovered;
+			if (isPressed) {
+				for (KTGUIEventAdapter adapter : adapters) {
+					adapter.onMousePressed();
+				}
+			}
+		}
+	}
+
+	/*   
+	 *  This method overrides the KTGUIEventProcessor's `mouseDragged` method and 
+	 *  implements its own behaviour. In particular, when this event is received 
+	 *  from the parent PApplet, this implementation defines the <i>"dragging"</i> 
+	 *  state/behaviour.
+	 */
+	@Override
+	public void processMouseDragged() {
+		if (isActive) {
+			// transfer mouseDragged event to child controllers
+			for(Controller child : controllers) {
+				child.processMouseDragged();
+			}
+			// process mouseDragged event by own means
+			if (isDragable) {
+				if (isPressed) {
+					posx += pa.mouseX - pa.pmouseX;
+					posy += pa.mouseY - pa.pmouseY;
+					for (KTGUIEventAdapter adapter : adapters) {
+						adapter.onMouseDragged();
+					}
+				}
+			}
+		}
+	}
+
+	/*   
+	 *  This method overrides the KTGUIEventProcessor's `mouseReleased` method and
+	 *  implements its own behaviour. In particular, when this event is received 
+	 *  from the parent, this implementation always sets the <i>isPressed</i> 
+	 *  variable to false. I.e. it changes the state of the controller to 'released'
+	 *  (unpressed).
+	 */
+	@Override
+	public void processMouseReleased() {
+		if (isActive) {
+			// transfer mouseReleased event to child controllers
+			for(Controller child : controllers) {
+				child.processMouseReleased();
+			}
+			// process mouseReleased event by own means
+			isPressed = false;
+			for (KTGUIEventAdapter adapter : adapters) {
+				adapter.onMouseReleased();
+			}
+		}
+	}
+	
+	@Override
+	public boolean isPointInside(int x, int y) {
+		boolean isInside = false;
+		if (isActive) {
+			if (x > getAbsolutePosX() && x < getAbsolutePosX() + w) {
+				if (y > getAbsolutePosY() && y < getAbsolutePosY() + h) {
+					isInside = true;
+				}
+			}
+		}
+		return isInside;
+	}
 }
