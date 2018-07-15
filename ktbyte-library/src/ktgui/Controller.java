@@ -228,21 +228,6 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
-	// update child controllers positions and all their childs (recursively)
-	public void updateChildrenPositions(int dx, int dy) {
-		for (Controller controller : controllers) {
-			controller.posx += dx;
-			controller.posy += dy;
-
-			if (controller.controllers.size() > 0) {
-				ArrayList<Controller> childControllers = controller.controllers;
-				for (Controller child : childControllers) {
-					child.updateChildrenPositions(dx, dy);
-				}
-			}
-		}
-	}
-
 	public void closeControllerRecursively(Controller controller) {
 		closeParent(controller);
 		closeChilds(controller);
@@ -275,15 +260,15 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void alignAboutCanvas(int hAlign, int vAlign) {
 		switch (hAlign) {
 		case PConstants.LEFT:
-			updateChildrenPositions(KTGUI.ALIGN_GAP - this.posx, 0);
+			//updateChildrenPositions(KTGUI.ALIGN_GAP - this.posx, 0);
 			this.posx = KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.RIGHT:
-			updateChildrenPositions(pa.width - this.w - KTGUI.ALIGN_GAP - this.posx, 0);
+			//updateChildrenPositions(pa.width - this.w - KTGUI.ALIGN_GAP - this.posx, 0);
 			this.posx = pa.width - this.w - KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.CENTER:
-			updateChildrenPositions((int) (pa.width * 0.5 - this.w * 0.5) - this.posx, 0);
+			//updateChildrenPositions((int) (pa.width * 0.5 - this.w * 0.5) - this.posx, 0);
 			this.posx = (int) (pa.width * 0.5 - this.w * 0.5);
 			break;
 		default:
@@ -292,15 +277,45 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		//
 		switch (vAlign) {
 		case PConstants.TOP:
-			updateChildrenPositions(0, KTGUI.ALIGN_GAP - this.posy);
+			//updateChildrenPositions(0, KTGUI.ALIGN_GAP - this.posy);
 			this.posy = KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.BOTTOM:
-			updateChildrenPositions(0, pa.height - this.h - KTGUI.ALIGN_GAP - this.posy);
+			//updateChildrenPositions(0, pa.height - this.h - KTGUI.ALIGN_GAP - this.posy);
 			this.posy = pa.height - this.h - KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.CENTER:
-			updateChildrenPositions(0, (int) (pa.height * 0.5 - this.h * 0.5) - this.posy);
+			//updateChildrenPositions(0, (int) (pa.height * 0.5 - this.h * 0.5) - this.posy);
+			this.posy = (int) (pa.height * 0.5 - this.h * 0.5);
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void alignAboutCanvas(int hAlign, int vAlign, int gap) {
+		switch (hAlign) {
+		case PConstants.LEFT:
+			this.posx = gap;
+			break;
+		case PConstants.RIGHT:
+			this.posx = pa.width - this.w - gap;
+			break;
+		case PConstants.CENTER:
+			this.posx = (int) (pa.width * 0.5 - this.w * 0.5);
+			break;
+		default:
+			break;
+		}
+		//
+		switch (vAlign) {
+		case PConstants.TOP:
+			this.posy = gap;
+			break;
+		case PConstants.BOTTOM:
+			this.posy = pa.height - this.h - gap;
+			break;
+		case PConstants.CENTER:
 			this.posy = (int) (pa.height * 0.5 - this.h * 0.5);
 			break;
 		default:
@@ -311,15 +326,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void alignAbout(Controller controller, int hAlign, int vAlign) {
 		switch (hAlign) {
 		case PConstants.LEFT:
-			updateChildrenPositions(KTGUI.ALIGN_GAP - this.posx, 0);
 			this.posx = KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.RIGHT:
-			updateChildrenPositions(controller.w - this.w - KTGUI.ALIGN_GAP - this.posx, 0);
 			this.posx = controller.w - this.w - KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.CENTER:
-			updateChildrenPositions((int) (controller.w * 0.5 - this.w * 0.5) - this.posx, 0);
 			this.posx = (int) (controller.w * 0.5 - this.w * 0.5);
 			break;
 		default:
@@ -328,15 +340,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		//
 		switch (vAlign) {
 		case PConstants.TOP:
-			updateChildrenPositions(0, KTGUI.ALIGN_GAP - this.posy);
 			this.posy = KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.BOTTOM:
-			updateChildrenPositions(0, controller.h - this.h - KTGUI.ALIGN_GAP - this.posy);
 			this.posy = controller.h - this.h - KTGUI.ALIGN_GAP;
 			break;
 		case PConstants.CENTER:
-			updateChildrenPositions(0, (int) (controller.h * 0.5 - this.h * 0.5) - this.posy);
 			this.posy = (int) (controller.h * 0.5 - this.h * 0.5);
 			break;
 		default:
@@ -347,15 +356,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void alignAbout(Controller controller, int hAlign, int vAlign, int gap) {
 		switch (hAlign) {
 		case PConstants.LEFT:
-			updateChildrenPositions(gap - this.posx, 0);
 			this.posx = gap;
 			break;
 		case PConstants.RIGHT:
-			updateChildrenPositions(controller.w - this.w - gap - this.posx, 0);
 			this.posx = controller.w - this.w - gap;
 			break;
 		case PConstants.CENTER:
-			updateChildrenPositions((int) (controller.w * 0.5 - this.w * 0.5) - this.posx, 0);
 			this.posx = (int) (controller.w * 0.5 - this.w * 0.5);
 			break;
 		default:
@@ -364,15 +370,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		//
 		switch (vAlign) {
 		case PConstants.TOP:
-			updateChildrenPositions(0, gap - this.posy);
 			this.posy = gap;
 			break;
 		case PConstants.BOTTOM:
-			updateChildrenPositions(0, controller.h - this.h - gap - this.posy);
 			this.posy = controller.h - this.h - gap;
 			break;
 		case PConstants.CENTER:
-			updateChildrenPositions(0, (int) (controller.h * 0.5 - this.h * 0.5) - this.posy);
 			this.posy = (int) (controller.h * 0.5 - this.h * 0.5);
 			break;
 		default:
@@ -384,20 +387,15 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		switch (direction) {
 
 		case PConstants.TOP: // stack this controller above the given controller
-			updateChildrenPositions(0, controller.posy - this.h - this.posy);
 			this.posy = controller.posy - this.h;
 			switch (align) {
 			case PConstants.LEFT:
-				updateChildrenPositions(controller.posx - this.posx, 0);
 				this.posx = controller.posx;
 				break;
 			case PConstants.RIGHT:
-				updateChildrenPositions((int) (controller.posx + controller.w * 0.5) - (int) (this.w * 0.5) - this.posx,
-						0);
 				this.posx = controller.posx + controller.w - this.w;
 				break;
 			case PConstants.CENTER:
-				updateChildrenPositions(controller.posx - this.posx, 0);
 				this.posx = (int) (controller.posx + controller.w * 0.5) - (int) (this.w * 0.5);
 				break;
 			default:
@@ -406,20 +404,15 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			break;
 
 		case PConstants.BOTTOM: // stack this controller below the given controller
-			updateChildrenPositions(controller.posy + this.h - this.posy, 0);
 			this.posy = controller.posy + this.h;
 			switch (align) {
 			case PConstants.LEFT:
-				updateChildrenPositions(controller.posx - this.posx, 0);
 				this.posx = controller.posx;
 				break;
 			case PConstants.RIGHT:
-				updateChildrenPositions((int) (controller.posx + controller.w * 0.5) - (int) (this.w * 0.5) - this.posx,
-						0);
 				this.posx = controller.posx + controller.w - this.w;
 				break;
 			case PConstants.CENTER:
-				updateChildrenPositions(controller.posx - this.posx, 0);
 				this.posx = (int) (controller.posx + controller.w * 0.5) - (int) (this.w * 0.5);
 				break;
 			default:
@@ -428,20 +421,15 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			break;
 
 		case PConstants.LEFT: // stack this controller to the left about given controller
-			updateChildrenPositions(controller.posx - this.w - this.posx, 0);
 			this.posx = controller.posx - this.w;
 			switch (align) {
 			case PConstants.TOP:
-				updateChildrenPositions(controller.posy - this.posy, 0);
 				this.posy = controller.posy;
 				break;
 			case PConstants.BOTTOM:
-				updateChildrenPositions(controller.posy + controller.h - this.h - this.posy, 0);
 				this.posy = controller.posy + controller.h - this.h;
 				break;
 			case PConstants.CENTER:
-				updateChildrenPositions((int) (controller.posy + controller.h * 0.5) - (int) (this.h * 0.5) - this.posy,
-						0);
 				this.posy = (int) (controller.posy + controller.h * 0.5) - (int) (this.h * 0.5);
 				break;
 			default:
@@ -450,20 +438,15 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			break;
 
 		case PConstants.RIGHT: // stack this controller to the right about given controller
-			updateChildrenPositions(controller.posx + this.w - this.posx, 0);
 			this.posx = controller.posx + this.w;
 			switch (align) {
 			case PConstants.TOP:
-				updateChildrenPositions(controller.posy - this.posy, 0);
 				this.posy = controller.posy;
 				break;
 			case PConstants.BOTTOM:
-				updateChildrenPositions(controller.posy + controller.h - this.h - this.posy, 0);
 				this.posy = controller.posy + controller.h - this.h;
 				break;
 			case PConstants.CENTER:
-				updateChildrenPositions((int) (controller.posy + controller.h * 0.5) - (int) (this.h * 0.5) - this.posy,
-						0);
 				this.posy = (int) (controller.posy + controller.h * 0.5) - (int) (this.h * 0.5);
 				break;
 			default:
