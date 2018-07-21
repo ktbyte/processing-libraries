@@ -114,6 +114,19 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		this.title = title;
 	}
 
+	public String getInfo() {
+		StringBuilder info = new StringBuilder();
+		info.append("[" + ((title != null) ? title : "null") + "]");
+		info.append(", pStage:" + ((parentStage != null) ? parentStage.getName() : "null"));
+		info.append(", pCtrlr:" + ((parentController != null) ? parentController.title : "null"));
+		info.append(", childs.sz():" + controllers.size());
+		info.append(", isPrsd:" + isPressed);
+		info.append(", isHvrd:" + isHovered);
+		info.append(", rpsx:" + posx);
+		info.append(", rpsy:" + posy);
+		return info.toString();
+	}
+	
 	public int getWidth() {
 		return w;
 	}
