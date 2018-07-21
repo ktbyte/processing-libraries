@@ -32,12 +32,19 @@ class CloseButton extends Button {
 		pg.endDraw();
 	}
 
+	/**
+	 * TODO : replace 'closeControllerRecursively' method with 'closeParentWindow' in 
+	 * order to prevent closing ALL controllers up to the 'root'. That behaviour is not
+	 * right - the CloseButton of the Window.TitleBar should close only the parent Window
+	 * and all it's childs (and their childs).
+	 */
 	@Override
 	public void processMousePressed() {
 		super.processMousePressed();
 		if (isPressed) {
 			System.out.println(parentController.title + " closeButton has been pressed!");
-			closeControllerRecursively(this); // closeButton --> TitleBar --> Window --> Pane, Button, Button, Window --> TitleBar
+			//closeControllerRecursively(this); // closeButton --> TitleBar --> Window --> Pane, Button, Button, Window --> TitleBar
+			closeParent();
 		}
 	}
 }

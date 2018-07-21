@@ -272,32 +272,36 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void closeControllerRecursively(Controller controller) {
-		closeParent(controller);
-		closeChilds(controller);
+		closeParent();
+		closeChilds();
 	}
 
-	public void closeParent(Controller controller) {
-		if (controller.parentController != null) {
-			closeParent(controller.parentController);
-			closeController(controller.parentController);
+	/**
+	 * FIX : This method should close only the parent controller and all its 
+	 * childs, it should not close all the controllers recursively up (??)
+	 */
+	public void closeParent() {
+		if (parentController != null) {
+			parentController.closeParent();
+			parentController.close();
 		}
 		for (Controller childController : controllers) {
-			closeChilds(childController);
+			childController.closeChilds();
 		}
-		closeChilds(controller);
+		closeChilds();
 	}
 
-	public void closeChilds(Controller controller) {
-		for (Controller childController : controller.controllers) {
-			closeChilds(childController);
-			closeController(childController);
+	public void closeChilds() {
+		for (Controller childController : controllers) {
+			childController.closeChilds();
+			childController.close();
 		}
 	}
 
-	public void closeController(Controller controller) {
-		PApplet.println("Closing '" + controller.title + "' controller.");
-		controller.isActive = false;
-		ktgui.addToGarbage(controller, pa.millis());
+	public void close() {
+		PApplet.println("Closing '" + title + "' controller.");
+		isActive = false;
+		ktgui.addToGarbage(this, pa.millis());
 	}
 
 	public void alignAboutCanvas(int hAlign, int vAlign) {
