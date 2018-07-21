@@ -172,6 +172,7 @@ public class KTGUI implements PConstants {
 			 * Display the active stage info 
 			 */
 			ypos = pa.height - 10;
+			pa.textAlign(LEFT, CENTER);
 			pa.text("aStage.name:" + StageManager.getActiveStage().getName(), 10, ypos -= YSHIFT);
 			pa.text("aStage.index:" + StageManager.stages.indexOf(StageManager.getActiveStage()),
 					10, ypos -= YSHIFT);

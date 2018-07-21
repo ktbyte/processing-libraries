@@ -5,7 +5,7 @@ public class Window extends Controller {
 	// Border border;
 	TitleBar	titleBar;
 	// MenuBar menuBar;
-	WindowPane	pane;
+	Pane	pane;
 
 	public Window(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 		super(ktgui, title, posx, posy, w, h);
@@ -48,14 +48,16 @@ public class Window extends Controller {
 	}
 	
 	private void createPane() {
-		
+		pane = new Pane(ktgui, "pane:" + title, 0, KTGUI.TITLE_BAR_HEIGHT, w, h - KTGUI.TITLE_BAR_HEIGHT);
+		pane.isDragable = false;
+		attachController(pane);
 	}
-
+	
 	@Override
-	public void addController(Controller controller, int hAlign, int vAlign) {
+	public void addController(Controller child, int hAlign, int vAlign) {
 		if (isActive) {
-			controller.alignAbout(pane, hAlign, vAlign);
-			pane.attachController(controller);
+			child.alignAbout(pane, hAlign, vAlign);
+			pane.attachController(child);
 		}
 	}
 

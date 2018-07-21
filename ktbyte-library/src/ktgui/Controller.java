@@ -34,7 +34,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public int						bgPassiveColor;
 
 	public Controller(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-		System.out.println("Creating " + title + ".");
+		System.out.println("Creating " + title + " started.");
 		this.ktgui = ktgui;
 		this.pa = KTGUI.getParentPApplet();
 		this.title = title;
@@ -51,6 +51,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		StageManager.getDefaultStage().registerController(this);
 
 		initColors();
+		System.out.println("Creating " + title + " completed.");
 	}
 
 	public void initColors() {
@@ -214,11 +215,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		return pg;
 	}
 
-	public void addController(Controller controller, int hAlign, int vAlign) {
+	public void addController(Controller child, int hAlign, int vAlign) {
 		if (isActive) {
-			controller.alignAbout(this, hAlign, vAlign);
-			attachController(controller);
-			//registerChildController(controller);
+			child.alignAbout(this, hAlign, vAlign);
+			attachController(child);
 		}
 	}
 
@@ -238,27 +238,25 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void attachController(Controller controller) {
 		if (isActive) {
 			System.out.println("Attaching " + controller.title + " to " + title + " ...");
-			// detach from existinler first (if exist)
+			
+			// detach from existing controller first (if exist)
 			if (controller.parentController != null) {
 				Controller pc = controller.parentController;
 				pc.detachController(controller); // reset parentWindow
 			}
-			// add to the list of controllers
+			// add to the list of (child) controllers of 'this' controller
 			if (!controllers.contains(controller)) {
-				System.out.println(title + ".controllers.contains(" +
-						controller.title + ") == " + controllers.contains(controller));
+				System.out.println(title + ".controllers.contains(" + controller.title + ") == " + 
+						controllers.contains(controller));
 				controllers.add(controller);
 			}
-			// set 'this' controller as parent
+			// set 'this' controller as parent of the controller being processed
 			controller.setParentController(this);
 			System.out.println("\t" + controller.title + ".parentController is " + controller.parentController.title);
 
 			// unregister the controller from all stages
 			StageManager.unregisterControllerFromAllStages(controller);
 
-			for (Controller child : controller.controllers) {
-
-			}
 		}
 	}
 
