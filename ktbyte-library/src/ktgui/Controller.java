@@ -76,20 +76,20 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void drawControllers() {
-//		if (controllers.size() > 0) {
-			ktgui.drawCallStack.add(title + ".drawControllers()" + "-'");
-			for (Controller child : controllers) {
-				child.updateGraphics();
-				child.draw();
-				pg.beginDraw();
-				ktgui.drawCallStack.add("pg.image(" + child.title + ").getGraphics: " +
-						child.posx + ", " + child.posy + "-'  ");
-				ktgui.drawCallStack.add("(" + child.title + ").apos:" +
-						child.getAbsolutePosX() + ", " + child.getAbsolutePosY() + "-'    ");
-				pg.image(child.getGraphics(), child.posx, child.posy);
-				pg.endDraw();
-			}
-//		}
+		//		if (controllers.size() > 0) {
+		ktgui.drawCallStack.add(title + ".drawControllers()" + "-'");
+		for (Controller child : controllers) {
+			child.updateGraphics();
+			child.draw();
+			pg.beginDraw();
+			ktgui.drawCallStack.add("pg.image(" + child.title + ").getGraphics: " +
+					child.posx + ", " + child.posy + "-'  ");
+			ktgui.drawCallStack.add("(" + child.title + ").apos:" +
+					child.getAbsolutePosX() + ", " + child.getAbsolutePosY() + "-'    ");
+			pg.image(child.getGraphics(), child.posx, child.posy);
+			pg.endDraw();
+		}
+		//		}
 	}
 
 	private void drawGraphics() {
@@ -126,7 +126,33 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		info.append(", rpsy:" + posy);
 		return info.toString();
 	}
-	
+
+	public ArrayList<String> getFullInfoList(int level) {
+		int recursyLevel = level;
+		
+		ArrayList<String> list = new ArrayList<>();
+		StringBuilder prefix = new StringBuilder();
+
+		if (recursyLevel > 0) {
+			prefix.append("'");
+			for (int i = 0; i < recursyLevel; i++) {
+				prefix.append("-");
+			}
+		} else {
+			prefix.append("+");
+		}
+		
+		list.add(prefix.toString() + getInfo());
+		
+		if (controllers.size() > 0) {
+			recursyLevel++;
+			for (Controller child : controllers) {
+				list.addAll(child.getFullInfoList(recursyLevel));
+			}
+		}
+		return list;
+	}
+
 	public int getWidth() {
 		return w;
 	}
@@ -226,12 +252,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			// set 'this' controller as parent
 			controller.setParentController(this);
 			System.out.println("\t" + controller.title + ".parentController is " + controller.parentController.title);
-			
+
 			// unregister the controller from all stages
 			StageManager.unregisterControllerFromAllStages(controller);
-			
-			for(Controller child : controller.controllers) {
-				
+
+			for (Controller child : controller.controllers) {
+
 			}
 		}
 	}

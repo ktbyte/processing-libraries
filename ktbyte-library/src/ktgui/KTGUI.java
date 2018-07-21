@@ -120,6 +120,12 @@ public class KTGUI implements PConstants {
 		}
 	}
 
+	void drawDebugTextSplitLine(int x, int y) {
+		pa.text("----------------------------------------------------" +
+				"----------------------------------------------------",
+				x, y);
+	}
+
 	void drawDebugInfo() {
 		if (debug) {
 			pa.fill(0);
@@ -127,65 +133,32 @@ public class KTGUI implements PConstants {
 			pa.textAlign(LEFT, CENTER);
 
 			int YSHIFT = 12;
-			int ypos = pa.height - 10;
-			pa.text("--------------------------------------------------------------------------------------------------------",
-					10, ypos += YSHIFT);
-			pa.text("aStage.name:" + StageManager.getActiveStage().getName(), 10, ypos -= YSHIFT);
-			pa.text("aStage.index:" + StageManager.stages.indexOf(StageManager.getActiveStage()),
-					10, ypos -= YSHIFT);
-			pa.text("stages.size():" + StageManager.stages.size(), 10, ypos -= YSHIFT);
-
-			ypos = 0;
-			pa.text("--------------------------------------------------------------------------------------------------------",
-					10, ypos += YSHIFT);
+			int ypos = 0;
+			
+			/* 
+			 * Display debug info of default stage controllers 
+			 */
+			drawDebugTextSplitLine(10, ypos += YSHIFT);
 			for (Controller controller : StageManager.getDefaultStage().getControllers()) {
-				pa.text("+" + controller.getInfo(), 10, ypos += YSHIFT);
-				if(controller.controllers.size() > 0) {
-					for(Controller child : controller.controllers) {
-						pa.text("'-" + child.getInfo(), 10, ypos += YSHIFT);
-						if(child.controllers.size() > 0) {
-							for(Controller subchild : child.controllers) {
-								pa.text("'--" + subchild.getInfo(), 10, ypos += YSHIFT);
-							}
-						}
+				for (String info : controller.getFullInfoList(0)) {
+					pa.text(info, 10, ypos += YSHIFT);
+				}
+			}
+
+			/* 
+			 * Display debug info of active stage controllers 
+			 */
+			drawDebugTextSplitLine(10, ypos += YSHIFT);
+			if (StageManager.getActiveStage() != StageManager.getDefaultStage()) {
+				for (Controller controller : StageManager.getActiveStage().getControllers()) {
+					for (String info : controller.getFullInfoList(0)) {
+						pa.text(info, 10, ypos += YSHIFT);
 					}
 				}
-				pa.text("", 10, ypos += YSHIFT);
+				drawDebugTextSplitLine(10, ypos += YSHIFT);
 			}
-			//			for (Controller controller : StageManager.getDefaultStage().getControllers()) {
-			//				if (controller.title != null) {
-			//					pa.text("dStage: " + controller.title + ", pCtrlr:" +
-			//							((controller.parentController != null) ? controller.parentController.title : "null") +
-			//							", ctrlrs.size():" + controller.controllers.size() +
-			//							", pStage:" +
-			//							((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
-			//							", isPrsd:" + controller.isPressed +
-			//							", isHvrd:" + controller.isHovered +
-			//							", rposx:" + controller.posx +
-			//							", rposy:" + controller.posy, 10, ypos += YSHIFT);
-			//				}
-			//			}
-			pa.text("--------------------------------------------------------------------------------------------------------",
-					10, ypos += YSHIFT);
-			if (StageManager.getActiveStage() != StageManager.getDefaultStage()) {
-				//				for (Controller controller : StageManager.getActiveStage().getControllers()) {
-				//					if (controller.title != null) {
-				//						pa.text("aStage: " + controller.title + ", pCtrlr:" +
-				//								((controller.parentController != null) ? controller.parentController.title : "null") +
-				//								", ctrllrs.size():" + controller.controllers.size() +
-				//								", pStage:" +
-				//								((controller.parentStage != null) ? controller.parentStage.getName() : "null") +
-				//								", isPrsd:" + controller.isPressed +
-				//								", isHvrd:" + controller.isHovered +
-				//								", rposx:" + controller.posx +
-				//								", rposy:" + controller.posy, 10, ypos += YSHIFT);
-				//					}
-				//				}
-				pa.text("--------------------------------------------------------------------------------------------------------",
-						10, ypos += YSHIFT);
-			}
-			/////////////////////////////////////////////////////////////////////////////////////////////////////////
-			/** 
+
+			/* 
 			 * Display the draw() method calls stack 
 			 */
 			ypos = 0;
@@ -194,6 +167,17 @@ public class KTGUI implements PConstants {
 				pa.text(msg, pa.width - 10, ypos += YSHIFT);
 			}
 			drawCallStack = new ArrayList<String>();
+
+			/* 
+			 * Display the active stage info 
+			 */
+			ypos = pa.height - 10;
+			pa.text("aStage.name:" + StageManager.getActiveStage().getName(), 10, ypos -= YSHIFT);
+			pa.text("aStage.index:" + StageManager.stages.indexOf(StageManager.getActiveStage()),
+					10, ypos -= YSHIFT);
+			pa.text("aStage.controllers.size():" + StageManager.getActiveStage().controllers.size(), 10, ypos -= YSHIFT);
+			pa.text("StageManager.stages.size():" + StageManager.stages.size(), 10, ypos -= YSHIFT);
+
 		}
 	}
 
