@@ -61,6 +61,14 @@ public class Window extends Controller {
 		}
 	}
 
+	@Override
+	public void addController(Controller child, int hAlign, int vAlign, int gap) {
+		if (isActive) {
+			child.alignAbout(pane, hAlign, vAlign, gap);
+			pane.attachController(child);
+		}
+	}
+
 	public Pane getPane() {
 		return pane;
 	}

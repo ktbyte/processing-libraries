@@ -115,6 +115,10 @@ public class KTGUI implements PConstants {
 			if (pa.millis() - time > 100) {
 				if (controller.parentStage != null) {
 					controller.parentStage.unregisterController(controller);
+				} else {
+					if(controller.parentController != null) {
+						controller.parentController.detachController(controller);
+					}
 				}
 			}
 		}

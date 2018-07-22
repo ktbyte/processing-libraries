@@ -130,7 +130,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	public ArrayList<String> getFullInfoList(int level) {
 		int recursyLevel = level;
-		
+
 		ArrayList<String> list = new ArrayList<>();
 		StringBuilder prefix = new StringBuilder();
 
@@ -142,9 +142,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		} else {
 			prefix.append("+");
 		}
-		
+
 		list.add(prefix.toString() + getInfo());
-		
+
 		if (controllers.size() > 0) {
 			recursyLevel++;
 			for (Controller child : controllers) {
@@ -222,10 +222,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
-	public void addController(Controller controller, int hAlign, int vAlign, int gap) {
+	public void addController(Controller child, int hAlign, int vAlign, int gap) {
 		if (isActive) {
-			controller.alignAbout(this, hAlign, vAlign, gap);
-			attachController(controller);
+			child.alignAbout(this, hAlign, vAlign, gap);
+			attachController(child);
 			//registerChildController(controller);
 		}
 	}
@@ -238,7 +238,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void attachController(Controller controller) {
 		if (isActive) {
 			System.out.println("Attaching " + controller.title + " to " + title + " ...");
-			
+
 			// detach from existing controller first (if exist)
 			if (controller.parentController != null) {
 				Controller pc = controller.parentController;
@@ -246,7 +246,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			}
 			// add to the list of (child) controllers of 'this' controller
 			if (!controllers.contains(controller)) {
-				System.out.println(title + ".controllers.contains(" + controller.title + ") == " + 
+				System.out.println(title + ".controllers.contains(" + controller.title + ") == " +
 						controllers.contains(controller));
 				controllers.add(controller);
 			}
@@ -271,29 +271,16 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
-	public void closeControllerRecursively(Controller controller) {
-		closeParent();
-		closeChilds();
-	}
-
-	/**
-	 * FIX : This method should close only the parent controller and all its 
-	 * childs, it should not close all the controllers recursively up (??)
-	 */
 	public void closeParent() {
 		if (parentController != null) {
-			parentController.closeParent();
 			parentController.close();
 		}
-		for (Controller childController : controllers) {
-			childController.closeChilds();
-		}
-		closeChilds();
+		closeAllChildsRecursively();
 	}
 
-	public void closeChilds() {
+	public void closeAllChildsRecursively() {
 		for (Controller childController : controllers) {
-			childController.closeChilds();
+			childController.closeAllChildsRecursively();
 			childController.close();
 		}
 	}

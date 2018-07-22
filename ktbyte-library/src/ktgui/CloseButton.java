@@ -42,9 +42,22 @@ class CloseButton extends Button {
 	public void processMousePressed() {
 		super.processMousePressed();
 		if (isPressed) {
-			System.out.println(parentController.title + " closeButton has been pressed!");
-			//closeControllerRecursively(this); // closeButton --> TitleBar --> Window --> Pane, Button, Button, Window --> TitleBar
 			closeParent();
 		}
+	}
+	
+	/**
+	 * This method closes all the controllers recursively up to the parent Window
+	 * and then closes all its childs recursively down. 
+	 */
+	@Override
+	public void closeParent() {
+		if (parentController != null) {
+			if(!parentController.getClass().getName().contains("Window")) {
+				parentController.closeParent();
+			}
+			parentController.close();
+		}
+		closeAllChildsRecursively();
 	}
 }
