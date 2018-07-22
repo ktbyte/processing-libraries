@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
+import processing.event.MouseEvent;
 
 /**********************************************************************************************************************
  * This class automatically receives events from PApplet when they happen.
@@ -77,20 +78,19 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void drawControllers() {
-		//		if (controllers.size() > 0) {
 		ktgui.drawCallStack.add(title + ".drawControllers()" + "-'");
 		for (Controller child : controllers) {
 			child.updateGraphics();
 			child.draw();
+			
 			pg.beginDraw();
-			ktgui.drawCallStack.add("pg.image(" + child.title + ").getGraphics: " +
-					child.posx + ", " + child.posy + "-'  ");
-			ktgui.drawCallStack.add("(" + child.title + ").apos:" +
-					child.getAbsolutePosX() + ", " + child.getAbsolutePosY() + "-'    ");
+			ktgui.drawCallStack
+					.add("pg.image(" + child.title + ").getGraphics: " + child.posx + ", " + child.posy + "-'  ");
+			ktgui.drawCallStack.add("(" + child.title + ").apos:" + child.getAbsolutePosX() + ", "
+					+ child.getAbsolutePosY() + "-'    ");
 			pg.image(child.getGraphics(), child.posx, child.posy);
 			pg.endDraw();
 		}
-		//		}
 	}
 
 	private void drawGraphics() {
@@ -531,7 +531,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				child.processMousePressed();
 			}
 			// process mousePressed event by own means
-			isPressed = isHovered;
+			isPressed = isFocused = isHovered;
 			if (isPressed) {
 				for (KTGUIEventAdapter adapter : adapters) {
 					adapter.onMousePressed();
@@ -596,5 +596,34 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			}
 		}
 		return isInside;
+	}
+
+	@Override
+	public void processKeyPressed() {
+		if (isActive) {
+			// transfer keyPressed event to child controllers
+			for (Controller child : controllers) {
+				child.processKeyPressed();
+			}
+		}
+	}
+
+	@Override
+	public void processKeyReleased() {
+		if (isActive) {
+			// transfer keyReleased event to child controllers
+			for (Controller child : controllers) {
+				child.processKeyReleased();
+			}
+		}
+	}
+	
+	@Override public void processMouseWheel(MouseEvent me) {
+		if (isActive) {
+			// transfer mouseWheel event to child controllers
+			for (Controller child : controllers) {
+				child.processMouseWheel(me);
+			}
+		}
 	}
 }
