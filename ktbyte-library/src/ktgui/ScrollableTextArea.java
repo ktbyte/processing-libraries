@@ -56,6 +56,7 @@ public class ScrollableTextArea extends Controller {
 		pg.endDraw();
 	}
 
+	@Override
 	public void processMouseWheel(MouseEvent me) {
 		mouseScrolled(me.getCount());
 	}

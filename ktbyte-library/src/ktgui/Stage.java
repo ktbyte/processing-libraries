@@ -17,10 +17,12 @@ public class Stage {
 	PApplet					pa;
 
 	public Stage(String name) {
+		System.out.println("Creating stage '" + name + "' started.");
 		this.pa = KTGUI.getParentPApplet();
 		this.name = name;
 		this.controllers = new ArrayList<Controller>();
 		StageManager.stages.add(this);
+		System.out.println("Creating stage '" + name + "' completed.");
 	}
 
 	public String getName() {

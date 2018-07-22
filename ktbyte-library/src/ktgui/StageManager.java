@@ -29,7 +29,6 @@ public class StageManager {
 	}
 
 	public static Stage createStage(String name) {
-		System.out.println("Creating stage '" + name + "'");
 		Stage stage = new Stage(name);
 		activeStage = stage;
 		return stage;
