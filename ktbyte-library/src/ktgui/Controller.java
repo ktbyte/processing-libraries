@@ -553,12 +553,14 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	 */
 	@Override public void processMouseMoved() {
 		if (isActive) {
-			// transfer mouseMoved event to child controllers
+			// transfer mouseMoved event to child controllers 
+			// (and, recursively, to their child controllers)
 			for (Controller child : controllers) {
 				child.processMouseMoved();
 			}
 			// process mouseMoved event by own means
 			isHovered = isPointInside(pa.mouseX, pa.mouseY) ? true : false;
+			// if is hovered, send notification to the registered listeners
 			if (isHovered) {
 				for (KTGUIEventAdapter adapter : adapters) {
 					adapter.onMouseMoved();
