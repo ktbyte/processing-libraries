@@ -23,30 +23,6 @@ public class Slider extends Controller {
 		updateValueFromHandlePosition();
 	}
 
-	//-----------------------------------------------------------------------------------------------
-	//
-	//-----------------------------------------------------------------------------------------------
-	public void draw() {
-//		pa.pushMatrix();
-//		pa.translate(posx, posy);
-//		pa.pushStyle();
-//		pa.fill(isHovered ? KTGUI.COLOR_BG_HOVERED : KTGUI.COLOR_BG_PASSIVE);
-//		pa.rectMode(CORNER);
-//		pa.rect(0, 0, this.w, this.h);
-//		pa.fill(isHovered ? KTGUI.COLOR_FG_HOVERED : KTGUI.COLOR_FG_PASSIVE);
-//		pa.rect(0, 0, pos, this.h);
-//		pa.fill(0);
-//		pa.textAlign(LEFT, CENTER);
-//		pa.text(PApplet.str(value), 10, h * 0.5f);
-//		pa.textAlign(LEFT, BOTTOM);
-//		pa.text(title, 10, -2);
-//		pa.popStyle();
-//		pa.popMatrix();
-		if (parentController == null) {
-			pa.image(pg, posx, posy);
-		}
-	}
-
 	public void updateGraphics() {
 		pg.beginDraw();
 		pg.fill(isHovered ? KTGUI.COLOR_BG_HOVERED : KTGUI.COLOR_BG_PASSIVE);
@@ -61,7 +37,7 @@ public class Slider extends Controller {
 		pg.text(title, 10, -2);
 		pg.endDraw();
 	}
-	
+
 	public void addEventAdapter(KTGUIEventAdapter adapter) {
 		adapters.add(adapter);
 	}
@@ -100,55 +76,34 @@ public class Slider extends Controller {
 		value = PApplet.map(pos, 0, this.w, rangeStart, rangeEnd);
 	}
 
-	// process mouseMoved event received from PApplet
-	public void processMouseMoved() {
-		if (isPointInside(pa.mouseX, pa.mouseY)) {
-			isHovered = true;
-		} else {
-			isHovered = false;
-		}
-
-		for (KTGUIEventAdapter adapter : adapters) {
-			adapter.onMouseMoved();
-		}
-	}
-
-	// process mousePressed event received from PApplet
-	public void processMousePressed() {
-		if (isHovered) {
-			isPressed = true;
-		} else {
-			isPressed = false;
-		}
-
+	@Override public void processMousePressed() {
+		super.processMousePressed();
 		if (isPressed) {
 			updateHandlePositionFromMouse();
 			updateValueFromHandlePosition();
 		}
-
-		for (KTGUIEventAdapter adapter : adapters) {
-			adapter.onMousePressed();
-		}
 	}
 
-	// process mouseReleased event received from PApplet
-	public void processMouseReleased() {
-		isPressed = false;
-		if (isHovered) {
-			for (KTGUIEventAdapter adapter : adapters) {
-				adapter.onMouseReleased();
+	@Override public void processMouseDragged() {
+		if (isActive) {
+			// transfer mouseDragged event to child controllers
+			for (Controller child : controllers) {
+				child.processMouseDragged();
+			}
+			// process mouseDragged event by own means
+			if (isPressed) {
+				//				posx += pa.mouseX - pa.pmouseX;
+				//				posy += pa.mouseY - pa.pmouseY;
+				updateHandlePositionFromMouse();
+				updateValueFromHandlePosition();
+				for (KTGUIEventAdapter adapter : adapters) {
+					adapter.onMouseDragged();
+				}
 			}
 		}
-	}
-
-	// process mouseDragged event received from PApplet
-	public void processMouseDragged() {
-		if (isPressed) {
-			updateHandlePositionFromMouse();
-			updateValueFromHandlePosition();
-		}
-		for (KTGUIEventAdapter adapter : adapters) {
-			adapter.onMouseDragged();
-		}
+		//		if (isPressed) {
+		//			updateHandlePositionFromMouse();
+		//			updateValueFromHandlePosition();
+		//		}
 	}
 }
