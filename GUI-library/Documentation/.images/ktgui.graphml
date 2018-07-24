@@ -1711,11 +1711,7 @@ Stage defaultStage;</y:AttributeLabel>
           <y:Geometry height="124.70897692907806" width="260.0689235885483" x="3127.1688355592005" y="4048.0847713808066"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-<<<<<<< HEAD
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.44091796875" x="107.81400280989874" y="47.77326789204835">KTGUI<y:LabelModel>
-=======
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="44.44091796875" x="107.8140028098992" y="47.77326789204881">KTGUI<y:LabelModel>
->>>>>>> test/ConsistentDraw
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -1980,10 +1976,6 @@ void onEnterKeyPressed()</y:MethodLabel>
       </data>
     </node>
     <node id="n104">
-<<<<<<< HEAD
-      <data key="d5"/>
-=======
->>>>>>> test/ConsistentDraw
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="30.0" width="30.0" x="4278.513580836086" y="-656.6351988893208"/>
@@ -1998,189 +1990,6 @@ void onEnterKeyPressed()</y:MethodLabel>
           </y:NodeLabel>
           <y:Shape type="rectangle"/>
         </y:ShapeNode>
-<<<<<<< HEAD
-      </data>
-    </node>
-    <node id="n105">
-      <data key="d4"/>
-      <data key="d6">
-        <y:UMLClassNode>
-          <y:Geometry height="265.51194128212546" width="338.60404372781704" x="59.94324446461002" y="2798.194599228674"/>
-          <y:Fill color="#FFCC00" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="66.11181640625" x="136.24611366078352" y="3.0">Controller<y:LabelModel>
-              <y:SmartNodeLabelModel distance="4.0"/>
-            </y:LabelModel>
-            <y:ModelParameter>
-              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="-0.03703090122767855" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
-            </y:ModelParameter>
-          </y:NodeLabel>
-          <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel>Controloler parentController;
-Stage parentStage;
-PGraphics pg;</y:AttributeLabel>
-            <y:MethodLabel>void updateGraphics();
-
-public void updateUserDefinedGraphics(PGraphics userpg) {
-  this.userpg = userpg;
-}
-
-public void draw() {
-  drawControllers();
-  drawUserDefinedGraphics();
-  drawGraphics();
-}</y:MethodLabel>
-          </y:UML>
-        </y:UMLClassNode>
-      </data>
-    </node>
-    <node id="n106">
-      <data key="d4"/>
-      <data key="d6">
-        <y:UMLNoteNode>
-          <y:Geometry height="62.428529931249614" width="303.8807716453043" x="-397.73057797661244" y="2779.9230354915862"/>
-          <y:Fill color="#FFFF99" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="node_size" fontFamily="Dialog" fontSize="14" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="62.428529931249614" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="303.8807716453043" x="0.0" y="0.0">Each controller that extends Controller class 
-MUST override the 'updateGraphics()' method 
-in order to present its own rendered view.</y:NodeLabel>
-        </y:UMLNoteNode>
-      </data>
-    </node>
-    <node id="n107">
-      <data key="d4"/>
-      <data key="d6">
-        <y:UMLNoteNode>
-          <y:Geometry height="91.36474252176777" width="397.9329402374633" x="-491.7827465687714" y="2883.343772744371"/>
-          <y:Fill color="#FFFF99" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="node_size" fontFamily="Dialog" fontSize="14" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="91.36474252176777" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="397.9329402374633" x="0.0" y="0.0">When one wants to draw dynamic shapes/images on the 
-canvas of the particular controller he needs to use the 
-'updateUserDefinedGraphics(PGraphics) method which sets 
-the content of the 'internal canvas' variable userpg.</y:NodeLabel>
-        </y:UMLNoteNode>
-      </data>
-    </node>
-    <node id="n108">
-      <data key="d4"/>
-      <data key="d6">
-        <y:UMLNoteNode>
-          <y:Geometry height="41.29637701210095" width="325.85821068121925" x="-423.62728049404797" y="3015.700722587674"/>
-          <y:Fill color="#FFFF99" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="node_size" fontFamily="Dialog" fontSize="14" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="41.29637701210095" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="325.85821068121925" x="0.0" y="0.0">Draw the canvases of the child controllers on 
-the internal canvas.</y:NodeLabel>
-        </y:UMLNoteNode>
-      </data>
-    </node>
-    <node id="n109">
-      <data key="d4"/>
-      <data key="d6">
-        <y:UMLNoteNode>
-          <y:Geometry height="41.29637701210095" width="325.85821068121925" x="-423.62728049404797" y="3086.9970995997755"/>
-          <y:Fill color="#FFFF99" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="node_size" fontFamily="Dialog" fontSize="14" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="41.29637701210095" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="325.85821068121925" x="0.0" y="0.0">Draw the user defined graphics on the internal 
-canvas.</y:NodeLabel>
-        </y:UMLNoteNode>
-      </data>
-    </node>
-    <node id="n110">
-      <data key="d4"/>
-      <data key="d6">
-        <y:UMLNoteNode>
-          <y:Geometry height="41.29637701210095" width="325.85821068121925" x="-423.62728049404797" y="3158.293476611876"/>
-          <y:Fill color="#FFFF99" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="left" autoSizePolicy="node_size" fontFamily="Dialog" fontSize="14" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="41.29637701210095" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="325.85821068121925" x="0.0" y="0.0">Draw the resulting image of the internal canvas
-to the PApplet canvas.</y:NodeLabel>
-        </y:UMLNoteNode>
-      </data>
-    </node>
-    <edge id="e0" source="n2" target="n3">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="none"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e1" source="n3" target="n1">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e2" source="n4" target="n3">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="380.7188474274882" y="316.1423749453579"/>
-            <y:Point x="281.2188474274882" y="316.1423749453579"/>
-            <y:Point x="281.2188474274882" y="-39.37550648984214"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e3" source="n4" target="n8">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e4" source="n7" target="n11">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e5" source="n9" target="n10">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e6" source="n11" target="n9">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e7" source="n8" target="n13">
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-=======
->>>>>>> test/ConsistentDraw
       </data>
     </node>
     <node id="n105">
@@ -3826,10 +3635,6 @@ about each other</y:NodeLabel>
       </data>
     </edge>
     <edge id="e79" source="n106" target="n105">
-<<<<<<< HEAD
-      <data key="d9"/>
-=======
->>>>>>> test/ConsistentDraw
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-10.56607645957456" tx="0.0" ty="-39.48533724309755">
@@ -3843,10 +3648,6 @@ about each other</y:NodeLabel>
       </data>
     </edge>
     <edge id="e80" source="n107" target="n105">
-<<<<<<< HEAD
-      <data key="d9"/>
-=======
->>>>>>> test/ConsistentDraw
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-7.452246693748293" tx="0.0" ty="-9.376672558229984"/>
@@ -3857,10 +3658,6 @@ about each other</y:NodeLabel>
       </data>
     </edge>
     <edge id="e81" source="n44" target="n105">
-<<<<<<< HEAD
-      <data key="d9"/>
-=======
->>>>>>> test/ConsistentDraw
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="16.98126760851062" sy="47.665884188778364" tx="1.2230596359160586" ty="-105.85716275080131">
@@ -3874,10 +3671,6 @@ about each other</y:NodeLabel>
       </data>
     </edge>
     <edge id="e82" source="n45" target="n105">
-<<<<<<< HEAD
-      <data key="d9"/>
-=======
->>>>>>> test/ConsistentDraw
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="1.2230596359160586" ty="-1.639054809141271">
@@ -3891,10 +3684,6 @@ about each other</y:NodeLabel>
       </data>
     </edge>
     <edge id="e83" source="n108" target="n105">
-<<<<<<< HEAD
-      <data key="d9"/>
-=======
->>>>>>> test/ConsistentDraw
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-3.4615831196819613" ty="62.07038391963488">
@@ -3908,10 +3697,6 @@ about each other</y:NodeLabel>
       </data>
     </edge>
     <edge id="e84" source="n109" target="n105">
-<<<<<<< HEAD
-      <data key="d9"/>
-=======
->>>>>>> test/ConsistentDraw
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-141.1627814999148" ty="78.6892394525712">
@@ -3925,10 +3710,6 @@ about each other</y:NodeLabel>
       </data>
     </edge>
     <edge id="e85" source="n110" target="n105">
-<<<<<<< HEAD
-      <data key="d9"/>
-=======
->>>>>>> test/ConsistentDraw
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-53.25302535625531" ty="94.14902199678545">
@@ -3941,8 +3722,6 @@ about each other</y:NodeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-<<<<<<< HEAD
-=======
     <edge id="e86" source="n125" target="n112">
       <data key="d9"/>
       <data key="d10">
@@ -4189,7 +3968,6 @@ about each other</y:NodeLabel>
         </y:BezierEdge>
       </data>
     </edge>
->>>>>>> test/ConsistentDraw
   </graph>
   <data key="d7">
     <y:Resources/>
