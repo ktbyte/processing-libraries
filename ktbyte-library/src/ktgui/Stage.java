@@ -17,9 +17,12 @@ public class Stage {
 	PApplet					pa;
 
 	public Stage(String name) {
+		System.out.println("Creating stage '" + name + "' started.");
 		this.pa = KTGUI.getParentPApplet();
 		this.name = name;
 		this.controllers = new ArrayList<Controller>();
+		StageManager.stages.add(this);
+		System.out.println("Creating stage '" + name + "' completed.");
 	}
 
 	public String getName() {
@@ -36,63 +39,63 @@ public class Stage {
 	}
 
 	public void registerController(Controller controller) {
-		System.out.println("Adding controller (" + controller.title + ") to stage (" + name + ").");
+		System.out.println("Registering controller (" + controller.title + ") in stage (" + name + ").");
 
 		// check if controller already exist in 'this' stage
 		if (controllers.contains(controller)) {
-			System.out.println("\tController (" + controller.title + ") already exist in stage (" + name + "). Interrupting.");
+			System.out.println(
+					"\tController (" + controller.title + ") already exist in stage (" + name + "). Interrupting.");
 			return;
 		}
 
 		// try to remove controller from default stage before adding it to 'this' stage
-		if (StageManager.getInstance().getDefaultStage().controllers.contains(controller)) {
-			StageManager.getInstance().defaultStage.unregisterController(controller);
+		if (StageManager.getDefaultStage().controllers.contains(controller)) {
+			StageManager.getDefaultStage().unregisterController(controller);
 		}
 
 		// try to remove controller from active stage before adding it to 'this' stage
-		if (StageManager.getInstance().getActiveStage() != null) {
-			if (StageManager.getInstance().activeStage.controllers.contains(controller)) {
-				StageManager.getInstance().activeStage.unregisterController(controller);
+		if (StageManager.getActiveStage() != null) {
+			if (StageManager.getActiveStage().controllers.contains(controller)) {
+				StageManager.getActiveStage().unregisterController(controller);
 			}
 		}
-		
+
 		// add controller to this stage
 		controllers.add(controller);
 		controller.parentStage = this;
-		
+
 		// debug info
 		System.out.println("\tDone. Now, stage (" + name + ") contains " + controllers.size() + " controllers.");
 		for (Controller c : controllers) {
-			System.out.println("\t\t" + controllers.indexOf(c) + ": " + c.title);
-		}
-		System.out.println("\tController (" + controller.title + ") contains " + controller.controllers.size()
-				+ " child controllers.");
-		for (Controller c : controller.controllers) {
-			System.out.println("\t\t" + controller.controllers.indexOf(c) + ": " + c.title);
+			System.out.println("\t\t" + controllers.indexOf(c) + ": " + c.title + " (" + c.controllers.size()
+					+ " child controllers)");
+			for (Controller child : c.controllers) {
+				System.out.println("\t\t\t" + c.controllers.indexOf(child) + ": " + child.title);
+			}
 		}
 
-		String controllerClassName = controller.getClass().getName();
-		String[] tokens = PApplet.splitTokens(controllerClassName, ".$");
-		//if (tokens.length > 1) controllerClassName = tokens[1];
-		if (tokens.length > 1) {
-			// try to add all child components of controller, if it is of type Window
-			if (tokens[1].equalsIgnoreCase("Window")) {
-				Window window = (Window) controller;
-				window.registerChildControllers();
-			}
-			// try to add all child components of controller, if it is of type Pane
-			if (tokens[1].equalsIgnoreCase("Pane")) {
-				Pane pane = (Pane) controller;
-				pane.registerChildControllers();
-			}
-			if (tokens[1].equalsIgnoreCase("WindowPane")) {
-				WindowPane windowPane = (WindowPane) controller;
-				windowPane.registerChildControllers();
-			}
-		} else {
-			System.out.println("....Cannot register child controllers of '" + name + "'");
-		}
-		System.out.println("------------------------------------------------------------------------------------");
+		//		String controllerClassName = controller.getClass().getName();
+		//		String[] tokens = PApplet.splitTokens(controllerClassName, ".$");
+		//		//if (tokens.length > 1) controllerClassName = tokens[1];
+		//		if (tokens.length > 1) {
+		//			// try to add all child components of controller, if it is of type Window
+		//			if (tokens[1].equalsIgnoreCase("Window")) {
+		//				Window window = (Window) controller;
+		//				window.registerChildControllers();
+		//			}
+		//			// try to add all child components of controller, if it is of type Pane
+		//			if (tokens[1].equalsIgnoreCase("Pane")) {
+		//				Pane pane = (Pane) controller;
+		//				pane.registerChildControllers();
+		//			}
+		//			if (tokens[1].equalsIgnoreCase("WindowPane")) {
+		//				WindowPane windowPane = (WindowPane) controller;
+		//				windowPane.registerChildControllers();
+		//			}
+		//		} else {
+		//			System.out.println("....Cannot register child controllers of '" + name + "'");
+		//		}
+		//		System.out.println("------------------------------------------------------------------------------------");
 	}
 
 	public void unregisterController(Controller controller) {
@@ -105,4 +108,7 @@ public class Stage {
 	public ArrayList<Controller> getControllers() {
 		return controllers;
 	}
+
+
+
 }

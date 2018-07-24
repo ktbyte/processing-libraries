@@ -3,59 +3,56 @@ package ktgui;
 import java.util.ArrayList;
 import java.util.List;
 
-import processing.core.PApplet;
-
 /********************************************************************************************************************** 
  * 
  *********************************************************************************************************************/
 public class StageManager {
 
-	public List<Stage>		stages;			// replace 'List' with 'Set' to prevent duplicates
-	public Stage			activeStage;
-	public Stage			defaultStage;
-	public PApplet			pa;
+	public static List<Stage>	stages;			// replace 'List' with 'Set' to prevent duplicates
+	private static Stage		activeStage;	// this is just a pointer to the currently active stage
+	private static Stage		defaultStage;	// this stage is always present regardless of the number of other stages
 	private static StageManager	instance;
 
 	static {
 		instance = new StageManager();
+		instance.init();
 	}
 
 	public static StageManager getInstance() {
 		return instance;
 	}
-	
-	public void init(KTGUI ktgui) {
+
+	private void init() {
 		stages = new ArrayList<Stage>();
-		defaultStage = new Stage("Default");
+		defaultStage = createStage("Default");
 		activeStage = defaultStage;
 	}
 
-	public Stage createStage(String name) {
+	public static Stage createStage(String name) {
 		Stage stage = new Stage(name);
-		stages.add(stage);
 		activeStage = stage;
 		return stage;
 	}
 
-	public Stage getDefaultStage() {
+	public static Stage getDefaultStage() {
 		return defaultStage;
 	}
 
-	public Stage getActiveStage() {
+	public static Stage getActiveStage() {
 		return activeStage;
 	}
 
-	public void goToStage(Stage stage) {
+	public static void goToStage(Stage stage) {
 		activeStage = stage;
 	}
 
-	public void goToStage(int numStage) {
+	public static void goToStage(int numStage) {
 		if (numStage > 0 && numStage < stages.size()) {
 			activeStage = stages.get(numStage);
 		}
 	}
 
-	public void goToNextStage() {
+	public static void goToNextStage() {
 		int indexOfCurrentStage = stages.indexOf(activeStage);
 		if (indexOfCurrentStage < stages.size() - 1) {
 			activeStage = stages.get(indexOfCurrentStage + 1);
@@ -64,4 +61,23 @@ public class StageManager {
 		}
 	}
 
+	public static void unregisterControllerFromAllStages(Controller controller) {
+		System.out.println("Unregistering " + controller.title + " from all stages ...");
+		for (Stage stage : stages) {
+			System.out.println("\tStage " + stage.getName() + " contains:");
+			for (Controller c : stage.controllers) {
+				System.out.println("\t\t" + c.title + " of type (" +
+						c.getClass().getName() + ")");
+			}
+			if (stage.controllers.contains(controller)) {
+				System.out.println("\t\t\t>>> Found (" + controller.title + ") in stage (" +
+						stage.getName() + "), removing ...");
+				stage.controllers.remove(stage.controllers.indexOf(controller));
+				System.out.println("\t\t\tNow, " + stage.getName() +
+						".controllers.contains(" + controller.title + ") == " + stage.controllers.contains(controller));
+			}
+		}
+		controller.parentStage = null;
+		System.out.println("Done.");
+	}
 }

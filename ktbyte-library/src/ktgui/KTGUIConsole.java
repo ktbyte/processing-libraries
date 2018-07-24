@@ -11,7 +11,7 @@ public class KTGUIConsole extends Controller {
 	//	private ScrollableTextArea		textArea;
 	public InputTextBox				inputBox;
 	public ScrollableTextArea		textArea;
-	//private ScrollBar scrollBar;
+	private ScrollBar				scrollBar;
 
 	private int						inputTextColor				= 0xFFFFFF;
 	private int						outputTextColor				= 0x000000;
@@ -19,18 +19,14 @@ public class KTGUIConsole extends Controller {
 	private HashMap<String, String>	dict;
 	private String					lastVariableName;
 
-	public KTGUIConsole(KTGUI ktgui, String title, int x, int y, int w, int h) {
-		super(ktgui);
-		this.title = title;
-		this.posx = x;
-		this.posy = y;
-		this.w = w;
-		this.h = h;
+	public KTGUIConsole(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+		super(ktgui, title, posx, posy, w, h);
+		
 		this.dict = new HashMap<String, String>();
 
 		int inputBoxHeight = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
-
-		inputBox = new InputTextBox(ktgui, "ConsoleTextBox", x, y + h - inputBoxHeight, w, inputBoxHeight);
+		
+		inputBox = new InputTextBox(ktgui, "ConsoleTextBox", posx, posy + h - inputBoxHeight, w, inputBoxHeight);
 		inputBox.setHandleFocus(true);
 		inputBox.setTextSize(16);
 		inputBox.setBorderRoundings(0, 0, BOX_ROUNDING, BOX_ROUNDING);
@@ -40,10 +36,18 @@ public class KTGUIConsole extends Controller {
 				handleConsoleInput();
 			}
 		});
-
-		textArea = new ScrollableTextArea(ktgui, "sta:" + title, x, y, w, h - inputBox.getHeight());
+		//attachController(inputBox);
+		//registerChildController(inputBox);
+		
+		textArea = new ScrollableTextArea(ktgui, "sta:" + title, posx, posy, w - inputBoxHeight, h - inputBoxHeight);
 		textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
-
+		//attachController(textArea);
+		//registerChildController(textArea);
+		
+		scrollBar = new ScrollBar(ktgui, "scrollbar:" + title, posx + w - inputBoxHeight, posy, inputBoxHeight, h - inputBoxHeight);
+		//attachController(scrollBar);
+		//registerChildController(scrollBar);
+		
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 
@@ -149,5 +153,86 @@ public class KTGUIConsole extends Controller {
 		if (getBlockCount() > 0)
 			textBlock = getBlock(getBlockCount() - 1);
 		return textBlock;
+	}
+
+	private class ScrollBar extends Controller {
+		DirectionButton scrollUpButton, scrollDownButton;
+
+		public ScrollBar(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+			super(ktgui, title, posx, posy, w, h);
+			createButtons();
+		}
+
+		public void draw() {
+			// add the background shape drawing here
+			drawControllers();
+		}
+		
+		private void createButtons() {
+			scrollUpButton = new DirectionButton(ktgui, "db-up:" + title, posx, posy, w, w);
+			scrollUpButton.setDirection(UP);
+			scrollUpButton.addEventAdapter(new KTGUIEventAdapter() {
+				public void onMousePressed() {
+					System.out.println(scrollUpButton.title + " pressed.");
+				}
+			});
+			attachController(scrollUpButton);
+			//registerChildController(scrollUpButton);
+
+			scrollDownButton = new DirectionButton(ktgui, "db-down:" + title, posx, posy - w, w, w);
+			scrollDownButton.setDirection(DOWN);
+			scrollDownButton.addEventAdapter(new KTGUIEventAdapter() {
+				public void onMousePressed() {
+					System.out.println(scrollDownButton.title + " pressed.");
+				}
+			});
+			attachController(scrollDownButton);
+			//registerChildController(scrollDownButton);
+		}
+
+	}
+
+	private class DirectionButton extends Button {
+
+		int direction = UP;
+
+		public DirectionButton(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+			super(ktgui, title, posx, posy, w, h);
+		}
+
+		public void updateGraphics() {
+			pg.beginDraw();
+			pg.rectMode(CORNER);
+			if (isHovered && !isPressed) {
+				pg.fill(KTGUI.COLOR_FG_HOVERED);
+			} else if (isHovered && isPressed) {
+				pg.fill(KTGUI.COLOR_FG_PRESSED);
+			} else {
+				//pg.fill(ktgui.COLOR_FG_PASSIVE);
+				pg.fill(200, 200);
+			}
+			pg.stroke(0);
+			pg.strokeWeight(1);
+			pg.rect(0, 0, w, h, r1, r2, r3, r4);
+			pg.pushMatrix();
+			pg.translate(w * 0.5f, h * 0.5f);
+			if (direction == UP) {
+				pg.rotate(PI);
+			} else if (direction == RIGHT) {
+				pg.rotate(PI + HALF_PI);
+			} else if (direction == DOWN) {
+				pg.rotate(0);
+			} else if (direction == LEFT) {
+				pg.rotate(HALF_PI);
+			}
+			pg.line(-0.4f * w, -0.4f * h, 0, 0.4f * h);
+			pg.line(0.4f * w, -0.4f * h, 0, 0.4f * h);
+			pg.popMatrix();
+			pg.endDraw();
+		}
+
+		public void setDirection(int direction) {
+			this.direction = direction;
+		}
 	}
 }

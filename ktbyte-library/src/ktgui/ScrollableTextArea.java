@@ -11,37 +11,15 @@ public class ScrollableTextArea extends Controller {
 
 	private ArrayList<TextLine>		textLines	= new ArrayList<>();
 	private ArrayList<TextBlock>	textBlocks	= new ArrayList<>();
-	private int						startLine	= 0;
+	private int						startLineNumber	= 0;
 	private boolean					enableLineStartMarks;
 
-	public ScrollableTextArea(KTGUI ktgui, String title, int x, int y, int w, int h) {
-		super(ktgui);
-
-		this.title = title;
-		this.posx = x;
-		this.posy = y;
-		this.w = w;
-		this.h = h;
-		
+	public ScrollableTextArea(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+		super(ktgui, title, posx, posy, w, h);
 		setPadding(getTextSize() * 0.75f);
-		
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
-
-		StageManager.getInstance().getDefaultStage().registerController(this);
 	}
 
-	/**
-	 * This is an automatically registered method and it should not be called directly
-	 */
-	public void draw() {
-		// if this button don't belongs to any window or pane 
-		// then draw it directly on the PApplet canvas 
-		if (parentController == null) {
-			pa.image(pg, posx, posy);
-		}
-	}
-
+	@Override
 	public void updateGraphics() {
 		updateTextAreaGraphics();
 	}
@@ -61,9 +39,9 @@ public class ScrollableTextArea extends Controller {
 		}
 		pg.rect(0, 0, w, h, r1, r2, r3, r4);
 
-		int consoleEndLine = PApplet.min(textLines.size() - 1, startLine + getMaxLinesToDisplay());
-		for (int i = 0; i <= consoleEndLine - startLine; i++) {
-			TextLine line = textLines.get(i + startLine);
+		int calculatedEndLineNumber = PApplet.min(textLines.size() - 1, startLineNumber + getMaxLinesToDisplay());
+		for (int i = 0; i <= calculatedEndLineNumber - startLineNumber; i++) {
+			TextLine line = textLines.get(i + startLineNumber);
 			pg.fill(line.textColor);
 			pg.textAlign(LEFT, BOTTOM);
 			pg.textSize(this.textSize);
@@ -78,28 +56,19 @@ public class ScrollableTextArea extends Controller {
 		pg.endDraw();
 	}
 
+	@Override
 	public void processMouseWheel(MouseEvent me) {
 		mouseScrolled(me.getCount());
-	}
-
-	public void processMousePressed() {
-		if (pa.mouseX > posx && pa.mouseX < posx + w
-				&& pa.mouseY > posy && pa.mouseY < posy + h) {
-			isFocused = true;
-		} else {
-			isFocused = false;
-		}
-
 	}
 
 	public void mouseScrolled(int mouseWheelDelta) {
 		if (isFocused) {
 			if (mouseWheelDelta < 0) {
-				if (startLine > 0) {
+				if (startLineNumber > 0) {
 					decrementStartLine();
 				}
 			} else if (mouseWheelDelta > 0) {
-				if (startLine < textLines.size() - getMaxLinesToDisplay()) {
+				if (startLineNumber < textLines.size() - getMaxLinesToDisplay()) {
 					incrementStartLine();
 				}
 			}
@@ -107,26 +76,26 @@ public class ScrollableTextArea extends Controller {
 	}
 
 	public void incrementStartLine() {
-		if (startLine < textLines.size() - getMaxLinesToDisplay()) {
-			startLine++;
+		if (startLineNumber < textLines.size() - getMaxLinesToDisplay()) {
+			startLineNumber++;
 		}
 	}
 
 	public void decrementStartLine() {
-		if (startLine > 0) {
-			startLine--;
+		if (startLineNumber > 0) {
+			startLineNumber--;
 		}
 	}
 
 	public void scrollToTop() {
-		while (startLine > 0) {
-			startLine--;
+		while (startLineNumber > 0) {
+			startLineNumber--;
 		}
 	}
 
 	public void scrollToBottom() {
-		while (startLine < textLines.size() - getMaxLinesToDisplay()) {
-			startLine++;
+		while (startLineNumber < textLines.size() - getMaxLinesToDisplay()) {
+			startLineNumber++;
 		}
 	}
 
@@ -186,12 +155,12 @@ public class ScrollableTextArea extends Controller {
 		return pa.textAscent() + pa.textDescent();
 	}
 
-	public int getStartLine() {
-		return startLine;
+	public int getStartLineNumber() {
+		return startLineNumber;
 	}
 
-	public void setStartLine(int startLine) {
-		this.startLine = startLine;
+	public void setStartLine(int lineNumber) {
+		this.startLineNumber = (lineNumber > 0) ? lineNumber : 0;
 	}
 
 	public void enableTextBlockStartMarks(boolean val) {

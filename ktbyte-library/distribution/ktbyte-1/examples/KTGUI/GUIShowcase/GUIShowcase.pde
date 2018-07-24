@@ -8,7 +8,7 @@ Pane pane;
 Window w1, w2, w3;
 Stage s1, s2, s3;
 Stage alignStage;
-boolean debug = false;
+
 
 /**********************************************************************************************************************
  * 
@@ -23,7 +23,7 @@ void setup() {
   dbgButton.alignAboutCanvas(CENTER, BOTTOM);
   dbgButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      debug = !debug;
+      ktgui.setDebug(!ktgui.getDebug());
     }
   }
   );
@@ -147,7 +147,7 @@ void setup() {
   p3b4.stackAbout(p3b3, TOP, RIGHT);
   alignStage.registerController(p3);
 
-  StageManager.getInstance().goToStage(s2);
+  StageManager.getInstance().goToStage(s3);
 
   msg(w2.getPane().w + ":" + w2.getPane().h);
 }
@@ -158,7 +158,6 @@ void setup() {
 void draw() {
   background(170, 220, 170);
   //
-  updateDebugInfo();
   updatePaneCanvas();
   updateSecondWindowCanvas();
 }
@@ -223,44 +222,8 @@ void updateSecondWindowCanvas() {
 }
 
 void msg(String msg) {
-  if (debug) {
+  if (ktgui.getDebug()) {
     println(msg);
   }
 }
 
-void updateDebugInfo() {
-  if (debug) {
-    fill(0);
-    textSize(20);
-    textAlign(RIGHT, CENTER);
-    textFont(createFont("monospaced", 16));
-    text("activeStage.name:" + StageManager.getInstance().getActiveStage().getName(), width - 10, 10);
-    text("activeStage.index:" + StageManager.getInstance().stages.indexOf(StageManager.getInstance().getActiveStage()), width - 10, 30);
-    text("size():" + StageManager.getInstance().stages.size(), width - 10, 50);
-
-    textSize(11);
-    int YSHIFT = 12;  
-    int ypos = 0;
-    textAlign(LEFT, CENTER);
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    for (Controller controller : StageManager.getInstance().getDefaultStage().getControllers()) {
-      if (controller.title != null) { 
-        text("defaultStage: " + controller.title + 
-          ", posx:" + controller.posx + 
-          ", posy:" + controller.posy
-          , 10, ypos+=YSHIFT);
-      }
-    }
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    for (Controller controller : StageManager.getInstance().getActiveStage().getControllers()) {
-      if (controller.title != null) {
-        text("activeStage: " + controller.title + 
-          ", parent:" + ((controller.parentController != null) ? controller.parentController.title : "null") + 
-          ", posx:" + controller.posx + 
-          ", posy:" + controller.posy, 
-          10, ypos+=YSHIFT);
-      }
-    }
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-  }
-}

@@ -28,6 +28,8 @@ public class KTGUIEventProcessor {
 
 	public void processKeyReleased() {}
 
+	public boolean isPointInside(int x, int y) { return false; }
+
 	public void addEventAdapter(KTGUIEventAdapter adapter) {
 		adapters.add(adapter);
 	}

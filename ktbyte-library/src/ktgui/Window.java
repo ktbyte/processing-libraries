@@ -3,95 +3,73 @@ package ktgui;
 public class Window extends Controller {
 
 	// Border border;
-	TitleBar	titleBar;
+	private TitleBar	titleBar;
 	// MenuBar menuBar;
-	WindowPane	pane;
-
-	public Window(KTGUI ktgui, int posx, int posy, int w, int h) {
-		super(ktgui);
-		this.title = "a Window";
-		this.posx = posx;
-		this.posy = posy;
-		this.w = w;
-		this.h = h;
-		
-		this.isDragable = true;
-		
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
-		createTitleBar();
-		createPane();
-		StageManager.getInstance().defaultStage.registerController(this);
-	}
+	private Pane		pane;
 
 	public Window(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-		super(ktgui);
-		this.title = title;
-		this.posx = posx;
-		this.posy = posy;
-		this.w = w;
-		this.h = h;
-		
-		this.isDragable = true;
-		
-		pg = pa.createGraphics(w + 1, h + 1);
-		userpg = pa.createGraphics(w + 1, h + 1);
+		super(ktgui, title, posx, posy, w, h);
+		isDragable = true;
 		createTitleBar();
 		createPane();
 		setTitle(title);
-		StageManager.getInstance().defaultStage.registerController(this);
 	}
 
-	public void draw() {
-		//
-		// the following code block is only for debuggin purposes
-		// START OF DEBUGGIN BLOCK;
-		//
-		//		drawUserDefinedGraphics();
-		//		pa.image(pg, posx, posy);
-		//		pa.pushMatrix();
-		//		pa.stroke(0);
-		//		pa.rectMode(CORNER);
-		//		pa.rect(posx, posy, w, h);
-		//		pa.popMatrix();
-		//
-		// the above code is only for debuggin purposes
-		// END OF DEBUGGIN BLOCK;
-		//
+	@Override public void updateGraphics() {
+		pg.beginDraw();
+		pg.background(200, 50);
+		pg.endDraw();
 	}
 
-	public void addController(Controller controller, int hAlign, int vAlign) {
+	/*
+	 * This particular implementation defines the area that can be (pressed/dragged)
+	 * as area of child titleBar 
+	 */
+	@Override public boolean isPointInside(int x, int y) {
+		boolean isInside = false;
 		if (isActive) {
-			controller.alignAbout(pane, hAlign, vAlign);
-			pane.attachController(controller);
+			if (x > getAbsolutePosX() && x < getAbsolutePosX() + w) {
+				if (y > getAbsolutePosY() && y < getAbsolutePosY() + titleBar.h) {
+					isInside = true;
+				}
+			}
 		}
+		return isInside;
 	}
 
 	private void createTitleBar() {
-		titleBar = new TitleBar(ktgui, "tb:" + title, this, posx, posy, w, KTGUI.TITLE_BAR_HEIGHT);
-		titleBar.isDragable = true;
+		titleBar = new TitleBar(ktgui, "tb:" + title, 0, 0, w, KTGUI.TITLE_BAR_HEIGHT);
+		// Prevent the child titleBar from being dragged. Instead, the Window can be 
+		// dragged. And whent this happens, all the child controllers (including titleBar
+		// will be dragged to the same amount of distance and in the same direction.
+		titleBar.isDragable = false;
 		attachController(titleBar);
-		registerChildController(titleBar);
-		titleBar.addEventAdapter(new KTGUIEventAdapter() {
-			public void onMouseDragged() {
-				int dx = pa.mouseX - pa.pmouseX;
-				int dy = pa.mouseY - pa.pmouseY;
-				pane.posx += dx;
-				pane.posy += dy;
-				posx += dx;
-				posy += dy;
-			}	
-		});
 	}
 
 	private void createPane() {
-		pane = new WindowPane(ktgui, "pane:" + title, this, posx, posy + titleBar.h, w, h - titleBar.h);
+		pane = new Pane(ktgui, "pane:" + title, 0, KTGUI.TITLE_BAR_HEIGHT, w, h - KTGUI.TITLE_BAR_HEIGHT);
 		pane.isDragable = false;
 		attachController(pane);
-		registerChildController(pane);
 	}
 
-	public Pane getPane() {
-		return pane;
+	/**
+	 * Add child controller to the 'internal' pane instead of adding it to 'this' window    
+	 */
+	@Override public void addController(Controller child, int hAlign, int vAlign) {
+		if (isActive) {
+			child.alignAbout(pane, hAlign, vAlign);
+			pane.attachController(child);
+		}
 	}
+
+	/**
+	 * Add child controller to the 'internal' pane instead of adding it to 'this' window    
+	 */
+	@Override public void addController(Controller child, int hAlign, int vAlign, int gap) {
+		if (isActive) {
+			child.alignAbout(pane, hAlign, vAlign, gap);
+			pane.attachController(child);
+		}
+	}
+
 }
