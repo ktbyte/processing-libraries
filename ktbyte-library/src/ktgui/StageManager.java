@@ -62,7 +62,7 @@ public class StageManager {
 	}
 
 	public static void unregisterControllerFromAllStages(Controller controller) {
-		System.out.println("Unregistering " + controller.title + " from all stages ...");
+		System.out.println("Unregistering " + controller.title + " from all stages started.");
 		for (Stage stage : stages) {
 			System.out.println("\tStage " + stage.getName() + " contains:");
 			for (Controller c : stage.controllers) {
@@ -78,6 +78,6 @@ public class StageManager {
 			}
 		}
 		controller.parentStage = null;
-		System.out.println("Done.");
+		System.out.println("Unregistering " + controller.title + " from all stages completed.");
 	}
 }

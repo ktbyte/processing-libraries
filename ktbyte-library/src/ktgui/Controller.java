@@ -213,21 +213,6 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		return pg;
 	}
 
-	public void addController(Controller child, int hAlign, int vAlign) {
-		if (isActive) {
-			child.alignAbout(this, hAlign, vAlign, KTGUI.ALIGN_GAP);
-			attachController(child);
-		}
-	}
-
-	public void addController(Controller child, int hAlign, int vAlign, int gap) {
-		if (isActive) {
-			child.alignAbout(this, hAlign, vAlign, gap);
-			attachController(child);
-			//registerChildController(controller);
-		}
-	}
-
 	public void positionAboutOtherController(Controller controller, int relativePosx, int relativePosy) {
 		this.posx = controller.posx + relativePosx;
 		this.posy = controller.posy + relativePosy;
@@ -290,6 +275,16 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		ktgui.addToGarbage(this, pa.millis());
 	}
 
+	public void addController(Controller child, int hAlign, int vAlign) {
+		addController(child, hAlign, vAlign, KTGUI.ALIGN_GAP);
+	}
+
+	public void addController(Controller child, int hAlign, int vAlign, int gap) {
+		if (isActive) {
+			child.alignAbout(this, hAlign, vAlign, gap);
+			attachController(child);
+		}
+	}
 	/**
 	 * @see #alignAboutCanvas(int, int, int) alignAboutCanvas
 	 * @param hAlign
@@ -457,7 +452,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public void alignAbout(Controller controller, int hAlign, int vAlign) {
 		alignAbout(controller, hAlign, vAlign, KTGUI.ALIGN_GAP);
 	}
-	
+
 	public void stackAbout(Controller controller, int direction, int align, int gap) {
 		if (controller != parentController && controller.parentController != this) {
 			switch (direction) {
@@ -536,7 +531,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		} else {
 			System.out.println("Cannot align [" + title +
 					"] about [" + controller.title + "] because they HAVE parent-child relationship."
-							+ "\nOnly 'non-parent-child' pairs can be stacked.");
+					+ "\nOnly 'non-parent-child' pairs can be stacked.");
 		}
 	}
 
@@ -551,7 +546,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	 *  state/behaviour.(the <i>"hovered"</i> state is  defined by the <b>isHovered</b> 
 	 *  variable, which can be set to true or false).
 	 */
-	@Override public void processMouseMoved() {
+	@Override
+	public void processMouseMoved() {
 		if (isActive) {
 			// transfer mouseMoved event to child controllers 
 			// (and, recursively, to their child controllers)
@@ -577,7 +573,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	 *  (the state is defined by the  <i>isPressed</i> variable, which can be set 
 	 *  to true or false).
 	 */
-	@Override public void processMousePressed() {
+	@Override
+	public void processMousePressed() {
 		if (isActive) {
 			// transfer mousePressed event to child controllers
 			for (Controller child : controllers) {
@@ -600,7 +597,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	 *  variable to false. I.e. it changes the state of the controller to 'released'
 	 *  (unpressed).
 	 */
-	@Override public void processMouseReleased() {
+	@Override
+	public void processMouseReleased() {
 		if (isActive) {
 			// transfer mouseReleased event to child controllers
 			for (Controller child : controllers) {
@@ -620,7 +618,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	 *  from the parent PApplet, this implementation defines the <i>"dragging"</i> 
 	 *  state/behaviour.
 	 */
-	@Override public void processMouseDragged() {
+	@Override
+	public void processMouseDragged() {
 		if (isActive) {
 			// transfer mouseDragged event to child controllers
 			for (Controller child : controllers) {
@@ -639,7 +638,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
-	@Override public boolean isPointInside(int x, int y) {
+	@Override
+	public boolean isPointInside(int x, int y) {
 		boolean isInside = false;
 		if (isActive) {
 			if (x > getAbsolutePosX() && x < getAbsolutePosX() + w) {
@@ -651,7 +651,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		return isInside;
 	}
 
-	@Override public void processKeyPressed() {
+	@Override
+	public void processKeyPressed() {
 		if (isActive) {
 			// transfer keyPressed event to child controllers
 			for (Controller child : controllers) {
@@ -660,7 +661,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
-	@Override public void processKeyReleased() {
+	@Override
+	public void processKeyReleased() {
 		if (isActive) {
 			// transfer keyReleased event to child controllers
 			for (Controller child : controllers) {
@@ -669,7 +671,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
-	@Override public void processMouseWheel(MouseEvent me) {
+	@Override
+	public void processMouseWheel(MouseEvent me) {
 		if (isActive) {
 			// transfer mouseWheel event to child controllers
 			for (Controller child : controllers) {
