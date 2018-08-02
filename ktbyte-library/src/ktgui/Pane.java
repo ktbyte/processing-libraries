@@ -26,7 +26,7 @@ public class Pane extends Controller {
 		pg.strokeWeight(1);
 		//pg.fill(200, 220, 200, 50);
 		pg.rectMode(CORNER);
-		pg.rect(0, 0, w, h);
+		pg.rect(0, 0, w, h, r1, r2, r3, r4);
 		pg.noFill();
 		pg.endDraw();
 	}
