@@ -16,6 +16,7 @@ void setup() {
 
   // instance of the KTGUI 'Button' component
   btn = ktgui.createButton(0, (int)(height * 0.25f), 150, 40);
+  btn.isDragable = true;
   btn.alignAboutCanvas(CENTER, 0);
   btn.setPressedColor(color(200, 150, 150));
   btn.setTitle("The Button");

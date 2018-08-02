@@ -23,30 +23,7 @@ public class Slider extends Controller {
 		updateValueFromHandlePosition();
 	}
 
-	//-----------------------------------------------------------------------------------------------
-	//
-	//-----------------------------------------------------------------------------------------------
-	public void draw() {
-//		pa.pushMatrix();
-//		pa.translate(posx, posy);
-//		pa.pushStyle();
-//		pa.fill(isHovered ? KTGUI.COLOR_BG_HOVERED : KTGUI.COLOR_BG_PASSIVE);
-//		pa.rectMode(CORNER);
-//		pa.rect(0, 0, this.w, this.h);
-//		pa.fill(isHovered ? KTGUI.COLOR_FG_HOVERED : KTGUI.COLOR_FG_PASSIVE);
-//		pa.rect(0, 0, pos, this.h);
-//		pa.fill(0);
-//		pa.textAlign(LEFT, CENTER);
-//		pa.text(PApplet.str(value), 10, h * 0.5f);
-//		pa.textAlign(LEFT, BOTTOM);
-//		pa.text(title, 10, -2);
-//		pa.popStyle();
-//		pa.popMatrix();
-		if (parentController == null) {
-			pa.image(pg, posx, posy);
-		}
-	}
-
+	@Override
 	public void updateGraphics() {
 		pg.beginDraw();
 		pg.fill(isHovered ? KTGUI.COLOR_BG_HOVERED : KTGUI.COLOR_BG_PASSIVE);
