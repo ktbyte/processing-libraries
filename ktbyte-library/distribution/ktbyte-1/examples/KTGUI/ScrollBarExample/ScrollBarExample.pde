@@ -14,7 +14,7 @@ void setup() {
   pane.setBorderRoundings(5, 5, 5, 5);
   pane.isDragable = true;
 
-  vsbar = new VerticalScrollBar(ktgui, "sBar", 20, 200, 30, 200);
+  vsbar = new VerticalScrollBar(ktgui, "sBar", 20, 200, 20, 200);
 }
 
 void draw() {

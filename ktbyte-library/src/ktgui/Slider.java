@@ -25,20 +25,29 @@ public class Slider extends Controller {
 
 	@Override
 	public void updateGraphics() {
+		ktgui.drawCallStack.add(title + ".updateGraphics()");
 		pg.beginDraw();
 		pg.fill(isHovered ? KTGUI.COLOR_BG_HOVERED : KTGUI.COLOR_BG_PASSIVE);
 		pg.rectMode(CORNER);
 		pg.rect(0, 0, this.w, this.h);
 		pg.fill(isHovered ? KTGUI.COLOR_FG_HOVERED : KTGUI.COLOR_FG_PASSIVE);
-		pg.rect(0, 0, pos, this.h);
+		if (w > h) {
+			pg.rect(0, 0, pos, this.h);
+		} else {
+			pg.rect(0, 0, this.w, pos);
+		}
 		pg.fill(0);
 		pg.textAlign(LEFT, CENTER);
-		pg.text(PApplet.str(value), 10, h * 0.5f);
-		pg.textAlign(LEFT, BOTTOM);
-		pg.text(title, 10, -2);
+		if (w > h) {
+			pg.text(PApplet.str(value), 10, h * 0.5f);
+			pg.textAlign(LEFT, BOTTOM);
+			pg.text(title, 10, -2);
+		} else {
+			pg.text(PApplet.str(value), 1, h * 0.5f);
+		}
 		pg.endDraw();
 	}
-	
+
 	public void addEventAdapter(KTGUIEventAdapter adapter) {
 		adapters.add(adapter);
 	}
@@ -70,11 +79,19 @@ public class Slider extends Controller {
 	}
 
 	void updateHandlePositionFromMouse() {
-		pos = PApplet.constrain(pa.mouseX - posx, 0, this.w);
+		if (w > h) {
+			pos = PApplet.constrain(pa.mouseX - posx, 0, this.w);
+		} else {
+			pos = PApplet.constrain(pa.mouseY - posy, 0, this.h);
+		}
 	}
 
 	void updateValueFromHandlePosition() {
-		value = PApplet.map(pos, 0, this.w, rangeStart, rangeEnd);
+		if (w > h) {
+			value = PApplet.map(pos, 0, this.w, rangeStart, rangeEnd);
+		} else {
+			value = PApplet.map(pos, 0, this.h, rangeStart, rangeEnd);
+		}
 	}
 
 	// process mouseMoved event received from PApplet

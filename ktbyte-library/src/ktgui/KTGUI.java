@@ -51,7 +51,7 @@ public class KTGUI implements PConstants {
 	public static int						COLOR_BG_HOVERED;
 	public static int						COLOR_BG_PASSIVE;
 	public static int						COLOR_BG_PRESSED;
-	public static int						DEFAULT_BAR_HEIGHT;
+	public static int						DEFAULT_SIZE;
 	public static int						MENU_BAR_HEIGHT;
 	public static int						BORDER_THICKNESS;
 	public static int						ALIGN_GAP;
@@ -81,7 +81,7 @@ public class KTGUI implements PConstants {
 		COLOR_BG_HOVERED = pa.color(220);
 		COLOR_BG_PASSIVE = pa.color(180);
 		COLOR_BG_PRESSED = pa.color(200);
-		DEFAULT_BAR_HEIGHT = 14;
+		DEFAULT_SIZE = 14;
 		MENU_BAR_HEIGHT = 20;
 		BORDER_THICKNESS = 3;
 		ALIGN_GAP = 20;
