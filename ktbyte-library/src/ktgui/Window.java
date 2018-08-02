@@ -72,4 +72,8 @@ public class Window extends Controller {
 		}
 	}
 
+	public Pane getPane() {
+		return pane;
+	}
+	
 }

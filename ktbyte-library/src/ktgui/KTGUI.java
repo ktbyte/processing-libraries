@@ -38,6 +38,7 @@ external class) and using for separating the code <strong><em>only the following
 Drawing inside this method is allowed because mouse events are queued, unless the sketch has called <code>noLoop()</code>.</li>
 <li><code>public void keyEvent(KeyEvent e)</code> Method that&#39;s called when a key event occurs in the parent <em>PApplet.</em> 
 Drawing is allowed because key events are queued, unless the sketch has called <code>noLoop()</code>.</li>
+</ul>
  *********************************************************************************************************************/
 public class KTGUI implements PConstants {
 	private static PApplet					pa;
