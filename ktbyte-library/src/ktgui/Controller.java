@@ -47,6 +47,13 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		pg = pa.createGraphics(w + 1, h + 1);
 		userpg = pa.createGraphics(w + 1, h + 1);
 
+		if (w < 5 || h < 5) {
+			System.out.println("!!! Width and height of the controller must be greater than 20 px. "
+					+ title + " is not created. Exiting constructor. Exiting app.");
+			pa.exit();
+			//return;
+		}
+
 		StageManager.getInstance();
 		// automatically register the newly created window in default stage of stageManager
 		StageManager.getDefaultStage().registerController(this);
@@ -82,7 +89,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		for (Controller child : controllers) {
 			child.updateGraphics();
 			child.draw();
-			
+
 			pg.beginDraw();
 			ktgui.drawCallStack
 					.add("pg.image(" + child.title + ").getGraphics: " + child.posx + ", " + child.posy + "-'  ");
@@ -351,7 +358,6 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		alignAbout(controller, hAlign, vAlign, KTGUI.ALIGN_GAP);
 	}
 
-	
 	/**
 	 * This method is used to align one controller about the other (reference) controller. 
 	 * By 'aligning' we understand the process of changing the X and Y coordinates. 
@@ -512,7 +518,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	public void stackAbout(Controller controller, int direction, int align, int gap) {
 		switch (direction) {
-		
+
 		case PConstants.TOP: // stack this controller above the given controller
 			this.posy = controller.posy - this.h - gap;
 			switch (align) {
@@ -529,7 +535,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				break;
 			}
 			break;
-			
+
 		case PConstants.BOTTOM: // stack this controller below the given controller
 			this.posy = controller.posy + controller.h + gap;
 			switch (align) {
@@ -546,7 +552,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				break;
 			}
 			break;
-			
+
 		case PConstants.LEFT: // stack this controller to the left about given controller
 			this.posx = controller.posx - this.w - gap;
 			switch (align) {
@@ -554,7 +560,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				this.posy = controller.posy - this.h - gap;
 				break;
 			case PConstants.BOTTOM:
-				this.posy = controller.posy + controller.h + gap;	
+				this.posy = controller.posy + controller.h + gap;
 				break;
 			case PConstants.CENTER:
 				this.posy = (int) (controller.posy + controller.h * 0.5) - (int) (this.h * 0.5);
@@ -563,7 +569,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				break;
 			}
 			break;
-			
+
 		case PConstants.RIGHT: // stack this controller to the right about given controller
 			this.posx = controller.posx + controller.w + gap;
 			switch (align) {
@@ -580,7 +586,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				break;
 			}
 			break;
-			
+
 		default: // do nothing
 			break;
 		}
@@ -593,7 +599,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	 *  state/behaviour.(the <i>"hovered"</i> state is  defined by the <b>isHovered</b> 
 	 *  variable, which can be set to true or false).
 	 */
-	@Override public void processMouseMoved() {
+	@Override
+	public void processMouseMoved() {
 		if (isActive) {
 			// transfer mouseMoved event to child controllers
 			for (Controller child : controllers) {
@@ -617,7 +624,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	 *  (the state is defined by the  <i>isPressed</i> variable, which can be set 
 	 *  to true or false).
 	 */
-	@Override public void processMousePressed() {
+	@Override
+	public void processMousePressed() {
 		if (isActive) {
 			// transfer mousePressed event to child controllers
 			for (Controller child : controllers) {
@@ -640,7 +648,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	 *  variable to false. I.e. it changes the state of the controller to 'released'
 	 *  (unpressed).
 	 */
-	@Override public void processMouseReleased() {
+	@Override
+	public void processMouseReleased() {
 		if (isActive) {
 			// transfer mouseReleased event to child controllers
 			for (Controller child : controllers) {
@@ -660,7 +669,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	 *  from the parent PApplet, this implementation defines the <i>"dragging"</i> 
 	 *  state/behaviour.
 	 */
-	@Override public void processMouseDragged() {
+	@Override
+	public void processMouseDragged() {
 		if (isActive) {
 			// transfer mouseDragged event to child controllers
 			for (Controller child : controllers) {
@@ -679,7 +689,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		}
 	}
 
-	@Override public boolean isPointInside(int x, int y) {
+	@Override
+	public boolean isPointInside(int x, int y) {
 		boolean isInside = false;
 		if (isActive) {
 			if (x > getAbsolutePosX() && x < getAbsolutePosX() + w) {
@@ -710,8 +721,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			}
 		}
 	}
-	
-	@Override public void processMouseWheel(MouseEvent me) {
+
+	@Override
+	public void processMouseWheel(MouseEvent me) {
 		if (isActive) {
 			// transfer mouseWheel event to child controllers
 			for (Controller child : controllers) {

@@ -3,6 +3,7 @@ import java.util.*;
 
 KTGUI ktgui;
 Pane pane;
+VerticalScrollBar vsbar;
 
 void setup() {
   size(1200, 600);
@@ -13,6 +14,7 @@ void setup() {
   pane.setBorderRoundings(5, 5, 5, 5);
   pane.isDragable = true;
 
+  vsbar = new VerticalScrollBar(ktgui, "sBar", 20, 200, 30, 200);
 }
 
 void draw() {

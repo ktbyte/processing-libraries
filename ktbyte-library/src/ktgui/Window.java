@@ -15,7 +15,8 @@ public class Window extends Controller {
 		setTitle(title);
 	}
 
-	@Override public void updateGraphics() {
+	@Override
+	public void updateGraphics() {
 		pg.beginDraw();
 		pg.background(200, 50);
 		pg.endDraw();
@@ -25,7 +26,8 @@ public class Window extends Controller {
 	 * This particular implementation defines the area that can be (pressed/dragged)
 	 * as area of child titleBar 
 	 */
-	@Override public boolean isPointInside(int x, int y) {
+	@Override
+	public boolean isPointInside(int x, int y) {
 		boolean isInside = false;
 		if (isActive) {
 			if (x > getAbsolutePosX() && x < getAbsolutePosX() + w) {
@@ -38,7 +40,7 @@ public class Window extends Controller {
 	}
 
 	private void createTitleBar() {
-		titleBar = new TitleBar(ktgui, "tb:" + title, 0, 0, w, KTGUI.TITLE_BAR_HEIGHT);
+		titleBar = new TitleBar(ktgui, "tb:" + title, 0, 0, w, KTGUI.DEFAULT_BAR_HEIGHT);
 		// Prevent the child titleBar from being dragged. Instead, the Window can be 
 		// dragged. And whent this happens, all the child controllers (including titleBar
 		// will be dragged to the same amount of distance and in the same direction.
@@ -47,7 +49,7 @@ public class Window extends Controller {
 	}
 
 	private void createPane() {
-		pane = new Pane(ktgui, "pane:" + title, 0, KTGUI.TITLE_BAR_HEIGHT, w, h - KTGUI.TITLE_BAR_HEIGHT);
+		pane = new Pane(ktgui, "pane:" + title, 0, KTGUI.DEFAULT_BAR_HEIGHT, w, h - KTGUI.DEFAULT_BAR_HEIGHT);
 		pane.isDragable = false;
 		attachController(pane);
 	}
@@ -55,7 +57,8 @@ public class Window extends Controller {
 	/**
 	 * Add child controller to the 'internal' pane instead of adding it to 'this' window    
 	 */
-	@Override public void addController(Controller child, int hAlign, int vAlign) {
+	@Override
+	public void addController(Controller child, int hAlign, int vAlign) {
 		if (isActive) {
 			child.alignAbout(pane, hAlign, vAlign);
 			pane.attachController(child);
@@ -65,7 +68,8 @@ public class Window extends Controller {
 	/**
 	 * Add child controller to the 'internal' pane instead of adding it to 'this' window    
 	 */
-	@Override public void addController(Controller child, int hAlign, int vAlign, int gap) {
+	@Override
+	public void addController(Controller child, int hAlign, int vAlign, int gap) {
 		if (isActive) {
 			child.alignAbout(pane, hAlign, vAlign, gap);
 			pane.attachController(child);
@@ -75,5 +79,5 @@ public class Window extends Controller {
 	public Pane getPane() {
 		return pane;
 	}
-	
+
 }

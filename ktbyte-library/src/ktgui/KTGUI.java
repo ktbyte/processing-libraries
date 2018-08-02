@@ -51,7 +51,7 @@ public class KTGUI implements PConstants {
 	public static int						COLOR_BG_HOVERED;
 	public static int						COLOR_BG_PASSIVE;
 	public static int						COLOR_BG_PRESSED;
-	public static int						TITLE_BAR_HEIGHT;
+	public static int						DEFAULT_BAR_HEIGHT;
 	public static int						MENU_BAR_HEIGHT;
 	public static int						BORDER_THICKNESS;
 	public static int						ALIGN_GAP;
@@ -75,13 +75,13 @@ public class KTGUI implements PConstants {
 
 		garbageList = new HashMap<Controller, Integer>();
 
-		COLOR_FG_PASSIVE = pa.color(50, 180, 50);
-		COLOR_FG_HOVERED = pa.color(50, 220, 50);
-		COLOR_FG_PRESSED = pa.color(10, 200, 10);
+		COLOR_FG_PASSIVE = pa.color(150, 180, 150);
+		COLOR_FG_HOVERED = pa.color(150, 220, 150);
+		COLOR_FG_PRESSED = pa.color(110, 200, 110);
 		COLOR_BG_HOVERED = pa.color(220);
 		COLOR_BG_PASSIVE = pa.color(180);
 		COLOR_BG_PRESSED = pa.color(200);
-		TITLE_BAR_HEIGHT = 14;
+		DEFAULT_BAR_HEIGHT = 14;
 		MENU_BAR_HEIGHT = 20;
 		BORDER_THICKNESS = 3;
 		ALIGN_GAP = 20;
