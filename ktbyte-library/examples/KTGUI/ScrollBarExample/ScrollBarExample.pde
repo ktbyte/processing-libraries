@@ -11,10 +11,11 @@ void setup() {
   ktgui.setDebug(true);
 
   pane = new Pane(ktgui, "aPane", 600, 200, 500, 200);
-  pane.setBorderRoundings(5, 5, 5, 5);
+  pane.setBorderRoundings(10, 10, 10, 10);
   pane.isDragable = true;
 
-  vsbar = new VerticalScrollBar(ktgui, "sBar", 20, 200, 20, 200);
+  vsbar = new VerticalScrollBar(ktgui, "sBar", 20, 200, 30, 200);
+  vsbar.setBorderRoundings(0, 10, 10, 0);
 }
 
 void draw() {

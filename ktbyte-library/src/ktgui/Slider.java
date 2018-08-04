@@ -12,9 +12,9 @@ public class Slider extends Controller {
 	int		rangeEnd	= 100;
 	float	value		= rangeStart;
 
-	//-----------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------
 	//
-	//-----------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------
 	Slider(KTGUI ktgui, String title, int posx, int posy, int w, int h, int sr, int er) {
 		super(ktgui, title, posx, posy, w, h);
 		this.rangeStart = sr;
@@ -34,7 +34,8 @@ public class Slider extends Controller {
 		if (w > h) {
 			pg.rect(0, 0, pos, this.h);
 		} else {
-			pg.rect(0, 0, this.w, pos);
+			// pg.rect(0, 0, this.w, pos);
+			pg.rect(0, pos, this.w, this.h - pos);
 		}
 		pg.fill(0);
 		pg.textAlign(LEFT, CENTER);
@@ -56,7 +57,7 @@ public class Slider extends Controller {
 		return value;
 	}
 
-	int getPosition() {
+	public int getPos() {
 		return pos;
 	}
 
@@ -80,9 +81,9 @@ public class Slider extends Controller {
 
 	void updateHandlePositionFromMouse() {
 		if (w > h) {
-			pos = PApplet.constrain(pa.mouseX - posx, 0, this.w);
+			pos = PApplet.constrain(pa.mouseX - getAbsolutePosX(), 0, this.w);
 		} else {
-			pos = PApplet.constrain(pa.mouseY - posy, 0, this.h);
+			pos = PApplet.constrain(pa.mouseY - getAbsolutePosY(), 0, this.h);
 		}
 	}
 
