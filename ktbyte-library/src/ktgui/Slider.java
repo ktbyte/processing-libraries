@@ -65,10 +65,30 @@ public class Slider extends Controller {
 		return value;
 	}
 
+	public void setValue(int val) {
+		if(val >= rangeStart && val <= rangeEnd) {
+			value = val;
+			updateHandlePositionFromValue();
+		} else {
+			System.out.println("You're trying to set the value of the slider "
+					+ "to be outside its range.");
+		}
+	}
+
 	public int getHandlePos() {
 		return handlePos;
 	}
 	
+	public void setHandlePos(int pos) {
+		if (pos >= 0 && pos <= this.h) {
+			handlePos = pos;
+			updateValueFromHandlePosition();
+		} else {
+			System.out.println("You're trying to set the position of the slider "
+					+ "to be outside its height.");
+		}
+	}
+
 	public int getRangeStart() {
 		return rangeStart;
 	}
@@ -87,7 +107,19 @@ public class Slider extends Controller {
 		updateValueFromHandlePosition();
 	}
 
-	void updateHandlePositionFromMouse() {
+	/**
+	 * This method is called when the user change the value of the slider 
+	 * manually (without using the mouse), using the setValue(int) method.
+	 */
+	private void updateHandlePositionFromValue() {
+		if (w > h) {
+			handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.w);
+		} else {
+			handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.h);
+		}
+	}
+	
+	private void updateHandlePositionFromMouse() {
 		if (w > h) {
 			handlePos = PApplet.constrain(pa.mouseX - getAbsolutePosX(), 0, this.w);
 		} else {
@@ -95,7 +127,7 @@ public class Slider extends Controller {
 		}
 	}
 
-	void updateValueFromHandlePosition() {
+	private void updateValueFromHandlePosition() {
 		if (w > h) {
 			value = PApplet.map(handlePos, 0, this.w, rangeStart, rangeEnd);
 		} else {
