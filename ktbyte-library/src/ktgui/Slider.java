@@ -7,7 +7,7 @@ import processing.core.PApplet;
 ************************************************************************************************/
 public class Slider extends Controller {
 
-	int		pos			= 0;
+	int		handlePos	= 0;
 	int		rangeStart	= 0;
 	int		rangeEnd	= 100;
 	float	value		= rangeStart;
@@ -26,17 +26,23 @@ public class Slider extends Controller {
 	@Override
 	public void updateGraphics() {
 		ktgui.drawCallStack.add(title + ".updateGraphics()");
-		pg.beginDraw();
+		///////////////////////////////////////////////////////////////////////
+		pg.beginDraw(); // start drawing the slider
+		///////////////////////////////////////////////////////////////////////
+		// add rectangle that shows the slider boundaries
 		pg.fill(isHovered ? KTGUI.COLOR_BG_HOVERED : KTGUI.COLOR_BG_PASSIVE);
 		pg.rectMode(CORNER);
 		pg.rect(0, 0, this.w, this.h);
+		///////////////////////////////////////////////////////////////////////
+		// add rectangle that represents the current handle position
 		pg.fill(isHovered ? KTGUI.COLOR_FG_HOVERED : KTGUI.COLOR_FG_PASSIVE);
 		if (w > h) {
-			pg.rect(0, 0, pos, this.h);
+			pg.rect(0, 0, handlePos, this.h);
 		} else {
-			// pg.rect(0, 0, this.w, pos);
-			pg.rect(0, pos, this.w, this.h - pos);
+			pg.rect(0, this.h - handlePos, this.w, handlePos);
 		}
+		///////////////////////////////////////////////////////////////////////
+		// add text label that displays the current value of the slider
 		pg.fill(0);
 		pg.textAlign(LEFT, CENTER);
 		if (w > h) {
@@ -46,7 +52,9 @@ public class Slider extends Controller {
 		} else {
 			pg.text(PApplet.str(value), 1, h * 0.5f);
 		}
-		pg.endDraw();
+		///////////////////////////////////////////////////////////////////////
+		pg.endDraw(); // stop drawing the slider
+		///////////////////////////////////////////////////////////////////////
 	}
 
 	public void addEventAdapter(KTGUIEventAdapter adapter) {
@@ -57,10 +65,10 @@ public class Slider extends Controller {
 		return value;
 	}
 
-	public int getPos() {
-		return pos;
+	public int getHandlePos() {
+		return handlePos;
 	}
-
+	
 	public int getRangeStart() {
 		return rangeStart;
 	}
@@ -81,17 +89,17 @@ public class Slider extends Controller {
 
 	void updateHandlePositionFromMouse() {
 		if (w > h) {
-			pos = PApplet.constrain(pa.mouseX - getAbsolutePosX(), 0, this.w);
+			handlePos = PApplet.constrain(pa.mouseX - getAbsolutePosX(), 0, this.w);
 		} else {
-			pos = PApplet.constrain(pa.mouseY - getAbsolutePosY(), 0, this.h);
+			handlePos = PApplet.constrain(this.h - (pa.mouseY - getAbsolutePosY()), 0, this.h);
 		}
 	}
 
 	void updateValueFromHandlePosition() {
 		if (w > h) {
-			value = PApplet.map(pos, 0, this.w, rangeStart, rangeEnd);
+			value = PApplet.map(handlePos, 0, this.w, rangeStart, rangeEnd);
 		} else {
-			value = PApplet.map(pos, 0, this.h, rangeStart, rangeEnd);
+			value = PApplet.map(handlePos, 0, this.h, rangeStart, rangeEnd);
 		}
 	}
 

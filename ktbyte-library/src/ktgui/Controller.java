@@ -50,7 +50,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		if (w < 5 || h < 5) {
 			System.out.println("w:" + w + ", h:" + h);
 			System.out.println("!!! Width and height of the controller must be greater than 5 px. "
-					+ title + " is not created. Exiting constructor. Exiting app.");
+					+ title + " is not created. Exiting Controller constructor. Exiting app.");
 			pa.exit();
 			//return;
 		}
