@@ -21,7 +21,7 @@ public class Stage {
 		this.pa = KTGUI.getParentPApplet();
 		this.name = name;
 		this.controllers = new ArrayList<Controller>();
-		StageManager.stages.add(this);
+		StageManager.getInstance().getStages().add(this);
 		System.out.println("Creating stage '" + name + "' completed.");
 	}
 
@@ -49,14 +49,14 @@ public class Stage {
 		}
 
 		// try to remove controller from default stage before adding it to 'this' stage
-		if (StageManager.getDefaultStage().controllers.contains(controller)) {
-			StageManager.getDefaultStage().unregisterController(controller);
+		if (StageManager.getInstance().getDefaultStage().controllers.contains(controller)) {
+			StageManager.getInstance().getDefaultStage().unregisterController(controller);
 		}
 
 		// try to remove controller from active stage before adding it to 'this' stage
-		if (StageManager.getActiveStage() != null) {
-			if (StageManager.getActiveStage().controllers.contains(controller)) {
-				StageManager.getActiveStage().unregisterController(controller);
+		if (StageManager.getInstance().getActiveStage() != null) {
+			if (StageManager.getInstance().getActiveStage().controllers.contains(controller)) {
+				StageManager.getInstance().getActiveStage().unregisterController(controller);
 			}
 		}
 

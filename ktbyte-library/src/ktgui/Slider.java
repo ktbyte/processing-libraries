@@ -108,8 +108,8 @@ public class Slider extends Controller {
 	}
 
 	/**
-	 * This method is called when the user change the value of the slider 
-	 * manually (without using the mouse), using the setValue(int) method.
+	 * This method is called when the user change the <b>value</b> of the slider 
+	 * without the mouse, using the setValue(int) method.
 	 */
 	private void updateHandlePositionFromValue() {
 		if (w > h) {
@@ -119,6 +119,10 @@ public class Slider extends Controller {
 		}
 	}
 	
+	/**
+	 * This method is called when the user change the <b>position</b> of the slider 
+	 * with the mouse.
+	 */
 	private void updateHandlePositionFromMouse() {
 		if (w > h) {
 			handlePos = PApplet.constrain(pa.mouseX - getAbsolutePosX(), 0, this.w);

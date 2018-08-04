@@ -147,7 +147,7 @@ public class ScrollableTextArea extends Controller {
 	}
 
 	public int getMaxLinesToDisplay() {
-		return (int) PApplet.floor((h - padding - padding) / getTextHeight());
+		return PApplet.floor((h - padding - padding) / getTextHeight());
 	}
 
 	private float getTextHeight() {
@@ -230,14 +230,14 @@ public class ScrollableTextArea extends Controller {
 			isHeadAlreadyMarked = false;
 			StringBuilder sb = new StringBuilder();
 			// calculate the wrapped width of the line as it will be shown
-			int wrappedWidth = (int) PApplet.floor(w - padding - padding);
+			int wrappedWidth = PApplet.floor(w - padding - padding);
 			// update the PApplet's textSize value in order to accurately calculate text width
 			// !!! textSize variable belongs to ScrollableTextArea 
 			pa.textSize(_textSize);
 			// go through all the characters in the text block splitting it
 			// by text chunks which has the width equals to the 'paddedWidth' 
 			for (int i = 0; i < content.length(); i++) {
-				int chunkWidth = (int) PApplet.ceil(pa.textWidth(sb.toString()));
+				int chunkWidth = PApplet.ceil(pa.textWidth(sb.toString()));
 				if (chunkWidth >= wrappedWidth) {
 					addWrappedLine(sb);
 					sb = new StringBuilder();

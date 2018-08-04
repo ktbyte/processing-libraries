@@ -142,11 +142,11 @@ public class InputTextBox extends Controller {
 
 	private String getTrimmedInputText() {
 		StringBuilder sb = new StringBuilder();
-		int wrappedWidth = (int) PApplet.floor(w - padding);
+		int wrappedWidth = PApplet.floor(w - padding);
 		// update the parent PApplet's textSize value in order to accurately calculate text width
 		pa.textSize(this.textSize);
 		for (int i = textInput.length() - 1; i >= 0; i--) {
-			int chunkWidth = (int) PApplet.ceil(pa.textWidth(sb.toString() + ":")); // + additional temp character
+			int chunkWidth = PApplet.ceil(pa.textWidth(sb.toString() + ":")); // + additional temp character
 			if (chunkWidth >= wrappedWidth) {
 				break;
 			}

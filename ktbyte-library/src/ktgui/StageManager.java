@@ -28,31 +28,31 @@ public class StageManager {
 		activeStage = defaultStage;
 	}
 
-	public static Stage createStage(String name) {
+	public Stage createStage(String name) {
 		Stage stage = new Stage(name);
 		activeStage = stage;
 		return stage;
 	}
 
-	public static Stage getDefaultStage() {
+	public Stage getDefaultStage() {
 		return defaultStage;
 	}
 
-	public static Stage getActiveStage() {
+	public Stage getActiveStage() {
 		return activeStage;
 	}
 
-	public static void goToStage(Stage stage) {
+	public void goToStage(Stage stage) {
 		activeStage = stage;
 	}
 
-	public static void goToStage(int numStage) {
+	public void goToStage(int numStage) {
 		if (numStage > 0 && numStage < stages.size()) {
 			activeStage = stages.get(numStage);
 		}
 	}
 
-	public static void goToNextStage() {
+	public void goToNextStage() {
 		int indexOfCurrentStage = stages.indexOf(activeStage);
 		if (indexOfCurrentStage < stages.size() - 1) {
 			activeStage = stages.get(indexOfCurrentStage + 1);
@@ -61,7 +61,7 @@ public class StageManager {
 		}
 	}
 
-	public static void unregisterControllerFromAllStages(Controller controller) {
+	public void unregisterControllerFromAllStages(Controller controller) {
 		System.out.println("Unregistering " + controller.title + " from all stages ...");
 		for (Stage stage : stages) {
 			System.out.println("\tStage " + stage.getName() + " contains:");
@@ -79,5 +79,9 @@ public class StageManager {
 		}
 		controller.parentStage = null;
 		System.out.println("Done.");
+	}
+
+	public List<Stage> getStages() {
+		return stages;
 	}
 }

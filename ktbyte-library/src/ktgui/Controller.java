@@ -57,7 +57,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 		StageManager.getInstance();
 		// automatically register the newly created window in default stage of stageManager
-		StageManager.getDefaultStage().registerController(this);
+		StageManager.getInstance().getDefaultStage().registerController(this);
 
 		initColors();
 		System.out.println("Creating " + title + " completed.");
@@ -263,7 +263,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			System.out.println("\t" + controller.title + ".parentController is " + controller.parentController.title);
 
 			// unregister the controller from all stages
-			StageManager.unregisterControllerFromAllStages(controller);
+			StageManager.getInstance().unregisterControllerFromAllStages(controller);
 
 			System.out.println("Attaching " + controller.title + " to " + title + " completed.");
 		}
@@ -303,9 +303,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	/**
 	 * @see #alignAboutCanvas(int, int, int) alignAboutCanvas
 	 * @param hAlign
-	 * 	the horizontal alignment direction 
+	 * 	the horizontal alignment position
 	 * @param vAlign
-	 * 	the vertical alignment direction 
+	 * 	the vertical alignment position 
 	 */
 	public void alignAboutCanvas(int hAlign, int vAlign) {
 		alignAboutCanvas(hAlign, vAlign, KTGUI.ALIGN_GAP);
@@ -313,9 +313,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	/**
 	 * @param hAlign
-	 * 	the horizontal alignment direction 
+	 * 	the horizontal alignment position 
 	 * @param vAlign
-	 * 	the vertical alignment direction 
+	 * 	the vertical alignment position
 	 * @param gap
 	 *  the gap between the outer boundary of the PApplet canvas and 
 	 *  the side of the controller to be aligned. 
@@ -352,8 +352,11 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 	/**
 	 * @param controller
+	 * 	the controller whos position is used as a 'reference' for aligning process
 	 * @param hAlign
+	 * 	the horizontal alignment position 
 	 * @param vAlign
+	 * 	the vertical alignment position 
 	 */
 	public void alignAbout(Controller controller, int hAlign, int vAlign) {
 		alignAbout(controller, hAlign, vAlign, KTGUI.ALIGN_GAP);
