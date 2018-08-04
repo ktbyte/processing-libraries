@@ -40,7 +40,7 @@ public class Window extends Controller {
 	}
 
 	private void createTitleBar() {
-		titleBar = new TitleBar(ktgui, "tb:" + title, 0, 0, w, KTGUI.DEFAULT_SIZE);
+		titleBar = new TitleBar(ktgui, "tb:" + title, 0, 0, w, KTGUI.DEFAULT_COMPONENT_SIZE);
 		// Prevent the child titleBar from being dragged. Instead, the Window can be 
 		// dragged. And whent this happens, all the child controllers (including titleBar
 		// will be dragged to the same amount of distance and in the same direction.
@@ -49,7 +49,7 @@ public class Window extends Controller {
 	}
 
 	private void createPane() {
-		pane = new Pane(ktgui, "pane:" + title, 0, KTGUI.DEFAULT_SIZE, w, h - KTGUI.DEFAULT_SIZE);
+		pane = new Pane(ktgui, "pane:" + title, 0, KTGUI.DEFAULT_COMPONENT_SIZE, w, h - KTGUI.DEFAULT_COMPONENT_SIZE);
 		pane.isDragable = false;
 		attachController(pane);
 	}
