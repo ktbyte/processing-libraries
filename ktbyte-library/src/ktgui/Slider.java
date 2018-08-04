@@ -12,9 +12,6 @@ public class Slider extends Controller {
 	int		rangeEnd	= 100;
 	float	value		= rangeStart;
 
-	// -----------------------------------------------------------------------------------------------
-	//
-	// -----------------------------------------------------------------------------------------------
 	Slider(KTGUI ktgui, String title, int posx, int posy, int w, int h, int sr, int er) {
 		super(ktgui, title, posx, posy, w, h);
 		this.rangeStart = sr;
@@ -130,7 +127,11 @@ public class Slider extends Controller {
 			handlePos = PApplet.constrain(this.h - (pa.mouseY - getAbsolutePosY()), 0, this.h);
 		}
 	}
-
+	
+	/**
+	 * This method is called to recalculate the value within the given range 
+	 *  when the user change the <b>position</b> of the slider with the mouse.
+	 */
 	private void updateValueFromHandlePosition() {
 		if (w > h) {
 			value = PApplet.map(handlePos, 0, this.w, rangeStart, rangeEnd);

@@ -3,22 +3,39 @@ import java.util.*;
 
 KTGUI ktgui;
 Pane pane;
-VerticalScrollBar vsbar;
+ScrollBar hsbar, vsbar;
+Button dbgBtn;
 
 void setup() {
-  size(1200, 600);
+  size(1000, 600);
   ktgui = new KTGUI(this);
   ktgui.setDebug(true);
 
-  pane = new Pane(ktgui, "aPane", 600, 200, 500, 200);
+  pane = new Pane(ktgui, "aPane", 0, 0, 500, 300);
   pane.setBorderRoundings(10, 10, 10, 10);
-  pane.isDragable = true;
+  pane.isDragable = false;
+  pane.alignAboutCanvas(CENTER, CENTER);
 
-  vsbar = new VerticalScrollBar(ktgui, "sBar", 20, 200, 30, 200);
-  vsbar.setBorderRoundings(0, 10, 10, 0);
+  hsbar = new ScrollBar(ktgui, "sBar", 20, 200, 200, 40);
+  hsbar.setBorderRoundings(10, 10, 10, 10);
+  
+  vsbar = new ScrollBar(ktgui, "sBar", 20, 200, 40, 200);
+  vsbar.setBorderRoundings(10, 10, 10, 10);
+
+  pane.addController(hsbar, LEFT, TOP, 10);
+  pane.addController(vsbar, RIGHT, BOTTOM, 10);
+
+  dbgBtn = new Button(ktgui, "Debug", 0, 0, 100, 40);
+  dbgBtn.alignAboutCanvas(CENTER, BOTTOM);
+  dbgBtn.addEventAdapter(new KTGUIEventAdapter() {
+    public void onMousePressed() {
+      ktgui.setDebug(!ktgui.getDebug());
+    }
+  });
+
 }
 
 void draw() {
-  background(220);
+  background(220); 
 }
 

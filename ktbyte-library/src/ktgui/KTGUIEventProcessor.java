@@ -10,6 +10,7 @@ public class KTGUIEventProcessor {
 	public boolean						isHovered;
 	public boolean						isDragable;
 	public boolean						isFocused;
+	public boolean						isVisible	= true;
 	public boolean						handleFocus;
 
 	public ArrayList<KTGUIEventAdapter>	adapters	= new ArrayList<KTGUIEventAdapter>();
@@ -28,7 +29,9 @@ public class KTGUIEventProcessor {
 
 	public void processKeyReleased() {}
 
-	public boolean isPointInside(int x, int y) { return false; }
+	public boolean isPointInside(int x, int y) {
+		return false;
+	}
 
 	public void addEventAdapter(KTGUIEventAdapter adapter) {
 		adapters.add(adapter);

@@ -364,6 +364,7 @@ ${line}
 			<include name="**/ButtonExample/**" />
 			<include name="**/InputTextBoxExample/**" />
 			<include name="**/ScrollableTextAreaExample/**" />
+			<include name="**/ScrollbarExample/**" />
 			<include name="**/SliderExample/**" />
 			<include name="**/WindowExample/**" />
 			<include name="**/GUIShowcase/**" />

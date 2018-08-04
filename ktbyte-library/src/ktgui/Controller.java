@@ -52,7 +52,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			System.out.println("!!! Width and height of the controller must be greater than 5 px. "
 					+ title + " is not created. Exiting Controller constructor. Exiting app.");
 			pa.exit();
-			//return;
+			// return;
 		}
 
 		StageManager.getInstance();
@@ -109,10 +109,15 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	}
 
 	public void draw() {
-		ktgui.drawCallStack.add(title + ".draw()" + "|");
-		drawControllers();
-		drawUserDefinedGraphics(); // draw 'userpg' on 'pg' 
-		drawGraphics(); // draw 'pg' on PApplet canvas
+		if (isVisible) {
+			ktgui.drawCallStack.add(title + ".draw()" + "|");
+			// draw all child controllers recursively
+			drawControllers();
+			// draw 'userpg' on 'pg'
+			drawUserDefinedGraphics(); 
+			// draw 'pg' on PApplet canvas
+			drawGraphics(); 
+		}
 	}
 
 	public void setParentController(Controller controller) {
@@ -234,7 +239,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		if (isActive) {
 			child.alignAbout(this, hAlign, vAlign, gap);
 			attachController(child);
-			//registerChildController(controller);
+			// registerChildController(controller);
 		}
 	}
 
