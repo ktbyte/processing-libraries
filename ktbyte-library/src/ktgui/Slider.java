@@ -7,10 +7,12 @@ import processing.core.PApplet;
 ************************************************************************************************/
 public class Slider extends Controller {
 
-	int		handlePos	= 0;
-	int		rangeStart	= 0;
-	int		rangeEnd	= 100;
-	float	value		= rangeStart;
+	private int		handlePos			= 0;
+	private int		rangeStart			= 0;
+	private int		rangeEnd			= 100;
+	private float	value				= rangeStart;
+	private float	roundingTemplate	= 10;
+	private boolean	isValueVisible		= true;
 
 	Slider(KTGUI ktgui, String title, int posx, int posy, int w, int h, int sr, int er) {
 		super(ktgui, title, posx, posy, w, h);
@@ -40,14 +42,16 @@ public class Slider extends Controller {
 		}
 		///////////////////////////////////////////////////////////////////////
 		// add text label that displays the current value of the slider
-		pg.fill(0);
-		pg.textAlign(LEFT, CENTER);
-		if (w > h) {
-			pg.text(PApplet.str(value), 10, h * 0.5f);
-			pg.textAlign(LEFT, BOTTOM);
-			pg.text(title, 10, -2);
-		} else {
-			pg.text(PApplet.str(value), 1, h * 0.5f);
+		if (isValueVisible) {
+			pg.fill(0);
+			pg.textAlign(LEFT, CENTER);
+			if (w > h) {
+				pg.text(PApplet.str(value), 10, h * 0.5f);
+				pg.textAlign(LEFT, BOTTOM);
+				pg.text(title, 10, -2);
+			} else {
+				pg.text(PApplet.str(value), 1, h * 0.5f);
+			}
 		}
 		///////////////////////////////////////////////////////////////////////
 		pg.endDraw(); // stop drawing the slider
@@ -63,7 +67,7 @@ public class Slider extends Controller {
 	}
 
 	public void setValue(int val) {
-		if(val >= rangeStart && val <= rangeEnd) {
+		if (val >= rangeStart && val <= rangeEnd) {
 			value = val;
 			updateHandlePositionFromValue();
 		} else {
@@ -75,7 +79,7 @@ public class Slider extends Controller {
 	public int getHandlePos() {
 		return handlePos;
 	}
-	
+
 	public void setHandlePos(int pos) {
 		if (pos >= 0 && pos <= this.h) {
 			handlePos = pos;
@@ -104,6 +108,18 @@ public class Slider extends Controller {
 		updateValueFromHandlePosition();
 	}
 
+	public void setRounding(int n) {
+		roundingTemplate = (float) Math.pow(10, n);
+	}
+
+	public boolean getIsValueVisible() {
+		return isValueVisible;
+	}
+
+	public void setIsValueVisible(boolean visible) {
+		this.isValueVisible = visible;
+	}
+
 	/**
 	 * This method is called when the user change the <b>value</b> of the slider 
 	 * without the mouse, using the setValue(int) method.
@@ -115,7 +131,7 @@ public class Slider extends Controller {
 			handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.h);
 		}
 	}
-	
+
 	/**
 	 * This method is called when the user change the <b>position</b> of the slider 
 	 * with the mouse.
@@ -127,7 +143,7 @@ public class Slider extends Controller {
 			handlePos = PApplet.constrain(this.h - (pa.mouseY - getAbsolutePosY()), 0, this.h);
 		}
 	}
-	
+
 	/**
 	 * This method is called to recalculate the value within the given range 
 	 *  when the user change the <b>position</b> of the slider with the mouse.
@@ -137,6 +153,14 @@ public class Slider extends Controller {
 			value = PApplet.map(handlePos, 0, this.w, rangeStart, rangeEnd);
 		} else {
 			value = PApplet.map(handlePos, 0, this.h, rangeStart, rangeEnd);
+		}
+
+		// based on
+		// https://stackoverflow.com/questions/10430370/truncate-a-float-in-java-1-5-excluding-setroundingmode
+		if (roundingTemplate > 0) {
+			value = Math.round(value * roundingTemplate) / roundingTemplate;
+		} else {
+			value = (float) Math.floor(value);
 		}
 	}
 

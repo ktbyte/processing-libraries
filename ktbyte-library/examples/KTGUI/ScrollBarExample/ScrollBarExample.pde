@@ -16,10 +16,10 @@ void setup() {
   pane.isDragable = false;
   pane.alignAboutCanvas(CENTER, CENTER);
 
-  hsbar = new ScrollBar(ktgui, "hsBar", 20, 200, 200, 40);
+  hsbar = new ScrollBar(ktgui, "hsBar", 20, 200, 200, 40, 0, 100);
   hsbar.setBorderRoundings(10, 10, 10, 10);
   
-  vsbar = new ScrollBar(ktgui, "vsBar", 20, 200, 40, 200);
+  vsbar = new ScrollBar(ktgui, "vsBar", 20, 200, 40, 200, 0, 100);
   vsbar.setBorderRoundings(10, 10, 10, 10);
 
   pane.addController(hsbar, LEFT, TOP, 10);
