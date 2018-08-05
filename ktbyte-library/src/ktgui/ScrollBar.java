@@ -20,18 +20,26 @@ public class ScrollBar extends Controller {
 	private void createButtons() {
 		if (w > h) {
 			backwardButton = new DirectionButton(ktgui, "bckwrdBtn:" + title, 0, 0, h, h, LEFT);
-		} else {
-			backwardButton = new DirectionButton(ktgui, "bckwrdBtn:" + title, 0, 0, w, w, UP);
-		}
-		backwardButton.isDragable = false;
-		attachController(backwardButton);
-
-		if (w > h) {
 			forwardButton = new DirectionButton(ktgui, "frwrdBtn:" + title, w - h, 0, h, h, RIGHT);
 		} else {
-			forwardButton = new DirectionButton(ktgui, "frwrdBtn:" + title, 0, h - w, w, w, DOWN);
+			forwardButton = new DirectionButton(ktgui, "frwrdBtn:" + title, 0, 0, w, w, UP);
+			backwardButton = new DirectionButton(ktgui, "bckwrdBtn:" + title, 0, h - w, w, w, DOWN);
 		}
+
+		backwardButton.addEventAdapter(new KTGUIEventAdapter() {
+			public void onMousePressed() {
+				System.out.println("BackwardButton of " + title + " has been pressed!");
+			}
+		});
+		forwardButton.addEventAdapter(new KTGUIEventAdapter() {
+			public void onMousePressed() {
+				System.out.println("ForwardButton of " + title + " has been pressed!");
+			}
+		});
+
+		backwardButton.isDragable = false;
 		forwardButton.isDragable = false;
+		attachController(backwardButton);
 		attachController(forwardButton);
 	}
 
@@ -54,8 +62,8 @@ public class ScrollBar extends Controller {
 			backwardButton.setBorderRoundings(r1, 0, 0, r4);
 			forwardButton.setBorderRoundings(0, r2, r3, 0);
 		} else {
-			backwardButton.setBorderRoundings(r1, r2, 0, 0);
-			forwardButton.setBorderRoundings(0, 0, r3, r4);
+			forwardButton.setBorderRoundings(r1, r2, 0, 0);
+			backwardButton.setBorderRoundings(0, 0, r3, r4);
 		}
 	}
 }
