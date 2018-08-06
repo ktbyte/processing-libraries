@@ -114,9 +114,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			// draw all child controllers recursively
 			drawControllers();
 			// draw 'userpg' on 'pg'
-			drawUserDefinedGraphics(); 
+			drawUserDefinedGraphics();
 			// draw 'pg' on PApplet canvas
-			drawGraphics(); 
+			drawGraphics();
 		}
 	}
 
@@ -617,11 +617,19 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			}
 			// process mouseMoved event by own means
 			isHovered = isPointInside(pa.mouseX, pa.mouseY) ? true : false;
-			if (isHovered) {
-				for (KTGUIEventAdapter adapter : adapters) {
-					adapter.onMouseMoved();
-				}
+
+			/*
+			 * Question: Is this can be an important decision (in terms of speed): 
+			 * whether we should send the event to the adapters EVERYTIME when the 
+			 * mouse moved or ONLY WHEN IT IS HOVERED OVER THE CONTROLLER?
+			 * Possible answer: depending on the number of adapters that controller 
+			 * would have.
+			 */
+			// if (isHovered) {
+			for (KTGUIEventAdapter adapter : adapters) {
+				adapter.onMouseMoved();
 			}
+			// }
 		}
 	}
 
