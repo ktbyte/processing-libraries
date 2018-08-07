@@ -7,7 +7,7 @@ public class Window extends Controller {
 	// MenuBar menuBar;
 	private Pane		pane;
 
-	public Window(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+	Window(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 		super(ktgui, title, posx, posy, w, h);
 		isDragable = true;
 		createTitleBar();

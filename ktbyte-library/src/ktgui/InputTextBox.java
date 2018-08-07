@@ -15,7 +15,7 @@ public class InputTextBox extends Controller {
 	private float				textHeight;
 	private float				padding;
 
-	public InputTextBox(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+	InputTextBox(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 		super(ktgui, title, posx, posy, w, h);
 		this.textInput = "";
 		this.textSize = 18;

@@ -2,10 +2,10 @@ package ktgui;
 
 public class ScrollBar extends Controller {
 
-	private DirectionButton	backwardButton, forwardButton;
+	private ArrowButton	backwardButton, forwardButton;
 	private Slider			slider;
 
-	public ScrollBar(KTGUI ktgui, String title, int posx, int posy, int w, int h, int sr, int er) {
+	ScrollBar(KTGUI ktgui, String title, int posx, int posy, int w, int h, int sr, int er) {
 		super(ktgui, title, posx, posy, w, h);
 		createButtons();
 		createSlider(sr, er);
@@ -66,11 +66,11 @@ public class ScrollBar extends Controller {
 	
 	private void createButtons() {
 		if (w > h) {
-			backwardButton = new DirectionButton(ktgui, "bckwrdBtn:" + title, 0, 0, h, h, LEFT);
-			forwardButton = new DirectionButton(ktgui, "frwrdBtn:" + title, w - h, 0, h, h, RIGHT);
+			backwardButton = new ArrowButton(ktgui, "bckwrdBtn:" + title, 0, 0, h, h, LEFT);
+			forwardButton = new ArrowButton(ktgui, "frwrdBtn:" + title, w - h, 0, h, h, RIGHT);
 		} else {
-			forwardButton = new DirectionButton(ktgui, "frwrdBtn:" + title, 0, 0, w, w, UP);
-			backwardButton = new DirectionButton(ktgui, "bckwrdBtn:" + title, 0, h - w, w, w, DOWN);
+			forwardButton = new ArrowButton(ktgui, "frwrdBtn:" + title, 0, 0, w, w, UP);
+			backwardButton = new ArrowButton(ktgui, "bckwrdBtn:" + title, 0, h - w, w, w, DOWN);
 		}
 
 		backwardButton.addEventAdapter(new KTGUIEventAdapter() {

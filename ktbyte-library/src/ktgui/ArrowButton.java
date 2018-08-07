@@ -1,15 +1,10 @@
 package ktgui;
 
-public class DirectionButton extends Controller {
+public class ArrowButton extends Controller {
 
 	private int direction;
 
-	public DirectionButton(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-		super(ktgui, title, posx, posy, w, h);
-		direction = UP;
-	}
-
-	public DirectionButton(KTGUI ktgui, String title, int posx, int posy, int w, int h, int dir) {
+	ArrowButton(KTGUI ktgui, String title, int posx, int posy, int w, int h, int dir) {
 		super(ktgui, title, posx, posy, w, h);
 		direction = dir;
 	}
@@ -28,7 +23,9 @@ public class DirectionButton extends Controller {
 		}
 		pg.rectMode(CORNER);
 		pg.rect(0, 0, w, h, r1, r2, r3, r4);
+		///////////////////////////////////////////////////
 		// start drawing the 'arrow'
+		///////////////////////////////////////////////////
 		pg.pushMatrix();
 		pg.translate(w * 0.5f, h * 0.5f);
 		if (direction == UP) {
@@ -44,7 +41,9 @@ public class DirectionButton extends Controller {
 		pg.line(-w * 0.4f, -h * 0.4f, 0, h * 0.4f);
 		pg.line(0, h * 0.4f, w * 0.4f, -h * 0.4f);
 		pg.popMatrix();
+        ///////////////////////////////////////////////////
 		// stop drawing the 'arrow'
+        ///////////////////////////////////////////////////
 		pg.popStyle();
 		pg.endDraw();
 	}

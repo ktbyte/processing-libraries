@@ -8,9 +8,9 @@ import processing.core.PApplet;
 public class Slider extends Controller {
 
     public final static int HANDLE_TYPE_CENTERED = 1;
-    public final static int HANDLE_TYPE_FILL     = 0;
+    public final static int HANDLE_TYPE_EXPANDED = 0;
 
-    private int             handleType           = HANDLE_TYPE_FILL;
+    private int             handleType           = HANDLE_TYPE_EXPANDED;
     private int             handlePos            = 0;
     private int             handleWidth          = 10;
     private int             rangeStart           = 0;
@@ -33,14 +33,14 @@ public class Slider extends Controller {
         ktgui.drawCallStack.add(title + ".updateGraphics()");
         if (handleType == HANDLE_TYPE_CENTERED) {
             drawCenteredHandle();
-        } else if (handleType == HANDLE_TYPE_FILL) {
-            drawFillHandle();
+        } else if (handleType == HANDLE_TYPE_EXPANDED) {
+            drawExpandedHandle();
         } else {
-            drawFillHandle();
+            drawExpandedHandle();
         }
     }
 
-    private void drawFillHandle() {
+    private void drawExpandedHandle() {
         ///////////////////////////////////////////////////////////////////////
         pg.beginDraw(); // start drawing the slider
         ///////////////////////////////////////////////////////////////////////
@@ -51,8 +51,8 @@ public class Slider extends Controller {
         pg.rect(0, 0, this.w, this.h);
 
         ///////////////////////////////////////////////////////////////////////
-        // add rectangle that fills space between the start of the slider and
-        // its handle
+        // add rectangle that fills the space between the start of the slider and
+        // the center of its handle
         pg.fill(isHovered ? KTGUI.COLOR_FG_HOVERED : KTGUI.COLOR_FG_PASSIVE);
         if (w > h) {
             pg.rect(0, 0, handlePos, this.h);
@@ -162,7 +162,7 @@ public class Slider extends Controller {
     }
 
     public void setHandleWidth(int handleWidth) {
-        if(w > h) {
+        if (w > h) {
             this.handleWidth = PApplet.constrain(handleWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.w);
         } else {
             this.handleWidth = PApplet.constrain(handleWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.h);

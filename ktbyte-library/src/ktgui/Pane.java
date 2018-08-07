@@ -5,7 +5,7 @@ package ktgui;
  *********************************************************************************************************************/
 public class Pane extends Controller {
 
-	public Pane(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+	Pane(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 		super(ktgui, title, posx, posy, w, h);
 	}
 

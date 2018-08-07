@@ -11,21 +11,21 @@ void setup() {
   ktgui = new KTGUI(this);
   ktgui.setDebug(true);
 
-  pane = new Pane(ktgui, "aPane", 0, 0, 500, 300);
+  pane = ktgui.createPane(0, 0, 500, 300);
   pane.setBorderRoundings(10, 10, 10, 10);
   pane.isDragable = false;
   pane.alignAboutCanvas(CENTER, CENTER);
 
-  hsbar = new ScrollBar(ktgui, "hsBar", 20, 200, 200, 40, 0, 100);
+  hsbar = ktgui.createScrollBar("hsBar", 20, 200, 200, 40, 0, 100);
   hsbar.setBorderRoundings(10, 10, 10, 10);
   
-  vsbar = new ScrollBar(ktgui, "vsBar", 20, 200, 40, 200, 0, 100);
+  vsbar = ktgui.createScrollBar("vsBar", 20, 200, 40, 200, 0, 100);
   vsbar.setBorderRoundings(10, 10, 10, 10);
 
   pane.addController(hsbar, LEFT, TOP, 10);
   pane.addController(vsbar, RIGHT, BOTTOM, 10);
 
-  dbgBtn = new Button(ktgui, "Debug", 0, 0, 100, 40);
+  dbgBtn = ktgui.createButton("Debug", 0, 0, 100, 40);
   dbgBtn.alignAboutCanvas(CENTER, BOTTOM);
   dbgBtn.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {

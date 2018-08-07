@@ -108,21 +108,13 @@ public class KTGUI implements PConstants {
 		}
 	}
 
-	@SuppressWarnings("rawtypes") void collectGarbage() {
-		for (Map.Entry me : garbageList.entrySet()) {
-			Controller controller = (Controller) me.getKey();
-			int time = (Integer) me.getValue();
-			if (pa.millis() - time > 100) {
-				if (controller.parentStage != null) {
-					controller.parentStage.unregisterController(controller);
-				} else {
-					if(controller.parentController != null) {
-						controller.parentController.detachController(controller);
-					}
-				}
-			}
-		}
-	}
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public boolean getDebug() {
+        return debug;
+    }
 
 	void drawDebugTextSplitLine(int x, int y) {
 		pa.text("----------------------------------------------------" +
@@ -186,6 +178,26 @@ public class KTGUI implements PConstants {
 		}
 	}
 
+    public void addToGarbage(Controller controller, int millis) {
+        garbageList.put(controller, millis);
+    }
+
+    @SuppressWarnings("rawtypes") void collectGarbage() {
+        for (Map.Entry me : garbageList.entrySet()) {
+            Controller controller = (Controller) me.getKey();
+            int time = (Integer) me.getValue();
+            if (pa.millis() - time > 100) {
+                if (controller.parentStage != null) {
+                    controller.parentStage.unregisterController(controller);
+                } else {
+                    if(controller.parentController != null) {
+                        controller.parentController.detachController(controller);
+                    }
+                }
+            }
+        }
+    }
+	
 	//-------------------------------------------------------------------------------------------------------------------
 	// These are the 'factory' methods
 	//-------------------------------------------------------------------------------------------------------------------
@@ -196,6 +208,14 @@ public class KTGUI implements PConstants {
 
 	public Button createButton(int x, int y, int w, int h) {
 		return new Button(this, "A Button", x, y, w, h);
+	}
+
+	public ArrowButton createDirectionButton(String title, int x, int y, int w, int h, int dir) {
+	    return new ArrowButton(this, title, x, y, w, h, dir);
+	}
+	
+	public ArrowButton createDirectionButton(int x, int y, int w, int h, int dir) {
+	    return new ArrowButton(this, "A DirButton", x, y, w, h, dir);
 	}
 
 	public Slider createSlider(String title, int posx, int posy, int w, int h, int sr, int er) {
@@ -224,6 +244,28 @@ public class KTGUI implements PConstants {
 	public Pane createPane(int x, int y, int w, int h) {
 		Pane pane = new Pane(this, "A Pane", x, y, w, h);
 		return pane;
+	}
+	
+	public ScrollBar createScrollBar(int x, int y, int w, int h, int sr, int er) {
+	    ScrollBar scrollBar = new ScrollBar(this, "A ScrollBar", x, y, w, h, sr, er);
+	    
+        // if(direction of the scrollbar != direction of the internal slider) {
+        // display warning
+        // exit creating scrolbar
+        // }
+	    
+	    return scrollBar;
+	}
+
+	public ScrollBar createScrollBar(String title, int x, int y, int w, int h, int sr, int er) {
+	    ScrollBar scrollBar = new ScrollBar(this, title, x, y, w, h, sr, er);
+	    
+	    // if(direction of the scrollbar != direction of the internal slider) {
+	    // display warning
+	    // exit creating scrolbar
+	    // }
+	    
+	    return scrollBar;
 	}
 
 	/**
@@ -364,18 +406,6 @@ public class KTGUI implements PConstants {
 				controller.processKeyReleased();
 			}
 		}
-	}
-
-	public void addToGarbage(Controller controller, int millis) {
-		garbageList.put(controller, millis);
-	}
-
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
-
-	public boolean getDebug() {
-		return debug;
 	}
 
 }
