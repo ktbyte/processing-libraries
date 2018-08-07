@@ -10,19 +10,21 @@ public class Slider extends Controller {
     public final static int HANDLE_TYPE_CENTERED = 1;
     public final static int HANDLE_TYPE_EXPANDED = 0;
 
-    private int             handleType           = HANDLE_TYPE_EXPANDED;
+    private int             handleType;
+    private int             handleWidth          = KTGUI.DEFAULT_COMPONENT_SIZE;
     private int             handlePos            = 0;
-    private int             handleWidth          = 10;
     private int             rangeStart           = 0;
     private int             rangeEnd             = 100;
     private float           value                = rangeStart;
     private float           roundingTemplate     = 10;
     private boolean         isValueVisible       = true;
+    private int             handleStep           = 1;
 
     Slider(KTGUI ktgui, String title, int posx, int posy, int w, int h, int sr, int er) {
         super(ktgui, title, posx, posy, w, h);
         this.rangeStart = sr;
         this.rangeEnd = er;
+        setHandleType(HANDLE_TYPE_EXPANDED);
         updateHandlePositionFromValue();
         updateHandlePositionFromMouse();
         updateValueFromHandlePosition();
@@ -139,33 +141,70 @@ public class Slider extends Controller {
         }
     }
 
+    public boolean getIsValueVisible() {
+        return isValueVisible;
+    }
+
+    public void setIsValueVisible(boolean visible) {
+        this.isValueVisible = visible;
+    }
+
     public int getHandlePos() {
         return handlePos;
     }
 
     public void setHandlePos(int pos) {
-        if (pos >= 0 && pos <= this.h) {
-            handlePos = pos;
-            updateValueFromHandlePosition();
+        if (w > h) {
+            if (pos >= 0 && pos <= this.w) {
+                handlePos = pos;
+                updateValueFromHandlePosition();
+            } else {
+                System.out.println("You're trying to set the position of the slider "
+                        + "to be outside its width.");
+            }
         } else {
-            System.out.println("You're trying to set the position of the slider "
-                    + "to be outside its height.");
+            if (pos >= 0 && pos <= this.h) {
+                handlePos = pos;
+                updateValueFromHandlePosition();
+            } else {
+                System.out.println("You're trying to set the position of the slider "
+                        + "to be outside its height.");
+            }
         }
+    }
+
+    public void incrementPos() {
+        float newPos = handlePos += handleStep;
+        if (w > h) {
+            setHandlePos((int) (newPos > w ? w : newPos));
+        } else {
+            setHandlePos((int) (newPos > h ? h : newPos));
+        }
+    }
+
+    public void decrementPos() {
+        float newPos = handlePos -= handleStep;
+        setHandlePos((int) (newPos < 0 ? 0 : newPos));
     }
 
     public void setHandleType(int handleType) {
         this.handleType = handleType;
+        if (handleType == HANDLE_TYPE_EXPANDED) {
+            handleWidth = 0;
+        } else if (handleType == HANDLE_TYPE_CENTERED) {
+            handleWidth = KTGUI.DEFAULT_COMPONENT_SIZE;
+        }
     }
 
     public int getHandleWidth() {
         return handleWidth;
     }
 
-    public void setHandleWidth(int handleWidth) {
+    public void setHandleWidth(int hWidth) {
         if (w > h) {
-            this.handleWidth = PApplet.constrain(handleWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.w);
+            this.handleWidth = PApplet.constrain(hWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.w);
         } else {
-            this.handleWidth = PApplet.constrain(handleWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.h);
+            this.handleWidth = PApplet.constrain(hWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.h);
         }
     }
 
@@ -191,23 +230,19 @@ public class Slider extends Controller {
         roundingTemplate = (float) Math.pow(10, n);
     }
 
-    public boolean getIsValueVisible() {
-        return isValueVisible;
-    }
-
-    public void setIsValueVisible(boolean visible) {
-        this.isValueVisible = visible;
-    }
-
     /**
      * This method is called when the user change the <b>value</b> of the slider 
      * without the mouse, using the setValue(int) method.
      */
     private void updateHandlePositionFromValue() {
         if (w > h) {
-            handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.w);
+            // handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.w);
+            handlePos = (int) PApplet.map(value, rangeStart, rangeEnd,
+                    handleWidth * 0.5f, this.w - handleWidth * 0.5f);
         } else {
-            handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.h);
+            // handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.h);
+            handlePos = (int) PApplet.map(value, rangeStart, rangeEnd,
+                    handleWidth * 0.5f, this.h - handleWidth * 0.5f);
         }
     }
 
@@ -217,9 +252,13 @@ public class Slider extends Controller {
      */
     private void updateHandlePositionFromMouse() {
         if (w > h) {
-            handlePos = PApplet.constrain(pa.mouseX - getAbsolutePosX(), 0, this.w);
+            // handlePos = PApplet.constrain(pa.mouseX - getAbsolutePosX(), 0, this.w);
+            handlePos = (int) PApplet.constrain(pa.mouseX - getAbsolutePosX(),
+                    handleWidth * 0.5f, this.w - handleWidth * 0.5f);
         } else {
-            handlePos = PApplet.constrain(this.h - (pa.mouseY - getAbsolutePosY()), 0, this.h);
+            // handlePos = PApplet.constrain(this.h - (pa.mouseY - getAbsolutePosY()), 0, this.h);
+            handlePos = (int) PApplet.constrain(this.h - (pa.mouseY - getAbsolutePosY()),
+                    handleWidth * 0.5f, this.h - handleWidth * 0.5f);
         }
     }
 
@@ -229,9 +268,9 @@ public class Slider extends Controller {
      */
     private void updateValueFromHandlePosition() {
         if (w > h) {
-            value = PApplet.map(handlePos, 0, this.w, rangeStart, rangeEnd);
+            value = PApplet.map(handlePos, handleWidth * 0.5f, this.w - handleWidth * 0.5f, rangeStart, rangeEnd);
         } else {
-            value = PApplet.map(handlePos, 0, this.h, rangeStart, rangeEnd);
+            value = PApplet.map(handlePos, handleWidth * 0.5f, this.h - handleWidth * 0.5f, rangeStart, rangeEnd);
         }
 
         // based on

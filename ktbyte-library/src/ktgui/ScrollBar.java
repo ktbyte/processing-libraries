@@ -33,6 +33,18 @@ public class ScrollBar extends Controller {
 		slider.setHandlePos(pos);
 	}
 
+    public void setHandleType(int handleType) {
+        slider.setHandleType(handleType);
+    }
+
+    public boolean getIsValueVisible() {
+        return slider.getIsValueVisible();
+    }
+
+    public void setIsValueVisible(boolean visible) {
+        slider.setIsValueVisible(visible);
+    }
+    
 	public int getRangeStart() {
 		return slider.getRangeStart();
 	}
@@ -75,17 +87,20 @@ public class ScrollBar extends Controller {
 
 		backwardButton.addEventAdapter(new KTGUIEventAdapter() {
 			public void onMousePressed() {
+			    slider.decrementPos();
 				System.out.println("BackwardButton of " + title + " has been pressed!");
 			}
 		});
 		forwardButton.addEventAdapter(new KTGUIEventAdapter() {
 			public void onMousePressed() {
+                slider.incrementPos();
 				System.out.println("ForwardButton of " + title + " has been pressed!");
 			}
 		});
 
 		backwardButton.isDragable = false;
 		forwardButton.isDragable = false;
+		
 		attachController(backwardButton);
 		attachController(forwardButton);
 	}

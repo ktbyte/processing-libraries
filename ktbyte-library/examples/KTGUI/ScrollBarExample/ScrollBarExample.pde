@@ -18,6 +18,8 @@ void setup() {
 
   hsbar = ktgui.createScrollBar("hsBar", 20, 200, 200, 40, 0, 100);
   hsbar.setBorderRoundings(10, 10, 10, 10);
+  hsbar.setHandleType(Slider.HANDLE_TYPE_CENTERED);
+  hsbar.setIsValueVisible(true);
   
   vsbar = ktgui.createScrollBar("vsBar", 20, 200, 40, 200, 0, 100);
   vsbar.setBorderRoundings(10, 10, 10, 10);

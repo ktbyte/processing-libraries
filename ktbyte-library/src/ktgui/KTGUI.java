@@ -247,24 +247,30 @@ public class KTGUI implements PConstants {
 	}
 	
 	public ScrollBar createScrollBar(int x, int y, int w, int h, int sr, int er) {
-	    ScrollBar scrollBar = new ScrollBar(this, "A ScrollBar", x, y, w, h, sr, er);
-	    
-        // if(direction of the scrollbar != direction of the internal slider) {
-        // display warning
-        // exit creating scrolbar
-        // }
-	    
+	    ScrollBar scrollBar = createScrollBar("A ScrollBar", x, y, w, h, sr, er);
 	    return scrollBar;
 	}
 
 	public ScrollBar createScrollBar(String title, int x, int y, int w, int h, int sr, int er) {
-	    ScrollBar scrollBar = new ScrollBar(this, title, x, y, w, h, sr, er);
-	    
-	    // if(direction of the scrollbar != direction of the internal slider) {
-	    // display warning
-	    // exit creating scrolbar
-	    // }
-	    
+        if(w > h) {
+            if((w - 2 * h) < 2 * KTGUI.DEFAULT_COMPONENT_SIZE) {
+                System.out.println("ERROR: The width of the ScrollBar to be created is "
+                        + " too small. As a consequence, the internal slider would have "
+                        + " orthogonal direction. Cannot create ScrollBar. Returning "
+                        + "null reference.");
+                return null;
+            }
+        } else {
+            if((h - 2 * w) < 2 * KTGUI.DEFAULT_COMPONENT_SIZE) {
+                System.out.println("ERROR: The height of the ScrollBar to be created is "
+                        + " too small. As a consequence, the internal slider would have "
+                        + " orthogonal direction. Cannot create ScrollBar. Returning "
+                        + "null reference.");
+                return null;
+            }
+        }
+
+        ScrollBar scrollBar = new ScrollBar(this, title, x, y, w, h, sr, er);
 	    return scrollBar;
 	}
 
