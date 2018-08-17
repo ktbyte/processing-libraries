@@ -13,7 +13,7 @@ void setup() {
 
   pane = ktgui.createPane(0, 0, 500, 300);
   pane.setBorderRoundings(10, 10, 10, 10);
-  pane.isDragable = false;
+  pane.isDragable = true;
   pane.alignAboutCanvas(CENTER, CENTER);
 
   hsbar = ktgui.createScrollBar("hsBar", 20, 200, 200, 40, 0, 100);
@@ -39,5 +39,6 @@ void setup() {
 
 void draw() {
   background(220); 
+  text("pane.isAnyChildPressed():" + pane.isAnyChildPressed(), 10, 10);
 }
 

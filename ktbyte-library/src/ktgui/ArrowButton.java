@@ -13,6 +13,7 @@ public class ArrowButton extends Controller {
 	public void updateGraphics() {
 		pg.beginDraw();
 		pg.pushStyle();
+		pg.stroke(0);
 		// changing the fill color depending on the state
 		if (isHovered && !isPressed) {
 			pg.fill(fgHoveredColor);
@@ -20,6 +21,12 @@ public class ArrowButton extends Controller {
 			pg.fill(fgPressedColor);
 		} else {
 			pg.fill(fgPassiveColor);
+		}
+		// indicate whether the controller is currently selected
+		if(isFocused) {
+		    pg.strokeWeight(2f);
+		} else {
+		    pg.strokeWeight(1f);
 		}
 		pg.rectMode(CORNER);
 		pg.rect(0, 0, w, h, r1, r2, r3, r4);
@@ -37,7 +44,7 @@ public class ArrowButton extends Controller {
 		} else if (direction == RIGHT) {
 			pg.rotate(HALF_PI + PI);
 		}
-		pg.stroke(0);
+		pg.strokeWeight(1f);
 		pg.line(-w * 0.4f, -h * 0.4f, 0, h * 0.4f);
 		pg.line(0, h * 0.4f, w * 0.4f, -h * 0.4f);
 		pg.popMatrix();

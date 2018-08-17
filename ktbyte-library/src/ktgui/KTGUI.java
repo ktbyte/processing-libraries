@@ -274,6 +274,14 @@ public class KTGUI implements PConstants {
 	    return scrollBar;
 	}
 
+	public InputTextBox createInputTextBox(String title, int x, int y, int w, int h) {
+	    return new InputTextBox(this, title, x, y, w, h);
+	}
+
+	public InputTextBox createInputTextBox(int x, int y, int w, int h) {
+	    return createInputTextBox("An InputTextBox", x, y, w, h);
+	}
+	
 	/**
 	 * This method 'redirects' the emitted mouse event from PApplet to KTGUI 'transfer' methods.
 	 * This method will be called <b>automatically</b> when the PApplet.mouseEvent is happening.

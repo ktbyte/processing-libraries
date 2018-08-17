@@ -24,22 +24,26 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
     public Controller            parentController = null;
     public Stage                 parentStage      = null;
 
+    // This is the Image that holds controller's own 'internal' shape representation.
     public PGraphics             pg;
+    // This is the Image that holds custom (additional), user-defined representation 
+    // that is layered over the 'internal' representation. This image is used to 'draw' 
+    // the dynamic shapes or text on the Pane's canvas, for example.
     public PGraphics             userpg;
 
-    public int                   fgHoveredColor;
-    public int                   fgPressedColor;
-    public int                   fgPassiveColor;
-    public int                   bgHoveredColor;
-    public int                   bgPressedColor;
-    public int                   bgPassiveColor;
+    public int                   fgHoveredColor   = KTGUI.COLOR_FG_HOVERED;
+    public int                   fgPressedColor   = KTGUI.COLOR_FG_PRESSED;
+    public int                   fgPassiveColor   = KTGUI.COLOR_FG_PASSIVE;
+    public int                   bgHoveredColor   = KTGUI.COLOR_BG_HOVERED;
+    public int                   bgPressedColor   = KTGUI.COLOR_BG_PRESSED;
+    public int                   bgPassiveColor   = KTGUI.COLOR_BG_PASSIVE;
 
     Controller(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
         System.out.println("Creation of " + title + " started.");
 
         if (w < KTGUI.DEFAULT_COMPONENT_SIZE || h < KTGUI.DEFAULT_COMPONENT_SIZE) {
             System.out.println("w:" + w + ", h:" + h);
-            System.out.println("!!! Width and height of the " + title 
+            System.out.println("!!! Width and height of the " + title
                     + " controller must be greater than "
                     + "KTGUI.DEFAULT_COMPONENT_SIZE px. Which is currently equal to "
                     + KTGUI.DEFAULT_COMPONENT_SIZE + " pixels.");
@@ -47,7 +51,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
             System.out.println("Exiting from " + title + "`s constructor without "
                     + "creating the actual object.");
             return;
-            //pa.exit();
+            // pa.exit();
         }
 
         this.ktgui = ktgui;
@@ -60,21 +64,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
         pg = pa.createGraphics(w + 1, h + 1);
         userpg = pa.createGraphics(w + 1, h + 1);
-        
-        initColors();
 
         // automatically register the newly created window in default stage of stageManager
         StageManager.getInstance().getDefaultStage().registerController(this);
         System.out.println("Creation of " + title + " completed.");
-    }
-
-    public void initColors() {
-        fgHoveredColor = KTGUI.COLOR_FG_HOVERED;
-        fgPressedColor = KTGUI.COLOR_FG_PRESSED;
-        fgPassiveColor = KTGUI.COLOR_FG_PASSIVE;
-        bgHoveredColor = KTGUI.COLOR_BG_HOVERED;
-        bgPressedColor = KTGUI.COLOR_BG_PRESSED;
-        bgPassiveColor = KTGUI.COLOR_BG_PASSIVE;
     }
 
     public void updateGraphics() {}
@@ -98,9 +91,11 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
             pg.beginDraw();
             ktgui.drawCallStack
-                    .add("pg.image(" + child.title + ").getGraphics: " + child.posx + ", " + child.posy + "-'  ");
-            ktgui.drawCallStack.add("(" + child.title + ").apos:" + child.getAbsolutePosX() + ", "
-                    + child.getAbsolutePosY() + "-'    ");
+                    .add("pg.image(" + child.title + ").getGraphics: " + child.posx
+                            + ", " + child.posy + "-'  ");
+            ktgui.drawCallStack
+                    .add("(" + child.title + ").apos:" + child.getAbsolutePosX()
+                            + ", " + child.getAbsolutePosY() + "-'    ");
             pg.image(child.getGraphics(), child.posx, child.posy);
             pg.endDraw();
         }
@@ -606,6 +601,20 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
         }
     }
 
+    public boolean isAnyChildPressed() {
+        for (Controller child : controllers) {
+            // if any of the direct childs are pressed, then return true immediately
+            if (child.isPressed) {
+                return true;
+            }
+            // make recursive call for the child in order to check its own childs
+            if (child.isAnyChildPressed()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /*   
      *  This method overrides the KTGUIEventProcessor's `mouseMoved()` method and 
      *  implements its own behaviour. In particular, when this event is received 
@@ -653,6 +662,12 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
             for (Controller child : controllers) {
                 child.processMousePressed();
             }
+            // prevent mouse event processing if any of the childs are pressed
+            if (isAnyChildPressed()) {
+                isPressed = isFocused = isHovered = false;
+                return;
+            }
+
             // process mousePressed event by own means
             isPressed = isFocused = isHovered;
             if (isPressed) {
@@ -678,7 +693,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
                 child.processMouseReleased();
             }
             // process mouseReleased event by own means
-            isPressed = false;
+            isPressed = isFocused = false;
             for (KTGUIEventAdapter adapter : adapters) {
                 adapter.onMouseReleased();
             }

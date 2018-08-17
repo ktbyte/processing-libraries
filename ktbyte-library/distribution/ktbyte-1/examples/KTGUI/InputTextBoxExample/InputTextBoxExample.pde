@@ -8,7 +8,7 @@ void setup() {
 
   ktgui = new KTGUI(this);
 
-  textBox1 = new InputTextBox(ktgui, "Upper TextBox", 50, 50, 300, 40);
+  textBox1 = ktgui.createInputTextBox("Upper TextBox", 50, 50, 300, 40);
 
   textBox1.setText("Enter some text in here ...");
   textBox1.alignAboutCanvas(CENTER, 0);
@@ -22,7 +22,7 @@ void setup() {
       }
   });
 
-  textBox2 = new InputTextBox(ktgui, "Lower TextBox", 50, 150, 300, 40);
+  textBox2 = ktgui.createInputTextBox("Lower TextBox", 50, 150, 300, 40);
   textBox2.setBorderRoundings(0, 0, 10, 10);
   textBox2.alignAboutCanvas(CENTER, 0);
   textBox2.setText("Or here ...");
