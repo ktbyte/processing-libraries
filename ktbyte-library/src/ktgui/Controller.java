@@ -693,7 +693,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
                 child.processMouseReleased();
             }
             // process mouseReleased event by own means
-            isPressed = isFocused = false;
+            isPressed = false;
             for (KTGUIEventAdapter adapter : adapters) {
                 adapter.onMouseReleased();
             }
