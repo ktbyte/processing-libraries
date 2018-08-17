@@ -7,10 +7,11 @@ import processing.event.MouseEvent;
 public class KTGUIEventProcessor {
 	public boolean						isActive	= true;
 	public boolean						isPressed;
-	public boolean						isHovered;
-	public boolean						isDragable;
-	public boolean						isFocused;
+	public boolean						isHovered;  
+	public boolean						isDragged ; // is this controller being dragged right now?
+	public boolean						isFocused;  
 	public boolean						isVisible	= true;
+	public boolean						isDragable; // can this controller be dragged? 
 	public boolean						handleFocus;
 
 	public ArrayList<KTGUIEventAdapter>	adapters	= new ArrayList<KTGUIEventAdapter>();

@@ -25,7 +25,7 @@ public class ScrollBar extends Controller {
 		slider.setValue(val);
 	}
 	
-	public int getHandlePos() {
+	public float getHandlePos() {
 		return slider.getHandlePos();
 	}
 	
@@ -45,7 +45,7 @@ public class ScrollBar extends Controller {
         slider.setIsValueVisible(visible);
     }
     
-	public int getRangeStart() {
+	public float getRangeStart() {
 		return slider.getRangeStart();
 	}
 	
@@ -53,7 +53,7 @@ public class ScrollBar extends Controller {
 		slider.setRangeStart(rangeStart);
 	}
 
-	public int getRangeEnd() {
+	public float getRangeEnd() {
 		return slider.getRangeEnd();
 	}
 	

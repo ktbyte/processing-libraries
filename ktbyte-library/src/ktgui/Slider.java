@@ -11,14 +11,14 @@ public class Slider extends Controller {
     public final static int HANDLE_TYPE_EXPANDED = 0;
 
     private int             handleType;
-    private int             handleWidth          = KTGUI.DEFAULT_COMPONENT_SIZE;
-    private int             handlePos            = 0;
-    private int             rangeStart           = 0;
-    private int             rangeEnd             = 100;
+    private int             handleSize           = KTGUI.DEFAULT_COMPONENT_SIZE;
+    private float           handlePos            = 0;
+    private float           rangeStart           = 0;
+    private float           rangeEnd             = 100;
     private float           value                = rangeStart;
     private float           roundingTemplate     = 10;
+    private float           handleStep           = 1;
     private boolean         isValueVisible       = true;
-    private int             handleStep           = 1;
 
     Slider(KTGUI ktgui, String title, int posx, int posy, int w, int h, int sr, int er) {
         super(ktgui, title, posx, posy, w, h);
@@ -95,13 +95,13 @@ public class Slider extends Controller {
         // add rectangle that is centered about the current handle position
         pg.fill(isHovered ? KTGUI.COLOR_FG_HOVERED : KTGUI.COLOR_FG_PASSIVE);
         pg.rectMode(CENTER);
-        int handleOffset = (int) (handleWidth * 0.5f);
+        int handleOffset = (int) (handleSize * 0.5f);
         if (w > h) {
             int correctedHandlePos = (int) PApplet.constrain(handlePos, handleOffset, this.w - handleOffset);
-            pg.rect(correctedHandlePos, this.h * 0.5f, handleWidth, this.h);
+            pg.rect(correctedHandlePos, this.h * 0.5f, handleSize, this.h);
         } else {
             int correctedHandlePos = (int) PApplet.constrain(handlePos, handleOffset, this.h - handleOffset);
-            pg.rect(this.w * 0.5f, this.h - correctedHandlePos, this.w, handleWidth);
+            pg.rect(this.w * 0.5f, this.h - correctedHandlePos, this.w, handleSize);
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -149,7 +149,7 @@ public class Slider extends Controller {
         this.isValueVisible = visible;
     }
 
-    public int getHandlePos() {
+    public float getHandlePos() {
         return handlePos;
     }
 
@@ -190,25 +190,25 @@ public class Slider extends Controller {
     public void setHandleType(int handleType) {
         this.handleType = handleType;
         if (handleType == HANDLE_TYPE_EXPANDED) {
-            handleWidth = 0;
+            handleSize = 0;
         } else if (handleType == HANDLE_TYPE_CENTERED) {
-            handleWidth = KTGUI.DEFAULT_COMPONENT_SIZE;
+            handleSize = KTGUI.DEFAULT_COMPONENT_SIZE;
         }
     }
 
-    public int getHandleWidth() {
-        return handleWidth;
+    public int getHandleSize() {
+        return handleSize;
     }
 
-    public void setHandleWidth(int hWidth) {
+    public void setHandleSize(int hWidth) {
         if (w > h) {
-            this.handleWidth = PApplet.constrain(hWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.w);
+            this.handleSize = PApplet.constrain(hWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.w);
         } else {
-            this.handleWidth = PApplet.constrain(hWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.h);
+            this.handleSize = PApplet.constrain(hWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.h);
         }
     }
 
-    public int getRangeStart() {
+    public float getRangeStart() {
         return rangeStart;
     }
 
@@ -217,7 +217,7 @@ public class Slider extends Controller {
         updateValueFromHandlePosition();
     }
 
-    public int getRangeEnd() {
+    public float getRangeEnd() {
         return rangeEnd;
     }
 
@@ -237,12 +237,12 @@ public class Slider extends Controller {
     private void updateHandlePositionFromValue() {
         if (w > h) {
             // handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.w);
-            handlePos = (int) PApplet.map(value, rangeStart, rangeEnd,
-                    handleWidth * 0.5f, this.w - handleWidth * 0.5f);
+            handlePos = PApplet.map(value, rangeStart, rangeEnd,
+                    handleSize * 0.5f, this.w - handleSize * 0.5f);
         } else {
             // handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.h);
-            handlePos = (int) PApplet.map(value, rangeStart, rangeEnd,
-                    handleWidth * 0.5f, this.h - handleWidth * 0.5f);
+            handlePos = PApplet.map(value, rangeStart, rangeEnd,
+                    handleSize * 0.5f, this.h - handleSize * 0.5f);
         }
     }
 
@@ -253,12 +253,12 @@ public class Slider extends Controller {
     private void updateHandlePositionFromMouse() {
         if (w > h) {
             // handlePos = PApplet.constrain(pa.mouseX - getAbsolutePosX(), 0, this.w);
-            handlePos = (int) PApplet.constrain(pa.mouseX - getAbsolutePosX(),
-                    handleWidth * 0.5f, this.w - handleWidth * 0.5f);
+            handlePos = PApplet.constrain(pa.mouseX - getAbsolutePosX(),
+                    handleSize * 0.5f, this.w - handleSize * 0.5f);
         } else {
             // handlePos = PApplet.constrain(this.h - (pa.mouseY - getAbsolutePosY()), 0, this.h);
-            handlePos = (int) PApplet.constrain(this.h - (pa.mouseY - getAbsolutePosY()),
-                    handleWidth * 0.5f, this.h - handleWidth * 0.5f);
+            handlePos = PApplet.constrain(this.h - (pa.mouseY - getAbsolutePosY()),
+                    handleSize * 0.5f, this.h - handleSize * 0.5f);
         }
     }
 
@@ -268,10 +268,12 @@ public class Slider extends Controller {
      */
     private void updateValueFromHandlePosition() {
         if (w > h) {
-            value = PApplet.map(handlePos, handleWidth * 0.5f, this.w - handleWidth * 0.5f, rangeStart, rangeEnd);
+            value = PApplet.map(handlePos, handleSize * 0.5f, this.w - handleSize * 0.5f, rangeStart, rangeEnd);
         } else {
-            value = PApplet.map(handlePos, handleWidth * 0.5f, this.h - handleWidth * 0.5f, rangeStart, rangeEnd);
+            value = PApplet.map(handlePos, handleSize * 0.5f, this.h - handleSize * 0.5f, rangeStart, rangeEnd);
         }
+
+        value = PApplet.constrain(value, rangeStart, rangeEnd);
 
         // based on
         // https://stackoverflow.com/questions/10430370/truncate-a-float-in-java-1-5-excluding-setroundingmode
@@ -284,12 +286,9 @@ public class Slider extends Controller {
 
     // process mouseMoved event received from PApplet
     public void processMouseMoved() {
-        if (isPointInside(pa.mouseX, pa.mouseY)) {
-            isHovered = true;
-        } else {
-            isHovered = false;
-        }
+        isHovered = isPointInside(pa.mouseX, pa.mouseY);
 
+        // always notify the listeners
         for (KTGUIEventAdapter adapter : adapters) {
             adapter.onMouseMoved();
         }
@@ -297,17 +296,15 @@ public class Slider extends Controller {
 
     // process mousePressed event received from PApplet
     public void processMousePressed() {
-        if (isHovered) {
-            isPressed = true;
-        } else {
-            isPressed = false;
-        }
+        isPressed = isHovered;
 
         if (isPressed) {
+            System.out.println("slider " + title + " has been pressed.");
             updateHandlePositionFromMouse();
             updateValueFromHandlePosition();
         }
 
+        // always notify the listeners
         for (KTGUIEventAdapter adapter : adapters) {
             adapter.onMousePressed();
         }
@@ -316,19 +313,24 @@ public class Slider extends Controller {
     // process mouseReleased event received from PApplet
     public void processMouseReleased() {
         isPressed = false;
-        if (isHovered) {
-            for (KTGUIEventAdapter adapter : adapters) {
-                adapter.onMouseReleased();
-            }
+        isDragged = false;
+
+        // always notify the listeners
+        for (KTGUIEventAdapter adapter : adapters) {
+            adapter.onMouseReleased();
         }
     }
 
     // process mouseDragged event received from PApplet
     public void processMouseDragged() {
+        isDragged = isPressed;
+
         if (isPressed) {
             updateHandlePositionFromMouse();
             updateValueFromHandlePosition();
         }
+
+        // always notify the listeners
         for (KTGUIEventAdapter adapter : adapters) {
             adapter.onMouseDragged();
         }
