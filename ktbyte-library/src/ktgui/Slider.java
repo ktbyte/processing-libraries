@@ -206,6 +206,7 @@ public class Slider extends Controller {
         } else {
             this.handleSize = PApplet.constrain(hWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.h);
         }
+        updateValueFromHandlePosition();
     }
 
     public float getRangeStart() {
