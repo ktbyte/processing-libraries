@@ -23,6 +23,14 @@ void setup() {
   
   vsbar = ktgui.createScrollBar("vsBar", 20, 200, 40, 200, 0, 100);
   vsbar.setBorderRoundings(10, 10, 10, 10);
+  vsbar.addEventAdapter(new KTGUIEventAdapter(){
+    public void onMousePressed(){
+      pane.posy = (int) map(vsbar.getValue(), vsbar.getRangeStart(), vsbar.getRangeEnd(), 0, height - pane.h);
+    }
+    public void onMouseDragged(){
+      pane.posy = (int) map(vsbar.getValue(), vsbar.getRangeStart(), vsbar.getRangeEnd(), 0, height - pane.h);
+    }
+  });
 
   pane.addController(hsbar, LEFT, TOP, 10);
   pane.addController(vsbar, RIGHT, BOTTOM, 10);

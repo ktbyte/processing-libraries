@@ -14,9 +14,14 @@ public class Bar extends Controller {
 		pg.background(200, 200);
 		pg.rectMode(CORNER);
 		pg.fill(bgPassiveColor);
-		pg.stroke(15);
-		pg.strokeWeight(1);
-		pg.rect(0, 0, w, h);
+        pg.stroke(0);
+        pg.rectMode(CORNER);
+        if(isFocused) {
+            pg.strokeWeight(3f);
+        } else {
+            pg.strokeWeight(1f);
+        }
+        pg.rect(0, 0, w, h, r1, r2, r3, r4);
 		pg.fill(25);
 		pg.textAlign(LEFT, CENTER);
 		pg.textSize(h * 0.65f);

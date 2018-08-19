@@ -300,7 +300,6 @@ public class Slider extends Controller {
         isPressed = isHovered;
 
         if (isPressed) {
-            System.out.println("slider " + title + " has been pressed.");
             updateHandlePositionFromMouse();
             updateValueFromHandlePosition();
         }

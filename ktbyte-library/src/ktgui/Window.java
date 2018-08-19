@@ -19,6 +19,15 @@ public class Window extends Controller {
 	public void updateGraphics() {
 		pg.beginDraw();
 		pg.background(200, 50);
+		pg.stroke(0);
+		pg.noFill();
+		pg.rectMode(CORNER);
+		if(isFocused) {
+		    pg.strokeWeight(3f);
+		} else {
+		    pg.strokeWeight(1f);
+		}
+		pg.rect(0, 0, w, h, r1, r2, r3, r4);
 		pg.endDraw();
 	}
 
@@ -47,8 +56,9 @@ public class Window extends Controller {
     }
 	
 	/*
-	 * This particular implementation defines the area that can be (pressed/dragged)
-	 * as area of child titleBar 
+	 * This particular implementation overrides the default Controller's 
+	 * implementation and REDIFINES the window area that can be used to 
+	 * process 'press/drag' mouse actions.  
 	 */
 	@Override
 	public boolean isPointInside(int x, int y) {

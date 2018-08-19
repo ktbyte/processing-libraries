@@ -14,7 +14,7 @@ ScrollableTextArea sta;
 void setup() {
   size(1200, 600);
   ktgui = new KTGUI(this);
-  ktgui.setDebug(true);
+  ktgui.setDebug(false);
 
   window = new Window(ktgui, "aWindow", 10, 50, 500, 400);
   window.alignAboutCanvas(CENTER, BOTTOM, 20);
@@ -33,7 +33,7 @@ void setup() {
   otherWindow.addController(debugButton, LEFT, TOP, 10);
 
 	sta = new ScrollableTextArea(ktgui, "STA", 20, 20, 300, 150);
-	sta.setBorderRoundings(15, 0, 15, 0);
+	sta.setBorderRoundings(15, 0, 0, 0);
 	sta.setPadding(20);
 	sta.setTextSize(14);
 	sta.alignAboutCanvas(CENTER, CENTER);

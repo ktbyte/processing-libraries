@@ -39,7 +39,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
     public int                   bgPassiveColor   = KTGUI.COLOR_BG_PASSIVE;
 
     Controller(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-        System.out.println("Creation of " + title + " started.");
+        System.out.println("Creation of [" + title + "] started.");
 
         if (w < KTGUI.DEFAULT_COMPONENT_SIZE * 0.5f || h < KTGUI.DEFAULT_COMPONENT_SIZE * 0.5f) {
             System.out.println("!!! ERRROR.");
@@ -68,7 +68,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
         // automatically register the newly created window in default stage of stageManager
         StageManager.getInstance().getDefaultStage().registerController(this);
-        System.out.println("Creation of " + title + " completed.\n");
+        System.out.println("Creation of [" + title + "] completed.\n");
     }
 
     public void updateGraphics() {}
@@ -680,11 +680,11 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
     }
 
     /*   
-     *  This method overrides the KTGUIEventProcessor's `mouseReleased` method and
-     *  implements its own behaviour. In particular, when this event is received 
-     *  from the parent, this implementation always sets the <i>isPressed</i> 
-     *  variable to false. I.e. it changes the state of the controller to 'released'
-     *  (unpressed).
+     *  This method implements default behaviour for `mouseReleased` event processing.
+     *  In particular, when this event is received from the parent, this implementation 
+     *  always sets the <i>isPressed</i> variable to false. I.e. it changes the state 
+     *  of the controller to 'released' (unpressed) state by setting the isPressed 
+     *  variable to false.
      */
     @Override
     public void processMouseReleased() {
