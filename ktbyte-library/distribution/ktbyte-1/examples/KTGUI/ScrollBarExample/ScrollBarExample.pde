@@ -39,6 +39,5 @@ void setup() {
 
 void draw() {
   background(220); 
-  text("pane.isAnyChildPressed():" + pane.isAnyChildPressed(), 10, 10);
 }
 

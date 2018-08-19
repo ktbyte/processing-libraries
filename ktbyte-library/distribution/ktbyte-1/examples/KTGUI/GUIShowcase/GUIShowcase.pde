@@ -69,10 +69,10 @@ void setup() {
       msg("Callback message: The Jumping Button was pressed!");
       if (jumpButton.parentController == w3.getPane()) {
         //w2.attachController(jumpButton);
-        w2.addController(jumpButton, 0, TOP);
+        //w2.addController(jumpButton, 0, TOP);
       } else if (jumpButton.parentController == w2.getPane()) {
         //w3.attachController(jumpButton);
-        w3.addController(jumpButton, 0, BOTTOM);
+        //w3.addController(jumpButton, 0, BOTTOM);
       }
     }
   }
@@ -196,7 +196,6 @@ void updatePaneCanvas() {
   g.endDraw();
   pane.updateUserDefinedGraphics(g);
 }
-
 
 void updateSecondWindowCanvas() {
   PGraphics g = createGraphics(w2.getPane().w, w2.getPane().h);

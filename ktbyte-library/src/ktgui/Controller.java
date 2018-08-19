@@ -41,15 +41,16 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
     Controller(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
         System.out.println("Creation of " + title + " started.");
 
-        if (w < KTGUI.DEFAULT_COMPONENT_SIZE || h < KTGUI.DEFAULT_COMPONENT_SIZE) {
-            System.out.println("w:" + w + ", h:" + h);
+        if (w < KTGUI.DEFAULT_COMPONENT_SIZE * 0.5f || h < KTGUI.DEFAULT_COMPONENT_SIZE * 0.5f) {
+            System.out.println("!!! ERRROR.");
+            System.out.println("!!! w:" + w + ", h:" + h);
             System.out.println("!!! Width and height of the " + title
                     + " controller must be greater than "
-                    + "KTGUI.DEFAULT_COMPONENT_SIZE px. Which is currently equal to "
-                    + KTGUI.DEFAULT_COMPONENT_SIZE + " pixels.");
-            System.out.println("Creation of " + title + " interrupted (prevented).");
-            System.out.println("Exiting from " + title + "`s constructor without "
-                    + "creating the actual object.");
+                    + "KTGUI.DEFAULT_COMPONENT_SIZE/2 a.u. Which is currently equal to "
+                    + KTGUI.DEFAULT_COMPONENT_SIZE * 0.5f + " a.u.");
+            System.out.println("!!! Creation of " + title + " interrupted (prevented).");
+            System.out.println("!!! Exiting from " + title + "`s constructor without "
+                    + "creating the actual object.\n");
             return;
             // pa.exit();
         }
@@ -67,7 +68,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
         // automatically register the newly created window in default stage of stageManager
         StageManager.getInstance().getDefaultStage().registerController(this);
-        System.out.println("Creation of " + title + " completed.");
+        System.out.println("Creation of " + title + " completed.\n");
     }
 
     public void updateGraphics() {}

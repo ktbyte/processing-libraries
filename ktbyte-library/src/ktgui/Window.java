@@ -7,7 +7,7 @@ public class Window extends Controller {
 	// MenuBar menuBar;
 	private Pane		pane;
 
-	Window(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+	public Window(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 		super(ktgui, title, posx, posy, w, h);
 		isDragable = true;
 		createTitleBar();
@@ -42,7 +42,7 @@ public class Window extends Controller {
 	private void createTitleBar() {
 		titleBar = new TitleBar(ktgui, "tb:" + title, 0, 0, w, KTGUI.DEFAULT_COMPONENT_SIZE);
 		// Prevent the child titleBar from being dragged. Instead, the Window can be 
-		// dragged. And whent this happens, all the child controllers (including titleBar
+		// dragged. And when this happens, all the child controllers (including titleBar
 		// will be dragged to the same amount of distance and in the same direction.
 		titleBar.isDragable = false;
 		attachController(titleBar);

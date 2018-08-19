@@ -81,7 +81,7 @@ public class KTGUI implements PConstants {
 		COLOR_BG_PASSIVE = pa.color(180);
 		COLOR_BG_HOVERED = pa.color(220);
 		COLOR_BG_PRESSED = pa.color(200);
-		DEFAULT_COMPONENT_SIZE = 14;
+		DEFAULT_COMPONENT_SIZE = 16;
 		BORDER_THICKNESS = 3;
 		ALIGN_GAP = 20;
 	}
@@ -95,7 +95,7 @@ public class KTGUI implements PConstants {
 	 * This way, the KTGUI class automatically updates all the controllers on the <i>default</i> and <i>active</i> stages.
 	 ************************************************************************************************************************/
 	public void draw() {
-		if (StageManager.getInstance().getDefaultStage() != StageManager.getInstance().getActiveStage()) {
+		if (StageManager.getInstance().userStagesExist()) {
 			StageManager.getInstance().getActiveStage().draw();
 		}
 		StageManager.getInstance().getDefaultStage().draw();

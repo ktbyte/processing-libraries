@@ -362,12 +362,17 @@ ${line}
 			<exclude name="**/.vscode/**" />
 			<exclude name="**/out/**" />
 			<include name="**/ButtonExample/**" />
+			<!-- 
+			<include name="**/ConsoleExample/**" /> 
+			-->
+			<include name="**/GUIShowcase/**" />
 			<include name="**/InputTextBoxExample/**" />
+			<include name="**/PaneExample/**" />
 			<include name="**/ScrollableTextAreaExample/**" />
 			<include name="**/ScrollbarExample/**" />
 			<include name="**/SliderExample/**" />
+			<include name="**/SliderHandleExample/**" />
 			<include name="**/WindowExample/**" />
-			<include name="**/GUIShowcase/**" />
 			<include name="**/KTSoundCipher_*/**" />
 			<include name="**/Console_*/**" />
 			<include name="**/SoundFile_*/**" />

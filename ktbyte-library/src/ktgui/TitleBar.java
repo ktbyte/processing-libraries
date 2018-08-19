@@ -6,7 +6,7 @@ public class TitleBar extends Bar {
 
 	TitleBar(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
 		super(ktgui, title, posx, posy, w, h);
-		this.isDragable = true;
+		isDragable = true;
 		closeButton = new CloseButton(ktgui, "cb:" + this.title, w - h + 2, 2, h - 4, h - 4);
 		attachController(closeButton);
 	}
