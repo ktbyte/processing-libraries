@@ -131,7 +131,7 @@ public class Slider extends Controller {
         return value;
     }
 
-    public void setValue(int val) {
+    public void setValue(float val) {
         if (val >= rangeStart && val <= rangeEnd) {
             value = val;
             updateHandlePositionFromValue();
@@ -153,9 +153,10 @@ public class Slider extends Controller {
         return handlePos;
     }
 
-    public void setHandlePos(int pos) {
+    public void setHandlePos(float pos) {
+        System.out.println("Trying to set handle pos to " + pos);
         if (w > h) {
-            if (pos >= 0 && pos <= this.w) {
+            if (pos >= 0 && pos <= w) {
                 handlePos = pos;
                 updateValueFromHandlePosition();
             } else {
@@ -163,7 +164,7 @@ public class Slider extends Controller {
                         + "to be outside its width.");
             }
         } else {
-            if (pos >= 0 && pos <= this.h) {
+            if (pos >= 0 && pos <= h) {
                 handlePos = pos;
                 updateValueFromHandlePosition();
             } else {
@@ -171,20 +172,33 @@ public class Slider extends Controller {
                         + "to be outside its height.");
             }
         }
+        System.out.println("Handle position is: " + handlePos + ", value is:" + value);
+    }
+
+    public float getHandleStep() {
+        return handleStep;
+    }
+
+    public void setHandleStep(float handleStep) {
+        if (handleStep > 0) {
+            this.handleStep = handleStep;
+        }
     }
 
     public void incrementPos() {
         float newPos = handlePos += handleStep;
+        System.out.println("[" + title + "] newPos=" + newPos);
         if (w > h) {
-            setHandlePos((int) (newPos > w ? w : newPos));
+            setHandlePos(newPos > w ? w : newPos);
         } else {
-            setHandlePos((int) (newPos > h ? h : newPos));
+            setHandlePos(newPos > h ? h : newPos);
         }
     }
 
     public void decrementPos() {
         float newPos = handlePos -= handleStep;
-        setHandlePos((int) (newPos < 0 ? 0 : newPos));
+        System.out.println("[" + title + "] newPos=" + newPos);
+        setHandlePos(newPos < 0 ? 0 : newPos);
     }
 
     public void setHandleType(int handleType) {
@@ -213,7 +227,7 @@ public class Slider extends Controller {
         return rangeStart;
     }
 
-    public void setRangeStart(int rangeStart) {
+    public void setRangeStart(float rangeStart) {
         this.rangeStart = rangeStart;
         updateValueFromHandlePosition();
     }
@@ -222,7 +236,7 @@ public class Slider extends Controller {
         return rangeEnd;
     }
 
-    public void setRangeEnd(int rangeEnd) {
+    public void setRangeEnd(float rangeEnd) {
         this.rangeEnd = rangeEnd;
         updateValueFromHandlePosition();
     }
@@ -237,11 +251,9 @@ public class Slider extends Controller {
      */
     private void updateHandlePositionFromValue() {
         if (w > h) {
-            // handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.w);
             handlePos = PApplet.map(value, rangeStart, rangeEnd,
                     handleSize * 0.5f, this.w - handleSize * 0.5f);
         } else {
-            // handlePos = (int) PApplet.map(value, rangeStart, rangeEnd, 0, this.h);
             handlePos = PApplet.map(value, rangeStart, rangeEnd,
                     handleSize * 0.5f, this.h - handleSize * 0.5f);
         }

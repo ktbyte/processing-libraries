@@ -66,19 +66,20 @@ public class StageManager {
     }
 
     public void unregisterControllerFromAllStages(Controller controller) {
-        System.out.println("Unregistering " + controller.title + " from all stages ...");
+        System.out.println("Unregistering [" + controller.title + "] from all stages ...");
         for (Stage stage : stages) {
-            System.out.println("\tStage " + stage.getName() + " contains:");
+            System.out.println("\tStage {" + stage.getName() + "} contains:");
             for (Controller c : stage.controllers) {
-                System.out.println("\t\t" + c.title + " of type (" +
-                        c.getClass().getName() + ")");
+                System.out.println("\t\t[" + c.title + "] of type <" +
+                        c.getClass().getName() + ">");
             }
             if (stage.controllers.contains(controller)) {
-                System.out.println("\t\t\t>>> Found (" + controller.title + ") in stage (" +
-                        stage.getName() + "), removing ...");
+                System.out.println("\t\t\t>>> Found [" + controller.title + "] of type <" +
+                        controller.getClass().getName() + "> in stage {" +
+                        stage.getName() + "}, removing ...");
                 stage.controllers.remove(stage.controllers.indexOf(controller));
-                System.out.println("\t\t\tNow, " + stage.getName() +
-                        ".controllers.contains(" + controller.title + ") == " + stage.controllers.contains(controller));
+                System.out.println("\t\t\tNow, {" + stage.getName() +
+                        "}.controllers.contains(" + controller.title + ") = " + stage.controllers.contains(controller));
             }
         }
         controller.parentStage = null;

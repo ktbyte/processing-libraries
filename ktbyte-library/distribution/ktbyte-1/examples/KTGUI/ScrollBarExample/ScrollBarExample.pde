@@ -9,26 +9,29 @@ Button dbgBtn;
 void setup() {
   size(1000, 600);
   ktgui = new KTGUI(this);
-  ktgui.setDebug(true);
+  ktgui.setDebug(false);
 
   pane = ktgui.createPane(0, 0, 500, 300);
   pane.setBorderRoundings(10, 10, 10, 10);
   pane.isDragable = true;
   pane.alignAboutCanvas(CENTER, CENTER);
 
-  hsbar = ktgui.createScrollBar("hsBar", 20, 200, 200, 40, 0, 100);
+  hsbar = ktgui.createScrollBar("hsBar", 20, 200, 200, 40, 0, 200);
   hsbar.setBorderRoundings(10, 10, 10, 10);
   hsbar.setHandleType(Slider.HANDLE_TYPE_CENTERED);
   hsbar.setIsValueVisible(true);
   
-  vsbar = ktgui.createScrollBar("vsBar", 20, 200, 40, 200, 0, 100);
+  vsbar = ktgui.createScrollBar("vsBar", 20, 200, 40, 200, 0, 10);
   vsbar.setBorderRoundings(10, 10, 10, 10);
+  vsbar.setIsValueVisible(true);
   vsbar.addEventAdapter(new KTGUIEventAdapter(){
     public void onMousePressed(){
-      pane.posy = (int) map(vsbar.getValue(), vsbar.getRangeStart(), vsbar.getRangeEnd(), 0, height - pane.h);
+      hsbar.setHandleStep(vsbar.getValue());
+      println(str(hsbar.getHandleStep()));
     }
     public void onMouseDragged(){
-      pane.posy = (int) map(vsbar.getValue(), vsbar.getRangeStart(), vsbar.getRangeEnd(), 0, height - pane.h);
+      hsbar.setHandleStep(vsbar.getValue());
+      println(str(hsbar.getHandleStep()));
     }
   });
 

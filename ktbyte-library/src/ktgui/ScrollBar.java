@@ -17,6 +17,30 @@ public class ScrollBar extends Controller {
         ktgui.drawCallStack.add(title + ".updateGraphics()");
     }
 
+    /*   
+     *  This method overrides the default Controller's implementation in
+     *  order to prevent blocking processing of the mousePressed event if
+     *  the controller has the childs. (in default Controller's implementation
+     *  this was done in order to prevent 'duplicate' pressing/dragging.
+     */
+    @Override
+    public void processMousePressed() {
+        if (isActive) {
+            // transfer mousePressed event to child controllers
+            for (Controller child : controllers) {
+                child.processMousePressed();
+            }
+
+            // process mousePressed event by own means
+            isPressed = isFocused = isHovered;
+            if (isPressed) {
+                for (KTGUIEventAdapter adapter : adapters) {
+                    adapter.onMousePressed();
+                }
+            }
+        }
+    }
+    
     public float getValue() {
         return slider.getValue();
     }
@@ -37,6 +61,14 @@ public class ScrollBar extends Controller {
         slider.setHandleType(handleType);
     }
 
+    public void setHandleStep(float step) {
+        slider.setHandleStep(step);
+    }
+    
+    public float getHandleStep() {
+        return slider.getHandleStep();
+    }
+    
     public boolean getIsValueVisible() {
         return slider.getIsValueVisible();
     }
@@ -88,13 +120,11 @@ public class ScrollBar extends Controller {
         backwardButton.addEventAdapter(new KTGUIEventAdapter() {
             public void onMousePressed() {
                 slider.decrementPos();
-                System.out.println("BackwardButton of " + title + " has been pressed!");
             }
         });
         forwardButton.addEventAdapter(new KTGUIEventAdapter() {
             public void onMousePressed() {
                 slider.incrementPos();
-                System.out.println("ForwardButton of " + title + " has been pressed!");
             }
         });
 

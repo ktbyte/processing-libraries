@@ -17,12 +17,12 @@ public class Stage {
     PApplet               pa;
 
     public Stage(String name) {
-        System.out.println("Creating stage '" + name + "' started.");
+        System.out.println("Creation of stage {" + name + "} started.");
         this.pa = KTGUI.getParentPApplet();
         this.name = name;
         this.controllers = new ArrayList<Controller>();
         StageManager.getInstance().getStages().add(this);
-        System.out.println("Creating stage '" + name + "' completed.");
+        System.out.println("Creation of stage {" + name + "} completed.");
     }
 
     public String getName() {
@@ -39,12 +39,12 @@ public class Stage {
     }
 
     public void registerController(Controller controller) {
-        System.out.println("Registering controller (" + controller.title + ") in stage (" + name + ").");
-
+        System.out.println("Registering controller [" + controller.title + "]" + " of type <" +
+                controller.getClass().getName() + "> in stage {" + name + "}:");
         // check if controller already exist in 'this' stage
         if (controllers.contains(controller)) {
             System.out.println(
-                    "\tController (" + controller.title + ") already exist in stage (" + name + "). Interrupting.");
+                    "\tController [" + controller.title + "] already exist in stage {" + name + "}. Interrupting.");
             return;
         }
 
@@ -65,7 +65,7 @@ public class Stage {
         controller.parentStage = this;
 
         // debug info
-        System.out.println("\tDone. Now, stage (" + name + ") contains " + controllers.size() + " controllers.");
+        System.out.println("\tDone. Now, stage {" + name + "} contain " + controllers.size() + " controller(s).");
         for (Controller c : controllers) {
             System.out.println("\t\t" + controllers.indexOf(c) + ": " + c.title + " (" + c.controllers.size()
                     + " child controllers)");

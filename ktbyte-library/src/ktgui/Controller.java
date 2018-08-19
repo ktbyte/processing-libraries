@@ -251,7 +251,11 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
     public void attachController(Controller controller) {
         if (isActive) {
-            System.out.println("Attaching " + controller.title + " to " + title + " started.");
+            System.out.println("Attaching of [" + controller.title +
+                    "] of type <" + controller.getClass().getName() +
+                    "> to [" + title +
+                    "] of type <" + getClass().getName() +
+                    "> started.");
 
             // detach from existing controller first (if exist)
             if (controller.parentController != null) {
@@ -260,18 +264,20 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
             }
             // add to the list of (child) controllers of 'this' controller
             if (!controllers.contains(controller)) {
-                System.out.println(title + ".controllers.contains(" + controller.title + ") == " +
+                System.out.println("\t[" + title + "].controllers.contains(" + controller.title + ") = " +
                         controllers.contains(controller));
                 controllers.add(controller);
             }
             // set 'this' controller as parent of the controller being processed
+            System.out.println("\tSetting parent controller...");
             controller.setParentController(this);
-            System.out.println("\t" + controller.title + ".parentController is " + controller.parentController.title);
+            System.out.println(
+                    "\t[" + controller.title + "].parentController is [" + controller.parentController.title + "]");
 
             // unregister the controller from all stages
             StageManager.getInstance().unregisterControllerFromAllStages(controller);
 
-            System.out.println("Attaching " + controller.title + " to " + title + " completed.");
+            System.out.println("Attaching of [" + controller.title + "] to [" + title + "] completed.\n");
         }
     }
 
@@ -728,6 +734,16 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
     }
 
     @Override
+    public void processMouseWheel(MouseEvent me) {
+        if (isActive) {
+            // transfer mouseWheel event to child controllers
+            for (Controller child : controllers) {
+                child.processMouseWheel(me);
+            }
+        }
+    }
+
+    @Override
     public boolean isPointInside(int x, int y) {
         boolean isInside = false;
         if (isActive) {
@@ -760,13 +776,4 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
         }
     }
 
-    @Override
-    public void processMouseWheel(MouseEvent me) {
-        if (isActive) {
-            // transfer mouseWheel event to child controllers
-            for (Controller child : controllers) {
-                child.processMouseWheel(me);
-            }
-        }
-    }
 }
