@@ -13,7 +13,7 @@ public class Button extends Controller {
 
     @Override
     public void updateGraphics() {
-        ktgui.drawCallStack.add(title + ".updateGraphics()");
+        super.updateGraphics();
         pg.beginDraw();
         pg.rectMode(CORNER);
         if (isHovered && !isPressed) {

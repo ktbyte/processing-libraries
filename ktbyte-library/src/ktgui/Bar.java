@@ -8,7 +8,7 @@ public class Bar extends Controller {
 	
 	@Override
 	public void updateGraphics() {
-		ktgui.drawCallStack.add(title + ".updateGraphics()");
+        super.updateGraphics();
 		// draw ar and title
 		pg.beginDraw();
 		pg.background(200, 200);

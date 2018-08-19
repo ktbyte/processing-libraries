@@ -12,7 +12,7 @@ class CloseButton extends Button {
 	
 	@Override
 	public void updateGraphics() {
-		ktgui.drawCallStack.add(title + ".updateGraphics()");
+        super.updateGraphics();
 		pg.beginDraw();
 		pg.rectMode(CORNER);
 		if (isHovered && !isPressed) {

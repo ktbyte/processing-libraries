@@ -11,6 +11,7 @@ public class ArrowButton extends Controller {
 
 	@Override
 	public void updateGraphics() {
+        super.updateGraphics();
 		pg.beginDraw();
 		pg.pushStyle();
 		pg.stroke(0);

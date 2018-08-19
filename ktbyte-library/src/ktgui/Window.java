@@ -17,6 +17,7 @@ public class Window extends Controller {
 
 	@Override
 	public void updateGraphics() {
+        super.updateGraphics();
 		pg.beginDraw();
 		pg.background(200, 50);
 		pg.stroke(0);

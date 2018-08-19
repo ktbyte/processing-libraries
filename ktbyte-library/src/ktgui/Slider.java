@@ -11,7 +11,7 @@ public class Slider extends Controller {
     public final static int HANDLE_TYPE_EXPANDED = 0;
 
     private int             handleType;
-    private int             handleSize           = KTGUI.DEFAULT_COMPONENT_SIZE;
+    private float           handleSize           = KTGUI.DEFAULT_COMPONENT_SIZE;
     private float           handlePos            = 0;
     private float           rangeStart           = 0;
     private float           rangeEnd             = 100;
@@ -32,7 +32,7 @@ public class Slider extends Controller {
 
     @Override
     public void updateGraphics() {
-        ktgui.drawCallStack.add(title + ".updateGraphics()");
+        super.updateGraphics();
         if (handleType == HANDLE_TYPE_CENTERED) {
             drawCenteredHandle();
         } else if (handleType == HANDLE_TYPE_EXPANDED) {
@@ -186,7 +186,7 @@ public class Slider extends Controller {
     }
 
     public void incrementPos() {
-        float newPos = handlePos += handleStep;
+        float newPos = handlePos + handleStep;
         System.out.println("[" + title + "] newPos=" + newPos);
         if (w > h) {
             setHandlePos(newPos > w ? w : newPos);
@@ -201,6 +201,18 @@ public class Slider extends Controller {
         setHandlePos(newPos < 0 ? 0 : newPos);
     }
 
+    public void incrementValue(float val) {
+        float newVal = value + val;
+        System.out.println("[" + title + "] newVal=" + newVal);
+        setValue(newVal > rangeEnd ? rangeEnd : newVal);
+    }
+    
+    public void decrementValue(float val) {
+        float newVal = value - val;
+        System.out.println("[" + title + "] newVal=" + newVal);
+        setValue(newVal < rangeStart ? rangeStart : newVal);
+    }
+
     public void setHandleType(int handleType) {
         this.handleType = handleType;
         if (handleType == HANDLE_TYPE_EXPANDED) {
@@ -210,15 +222,15 @@ public class Slider extends Controller {
         }
     }
 
-    public int getHandleSize() {
+    public float getHandleSize() {
         return handleSize;
     }
 
-    public void setHandleSize(int hWidth) {
+    public void setHandleSize(float hSize) {
         if (w > h) {
-            this.handleSize = PApplet.constrain(hWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.w);
+            this.handleSize = PApplet.constrain(hSize, KTGUI.DEFAULT_COMPONENT_SIZE, this.w);
         } else {
-            this.handleSize = PApplet.constrain(hWidth, KTGUI.DEFAULT_COMPONENT_SIZE, this.h);
+            this.handleSize = PApplet.constrain(hSize, KTGUI.DEFAULT_COMPONENT_SIZE, this.h);
         }
         updateValueFromHandlePosition();
     }

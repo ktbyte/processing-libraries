@@ -71,7 +71,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
         System.out.println("Creation of [" + title + "] completed.\n");
     }
 
-    public void updateGraphics() {}
+    public void updateGraphics() {
+        ktgui.addDrawCallStackDebugMessage(title + ".updateGraphics()");
+    }
 
     public void updateUserDefinedGraphics(PGraphics userpg) {
         this.userpg = userpg;
@@ -137,6 +139,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
         info.append(", childs.sz():" + controllers.size());
         info.append(", isPrsd:" + isPressed);
         info.append(", isHvrd:" + isHovered);
+        info.append(", isDrgd:" + isDragged);
         info.append(", rpsx:" + posx);
         info.append(", rpsy:" + posy);
         return info.toString();
@@ -310,6 +313,22 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
         PApplet.println("Closing '" + title + "' controller.");
         isActive = false;
         ktgui.addToGarbage(this, pa.millis());
+    }
+
+    public float getPosx() {
+        return posx;
+    }
+
+    public void setPosx(int posx) {
+        this.posx = posx;
+    }
+
+    public float getPosy() {
+        return posy;
+    }
+
+    public void setPosy(int posy) {
+        this.posy = posy;
     }
 
     /**

@@ -14,7 +14,7 @@ public class ScrollBar extends Controller {
 
     @Override
     public void updateGraphics() {
-        ktgui.drawCallStack.add(title + ".updateGraphics()");
+        super.updateGraphics();
     }
 
     /*   
@@ -23,23 +23,23 @@ public class ScrollBar extends Controller {
      *  the controller has the childs. (in default Controller's implementation
      *  this was done in order to prevent 'duplicate' pressing/dragging.
      */
-    @Override
-    public void processMousePressed() {
-        if (isActive) {
-            // transfer mousePressed event to child controllers
-            for (Controller child : controllers) {
-                child.processMousePressed();
-            }
-
-            // process mousePressed event by own means
-            isPressed = isFocused = isHovered;
-            if (isPressed) {
-                for (KTGUIEventAdapter adapter : adapters) {
-                    adapter.onMousePressed();
-                }
-            }
-        }
-    }
+//    @Override
+//    public void processMousePressed() {
+//        if (isActive) {
+//            // transfer mousePressed event to child controllers
+//            for (Controller child : controllers) {
+//                child.processMousePressed();
+//            }
+//
+//            // process mousePressed event by own means
+//            isPressed = isFocused = isHovered;
+//            if (isPressed) {
+//                for (KTGUIEventAdapter adapter : adapters) {
+//                    adapter.onMousePressed();
+//                }
+//            }
+//        }
+//    }
     
     public float getValue() {
         return slider.getValue();
@@ -147,6 +147,15 @@ public class ScrollBar extends Controller {
         slider.setValue(0);
         slider.setRounding(0);
         slider.setIsValueVisible(false);
+        slider.addEventAdapter(new KTGUIEventAdapter() {
+            public void onMouseDragged() {
+                // !!! This line actually notifies the ScrollBar.mouseDragged 
+                // !!! event listeners, not Slider.mouseDragged event listeners
+                for(KTGUIEventAdapter adapter : adapters) {
+                    adapter.onMouseDragged();
+                }
+            }
+        });
         attachController(slider);
     }
 

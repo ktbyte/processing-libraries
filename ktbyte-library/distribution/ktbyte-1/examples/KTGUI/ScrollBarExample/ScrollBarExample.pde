@@ -9,7 +9,7 @@ Button dbgBtn;
 void setup() {
   size(1000, 600);
   ktgui = new KTGUI(this);
-  ktgui.setDebug(false);
+  ktgui.setDebugControllersFlag(false);
 
   pane = ktgui.createPane(0, 0, 500, 300);
   pane.setBorderRoundings(10, 10, 10, 10);
@@ -42,7 +42,7 @@ void setup() {
   dbgBtn.alignAboutCanvas(CENTER, BOTTOM);
   dbgBtn.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      ktgui.setDebug(!ktgui.getDebug());
+      ktgui.setDebugControllersFlag(!ktgui.getDebugControllersFlag());
     }
   });
 

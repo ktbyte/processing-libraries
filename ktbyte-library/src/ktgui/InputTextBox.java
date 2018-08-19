@@ -33,6 +33,7 @@ public class InputTextBox extends Controller {
     }
 
     public void updateGraphics() {
+        super.updateGraphics();
         updateTextBox();
         updateBlinkingCursorGraphics();
     }

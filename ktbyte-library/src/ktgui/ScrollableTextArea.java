@@ -21,7 +21,7 @@ public class ScrollableTextArea extends Controller {
 
 	@Override
 	public void updateGraphics() {
-		ktgui.drawCallStack.add(title + ".updateGraphics()");
+        super.updateGraphics();
 		updateTextAreaGraphics();
 	}
 
