@@ -16,8 +16,8 @@ public class Slider extends Controller {
     private float           rangeStart           = 0;
     private float           rangeEnd             = 100;
     private float           value                = rangeStart;
+    private float           valueStep            = 1;
     private float           roundingTemplate     = 10;
-    private float           handleStep           = 1;
     private boolean         isValueVisible       = true;
 
     Slider(KTGUI ktgui, String title, int posx, int posy, int w, int h, int sr, int er) {
@@ -175,41 +175,23 @@ public class Slider extends Controller {
         System.out.println("Handle position is: " + handlePos + ", value is:" + value);
     }
 
-    public float getHandleStep() {
-        return handleStep;
+    public float getValueStep() {
+        return valueStep;
     }
 
-    public void setHandleStep(float handleStep) {
-        if (handleStep > 0) {
-            this.handleStep = handleStep;
+    public void setHandleValue(float valueStep) {
+        if (valueStep > 0) {
+            this.valueStep = valueStep;
         }
     }
 
-    public void incrementPos() {
-        float newPos = handlePos + handleStep;
-        System.out.println("[" + title + "] newPos=" + newPos);
-        if (w > h) {
-            setHandlePos(newPos > w ? w : newPos);
-        } else {
-            setHandlePos(newPos > h ? h : newPos);
-        }
-    }
-
-    public void decrementPos() {
-        float newPos = handlePos -= handleStep;
-        System.out.println("[" + title + "] newPos=" + newPos);
-        setHandlePos(newPos < 0 ? 0 : newPos);
-    }
-
-    public void incrementValue(float val) {
-        float newVal = value + val;
-        System.out.println("[" + title + "] newVal=" + newVal);
+    public void incrementValue() {
+        float newVal = value + valueStep;
         setValue(newVal > rangeEnd ? rangeEnd : newVal);
     }
-    
-    public void decrementValue(float val) {
-        float newVal = value - val;
-        System.out.println("[" + title + "] newVal=" + newVal);
+
+    public void decrementValue() {
+        float newVal = value - valueStep;
         setValue(newVal < rangeStart ? rangeStart : newVal);
     }
 

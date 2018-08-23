@@ -62,11 +62,11 @@ public class ScrollBar extends Controller {
     }
 
     public void setHandleStep(float step) {
-        slider.setHandleStep(step);
+        slider.setHandleValue(step);
     }
     
     public float getHandleStep() {
-        return slider.getHandleStep();
+        return slider.getValueStep();
     }
     
     public boolean getIsValueVisible() {
@@ -119,12 +119,12 @@ public class ScrollBar extends Controller {
 
         backwardButton.addEventAdapter(new KTGUIEventAdapter() {
             public void onMousePressed() {
-                slider.decrementPos();
+                slider.decrementValue();
             }
         });
         forwardButton.addEventAdapter(new KTGUIEventAdapter() {
             public void onMousePressed() {
-                slider.incrementPos();
+                slider.incrementValue();
             }
         });
 
@@ -149,8 +149,8 @@ public class ScrollBar extends Controller {
         slider.setIsValueVisible(false);
         slider.addEventAdapter(new KTGUIEventAdapter() {
             public void onMouseDragged() {
-                // !!! This line actually notifies the ScrollBar.mouseDragged 
-                // !!! event listeners, not Slider.mouseDragged event listeners
+                // !!! This line actually notifies the SCROLLBAR.mouseDragged 
+                // !!! event listeners, not SLIDER.mouseDragged event listeners
                 for(KTGUIEventAdapter adapter : adapters) {
                     adapter.onMouseDragged();
                 }
