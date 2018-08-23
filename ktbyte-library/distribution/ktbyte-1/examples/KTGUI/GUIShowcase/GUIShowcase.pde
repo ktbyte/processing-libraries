@@ -23,7 +23,7 @@ void setup() {
   dbgButton.alignAboutCanvas(CENTER, BOTTOM);
   dbgButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      ktgui.setDebug(!ktgui.getDebug());
+      ktgui.setDebugControllersFlag(!ktgui.getDebugControllersFlag());
     }
   }
   );
@@ -221,7 +221,7 @@ void updateSecondWindowCanvas() {
 }
 
 void msg(String msg) {
-  if (ktgui.getDebug()) {
+  if (ktgui.getDebugControllersFlag()) {
     println(msg);
   }
 }

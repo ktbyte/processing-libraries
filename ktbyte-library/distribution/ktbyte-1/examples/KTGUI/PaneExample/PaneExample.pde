@@ -8,20 +8,20 @@ Button dbgBtn;
 float p1y, p2x;
 
 void setup() {
-  size(1000, 600);
+  size(1000, 500);
   ktgui = new KTGUI(this);
   ktgui.setDebugControllersFlag(false);
 
   pane1 = ktgui.createPane(0, 0, 300, 300);
   pane1.setBorderRoundings(10, 10, 10, 10);
   pane1.isDragable = true;
-  pane1.alignAboutCanvas(LEFT, CENTER);
+  pane1.alignAboutCanvas(LEFT, CENTER, 60);
   p1y = pane1.getPosy();
 
   pane2 = ktgui.createPane(0, 0, 300, 300);
   pane2.setBorderRoundings(10, 10, 10, 10);
   pane2.isDragable = true;
-  pane2.alignAboutCanvas(RIGHT, CENTER);
+  pane2.alignAboutCanvas(RIGHT, CENTER, 60);
   p2x = pane2.getPosx();
 
   hsbar = ktgui.createScrollBar("hsBar", 20, 200, 200, 40, 0, 100);

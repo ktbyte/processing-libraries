@@ -339,7 +339,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
      * 	the vertical alignment position 
      */
     public void alignAboutCanvas(int hAlign, int vAlign) {
-        alignAboutCanvas(hAlign, vAlign, KTGUI.ALIGN_GAP);
+        alignAboutCanvas(hAlign, vAlign, KTGUI.DEFAULT_ALIGN_GAP);
     }
 
     /**
@@ -390,22 +390,25 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
      * 	the vertical alignment position 
      */
     public void alignAbout(Controller controller, int hAlign, int vAlign) {
-        alignAbout(controller, hAlign, vAlign, KTGUI.ALIGN_GAP);
+        alignAbout(controller, hAlign, vAlign, KTGUI.DEFAULT_ALIGN_GAP);
     }
 
     /**
-     * This method is used to align one controller about the other (reference) controller. 
-     * By 'aligning' we understand the process of changing the X and Y coordinates. 
+     * This method is used to place one controller <b>inside</b> the other (reference) 
+     * controller.
+     * By 'aligning' we understand the process of changing the X and Y coordinates
+     * so that the controller is placed inside and near one of the walls of the 
+     * reference controller. 
      * The X and Y position, and width and height of the controller being used as 
-     * a reference are used to calculate the new position of the controller to 
-     * be aligned. The said values identify the 'boundary rectangle' of the reference controller.
-     * The named constants LEFT, RIGHT, BOTTOM, TOP and CENTER are used to identify
-     * the sides and the center of the bounding rectangle. The sides and center 
+     * a reference are used to calculate the new position of the controller that is to 
+     * be aligned. The said values identify the 'boundary rectangle' of the reference 
+     * controller. The named constants LEFT, RIGHT, BOTTOM, TOP and CENTER are used to 
+     * identify the sides and the center of the bounding rectangle. The sides and center 
      * of the reference rectangle are used for calculation of the relative 
      * distances that are used to 'shift' the position of the controller to be 
      * aligned. The direction of shifting is <b>inward</b> - i.e. the changing of relative 
-     * position is made from the sides of the bounding rectangle <i>to the center</i> of the 
-     * bounding rectangle.
+     * position is made <i>from the sides</i> of the bounding rectangle <i>to the 
+     * center</i> of the bounding rectangle.
      * 
      * @param controller
      *  the 'reference' controller.
@@ -413,37 +416,37 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
      * 	the horizontal alignment direction. The following named constants can be used:</br>
      * <ul>
      * <li>
-     * LEFT - the controller will be placed so that its <i>left</i> side will be 
-     * aligned to the <i>left</i> side of the reference controller.</br>
+     * LEFT - the controller will be placed so that its <i>left</i> side will  
+     * 'stick' to the <i>left</i> side of the reference controller.</br>
      * </li>
      * <li>
-     * RIGHT - the controller will be placed so that its <i>right</i> side will be 
-     * aligned to the <i>right</i> side of the reference controller.</br>
+     * RIGHT - the controller will be placed so that its <i>right</i> side will 
+     * 'stick' to the <i>right</i> side of the reference controller.</br>
      * </li>
      * <li>
-     * CENTER - the controller will be placed so that its <i>center</i> will be 
-     * aligned to the <i>center</i> of the reference controller.</br> 
+     * CENTER - the controller will be placed so that its <i>center</i> will 
+     * 'stick' to the <i>center</i> of the reference controller.</br> 
      * </li>
      * </ul>
      * @param vAlign
      * 	the vertical alignment direction. The following named constants can be used:</br> 
      * <ul>
      * <li>
-     *  TOP - the controller will be placed so that its <i>top</i> side will be 
-     *  aligned to the <i>top</i> side of the reference controller.</br>
+     *  TOP - the controller will be placed so that its <i>top</i> side will 
+     *  'stick' to the <i>top</i> side of the reference controller.</br>
      * </li>
      * <li>
-     *  BOTTOM - the controller will be placed so that its <i>bottom</i> side will be 
-     *  aligned to the <i>bottom</i> side of the reference controller.</br>
+     *  BOTTOM - the controller will be placed so that its <i>bottom</i> side will 
+     *  'stick' to the <i>bottom</i> side of the reference controller.</br>
      * </li>
      * <li>
-     *  CENTER - the controller will be placed so that its <i>center</i> will be 
-     *  aligned to the <i>center</i> of the reference controller. </br>
+     *  CENTER - the controller will be placed so that its <i>center</i> will 
+     *  'stick' to the <i>center</i> of the reference controller. </br>
      * </li>
      * </ul>
      * @param gap
      *  the gap between aligned sides. If the CENTER constant is used as hAlign 
-     *  or vAlign argument then the gap is <b>not</b> added in that direction.
+     *  or vAlign argument then the gap will <b>not</b> be added to that direction.
      */
     public void alignAbout(Controller controller, int hAlign, int vAlign, int gap) {
         switch (hAlign) {
@@ -476,81 +479,90 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
     }
 
     public void stackAbout(Controller controller, int direction, int align) {
-        switch (direction) {
-
-        case PConstants.TOP: // stack this controller above the given controller
-            this.posy = controller.posy - this.h;
-            switch (align) {
-            case PConstants.LEFT:
-                this.posx = controller.posx;
-                break;
-            case PConstants.RIGHT:
-                this.posx = controller.posx + controller.w - this.w;
-                break;
-            case PConstants.CENTER:
-                this.posx = (int) (controller.posx + controller.w * 0.5) - (int) (this.w * 0.5);
-                break;
-            default:
-                break;
-            }
-            break;
-
-        case PConstants.BOTTOM: // stack this controller below the given controller
-            this.posy = controller.posy + controller.h;
-            switch (align) {
-            case PConstants.LEFT:
-                this.posx = controller.posx;
-                break;
-            case PConstants.RIGHT:
-                this.posx = controller.posx + controller.w - this.w;
-                break;
-            case PConstants.CENTER:
-                this.posx = (int) (controller.posx + controller.w * 0.5) - (int) (this.w * 0.5);
-                break;
-            default:
-                break;
-            }
-            break;
-
-        case PConstants.LEFT: // stack this controller to the left about given controller
-            this.posx = controller.posx - this.w;
-            switch (align) {
-            case PConstants.TOP:
-                this.posy = controller.posy - this.h;
-                break;
-            case PConstants.BOTTOM:
-                this.posy = controller.posy + controller.h;
-                break;
-            case PConstants.CENTER:
-                this.posy = (int) (controller.posy + controller.h * 0.5) - (int) (this.h * 0.5);
-                break;
-            default:
-                break;
-            }
-            break;
-
-        case PConstants.RIGHT: // stack this controller to the right about given controller
-            this.posx = controller.posx + controller.w;
-            switch (align) {
-            case PConstants.TOP:
-                this.posy = controller.posy - this.h;
-                break;
-            case PConstants.BOTTOM:
-                this.posy = controller.posy + controller.h;
-                break;
-            case PConstants.CENTER:
-                this.posy = (int) (controller.posy + controller.h * 0.5) - (int) (this.h * 0.5);
-                break;
-            default:
-                break;
-            }
-            break;
-
-        default: // do nothing
-            break;
-        }
+        stackAbout(controller, direction, align, KTGUI.DEFAULT_ALIGN_GAP);
     }
 
+    /**
+     * This method is used to position one controller <b>outside</b> the other 
+     * (reference) controller. 
+     * By 'stacking' we understand the process of changing the X and Y coordinates
+     * so that the controller is placed outside and near one of the walls of the 
+     * reference controller. 
+     * The X and Y position, and width and height of the controller being used as 
+     * a reference are used to calculate the new position of the controller to 
+     * be aligned. The said values identify the 'boundary rectangle' of the reference 
+     * controller.
+     * The named constants LEFT, RIGHT, BOTTOM and TOP are used to identify
+     * the sides of the bounding rectangle. They are used for calculation of the 
+     * relative distances that are used to 'shift' the position of the controller to be 
+     * aligned. The direction of shifting is <b>outward</b> - i.e. the changing of 
+     * relative position is made from the sides of the bounding rectangle <i>to the 
+     * outward direction about</i> the bounding rectangle.
+     * 
+     * @param <b>controller</b>
+     *  the 'reference' controller.
+     * @param <b>direction</b>
+     *  the 'reference' alignment direction. The following named constants can be used:</br>
+     * <ul>
+     * <li>
+     * LEFT - the controller will be placed so that its <i>rigth</i> side will 
+     * 'stick' to the <i>left</i> side of the reference controller.</br>
+     * </li>
+     * <li>
+     * RIGHT - the controller will be placed so that its <i>left</i> side will  
+     * 'stick' to the <i>right</i> side of the reference controller.</br>
+     * </li>
+     * <li>
+     * TOP - the controller will be placed so that its <i>bottom</i> side will  
+     * 'stick' to the <i>top</i> side of the reference controller.</br> 
+     * </li>
+     * <li>
+     * BOTTOM - the controller will be placed so that its <i>top</i> side will 
+     * 'stick' to the <i>bottom</i> side of the reference controller.</br> 
+     * </li>
+     * </ul>
+     * @param <b>align</b>
+     *  the 'orthogonal' alignment direction. </br>
+     *  The following named constants can be used:</br>
+     *  If the 'reference' alignment direction was chosen as LEFT or RIGTH, then the 
+     *  'orthogonal' direction can be set only fron one of the following constants:
+     * <ul>
+     * <li>
+     *  TOP - the controller will be placed so that its <i>top</i> side will be 
+     *  aligned to the <i>top</i> side of the reference controller.</br>
+     * </li>
+     * <li>
+     *  BOTTOM - the controller will be placed so that its <i>bottom</i> side will be 
+     *  aligned to the <i>bottom</i> side of the reference controller.</br>
+     * </li>
+     * <li>
+     *  CENTER - the controller will be placed so that its <i>center</i> will be 
+     *  aligned to the <i>center</i> of the reference controller. </br>
+     * </li>
+     * </ul>
+     *
+     *  If the 'reference' alignment direction was chosen as BOTTOM or TOP, then the 
+     *  'orthogonal' direction can be set only from one of the following constants:
+     * <ul>
+     * <li>
+     *  LEFT - the controller will be placed so that its <i>left</i> side will be 
+     *  aligned to the <i>left</i> side of the reference controller.</br>
+     * </li>
+     * <li>
+     *  RIGHT - the controller will be placed so that its <i>right</i> side will be 
+     *  aligned to the <i>right</i> side of the reference controller.</br>
+     * </li>
+     * <li>
+     *  CENTER - the controller will be placed so that its <i>center</i> will be 
+     *  aligned to the <i>center</i> of the reference controller. </br>
+     * </li>
+     * </ul>
+  
+     * @param <b>gap</b>
+     *  the gap of some length between the sides to be aligned. If the CENTER constant 
+     *  is used as 'direction' or 'align' argument then the gap is <b>not</b> added 
+     *  in that direction.
+     */
     public void stackAbout(Controller controller, int direction, int align, int gap) {
         switch (direction) {
 
@@ -558,10 +570,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
             this.posy = controller.posy - this.h - gap;
             switch (align) {
             case PConstants.LEFT:
-                this.posx = controller.posx - gap;
+                this.posx = controller.posx + gap;
                 break;
             case PConstants.RIGHT:
-                this.posx = controller.posx + controller.w - this.w + gap;
+                this.posx = controller.posx + controller.w - this.w - gap;
                 break;
             case PConstants.CENTER:
                 this.posx = (int) (controller.posx + controller.w * 0.5) - (int) (this.w * 0.5);
@@ -575,10 +587,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
             this.posy = controller.posy + controller.h + gap;
             switch (align) {
             case PConstants.LEFT:
-                this.posx = controller.posx - gap;
+                this.posx = controller.posx + gap;
                 break;
             case PConstants.RIGHT:
-                this.posx = controller.posx + controller.w - this.w + gap;
+                this.posx = controller.posx + controller.w - this.w - gap;
                 break;
             case PConstants.CENTER:
                 this.posx = (int) (controller.posx + controller.w * 0.5) - (int) (this.w * 0.5);
@@ -592,10 +604,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
             this.posx = controller.posx - this.w - gap;
             switch (align) {
             case PConstants.TOP:
-                this.posy = controller.posy - this.h - gap;
+                this.posy = controller.posy + gap;
                 break;
             case PConstants.BOTTOM:
-                this.posy = controller.posy + controller.h + gap;
+                this.posy = controller.posy + controller.h - this.h - gap;
                 break;
             case PConstants.CENTER:
                 this.posy = (int) (controller.posy + controller.h * 0.5) - (int) (this.h * 0.5);
@@ -609,10 +621,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
             this.posx = controller.posx + controller.w + gap;
             switch (align) {
             case PConstants.TOP:
-                this.posy = controller.posy - this.h - gap;
+                this.posy = controller.posy + gap;
                 break;
             case PConstants.BOTTOM:
-                this.posy = controller.posy + controller.h + gap;
+                this.posy = controller.posy + controller.h - this.h - gap;
                 break;
             case PConstants.CENTER:
                 this.posy = (int) (controller.posy + controller.h * 0.5) - (int) (this.h * 0.5);
@@ -763,19 +775,6 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
     }
 
     @Override
-    public boolean isPointInside(int x, int y) {
-        boolean isInside = false;
-        if (isActive) {
-            if (x > getAbsolutePosX() && x < getAbsolutePosX() + w) {
-                if (y > getAbsolutePosY() && y < getAbsolutePosY() + h) {
-                    isInside = true;
-                }
-            }
-        }
-        return isInside;
-    }
-
-    @Override
     public void processKeyPressed() {
         if (isActive) {
             // transfer keyPressed event to child controllers
@@ -795,4 +794,16 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
         }
     }
 
+    @Override
+    public boolean isPointInside(int x, int y) {
+        boolean isInside = false;
+        if (isActive) {
+            if (x > getAbsolutePosX() && x < getAbsolutePosX() + w) {
+                if (y > getAbsolutePosY() && y < getAbsolutePosY() + h) {
+                    isInside = true;
+                }
+            }
+        }
+        return isInside;
+    }
 }
