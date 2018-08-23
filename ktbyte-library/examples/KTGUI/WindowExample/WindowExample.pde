@@ -14,7 +14,7 @@ ScrollableTextArea sta;
 void setup() {
   size(1200, 600);
   ktgui = new KTGUI(this);
-  ktgui.setDebug(false);
+  ktgui.setDebugControllersFlag(false);
 
   window = new Window(ktgui, "aWindow", 10, 50, 500, 400);
   window.alignAboutCanvas(CENTER, BOTTOM, 20);
@@ -24,7 +24,7 @@ void setup() {
   debugButton.addEventAdapter(new KTGUIEventAdapter(){
     public void onMousePressed(){
       println("Button has been pressed!");
-      ktgui.setDebug(ktgui.getDebug() ? false : true);
+      ktgui.setDebugControllersFlag(ktgui.getDebugControllersFlag() ? false : true);
     }
   });
 
