@@ -41,13 +41,13 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
     Controller(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
         System.out.println("Creation of [" + title + "] started.");
 
-        if (w < KTGUI.DEFAULT_COMPONENT_SIZE * 0.5f || h < KTGUI.DEFAULT_COMPONENT_SIZE * 0.5f) {
+        if (w < KTGUI.DEFAULT_COMPONENT_WIDTH * 0.5f || h < KTGUI.DEFAULT_COMPONENT_WIDTH * 0.5f) {
             System.out.println("!!! ERRROR.");
             System.out.println("!!! w:" + w + ", h:" + h);
             System.out.println("!!! Width and height of the " + title
                     + " controller must be greater than "
                     + "KTGUI.DEFAULT_COMPONENT_SIZE/2 a.u. Which is currently equal to "
-                    + KTGUI.DEFAULT_COMPONENT_SIZE * 0.5f + " a.u.");
+                    + KTGUI.DEFAULT_COMPONENT_WIDTH * 0.5f + " a.u.");
             System.out.println("!!! Creation of " + title + " interrupted (prevented).");
             System.out.println("!!! Exiting from " + title + "`s constructor without "
                     + "creating the actual object.\n");
@@ -94,7 +94,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
             pg.beginDraw();
             ktgui.drawCallStack
-                    .add("pg.image(" + child.title + ").getGraphics: " + child.posx
+                    .add("pg.image(" + 
+            child.title + ").getGraphics: " + child.posx
                             + ", " + child.posy + "-'  ");
             ktgui.drawCallStack
                     .add("(" + child.title + ").apos:" + child.getAbsolutePosX()

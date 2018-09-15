@@ -51,8 +51,10 @@ public class KTGUI implements PConstants {
     public static int                    COLOR_BG_HOVERED;
     public static int                    COLOR_BG_PASSIVE;
     public static int                    COLOR_BG_PRESSED;
-    public static int                    DEFAULT_COMPONENT_SIZE;
+    public static int                    DEFAULT_COMPONENT_WIDTH;
     public static int                    DEFAULT_ALIGN_GAP;
+    public static int                    DEFAULT_ROUNDING;
+
     private boolean                      debugControllers   = false;
     private boolean                      debugDrawCallStack = false;
 
@@ -80,8 +82,10 @@ public class KTGUI implements PConstants {
         COLOR_BG_PASSIVE = pa.color(180);
         COLOR_BG_HOVERED = pa.color(220);
         COLOR_BG_PRESSED = pa.color(200);
-        DEFAULT_COMPONENT_SIZE = 16;
+        
+        DEFAULT_COMPONENT_WIDTH = 16;
         DEFAULT_ALIGN_GAP = 20;
+        DEFAULT_ROUNDING = 8;
     }
 
     public static PApplet getParentPApplet() {
@@ -271,7 +275,7 @@ public class KTGUI implements PConstants {
 
     public ScrollBar createScrollBar(String title, int x, int y, int w, int h, int sr, int er) {
         if (w > h) {
-            if ((w - 2 * h) < 2 * KTGUI.DEFAULT_COMPONENT_SIZE) {
+            if ((w - 2 * h) < 2 * KTGUI.DEFAULT_COMPONENT_WIDTH) {
                 System.out.println("ERROR: The width of the ScrollBar to be created is "
                         + " too small. As a consequence, the internal slider would have "
                         + " orthogonal direction. Cannot create ScrollBar. Returning "
@@ -279,7 +283,7 @@ public class KTGUI implements PConstants {
                 return null;
             }
         } else {
-            if ((h - 2 * w) < 2 * KTGUI.DEFAULT_COMPONENT_SIZE) {
+            if ((h - 2 * w) < 2 * KTGUI.DEFAULT_COMPONENT_WIDTH) {
                 System.out.println("ERROR: The height of the ScrollBar to be created is "
                         + " too small. As a consequence, the internal slider would have "
                         + " orthogonal direction. Cannot create ScrollBar. Returning "

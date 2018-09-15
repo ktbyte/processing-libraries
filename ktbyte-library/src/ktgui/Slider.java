@@ -11,7 +11,7 @@ public class Slider extends Controller {
     public final static int HANDLE_TYPE_EXPANDED = 0;
 
     private int             handleType;
-    private float           handleSize           = KTGUI.DEFAULT_COMPONENT_SIZE;
+    private float           handleSize           = KTGUI.DEFAULT_COMPONENT_WIDTH;
     private float           handlePos            = 0;
     private float           rangeStart           = 0;
     private float           rangeEnd             = 100;
@@ -200,7 +200,7 @@ public class Slider extends Controller {
         if (handleType == HANDLE_TYPE_EXPANDED) {
             handleSize = 0;
         } else if (handleType == HANDLE_TYPE_CENTERED) {
-            handleSize = KTGUI.DEFAULT_COMPONENT_SIZE;
+            handleSize = KTGUI.DEFAULT_COMPONENT_WIDTH;
         }
     }
 
@@ -210,9 +210,9 @@ public class Slider extends Controller {
 
     public void setHandleSize(float hSize) {
         if (w > h) {
-            this.handleSize = PApplet.constrain(hSize, KTGUI.DEFAULT_COMPONENT_SIZE, this.w);
+            this.handleSize = PApplet.constrain(hSize, KTGUI.DEFAULT_COMPONENT_WIDTH, this.w);
         } else {
-            this.handleSize = PApplet.constrain(hSize, KTGUI.DEFAULT_COMPONENT_SIZE, this.h);
+            this.handleSize = PApplet.constrain(hSize, KTGUI.DEFAULT_COMPONENT_WIDTH, this.h);
         }
         updateValueFromHandlePosition();
     }
