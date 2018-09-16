@@ -79,9 +79,9 @@ public class KTGUI implements PConstants {
         COLOR_FG_PASSIVE = pa.color(150, 180, 150);
         COLOR_FG_HOVERED = pa.color(150, 220, 150);
         COLOR_FG_PRESSED = pa.color(110, 200, 110);
-        COLOR_BG_PASSIVE = pa.color(180);
+        COLOR_BG_PASSIVE = pa.color(200);
         COLOR_BG_HOVERED = pa.color(220);
-        COLOR_BG_PRESSED = pa.color(200);
+        COLOR_BG_PRESSED = pa.color(210);
         
         DEFAULT_COMPONENT_WIDTH = 16;
         DEFAULT_ALIGN_GAP = 20;

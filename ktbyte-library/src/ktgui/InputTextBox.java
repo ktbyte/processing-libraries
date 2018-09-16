@@ -30,9 +30,15 @@ public class InputTextBox extends Controller {
     private void updateTextBox() {
         pg.beginDraw();
         pg.pushStyle();
-        pg.fill(255);
-        pg.stroke(0);
-        pg.strokeWeight(isFocused ? 2f : 1f);
+        if (isFocused) {
+            pg.fill(bgPressedColor);
+            pg.stroke(50);
+            pg.strokeWeight(3f);
+        } else {
+            pg.fill(bgPassiveColor);
+            pg.stroke(0, 50, 0);
+            pg.strokeWeight(1f);
+        }
         pg.rect(0, 0, w, h, r1, r2, r3, r4);
         pg.fill(0);
         pg.textSize(textSize);

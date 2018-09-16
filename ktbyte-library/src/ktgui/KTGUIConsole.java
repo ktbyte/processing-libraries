@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 public class KTGUIConsole extends Controller {
     private final static int        BOX_ROUNDING                = 7;
-    private final static int        SCROLL_BAR_WIDTH            = 20;
     private final static float      INPUT_BOX_HEIGHT_PERCENTAGE = 0.1f;
 
     //	private InputTextBox			inputBox;
@@ -58,10 +57,6 @@ public class KTGUIConsole extends Controller {
         // automatically register the newly created window in default stage of stageManager
         StageManager.getInstance().getDefaultStage().registerController(this);
     }
-
-    // overrides the 'draw()' method of parent class (Controller)
-    // to prevent drawing the TitleBar and Pane second time.   	
-    public void draw() {}
 
     /**
      * Returns a stored value from the console's memory

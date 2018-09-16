@@ -9,7 +9,7 @@ void setup() {
 
   console = new KTGUIConsole(ktgui, "A Console", 100, 100, 600, 400);
   // console.alignAboutCanvas(LEFT, TOP);
-  console.setBorderRoundings(10, 10, 5, 5);
+  console.setBorderRoundings(15, 15, 10, 10);
   //console.setInputTextColor(color(255, 10, 100));
   //console.setOutputTextColor(color(130, 90, 190));
   console.setOutputTextSize(16);
@@ -58,6 +58,9 @@ void setup() {
         if(!isNumber(value)){
           console.writeOutput("Please enter your age as unsigned integer.");
           console.readInput("age");
+        } else if (int(value) <= 3) {
+          console.writeOutput("Are you sure you're not mistaken?");
+          console.readInput("age");
         } else {
           console.writeOutput(value + " ...  nice!!");
           console.writeOutput("Are you a Boy or girl?");
@@ -65,12 +68,11 @@ void setup() {
         }
       } else if (variable.equals("gender")) {
         if (value.equalsIgnoreCase("boy") || value.equalsIgnoreCase("girl")) {
-          console.writeOutput("Cool..");
-          console.readInput("other");
+          console.writeOutput("Cool...");
         } else {
-          console.writeOutput("Please answer my question! Choose from: boy or girl.");
-          console.readInput("gender");
+          console.writeOutput("Well, if that's what you want to be... then ok. It's your choice.");
         }
+        console.readInput("other");
       } else if (variable.equals("other")) {
         console.writeOutput(value + " you say... ok, go on...");
       }
