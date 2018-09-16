@@ -21,17 +21,6 @@ public class InputTextBox extends Controller {
         updateTextAttributes();
     }
 
-    /**
-     * This is an automatically registered method and it should not be called directly
-     */
-    public void draw() {
-        // if this button don't belongs to any window or pane 
-        // then draw it directly on the PApplet canvas 
-        if (parentController == null) {
-            pa.image(pg, posx, posy);
-        }
-    }
-
     public void updateGraphics() {
         super.updateGraphics();
         updateTextBox();

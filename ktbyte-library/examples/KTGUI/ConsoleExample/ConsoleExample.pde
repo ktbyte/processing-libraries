@@ -10,9 +10,9 @@ void setup() {
   console = new KTGUIConsole(ktgui, "A Console", 100, 100, 600, 400);
   // console.alignAboutCanvas(LEFT, TOP);
   console.setBorderRoundings(10, 10, 5, 5);
-  console.setInputTextColor(color(255, 10, 100));
-  console.setOutputTextColor(color(130, 90, 190));
-  console.setOutputTextSize(22);
+  //console.setInputTextColor(color(255, 10, 100));
+  //console.setOutputTextColor(color(130, 90, 190));
+  console.setOutputTextSize(16);
 
 
   console.writeOutput("Well, Prince, so Genoa and Lucca are now just family estates of the " +
@@ -31,14 +31,14 @@ void setup() {
     "Shinshín, a cousin of the countess’, a man with “a sharp tongue " +
     "as they said in Moscow society. He seemed to be condescending " +
     "this companion. The latter, a fresh, rosy officer of the Guards " +
-    "irreproachably washed, brushed, and buttoned, held his pipe in the" +
+    "irreproachably washed, brushed, and buttoned, held his pipe in the " +
     "middle of his mouth and with red lips gently inhaled the smoke, letting " +
     "it escape from his handsome mouth in rings. This was Lieutenant Berg, a" +
-    "officer in the Semënov regiment with whom Borís was to travel to joi" +
-    "the army, and about whom Natásha had teased her elder sister Véra" +
-    "speaking of Berg as her “intended.” The count sat between them an" +
+    "officer in the Semënov regiment with whom Borís was to travel to join " +
+    "the army, and about whom Natásha had teased her elder sister Véra " +
+    "speaking of Berg as her “intended.” The count sat between them and " +
     "listened attentively. His favorite occupation when not playing boston, " +
-    "card game he was very fond of, was that of listener, especially when he" +
+    "card game he was very fond of, was that of listener, especially when he " +
     "succeeded in setting two loquacious talkers at one another " +
     "Well, then, old chap, mon très honorable Alphonse Kárlovich, " +
     "said Shinshín, laughing ironically and mixing the most ordinary Russia " +
