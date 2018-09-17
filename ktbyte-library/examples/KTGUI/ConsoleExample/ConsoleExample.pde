@@ -6,7 +6,7 @@ Stage s1, s2;
 
 void setup() {
   size(1000, 800);
-  KTGUI.setDebugControllersFlag(true);
+  //KTGUI.setDebugControllersFlag(true);
   ktgui = new KTGUI(this);
 
   console = new KTGUIConsole(ktgui, "A Console", 200, 200, 600, 400);
@@ -82,9 +82,10 @@ void setup() {
   });
 
   s1 = StageManager.getInstance().createStage("Stage1");
-  //s1.registerController(console);
+  s1.registerController(console);
 
   s2 = StageManager.getInstance().createStage("Stage2");
+  StageManager.getInstance().goToStage(s1);
 
   Button firstStageBtn = ktgui.createButton("Stage1", 50, 50, 100, 50);
   firstStageBtn.alignAboutCanvas(LEFT, BOTTOM);

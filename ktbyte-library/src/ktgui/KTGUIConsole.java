@@ -17,15 +17,36 @@ public class KTGUIConsole extends Controller {
 
     private HashMap<String, String> dict;
     private String                  lastVariableName;
+    int                             inputBoxWidth               = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
 
     public KTGUIConsole(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
         super(ktgui, title, posx, posy, w, h);
         this.dict = new HashMap<String, String>();
+        createScrollableTextArea();
+        createInputBox();
+        createScrollBar();
+    }
 
-        int inputBoxWidth = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
+    private void createScrollableTextArea() {
+        textArea = new ScrollableTextArea(ktgui, "scrlbltxtar:" + title,
+                0, 0,
+                w - inputBoxWidth, h - inputBoxWidth);
+        textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
+        attachController(textArea);
+    }
 
+    private void createScrollBar() {
+        scrollBar = new ScrollBar(ktgui, "scrlbar:" + title,
+                w - inputBoxWidth, 0,
+                inputBoxWidth, h - inputBoxWidth,
+                0, 100);
+        attachController(scrollBar);
+    }
+
+    private void createInputBox() {
         inputBox = new InputTextBox(ktgui, "inptxtbx:" + title,
-                posx, posy + h - inputBoxWidth, w, inputBoxWidth);
+                0, h - inputBoxWidth,
+                w, inputBoxWidth);
         inputBox.setHandleFocus(true);
         inputBox.setTextSize(16);
         inputBox.setBorderRoundings(0, 0, BOX_ROUNDING, BOX_ROUNDING);
@@ -35,17 +56,7 @@ public class KTGUIConsole extends Controller {
                 handleConsoleInput();
             }
         });
-        //attachController(inputBox);
-
-        textArea = new ScrollableTextArea(ktgui, "scrlbltxtar:" + title, 
-                posx, posy, w - inputBoxWidth, h - inputBoxWidth);
-        textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
-        //attachController(textArea);
-
-        scrollBar = new ScrollBar(ktgui, "scrlbar:" + title, 
-                posx + w - inputBoxWidth, posy, inputBoxWidth, h - inputBoxWidth, 0, 100);
-        //attachController(scrollBar);
-
+        attachController(inputBox);
     }
 
     /**
