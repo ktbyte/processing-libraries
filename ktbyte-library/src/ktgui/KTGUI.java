@@ -55,7 +55,7 @@ public class KTGUI implements PConstants {
     public static int                    DEFAULT_ALIGN_GAP;
     public static int                    DEFAULT_ROUNDING;
 
-    private boolean                      debugControllers   = false;
+    private static boolean               debugControllers   = false;
     private boolean                      debugDrawCallStack = false;
 
     /*************************************************************************************************************************
@@ -63,29 +63,41 @@ public class KTGUI implements PConstants {
      * It automatically registers the 'draw', 'mouseEvent' and 'keyEvent' methods of this class in PApplet.
      ************************************************************************************************************************/
     public KTGUI(PApplet pa) {
-        System.out.println("Creating the KTGUI instance...");
+        debug("\nCreating of the KTGUI instance started.");
         init(pa);
-        System.out.println("Done.\n");
+        debug("Creating of the KTGUI instance completed.\n");
     }
 
     private void init(PApplet pa) {
+        debug("\tInitializing of the KTGUI started.");
         KTGUI.pa = pa;
         KTGUI.pa.registerMethod("draw", this);
+        debug("\t\t'draw()' method has been registered in parent PApplet.");
         KTGUI.pa.registerMethod("mouseEvent", this);
+        debug("\t\t'mouseEvent()' method has been registered in parent PApplet.");
         KTGUI.pa.registerMethod("keyEvent", this);
+        debug("\t\t'keyEvent()' method has been registered in parent PApplet.");
 
         garbageList = new HashMap<Controller, Integer>();
+        debug("\t\tGarbage list created.");
 
         COLOR_FG_PASSIVE = pa.color(150, 180, 150);
         COLOR_FG_HOVERED = pa.color(150, 220, 150);
         COLOR_FG_PRESSED = pa.color(110, 200, 110);
-        COLOR_BG_PASSIVE = pa.color(200);
+        COLOR_BG_PASSIVE = pa.color(190);
         COLOR_BG_HOVERED = pa.color(220);
         COLOR_BG_PRESSED = pa.color(210);
-        
+
         DEFAULT_COMPONENT_WIDTH = 16;
         DEFAULT_ALIGN_GAP = 20;
         DEFAULT_ROUNDING = 8;
+        debug("\t\tColor and size constants initialized.");
+
+        // Call this method once in order to create the singleton StageManager instance now,
+        // and not later when it would be needed
+        StageManager.getInstance();
+
+        debug("\tInitializing of the KTGUI completed.");
     }
 
     public static PApplet getParentPApplet() {
@@ -107,14 +119,14 @@ public class KTGUI implements PConstants {
 
     }
 
-    public void setDebugControllersFlag(boolean debug) {
-        this.debugControllers = debug;
+    public static void setDebugControllersFlag(boolean debug) {
+        debugControllers = debug;
     }
 
-    public boolean getDebugControllersFlag() {
+    public static boolean getDebugControllersFlag() {
         return debugControllers;
     }
-    
+
     public void setDrawCallStackFlag(boolean debug) {
         this.debugDrawCallStack = debug;
     }
@@ -194,7 +206,7 @@ public class KTGUI implements PConstants {
     }
 
     public void addDrawCallStackDebugMessage(String msg) {
-        if(debugDrawCallStack) {
+        if (debugDrawCallStack) {
             drawCallStack.add(msg);
         }
     }
@@ -276,7 +288,7 @@ public class KTGUI implements PConstants {
     public ScrollBar createScrollBar(String title, int x, int y, int w, int h, int sr, int er) {
         if (w > h) {
             if ((w - 2 * h) < 2 * KTGUI.DEFAULT_COMPONENT_WIDTH) {
-                System.out.println("ERROR: The width of the ScrollBar to be created is "
+                debug("ERROR: The width of the ScrollBar to be created is "
                         + " too small. As a consequence, the internal slider would have "
                         + " orthogonal direction. Cannot create ScrollBar. Returning "
                         + "null reference.");
@@ -284,7 +296,7 @@ public class KTGUI implements PConstants {
             }
         } else {
             if ((h - 2 * w) < 2 * KTGUI.DEFAULT_COMPONENT_WIDTH) {
-                System.out.println("ERROR: The height of the ScrollBar to be created is "
+                debug("ERROR: The height of the ScrollBar to be created is "
                         + " too small. As a consequence, the internal slider would have "
                         + " orthogonal direction. Cannot create ScrollBar. Returning "
                         + "null reference.");
@@ -343,7 +355,7 @@ public class KTGUI implements PConstants {
         }
     }
 
-    public void msg(String string) {
+    public static void debug(String string) {
         if (debugControllers)
             PApplet.println(string);
     }
@@ -443,6 +455,5 @@ public class KTGUI implements PConstants {
             }
         }
     }
-
 
 }

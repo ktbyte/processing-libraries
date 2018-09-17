@@ -24,38 +24,28 @@ public class KTGUIConsole extends Controller {
 
         int inputBoxWidth = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
 
-        inputBox = new InputTextBox(ktgui, "ConsoleTextBox",
-                posx, posy + h - inputBoxWidth,
-                w, inputBoxWidth);
+        inputBox = new InputTextBox(ktgui, "inptxtbx:" + title,
+                posx, posy + h - inputBoxWidth, w, inputBoxWidth);
         inputBox.setHandleFocus(true);
         inputBox.setTextSize(16);
         inputBox.setBorderRoundings(0, 0, BOX_ROUNDING, BOX_ROUNDING);
         inputBox.addEventAdapter(new KTGUIEventAdapter() {
             public void onEnterKeyPressed() {
-                println("Processing input...");
+                KTGUI.debug("Processing input...");
                 handleConsoleInput();
             }
         });
         //attachController(inputBox);
-        //registerChildController(inputBox);
 
-        textArea = new ScrollableTextArea(ktgui, "sta:" + title, 
+        textArea = new ScrollableTextArea(ktgui, "scrlbltxtar:" + title, 
                 posx, posy, w - inputBoxWidth, h - inputBoxWidth);
         textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
         //attachController(textArea);
-        //registerChildController(textArea);
 
-        scrollBar = new ScrollBar(ktgui, "scrollbar:" + title, 
-                posx + w - inputBoxWidth, posy, 
-                inputBoxWidth, h - inputBoxWidth, 0, 100);
+        scrollBar = new ScrollBar(ktgui, "scrlbar:" + title, 
+                posx + w - inputBoxWidth, posy, inputBoxWidth, h - inputBoxWidth, 0, 100);
         //attachController(scrollBar);
-        //registerChildController(scrollBar);
 
-        pg = pa.createGraphics(w + 1, h + 1);
-        userpg = pa.createGraphics(w + 1, h + 1);
-
-        // automatically register the newly created window in default stage of stageManager
-        StageManager.getInstance().getDefaultStage().registerController(this);
     }
 
     /**

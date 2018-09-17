@@ -39,17 +39,17 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
     public int                   bgPassiveColor   = KTGUI.COLOR_BG_PASSIVE;
 
     Controller(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-        System.out.println("Creation of [" + title + "] started.");
+        KTGUI.debug("Creation of [" + title + "] started.");
 
         if (w < KTGUI.DEFAULT_COMPONENT_WIDTH * 0.5f || h < KTGUI.DEFAULT_COMPONENT_WIDTH * 0.5f) {
-            System.out.println("!!! ERRROR.");
-            System.out.println("!!! w:" + w + ", h:" + h);
-            System.out.println("!!! Width and height of the " + title
+            KTGUI.debug("!!! ERRROR.");
+            KTGUI.debug("!!! w:" + w + ", h:" + h);
+            KTGUI.debug("!!! Width and height of the " + title
                     + " controller must be greater than "
                     + "KTGUI.DEFAULT_COMPONENT_SIZE/2 a.u. Which is currently equal to "
                     + KTGUI.DEFAULT_COMPONENT_WIDTH * 0.5f + " a.u.");
-            System.out.println("!!! Creation of " + title + " interrupted (prevented).");
-            System.out.println("!!! Exiting from " + title + "`s constructor without "
+            KTGUI.debug("!!! Creation of " + title + " interrupted (prevented).");
+            KTGUI.debug("!!! Exiting from " + title + "`s constructor without "
                     + "creating the actual object.\n");
             return;
             // pa.exit();
@@ -68,7 +68,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
         // automatically register the newly created window in default stage of stageManager
         StageManager.getInstance().getDefaultStage().registerController(this);
-        System.out.println("Creation of [" + title + "] completed.\n");
+        KTGUI.debug("Creation of [" + title + "] completed.\n");
     }
 
     public void updateGraphics() {
@@ -255,7 +255,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
     public void attachController(Controller controller) {
         if (isActive) {
-            System.out.println("Attaching of [" + controller.title +
+            KTGUI.debug("Attaching of [" + controller.title +
                     "] of type <" + controller.getClass().getName() +
                     "> to [" + title +
                     "] of type <" + getClass().getName() +
@@ -268,20 +268,20 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
             }
             // add to the list of (child) controllers of 'this' controller
             if (!controllers.contains(controller)) {
-                System.out.println("\t[" + title + "].controllers.contains(" + controller.title + ") = " +
+                KTGUI.debug("\t[" + title + "].controllers.contains(" + controller.title + ") = " +
                         controllers.contains(controller));
                 controllers.add(controller);
             }
             // set 'this' controller as parent of the controller being processed
-            System.out.println("\tSetting parent controller...");
+            KTGUI.debug("\tSetting parent controller...");
             controller.setParentController(this);
-            System.out.println(
+            KTGUI.debug(
                     "\t[" + controller.title + "].parentController is [" + controller.parentController.title + "]");
 
             // unregister the controller from all stages
             StageManager.getInstance().unregisterControllerFromAllStages(controller);
 
-            System.out.println("Attaching of [" + controller.title + "] to [" + title + "] completed.\n");
+            KTGUI.debug("Attaching of [" + controller.title + "] to [" + title + "] completed.\n");
         }
     }
 

@@ -17,12 +17,12 @@ public class Stage {
     PApplet               pa;
 
     public Stage(String name) {
-        System.out.println("Creation of stage {" + name + "} started.");
+        KTGUI.debug("Creation of stage {" + name + "} started.");
         this.pa = KTGUI.getParentPApplet();
         this.name = name;
         this.controllers = new ArrayList<Controller>();
         StageManager.getInstance().getStages().add(this);
-        System.out.println("Creation of stage {" + name + "} completed.");
+        KTGUI.debug("Creation of stage {" + name + "} completed.");
     }
 
     public String getName() {
@@ -39,11 +39,11 @@ public class Stage {
     }
 
     public void registerController(Controller controller) {
-        System.out.println("Registering controller [" + controller.title + "]" + " of type <" +
+        KTGUI.debug("Registering controller [" + controller.title + "]" + " of type <" +
                 controller.getClass().getName() + "> in stage {" + name + "}:");
         // check if controller already exist in 'this' stage
         if (controllers.contains(controller)) {
-            System.out.println(
+            KTGUI.debug(
                     "\tController [" + controller.title + "] already exist in stage {" + name + "}. Interrupting.");
             return;
         }
@@ -65,12 +65,12 @@ public class Stage {
         controller.parentStage = this;
 
         // debug info
-        System.out.println("\tDone. Now, stage {" + name + "} contain " + controllers.size() + " controller(s).");
+        KTGUI.debug("\tDone. Now, stage {" + name + "} contain " + controllers.size() + " controller(s).");
         for (Controller c : controllers) {
-            System.out.println("\t\t" + controllers.indexOf(c) + ": " + c.title + " (" + c.controllers.size()
+            KTGUI.debug("\t\t" + controllers.indexOf(c) + ": " + c.title + " (" + c.controllers.size()
                     + " child controllers)");
             for (Controller child : c.controllers) {
-                System.out.println("\t\t\t" + c.controllers.indexOf(child) + ": " + child.title);
+                KTGUI.debug("\t\t\t" + c.controllers.indexOf(child) + ": " + child.title);
             }
         }
 
@@ -93,9 +93,9 @@ public class Stage {
         //				windowPane.registerChildControllers();
         //			}
         //		} else {
-        //			System.out.println("....Cannot register child controllers of '" + name + "'");
+        //			KTGUI.debug("....Cannot register child controllers of '" + name + "'");
         //		}
-        //		System.out.println("------------------------------------------------------------------------------------");
+        //		KTGUI.debug("------------------------------------------------------------------------------------");
     }
 
     public void unregisterController(Controller controller) {

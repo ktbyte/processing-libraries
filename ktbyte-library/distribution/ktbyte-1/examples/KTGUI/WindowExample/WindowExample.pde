@@ -13,8 +13,8 @@ ScrollableTextArea sta;
  *********************************************************************************************************************/
 void setup() {
   size(1200, 600);
+  KTGUI.setDebugControllersFlag(false);
   ktgui = new KTGUI(this);
-  ktgui.setDebugControllersFlag(false);
 
   window = new Window(ktgui, "aWindow", 10, 50, 500, 400);
   window.alignAboutCanvas(CENTER, BOTTOM, 20);

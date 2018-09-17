@@ -2,13 +2,15 @@ import ktgui.*;
 
 KTGUI ktgui;
 KTGUIConsole console;
+Stage s1, s2;
 
 void setup() {
-  size(800, 600);
+  size(1000, 800);
   ktgui = new KTGUI(this);
+  ktgui.setDebugControllersFlag(true);
 
   console = new KTGUIConsole(ktgui, "A Console", 100, 100, 600, 400);
-  // console.alignAboutCanvas(LEFT, TOP);
+  console.alignAboutCanvas(CENTER, CENTER);
   console.setBorderRoundings(15, 15, 10, 10);
   //console.setInputTextColor(color(255, 10, 100));
   //console.setOutputTextColor(color(130, 90, 190));
@@ -79,6 +81,26 @@ void setup() {
     }
   });
 
+  s1 = StageManager.getInstance().createStage("Stage1");
+  //s1.registerController(console);
+
+  s2 = StageManager.getInstance().createStage("Stage2");
+
+  Button firstStageBtn = ktgui.createButton("Stage1", 50, 50, 100, 50);
+  firstStageBtn.alignAboutCanvas(LEFT, BOTTOM);
+  firstStageBtn.addEventAdapter(new KTGUIEventAdapter() {
+    public void onMousePressed() {
+      StageManager.getInstance().goToStage(s1);
+    }
+  });
+
+  Button secondStageBtn = ktgui.createButton("Stage2", 50, 50, 100, 50);
+  secondStageBtn.alignAboutCanvas(RIGHT, BOTTOM);
+  secondStageBtn.addEventAdapter(new KTGUIEventAdapter() {
+    public void onMousePressed() {
+      StageManager.getInstance().goToStage(s2);
+    }
+  });
 }
 
 void draw() {

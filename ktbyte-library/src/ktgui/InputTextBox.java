@@ -49,18 +49,17 @@ public class InputTextBox extends Controller {
     }
 
     private void updateBlinkingCursorGraphics() {
-        if (!isFocused) {
-            return;
-        }
-        if (pa.frameCount % 60 < 30) {
-            // update the parent PApplet's textSize value in order to accurately calculate text width
-            pa.textSize(this.textSize);
-            float cursorX = PApplet.min(w - padding, padding + pa.textWidth(textInput));
-            pg.beginDraw();
-            pg.stroke(0);
-            pg.strokeWeight(2);
-            pg.line(cursorX, h * 0.5f - textHeight * 0.5f, cursorX, h * 0.5f + textHeight * 0.5f);
-            pg.endDraw();
+        if (isFocused) {
+            if (pa.frameCount % 60 < 30) {
+                // update the parent PApplet's textSize value in order to accurately calculate text width
+                pa.textSize(this.textSize);
+                float cursorX = PApplet.min(w - padding, padding + pa.textWidth(textInput));
+                pg.beginDraw();
+                pg.stroke(0);
+                pg.strokeWeight(2);
+                pg.line(cursorX, h * 0.5f - textHeight * 0.5f, cursorX, h * 0.5f + textHeight * 0.5f);
+                pg.endDraw();
+            }
         }
     }
 
