@@ -153,4 +153,8 @@ public class KTGUIConsole extends Controller {
         return textBlock;
     }
 
+    public void setInputFocused(boolean value) {
+        inputBox.setFocused(value);
+    }
+    
 }

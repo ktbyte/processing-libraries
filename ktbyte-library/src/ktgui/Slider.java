@@ -10,7 +10,7 @@ public class Slider extends Controller {
     public final static int HANDLE_TYPE_CENTERED = 1;
     public final static int HANDLE_TYPE_EXPANDED = 0;
 
-    private int             handleType;
+    private int             handleType           = HANDLE_TYPE_EXPANDED;
     private float           handleSize           = KTGUI.DEFAULT_COMPONENT_WIDTH;
     private float           handlePos            = 0;
     private float           rangeStart           = 0;
@@ -222,8 +222,12 @@ public class Slider extends Controller {
     }
 
     public void setRangeStart(float rangeStart) {
-        this.rangeStart = rangeStart;
-        updateValueFromHandlePosition();
+        if (rangeStart > rangeEnd) {
+            this.rangeStart = rangeStart;
+            updateValueFromHandlePosition();
+        } else {
+            KTGUI.debug("[" + title + "] range start cannot be set greater than its range end.");
+        }
     }
 
     public float getRangeEnd() {
@@ -231,8 +235,12 @@ public class Slider extends Controller {
     }
 
     public void setRangeEnd(float rangeEnd) {
-        this.rangeEnd = rangeEnd;
-        updateValueFromHandlePosition();
+        if (rangeEnd > rangeStart) {
+            this.rangeEnd = rangeEnd;
+            updateValueFromHandlePosition();
+        } else {
+            KTGUI.debug("[" + title + "] range end cannot be set smaller than its range start.");
+        }
     }
 
     public void setRounding(int n) {
@@ -270,7 +278,7 @@ public class Slider extends Controller {
     }
 
     /**
-     * This method is called to recalculate the value within the given range 
+     *  This method is called to recalculate the slider's `value` within the given range 
      *  when the user change the <b>position</b> of the slider with the mouse.
      */
     private void updateValueFromHandlePosition() {

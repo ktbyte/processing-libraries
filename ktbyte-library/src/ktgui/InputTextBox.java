@@ -103,6 +103,10 @@ public class InputTextBox extends Controller {
         }
     }
 
+    public void setFocused(boolean value) {
+        isFocused = value;
+    }
+    
     /**
      * Sets the current text
      * 

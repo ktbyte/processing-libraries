@@ -48,34 +48,44 @@ void setup() {
     "of his speech. “Vous comptez vous faire des rentes sur l’état; " +
     "you want to make something out of your company?");
   console.writeOutput("");
+  console.setOutputTextColor(color(200, 50, 50));
   console.writeOutput("Ohhh... Hello there! What's your name?");
   console.readInput("name");
   console.addEventAdapter(new KTGUIEventAdapter() {
     public void onConsoleInput(String value, String variable) {
       if (variable.equals("name")) {
+        console.setOutputTextColor(color(50, 200, 50));
         console.writeOutput("Nice to meet you " + value + "!");
+        console.setOutputTextColor(color(random(155), random(155), random(155)));
         console.writeOutput("How old are you?");
         console.readInput("age");
       } else if (variable.equals("age")) {
         if(!isNumber(value)){
+          console.setOutputTextColor(color(random(155), random(155), random(155)));
           console.writeOutput("Please enter your age as unsigned integer.");
           console.readInput("age");
         } else if (int(value) <= 3) {
+          console.setOutputTextColor(color(random(155), random(155), random(155)));
           console.writeOutput("Are you sure you're not mistaken?");
           console.readInput("age");
         } else {
+          console.setOutputTextColor(color(random(155), random(155), random(155)));
           console.writeOutput(value + " ...  nice!!");
+          console.setOutputTextColor(color(random(155), random(155), random(155)));
           console.writeOutput("Are you a Boy or girl?");
           console.readInput("gender");
         }
       } else if (variable.equals("gender")) {
         if (value.equalsIgnoreCase("boy") || value.equalsIgnoreCase("girl")) {
+          console.setOutputTextColor(color(random(155), random(155), random(155)));
           console.writeOutput("Cool...");
         } else {
+          console.setOutputTextColor(color(random(155), random(155), random(155)));
           console.writeOutput("Well, if that's what you want to be... then ok. It's your choice.");
         }
         console.readInput("other");
       } else if (variable.equals("other")) {
+        console.setOutputTextColor(color(random(155), random(155), random(155)));
         console.writeOutput(value + " you say... ok, go on...");
       }
     }

@@ -23,79 +23,23 @@ public class ScrollBar extends Controller {
      *  the controller has the childs. (in default Controller's implementation
      *  this was done in order to prevent 'duplicate' pressing/dragging.
      */
-//    @Override
-//    public void processMousePressed() {
-//        if (isActive) {
-//            // transfer mousePressed event to child controllers
-//            for (Controller child : controllers) {
-//                child.processMousePressed();
-//            }
-//
-//            // process mousePressed event by own means
-//            isPressed = isFocused = isHovered;
-//            if (isPressed) {
-//                for (KTGUIEventAdapter adapter : adapters) {
-//                    adapter.onMousePressed();
-//                }
-//            }
-//        }
-//    }
-    
-    public float getValue() {
-        return slider.getValue();
-    }
-
-    public void setValue(int val) {
-        slider.setValue(val);
-    }
-
-    public float getHandlePos() {
-        return slider.getHandlePos();
-    }
-
-    public void setHandlePos(int pos) {
-        slider.setHandlePos(pos);
-    }
-
-    public void setHandleType(int handleType) {
-        slider.setHandleType(handleType);
-    }
-
-    public void setHandleStep(float step) {
-        slider.setHandleValue(step);
-    }
-    
-    public float getHandleStep() {
-        return slider.getValueStep();
-    }
-    
-    public boolean getIsValueVisible() {
-        return slider.getIsValueVisible();
-    }
-
-    public void setIsValueVisible(boolean visible) {
-        slider.setIsValueVisible(visible);
-    }
-
-    public float getRangeStart() {
-        return slider.getRangeStart();
-    }
-
-    public void setRangeStart(int rangeStart) {
-        slider.setRangeStart(rangeStart);
-    }
-
-    public float getRangeEnd() {
-        return slider.getRangeEnd();
-    }
-
-    public void setRangeEnd(int rangeEnd) {
-        slider.setRangeEnd(rangeEnd);
-    }
-
-    public void setRounding(int n) {
-        slider.setRounding(n);
-    }
+    //    @Override
+    //    public void processMousePressed() {
+    //        if (isActive) {
+    //            // transfer mousePressed event to child controllers
+    //            for (Controller child : controllers) {
+    //                child.processMousePressed();
+    //            }
+    //
+    //            // process mousePressed event by own means
+    //            isPressed = isFocused = isHovered;
+    //            if (isPressed) {
+    //                for (KTGUIEventAdapter adapter : adapters) {
+    //                    adapter.onMousePressed();
+    //                }
+    //            }
+    //        }
+    //    }
 
     @Override
     public void setBorderRoundings(int r1, int r2, int r3, int r4) {
@@ -151,7 +95,7 @@ public class ScrollBar extends Controller {
             public void onMouseDragged() {
                 // !!! This line actually notifies the SCROLLBAR.mouseDragged 
                 // !!! event listeners, not SLIDER.mouseDragged event listeners
-                for(KTGUIEventAdapter adapter : adapters) {
+                for (KTGUIEventAdapter adapter : adapters) {
                     adapter.onMouseDragged();
                 }
             }
@@ -159,4 +103,59 @@ public class ScrollBar extends Controller {
         attachController(slider);
     }
 
+    public float getValue() {
+        return slider.getValue();
+    }
+
+    public void setValue(int val) {
+        slider.setValue(val);
+    }
+
+    public float getHandlePos() {
+        return slider.getHandlePos();
+    }
+
+    public void setHandlePos(int pos) {
+        slider.setHandlePos(pos);
+    }
+
+    public void setHandleType(int handleType) {
+        slider.setHandleType(handleType);
+    }
+
+    public void setHandleStep(float step) {
+        slider.setHandleValue(step);
+    }
+
+    public float getHandleStep() {
+        return slider.getValueStep();
+    }
+
+    public boolean getIsValueVisible() {
+        return slider.getIsValueVisible();
+    }
+
+    public void setIsValueVisible(boolean visible) {
+        slider.setIsValueVisible(visible);
+    }
+
+    public float getRangeStart() {
+        return slider.getRangeStart();
+    }
+
+    public void setRangeStart(int rangeStart) {
+        slider.setRangeStart(rangeStart);
+    }
+
+    public float getRangeEnd() {
+        return slider.getRangeEnd();
+    }
+
+    public void setRangeEnd(int rangeEnd) {
+        slider.setRangeEnd(rangeEnd);
+    }
+
+    public void setRounding(int n) {
+        slider.setRounding(n);
+    }
 }
