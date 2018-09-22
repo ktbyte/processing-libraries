@@ -15,6 +15,7 @@ void setup() {
   //console.setInputTextColor(color(255, 10, 100));
   //console.setOutputTextColor(color(130, 90, 190));
   console.setOutputTextSize(16);
+  console.setInputFocused(true);
 
 
   console.writeOutput("Well, Prince, so Genoa and Lucca are now just family estates of the " +
@@ -50,18 +51,17 @@ void setup() {
   console.writeOutput("");
   console.setOutputTextColor(color(200, 50, 50));
   console.writeOutput("Ohhh... Hello there! What's your name?");
+  console.setOutputTextColor(color(50, 200, 50));
   console.readInput("name");
   console.addEventAdapter(new KTGUIEventAdapter() {
     public void onConsoleInput(String value, String variable) {
       if (variable.equals("name")) {
-        console.setOutputTextColor(color(50, 200, 50));
         console.writeOutput("Nice to meet you " + value + "!");
         console.setOutputTextColor(color(random(155), random(155), random(155)));
         console.writeOutput("How old are you?");
         console.readInput("age");
       } else if (variable.equals("age")) {
         if(!isNumber(value)){
-          console.setOutputTextColor(color(random(155), random(155), random(155)));
           console.writeOutput("Please enter your age as unsigned integer.");
           console.readInput("age");
         } else if (int(value) <= 3) {
@@ -72,7 +72,7 @@ void setup() {
           console.setOutputTextColor(color(random(155), random(155), random(155)));
           console.writeOutput(value + " ...  nice!!");
           console.setOutputTextColor(color(random(155), random(155), random(155)));
-          console.writeOutput("Are you a Boy or girl?");
+          console.writeOutput("Are you a boy or a girl?");
           console.readInput("gender");
         }
       } else if (variable.equals("gender")) {

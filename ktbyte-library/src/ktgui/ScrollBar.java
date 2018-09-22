@@ -18,10 +18,10 @@ public class ScrollBar extends Controller {
     }
 
     /*   
-     *  This method overrides the default Controller's implementation in
-     *  order to prevent blocking processing of the mousePressed event if
-     *  the controller has the childs. (in default Controller's implementation
-     *  this was done in order to prevent 'duplicate' pressing/dragging.
+     *  This method overrides the default Controller's implementation in order to 
+     *  prevent interrupting the processing of the mousePressed event if controller 
+     *  has the childs. (in default Controller's implementation this was done in order 
+     *  to prevent 'duplicate' pressing/dragging).
      */
     //    @Override
     //    public void processMousePressed() {

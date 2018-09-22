@@ -222,7 +222,7 @@ public class Slider extends Controller {
     }
 
     public void setRangeStart(float rangeStart) {
-        if (rangeStart > rangeEnd) {
+        if (rangeStart < rangeEnd) {
             this.rangeStart = rangeStart;
             updateValueFromHandlePosition();
         } else {
