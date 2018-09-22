@@ -225,6 +225,7 @@ public class Slider extends Controller {
         if (rangeStart < rangeEnd) {
             this.rangeStart = rangeStart;
             updateValueFromHandlePosition();
+            KTGUI.debug("[" + title + "] range start set to " + rangeStart);
         } else {
             KTGUI.debug("[" + title + "] range start cannot be set greater than its range end.");
         }
@@ -238,6 +239,7 @@ public class Slider extends Controller {
         if (rangeEnd > rangeStart) {
             this.rangeEnd = rangeEnd;
             updateValueFromHandlePosition();
+            KTGUI.debug("[" + title + "] range end set to " + rangeEnd);
         } else {
             KTGUI.debug("[" + title + "] range end cannot be set smaller than its range start.");
         }

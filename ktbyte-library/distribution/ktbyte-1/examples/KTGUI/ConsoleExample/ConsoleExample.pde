@@ -6,7 +6,7 @@ Stage s1, s2;
 
 void setup() {
   size(1000, 800);
-  //KTGUI.setDebugControllersFlag(true);
+  KTGUI.setDebugControllersFlag(true);
   ktgui = new KTGUI(this);
 
   console = new KTGUIConsole(ktgui, "A Console", 200, 200, 600, 400);
@@ -76,12 +76,15 @@ void setup() {
           console.readInput("gender");
         }
       } else if (variable.equals("gender")) {
-        if (value.equalsIgnoreCase("boy") || value.equalsIgnoreCase("girl")) {
+        if (value.toLowerCase().contains("boy")) {
           console.setOutputTextColor(color(random(155), random(155), random(155)));
-          console.writeOutput("Cool...");
+          console.writeOutput("So you're a boy. Cool...");
+        } else if (value.toLowerCase().contains("girl")) {
+          console.setOutputTextColor(color(random(155), random(155), random(155)));
+          console.writeOutput("So you're a girl. Cool...");
         } else {
           console.setOutputTextColor(color(random(155), random(155), random(155)));
-          console.writeOutput("Well, if that's what you want to be... then ok. It's your choice.");
+          console.writeOutput("Well, if that's what you want to be...then ok.It's your choice.");
         }
         console.readInput("other");
       } else if (variable.equals("other")) {

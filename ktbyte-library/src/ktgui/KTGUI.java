@@ -139,6 +139,7 @@ public class KTGUI implements PConstants {
 
     void drawDebugInfo() {
         if (debugControllers) {
+            pa.pushStyle();
             pa.fill(0);
             pa.textFont(pa.createFont("monospaced", 11));
             pa.textAlign(LEFT, CENTER);
@@ -184,12 +185,14 @@ public class KTGUI implements PConstants {
                     10, ypos -= YSHIFT);
             pa.text("mouseX:mouseY - " + pa.mouseX + ":" + pa.mouseY, 10, ypos -= YSHIFT);
 
+            pa.popStyle();
         }
 
         /* 
          * Display the draw() method calls stack 
          */
         if (debugDrawCallStack) {
+            pa.pushStyle();
             pa.fill(0);
             pa.textFont(pa.createFont("monospaced", 11));
             pa.textAlign(LEFT, CENTER);
@@ -202,6 +205,7 @@ public class KTGUI implements PConstants {
             }
             // clear message list after each frame
             drawCallStack = new ArrayList<String>();
+            pa.popStyle();
         }
     }
 

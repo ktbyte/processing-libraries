@@ -6,10 +6,8 @@ public class KTGUIConsole extends Controller {
     private final static int        BOX_ROUNDING                = 7;
     private final static float      INPUT_BOX_HEIGHT_PERCENTAGE = 0.1f;
 
-    //	private InputTextBox			inputBox;
-    //	private ScrollableTextArea		textArea;
-    public InputTextBox             inputBox;
-    public ScrollableTextArea       textArea;
+    private InputTextBox            inputBox;
+    private ScrollableTextArea      textArea;
     private ScrollBar               scrollBar;
 
     private int                     inputTextColor              = 0xFFFFFF;
@@ -28,23 +26,37 @@ public class KTGUIConsole extends Controller {
     }
 
     private void createScrollableTextArea() {
-        textArea = new ScrollableTextArea(ktgui, "scrlbltxtar:" + title,
+        textArea = new ScrollableTextArea(ktgui, "sta:" + title,
                 0, 0,
                 w - inputBoxWidth, h - inputBoxWidth);
         textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
+        textArea.addEventAdapter(new KTGUIEventAdapter() {
+            public void onMouseWheel(int count) {
+                
+            }
+        });
         attachController(textArea);
     }
 
     private void createScrollBar() {
-        scrollBar = new ScrollBar(ktgui, "scrlbar:" + title,
+        scrollBar = new ScrollBar(ktgui, "sb:" + title,
                 w - inputBoxWidth, 0,
                 inputBoxWidth, h - inputBoxWidth,
                 0, 100);
+        scrollBar.addEventAdapter(new KTGUIEventAdapter() {
+            public void onMouseDragged() {
+                
+            }
+            
+            public void onMousePressed() {
+                
+            }
+        });
         attachController(scrollBar);
     }
 
     private void createInputBox() {
-        inputBox = new InputTextBox(ktgui, "inptxtbx:" + title,
+        inputBox = new InputTextBox(ktgui, "ib:" + title,
                 0, h - inputBoxWidth,
                 w, inputBoxWidth);
         inputBox.setHandleFocus(true);
@@ -92,17 +104,27 @@ public class KTGUIConsole extends Controller {
     }
 
     private void handleConsoleInput() {
+        // process InputBox onEnterKeyPressedEvent by own means
         String textInput = inputBox.getText();
         textArea.appendTextBlock(textInput, inputTextColor);
         textArea.scrollToBottom();
         inputBox.setText("");
         dict.put(lastVariableName, textInput);
+        //updateScrollBar();
+        
+        // notify listeners about onEnterKeyPressedEvent
         for (KTGUIEventAdapter adapter : adapters) {
             adapter.onConsoleInput(textInput, lastVariableName);
         }
     }
 
-    public void setInputTextSize(int size) {
+    private void updateScrollBar() {
+        //scrollBar.setRangeEnd(textArea.getLineNumbers());
+        scrollBar.setRangeEnd(textArea.getMaximumAllowedPositionOfStartLine());
+        scrollBar.setValue((int)(scrollBar.getRangeEnd() - getStartLinePosition()));
+    }
+
+        public void setInputTextSize(int size) {
         inputBox.setTextSize(size);
     }
 
@@ -115,6 +137,14 @@ public class KTGUIConsole extends Controller {
         textArea.scrollToBottom();
     }
 
+    public void setInputFocused(boolean value) {
+        inputBox.setFocused(value);
+    }
+
+    public int getStartLinePosition() {
+        return textArea.getStartLinePosition();
+    }
+    
     public void setInputTextColor(int c) {
         inputTextColor = c;
     }
@@ -132,29 +162,26 @@ public class KTGUIConsole extends Controller {
     }
 
     public int getLineCount() {
-        return textArea.getLineNumbers();
+        return textArea.getLineCount();
     }
 
     public int getBlockCount() {
-        return textArea.getBlockNumbers();
+        return textArea.getBlockCount();
     }
 
     public String getLastLine() {
-        String textLine = "";
+        String textLine = "_NO_LINES_EXIST_YET_";
         if (getLineCount() > 0)
             textLine = getLine(getLineCount() - 1);
         return textLine;
     }
 
     public String getLastBlock() {
-        String textBlock = "";
+        String textBlock = "_NO_BLOCKS_EXIST_YET_";
         if (getBlockCount() > 0)
             textBlock = getBlock(getBlockCount() - 1);
         return textBlock;
     }
 
-    public void setInputFocused(boolean value) {
-        inputBox.setFocused(value);
-    }
-    
+
 }
