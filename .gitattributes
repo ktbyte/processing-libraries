@@ -1,1 +1,2 @@
-*.graphml            -text
+
+*.graphml -text -diff
