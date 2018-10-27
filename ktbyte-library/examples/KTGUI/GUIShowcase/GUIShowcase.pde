@@ -8,7 +8,7 @@ Pane pane;
 Window w1, w2, w3;
 Stage s1, s2, s3;
 Stage alignStage;
-boolean debug = false;
+
 
 /**********************************************************************************************************************
  * 
@@ -23,7 +23,7 @@ void setup() {
   dbgButton.alignAboutCanvas(CENTER, BOTTOM);
   dbgButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      debug = !debug;
+      ktgui.setDebugControllersFlag(!ktgui.getDebugControllersFlag());
     }
   }
   );
@@ -69,10 +69,10 @@ void setup() {
       msg("Callback message: The Jumping Button was pressed!");
       if (jumpButton.parentController == w3.getPane()) {
         //w2.attachController(jumpButton);
-        w2.addController(jumpButton, 0, TOP);
+        //w2.addController(jumpButton, 0, TOP);
       } else if (jumpButton.parentController == w2.getPane()) {
         //w3.attachController(jumpButton);
-        w3.addController(jumpButton, 0, BOTTOM);
+        //w3.addController(jumpButton, 0, BOTTOM);
       }
     }
   }
@@ -127,23 +127,27 @@ void setup() {
   alignStage.registerController(p2);
 
   Pane p3 = ktgui.createPane("Left Pane", 110, 10, 200, 400);
-  p3.isDragable = true;
+  p3.isDragable = false;
   p3.alignAboutCanvas(RIGHT, TOP);
   Button p3b1 = ktgui.createButton("Bottom", 10, 10, 180, 40);
+  p3b1.isDragable = true;
   p3b1.setPassiveColor(color(250, 20, 200));
   p3.addController(p3b1, CENTER, BOTTOM);
   Button p3b2 = ktgui.createButton("Above & Center", 10, 10, 160, 40);
+  p3b2.isDragable = true;
   p3.attachController(p3b2);
   p3b2.stackAbout(p3b1, TOP, CENTER);
   Button p3b3 = ktgui.createButton("Above & Left", 10, 10, 140, 40);
+  p3b3.isDragable = true;
   p3.attachController(p3b3);
   p3b3.stackAbout(p3b2, TOP, LEFT);
   Button p3b4 = ktgui.createButton("Above & Right", 10, 10, 120, 40);
+  p3b4.isDragable = true;
   p3.attachController(p3b4);
   p3b4.stackAbout(p3b3, TOP, RIGHT);
   alignStage.registerController(p3);
 
-  StageManager.getInstance().goToStage(s2);
+  StageManager.getInstance().goToStage(s3);
 
   msg(w2.getPane().w + ":" + w2.getPane().h);
 }
@@ -154,7 +158,6 @@ void setup() {
 void draw() {
   background(170, 220, 170);
   //
-  updateDebugInfo();
   updatePaneCanvas();
   updateSecondWindowCanvas();
 }
@@ -194,7 +197,6 @@ void updatePaneCanvas() {
   pane.updateUserDefinedGraphics(g);
 }
 
-
 void updateSecondWindowCanvas() {
   PGraphics g = createGraphics(w2.getPane().w, w2.getPane().h);
   g.beginDraw();
@@ -219,44 +221,8 @@ void updateSecondWindowCanvas() {
 }
 
 void msg(String msg) {
-  if (debug) {
+  if (ktgui.getDebugControllersFlag()) {
     println(msg);
   }
 }
 
-void updateDebugInfo() {
-  if (debug) {
-    fill(0);
-    textSize(20);
-    textAlign(RIGHT, CENTER);
-    textFont(createFont("monospaced", 16));
-    text("activeStage.name:" + StageManager.getInstance().getActiveStage().getName(), width - 10, 10);
-    text("activeStage.index:" + StageManager.getInstance().stages.indexOf(StageManager.getInstance().getActiveStage()), width - 10, 30);
-    text("size():" + StageManager.getInstance().stages.size(), width - 10, 50);
-
-    textSize(11);
-    int YSHIFT = 12;  
-    int ypos = 0;
-    textAlign(LEFT, CENTER);
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    for (Controller controller : StageManager.getInstance().getDefaultStage().getControllers()) {
-      if (controller.title != null) { 
-        text("defaultStage: " + controller.title + 
-          ", posx:" + controller.posx + 
-          ", posy:" + controller.posy
-          , 10, ypos+=YSHIFT);
-      }
-    }
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-    for (Controller controller : StageManager.getInstance().getActiveStage().getControllers()) {
-      if (controller.title != null) {
-        text("activeStage: " + controller.title + 
-          ", parent:" + ((controller.parentController != null) ? controller.parentController.title : "null") + 
-          ", posx:" + controller.posx + 
-          ", posy:" + controller.posy, 
-          10, ypos+=YSHIFT);
-      }
-    }
-    text("----------------------------------------------------", 10, ypos+=YSHIFT);
-  }
-}

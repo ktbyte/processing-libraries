@@ -127,7 +127,9 @@ public class Console implements PConstants {
 		parent.noStroke();
 		parent.fill(50);
 		parent.rect(x + consoleTextBoxWidth, y, SCROLL_BAR_WIDTH, consoleTextBoxHeight, 0, BOX_RONDING, 0, 0);
+		// ??????? create new instance on each frame ????????
 		upBtn = new ArrowButton(x + consoleTextBoxWidth, y, SCROLL_BAR_WIDTH, UP, 0, BOX_RONDING, 0, 0);
+		// ??????? create new instance on each frame ????????
 		downBtn = new ArrowButton(x + consoleTextBoxWidth, y + consoleTextBoxHeight - 20, SCROLL_BAR_WIDTH, DOWN);
 		parent.fill(120);
 		

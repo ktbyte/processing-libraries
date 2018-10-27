@@ -1,40 +1,61 @@
 import ktgui.*;
+import java.util.*;
 
 KTGUI ktgui;
-Button jumpButton;
-Window w1, w2;
+TitleBar titleBar;
+Pane pane;
+Window window;
+PGraphics ug;
+ScrollableTextArea sta;
 
 /**********************************************************************************************************************
  * 
  *********************************************************************************************************************/
 void setup() {
-  size(800, 500);
-  
-  ktgui = new KTGUI(this); // default stage is automatically created
+  size(1200, 600);
+  KTGUI.setDebugControllersFlag(true);
+  ktgui = new KTGUI(this);
 
-  jumpButton = ktgui.createButton("Jump!", 50, 50, 100, 50);
-  jumpButton.addEventAdapter(new KTGUIEventAdapter() {
-    public void onMousePressed() {
-      if (jumpButton.parentController == w2.getPane()) {
-        w1.addController(jumpButton, 0, TOP);
-      } else if (jumpButton.parentController == w1.getPane()) {
-        w2.addController(jumpButton, 0, BOTTOM);
-      }
+  window = new Window(ktgui, "aWindow", 10, 50, 500, 400);
+  window.alignAboutCanvas(CENTER, BOTTOM, 20);
+
+  Button debugButton = new Button(ktgui, "Debug On/Off", 200, 200, 120, 30);
+  debugButton.setBorderRoundings(5, 5, 5, 5);
+  debugButton.addEventAdapter(new KTGUIEventAdapter(){
+    public void onMousePressed(){
+      println("Button has been pressed!");
+      ktgui.setDebugControllersFlag(ktgui.getDebugControllersFlag() ? false : true);
     }
-  }
-  );
+  });
 
-  w1 = ktgui.createWindow("Window_1", 10, 220, 300, 200);
-  w1.alignAboutCanvas(LEFT, BOTTOM);
+  Window otherWindow = new Window(ktgui, "otherWindow", 10, 50, 400, 300);
+  window.addController(otherWindow, CENTER, TOP, 20);
+  otherWindow.addController(debugButton, LEFT, TOP, 10);
 
-  w2 = ktgui.createWindow("Window_2", 400, 220, 300, 200);
-  w2.stackAbout(w1, TOP, CENTER);
-  w2.addController(jumpButton, CENTER, CENTER);
+	sta = new ScrollableTextArea(ktgui, "STA", 20, 20, 300, 150);
+	sta.setBorderRoundings(15, 0, 0, 0);
+	sta.setPadding(20);
+	sta.setTextSize(14);
+	sta.alignAboutCanvas(CENTER, CENTER);
+	sta.appendTextBlock("A first line.", color(20, 20, 200));
+	sta.appendTextBlock("A HashMap: ", color(200, 20, 20));
+	sta.appendTextBlock("stores a collection of objects, each referenced by a key."
+				+ " This is similar to an Array, only instead of accessing elements with "
+				+ "a numeric index, a String is used. (If you are familiar with associative "
+				+ "arrays from other languages, this is the same idea.) The above example "
+				+ "covers basic use, but there's a more extensive example included with the "
+				+ "Processing examples. In addition, for simple pairings of Strings and "
+				+ "integers, Strings and floats, or Strings and Strings, you can now use the "
+				+ "simpler IntDict, FloatDict, and StringDict classes.");
+	sta.appendTextBlock("A third line.", color(50, 150, 0));
+
+  otherWindow.addController(sta, RIGHT, BOTTOM, 0);
 }
 
 /**********************************************************************************************************************
  * 
  *********************************************************************************************************************/
 void draw() {
-  background(170, 220, 170);
+  background(220);
 }
+

@@ -5,16 +5,14 @@ package ktgui;
  ****************************************************************************************************/
 class CloseButton extends Button {
 
-	public CloseButton(KTGUI ktgui, int posx, int posy, int w, int h) {
-		super(ktgui, posx, posy, w, h);
-	}
-
 	public CloseButton(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
-		//super(ktgui, title, posx, posy, w, h);
 		super(ktgui, title, posx, posy, w, h);
+		this.isDragable = false; // just to make sure
 	}
-
+	
+	@Override
 	public void updateGraphics() {
+        super.updateGraphics();
 		pg.beginDraw();
 		pg.rectMode(CORNER);
 		if (isHovered && !isPressed) {
@@ -34,11 +32,32 @@ class CloseButton extends Button {
 		pg.endDraw();
 	}
 
+	/**
+	 * TODO : replace 'closeControllerRecursively' method with 'closeParentWindow' in 
+	 * order to prevent closing ALL controllers up to the 'root'. That behaviour is not
+	 * right - the CloseButton of the Window.TitleBar should close only the parent Window
+	 * and all it's childs (and their childs).
+	 */
+	@Override
 	public void processMousePressed() {
 		super.processMousePressed();
 		if (isPressed) {
-			//closeControllerRecursivelyUpward(parentController); // closeButton --> TitleBar --> Window --> Pane, Button, Button, Window --> TitleBar
-			closeControllerRecursively(this); // closeButton --> TitleBar --> Window --> Pane, Button, Button, Window --> TitleBar
+			closeParent();
 		}
+	}
+	
+	/**
+	 * This method closes all the controllers recursively up to the parent Window
+	 * and then closes all its childs recursively down. 
+	 */
+	@Override
+	public void closeParent() {
+		if (parentController != null) {
+			if(!parentController.getClass().getName().contains("Window")) {
+				parentController.closeParent();
+			}
+			parentController.close();
+		}
+		closeAllChildsRecursively();
 	}
 }

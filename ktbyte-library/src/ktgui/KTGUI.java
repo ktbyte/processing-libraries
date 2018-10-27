@@ -1,9 +1,11 @@
 package ktgui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 
@@ -36,260 +38,426 @@ external class) and using for separating the code <strong><em>only the following
 Drawing inside this method is allowed because mouse events are queued, unless the sketch has called <code>noLoop()</code>.</li>
 <li><code>public void keyEvent(KeyEvent e)</code> Method that&#39;s called when a key event occurs in the parent <em>PApplet.</em> 
 Drawing is allowed because key events are queued, unless the sketch has called <code>noLoop()</code>.</li>
+</ul>
  *********************************************************************************************************************/
-public class KTGUI {
-	private static PApplet					parentPApplet;
-	private StageManager					stageManager;
-	private HashMap<Controller, Integer>	garbageList;
+public class KTGUI implements PConstants {
+    private static PApplet               pa;
+    private HashMap<Controller, Integer> garbageList;
+    public ArrayList<String>             drawCallStack      = new ArrayList<String>();
 
-	public static int						COLOR_FG_HOVERED;
-	public static int						COLOR_FG_PRESSED;
-	public static int						COLOR_FG_PASSIVE;
-	public static int						COLOR_BG_HOVERED;
-	public static int						COLOR_BG_PASSIVE;
-	public static int						COLOR_BG_PRESSED;
-	public static int						TITLE_BAR_HEIGHT;
-	public static int						MENU_BAR_HEIGHT;
-	public static int						BORDER_THICKNESS;
-	public static int						ALIGN_GAP;
-	private boolean							debug;
+    public static int                    COLOR_FG_HOVERED;
+    public static int                    COLOR_FG_PRESSED;
+    public static int                    COLOR_FG_PASSIVE;
+    public static int                    COLOR_BG_HOVERED;
+    public static int                    COLOR_BG_PASSIVE;
+    public static int                    COLOR_BG_PRESSED;
+    public static int                    DEFAULT_COMPONENT_WIDTH;
+    public static int                    DEFAULT_ALIGN_GAP;
+    public static int                    DEFAULT_ROUNDING;
 
-	/*************************************************************************************************************************
-	 * This is a constructor of the KTGUI class.
-	 * It automatically registers the 'draw', 'mouseEvent' and 'keyEvent' methods of this class in PApplet.
-	 ************************************************************************************************************************/
-	public KTGUI(PApplet pa) {
-		System.out.println("Creating the KTGUI instance...");
-		init(pa);
-		System.out.println("Done.\n");
-	}
+    private static boolean               debugControllers   = false;
+    private boolean                      debugDrawCallStack = false;
 
-	private void init(PApplet pa) {
-		KTGUI.parentPApplet = pa;
-		KTGUI.parentPApplet.registerMethod("draw", this);
-		KTGUI.parentPApplet.registerMethod("mouseEvent", this);
-		KTGUI.parentPApplet.registerMethod("keyEvent", this);
+    /*************************************************************************************************************************
+     * This is a constructor of the KTGUI class.
+     * It automatically registers the 'draw', 'mouseEvent' and 'keyEvent' methods of this class in PApplet.
+     ************************************************************************************************************************/
+    public KTGUI(PApplet pa) {
+        debug("\nCreating of the KTGUI instance started.");
+        init(pa);
+        debug("Creating of the KTGUI instance completed.\n");
+    }
 
-		garbageList = new HashMap<Controller, Integer>();
+    private void init(PApplet pa) {
+        debug("\tInitializing of the KTGUI started.");
+        KTGUI.pa = pa;
+        KTGUI.pa.registerMethod("draw", this);
+        debug("\t\t'draw()' method has been registered in parent PApplet.");
+        KTGUI.pa.registerMethod("mouseEvent", this);
+        debug("\t\t'mouseEvent()' method has been registered in parent PApplet.");
+        KTGUI.pa.registerMethod("keyEvent", this);
+        debug("\t\t'keyEvent()' method has been registered in parent PApplet.");
 
-		COLOR_FG_PASSIVE = pa.color(50, 180, 50);
-		COLOR_FG_HOVERED = pa.color(50, 220, 50);
-		COLOR_FG_PRESSED = pa.color(10, 200, 10);
-		COLOR_BG_HOVERED = pa.color(220);
-		COLOR_BG_PASSIVE = pa.color(180);
-		COLOR_BG_PRESSED = pa.color(200);
-		TITLE_BAR_HEIGHT = 14;
-		MENU_BAR_HEIGHT = 20;
-		BORDER_THICKNESS = 3;
-		ALIGN_GAP = 20;
+        garbageList = new HashMap<Controller, Integer>();
+        debug("\t\tGarbage list created.");
 
-		stageManager = StageManager.getInstance();
-		stageManager.init(this);
-	}
+        COLOR_FG_PASSIVE = pa.color(150, 180, 150);
+        COLOR_FG_HOVERED = pa.color(150, 220, 150);
+        COLOR_FG_PRESSED = pa.color(110, 200, 110);
+        COLOR_BG_PASSIVE = pa.color(190);
+        COLOR_BG_HOVERED = pa.color(220);
+        COLOR_BG_PRESSED = pa.color(210);
 
-	public static PApplet getParentPApplet() {
-		return parentPApplet;
-	}
+        DEFAULT_COMPONENT_WIDTH = 16;
+        DEFAULT_ALIGN_GAP = 20;
+        DEFAULT_ROUNDING = 8;
+        debug("\t\tColor and size constants initialized.");
 
-	/*************************************************************************************************************************
-	 * This method is intended to be called <b>automatically</b> at the end of each draw() cycle of the parent PApplet. 
-	 * This way, the KTGUI class automatically updates all the controllers on the <i>default</i> and <i>active</i> stages.
-	 ************************************************************************************************************************/
-	public void draw() {
-		stageManager.getDefaultStage().draw();
-		stageManager.getActiveStage().draw();
-		collectGarbage();
-	}
+        // Call this method once in order to create the singleton StageManager instance now,
+        // and not later when it would be needed
+        StageManager.getInstance();
 
-	@SuppressWarnings("rawtypes") void collectGarbage() {
-		for (Map.Entry me : garbageList.entrySet()) {
-			Controller controller = (Controller) me.getKey();
-			int time = (Integer) me.getValue();
-			if (parentPApplet.millis() - time > 100) {
-				if (controller.parentStage != null) {
-					controller.parentStage.unregisterController(controller);
-				}
-			}
-		}
-	}
+        debug("\tInitializing of the KTGUI completed.");
+    }
 
-	//-------------------------------------------------------------------------------------------------------------------
-	// These are the 'factory' methods
-	//-------------------------------------------------------------------------------------------------------------------
-	public Button createButton(int x, int y, int w, int h) {
-		return new Button(this, x, y, w, h);
-	}
+    public static PApplet getParentPApplet() {
+        return pa;
+    }
 
-	public Button createButton(String title, int x, int y, int w, int h) {
-		return new Button(this, title, x, y, w, h);
-	}
+    /*************************************************************************************************************************
+     * This method is intended to be called <b>automatically</b> at the end of each draw() cycle of the parent PApplet. 
+     * This way, the KTGUI class automatically updates all the controllers on the <i>default</i> and <i>active</i> stages.
+     ************************************************************************************************************************/
+    public void draw() {
+        if (StageManager.getInstance().userStagesExist()) {
+            StageManager.getInstance().getActiveStage().draw();
+        }
+        StageManager.getInstance().getDefaultStage().draw();
 
-	public Slider createSlider(int posx, int posy, int w, int h, int sr, int er) {
-		return new Slider(this, posx, posy, w, h, sr, er);
-	}
-	
-	public Window createWindow(int x, int y, int w, int h) {
-		Window window = new Window(this, x, y, w, h);
-		return window;
-	}
+        collectGarbage();
+        drawDebugInfo();
 
-	public Window createWindow(String title, int x, int y, int w, int h) {
-		Window window = new Window(this, title, x, y, w, h);
-		return window;
-	}
+    }
 
-	public Pane createPane(int x, int y, int w, int h) {
-		Pane pane = new Pane(this, x, y, w, h);
-		return pane;
-	}
+    public static void setDebugControllersFlag(boolean debug) {
+        debugControllers = debug;
+    }
 
-	public Pane createPane(String title, int x, int y, int w, int h) {
-		Pane pane = new Pane(this, title, x, y, w, h);
-		return pane;
-	}
+    public static boolean getDebugControllersFlag() {
+        return debugControllers;
+    }
 
-	/**
-	 * This method 'redirects' the emitted mouse event from PApplet to KTGUI 'transfer' methods.
-	 * This method will be called <b>automatically</b> when the PApplet.mouseEvent is happening.
-	 */
-	public void mouseEvent(MouseEvent e) {
-		switch (e.getAction()) {
-		case MouseEvent.PRESS:
-			this.mousePressed();
-			break;
-		case MouseEvent.RELEASE:
-			this.mouseReleased();
-			break;
-		case MouseEvent.DRAG:
-			this.mouseDragged();
-			break;
-		case MouseEvent.MOVE:
-			this.mouseMoved();
-			break;
-		case MouseEvent.WHEEL:
-			this.mouseWheel(e);
-			break;
-		}
-	}
+    public void setDrawCallStackFlag(boolean debug) {
+        this.debugDrawCallStack = debug;
+    }
 
-	/**
-	 * This method 'redirects' the emitted keyboard event from PApplet to KTGUI 'transfer' methods.
-	 * This method will be called <b>automatically</b> when the PApplet.keyEvent is happening.
-	 */
-	public void keyEvent(KeyEvent e) {
-		switch (e.getAction()) {
-		case KeyEvent.PRESS:
-			this.keyPressed();
-			break;
-		case KeyEvent.RELEASE:
-			this.keyReleased();
-			break;
-		}
-	}
+    void drawDebugTextSplitLine(int x, int y) {
+        pa.text("--------------------------------------------------------------" +
+                "--------------------------------------------------------------",
+                x, y);
+    }
 
-	public void msg(String string) {
-		if (debug)
-			PApplet.println(string);
-	}
+    void drawDebugInfo() {
+        if (debugControllers) {
+            pa.pushStyle();
+            pa.fill(0);
+            pa.textFont(pa.createFont("monospaced", 11));
+            pa.textAlign(LEFT, CENTER);
 
-	/**
-	 * This is a 'transfer' method - it 'redirects' the PApplet.mouseDragged event to KTGUI components (controllers)
-	 */
-	private void mouseDragged() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
-			controller.processMouseDragged();
-		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
-				controller.processMouseDragged();
-			}
-		}
-	}
+            int YSHIFT = 12;
+            int ypos = 0;
 
-	/**
-	 * This is a 'transfer' method - it 'redirects' the PApplet.mousePressed event to KTGUI components (controllers)
-	 */
-	private void mousePressed() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
-			controller.processMousePressed();
-		}
+            /* 
+             * Display debug info of default stage controllers 
+             */
+            drawDebugTextSplitLine(10, ypos += YSHIFT);
+            for (Controller controller : StageManager.getInstance().getDefaultStage().getControllers()) {
+                for (String info : controller.getFullInfoList(0)) {
+                    pa.text(info, 10, ypos += YSHIFT);
+                }
+            }
 
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
-				controller.processMousePressed();
-			}
-		}
-	}
+            /* 
+             * Display debug info of active stage controllers 
+             */
+            drawDebugTextSplitLine(10, ypos += YSHIFT);
+            if (StageManager.getInstance().getActiveStage() != StageManager.getInstance().getDefaultStage()) {
+                for (Controller controller : StageManager.getInstance().getActiveStage().getControllers()) {
+                    for (String info : controller.getFullInfoList(0)) {
+                        pa.text(info, 10, ypos += YSHIFT);
+                    }
+                }
+                drawDebugTextSplitLine(10, ypos += YSHIFT);
+            }
 
-	/**
-	 * This is a 'transfer' method - it 'redirects' the PApplet.mouseReleased event to KTGUI components (controllers)
-	 */
-	private void mouseReleased() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
-			controller.processMouseReleased();
-		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
-				controller.processMouseReleased();
-			}
-		}
-	}
+            /* 
+             * Display the active stage info 
+             */
+            ypos = pa.height - 10;
+            pa.textAlign(LEFT, CENTER);
+            pa.text("aStage.name:" + StageManager.getInstance().getActiveStage().getName(), 10, ypos -= YSHIFT);
+            pa.text("aStage.index:" + StageManager.getInstance().getStages()
+                    .indexOf(StageManager.getInstance().getActiveStage()),
+                    10, ypos -= YSHIFT);
+            pa.text("aStage.controllers.size():" + StageManager.getInstance().getActiveStage().controllers.size(),
+                    10, ypos -= YSHIFT);
+            pa.text("StageManager.getInstance().stages.size():" + StageManager.getInstance().getStages().size(),
+                    10, ypos -= YSHIFT);
+            pa.text("mouseX:mouseY - " + pa.mouseX + ":" + pa.mouseY, 10, ypos -= YSHIFT);
 
-	/***
-	 * This is a 'transfer' method - it 'redirects' the PApplet.mouseMoved event to KTGUI components (controllers)
-	 */
-	private void mouseMoved() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
-			controller.processMouseMoved();
-		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
-				controller.processMouseMoved();
-			}
-		}
-	}
+            pa.popStyle();
+        }
 
-	private void mouseWheel(MouseEvent me) {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
-			controller.processMouseWheel(me);
-		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
-				controller.processMouseWheel(me);
-			}
-		}
-	}
+        /* 
+         * Display the draw() method calls stack 
+         */
+        if (debugDrawCallStack) {
+            pa.pushStyle();
+            pa.fill(0);
+            pa.textFont(pa.createFont("monospaced", 11));
+            pa.textAlign(LEFT, CENTER);
 
-	/**
-	 * This is a 'transfer' method - it 'redirects' the PApplet.keyPressed event to KTGUI components (controllers)
-	 */
-	private void keyPressed() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
-			controller.processKeyPressed();
-		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
-				controller.processKeyPressed();
-			}
-		}
-	}
+            int YSHIFT = 12;
+            int ypos = 0;
+            pa.textAlign(RIGHT, CENTER);
+            for (String msg : drawCallStack) {
+                pa.text(msg, pa.width - 10, ypos += YSHIFT);
+            }
+            // clear message list after each frame
+            drawCallStack = new ArrayList<String>();
+            pa.popStyle();
+        }
+    }
 
-	/**
-	 * This is a 'transfer' method - it 'redirects' the PApplet.keyReleased event to KTGUI components (controllers)
-	 */
-	private void keyReleased() {
-		for (Controller controller : stageManager.getActiveStage().controllers) {
-			controller.processKeyReleased();
-		}
-		if (stageManager.getDefaultStage() != stageManager.getActiveStage()) {
-			for (Controller controller : stageManager.getDefaultStage().controllers) {
-				controller.processKeyReleased();
-			}
-		}
-	}
+    public void addDrawCallStackDebugMessage(String msg) {
+        if (debugDrawCallStack) {
+            drawCallStack.add(msg);
+        }
+    }
 
-	public void addToGarbage(Controller controller, int millis) {
-		garbageList.put(controller, millis);
-	}
+    public void addToGarbage(Controller controller, int millis) {
+        garbageList.put(controller, millis);
+    }
+
+    @SuppressWarnings("rawtypes")
+    void collectGarbage() {
+        for (Map.Entry me : garbageList.entrySet()) {
+            Controller controller = (Controller) me.getKey();
+            int time = (Integer) me.getValue();
+            if (pa.millis() - time > 100) {
+                if (controller.parentStage != null) {
+                    controller.parentStage.unregisterController(controller);
+                } else {
+                    if (controller.parentController != null) {
+                        controller.parentController.detachController(controller);
+                    }
+                }
+            }
+        }
+    }
+
+    //-------------------------------------------------------------------------------------------------------------------
+    // These are the 'factory' methods
+    //-------------------------------------------------------------------------------------------------------------------
+
+    public Button createButton(String title, int x, int y, int w, int h) {
+        return new Button(this, title, x, y, w, h);
+    }
+
+    public Button createButton(int x, int y, int w, int h) {
+        return new Button(this, "A Button", x, y, w, h);
+    }
+
+    public ArrowButton createDirectionButton(String title, int x, int y, int w, int h, int dir) {
+        return new ArrowButton(this, title, x, y, w, h, dir);
+    }
+
+    public ArrowButton createDirectionButton(int x, int y, int w, int h, int dir) {
+        return new ArrowButton(this, "A DirButton", x, y, w, h, dir);
+    }
+
+    public Slider createSlider(String title, int posx, int posy, int w, int h, int sr, int er) {
+        return new Slider(this, title, posx, posy, w, h, sr, er);
+    }
+
+    public Slider createSlider(int posx, int posy, int w, int h, int sr, int er) {
+        return new Slider(this, "A Slider", posx, posy, w, h, sr, er);
+    }
+
+    public Window createWindow(String title, int x, int y, int w, int h) {
+        Window window = new Window(this, title, x, y, w, h);
+        return window;
+    }
+
+    public Window createWindow(int x, int y, int w, int h) {
+        Window window = new Window(this, "A Window", x, y, w, h);
+        return window;
+    }
+
+    public Pane createPane(String title, int x, int y, int w, int h) {
+        Pane pane = new Pane(this, title, x, y, w, h);
+        return pane;
+    }
+
+    public Pane createPane(int x, int y, int w, int h) {
+        Pane pane = new Pane(this, "A Pane", x, y, w, h);
+        return pane;
+    }
+
+    public ScrollBar createScrollBar(int x, int y, int w, int h, int sr, int er) {
+        ScrollBar scrollBar = createScrollBar("A ScrollBar", x, y, w, h, sr, er);
+        return scrollBar;
+    }
+
+    public ScrollBar createScrollBar(String title, int x, int y, int w, int h, int sr, int er) {
+        if (w > h) {
+            if ((w - 2 * h) < 2 * KTGUI.DEFAULT_COMPONENT_WIDTH) {
+                debug("ERROR: The width of the ScrollBar to be created is "
+                        + " too small. As a consequence, the internal slider would have "
+                        + " orthogonal direction. Cannot create ScrollBar. Returning "
+                        + "null reference.");
+                return null;
+            }
+        } else {
+            if ((h - 2 * w) < 2 * KTGUI.DEFAULT_COMPONENT_WIDTH) {
+                debug("ERROR: The height of the ScrollBar to be created is "
+                        + " too small. As a consequence, the internal slider would have "
+                        + " orthogonal direction. Cannot create ScrollBar. Returning "
+                        + "null reference.");
+                return null;
+            }
+        }
+
+        ScrollBar scrollBar = new ScrollBar(this, title, x, y, w, h, sr, er);
+        return scrollBar;
+    }
+
+    public InputTextBox createInputTextBox(String title, int x, int y, int w, int h) {
+        return new InputTextBox(this, title, x, y, w, h);
+    }
+
+    public InputTextBox createInputTextBox(int x, int y, int w, int h) {
+        return createInputTextBox("An InputTextBox", x, y, w, h);
+    }
+
+    /**
+     * This method 'redirects' the emitted mouse event from PApplet to KTGUI 'transfer' methods.
+     * This method will be called <b>automatically</b> when the PApplet.mouseEvent is happening.
+     */
+    public void mouseEvent(MouseEvent e) {
+        switch (e.getAction()) {
+        case MouseEvent.PRESS:
+            this.mousePressed();
+            break;
+        case MouseEvent.RELEASE:
+            this.mouseReleased();
+            break;
+        case MouseEvent.DRAG:
+            this.mouseDragged();
+            break;
+        case MouseEvent.MOVE:
+            this.mouseMoved();
+            break;
+        case MouseEvent.WHEEL:
+            this.mouseWheel(e);
+            break;
+        }
+    }
+
+    /**
+     * This method 'redirects' the emitted keyboard event from PApplet to KTGUI 'transfer' methods.
+     * This method will be called <b>automatically</b> when the PApplet.keyEvent is happening.
+     */
+    public void keyEvent(KeyEvent e) {
+        switch (e.getAction()) {
+        case KeyEvent.PRESS:
+            this.keyPressed();
+            break;
+        case KeyEvent.RELEASE:
+            this.keyReleased();
+            break;
+        }
+    }
+
+    public static void debug(String string) {
+        if (debugControllers)
+            PApplet.println(string);
+    }
+
+    /**
+     * This is a 'transfer' method - it 'redirects' the PApplet.mouseDragged event to KTGUI components (controllers)
+     */
+    private void mouseDragged() {
+        for (Controller controller : StageManager.getInstance().getActiveStage().controllers) {
+            controller.processMouseDragged();
+        }
+        if (StageManager.getInstance().getDefaultStage() != StageManager.getInstance().getActiveStage()) {
+            for (Controller controller : StageManager.getInstance().getDefaultStage().controllers) {
+                controller.processMouseDragged();
+            }
+        }
+    }
+
+    /**
+     * This is a 'transfer' method - it 'redirects' the PApplet.mousePressed event to KTGUI components (controllers)
+     */
+    private void mousePressed() {
+        for (Controller controller : StageManager.getInstance().getActiveStage().controllers) {
+            controller.processMousePressed();
+        }
+
+        if (StageManager.getInstance().getDefaultStage() != StageManager.getInstance().getActiveStage()) {
+            for (Controller controller : StageManager.getInstance().getDefaultStage().controllers) {
+                controller.processMousePressed();
+            }
+        }
+    }
+
+    /**
+     * This is a 'transfer' method - it 'redirects' the PApplet.mouseReleased event to KTGUI components (controllers)
+     */
+    private void mouseReleased() {
+        for (Controller controller : StageManager.getInstance().getActiveStage().controllers) {
+            controller.processMouseReleased();
+        }
+        if (StageManager.getInstance().getDefaultStage() != StageManager.getInstance().getActiveStage()) {
+            for (Controller controller : StageManager.getInstance().getDefaultStage().controllers) {
+                controller.processMouseReleased();
+            }
+        }
+    }
+
+    /***
+     * This is a 'transfer' method - it 'redirects' the PApplet.mouseMoved event to KTGUI components (controllers)
+     */
+    private void mouseMoved() {
+        for (Controller controller : StageManager.getInstance().getActiveStage().controllers) {
+            controller.processMouseMoved();
+        }
+        if (StageManager.getInstance().getDefaultStage() != StageManager.getInstance().getActiveStage()) {
+            for (Controller controller : StageManager.getInstance().getDefaultStage().controllers) {
+                controller.processMouseMoved();
+            }
+        }
+    }
+
+    private void mouseWheel(MouseEvent me) {
+        for (Controller controller : StageManager.getInstance().getActiveStage().controllers) {
+            controller.processMouseWheel(me);
+        }
+        if (StageManager.getInstance().getDefaultStage() != StageManager.getInstance().getActiveStage()) {
+            for (Controller controller : StageManager.getInstance().getDefaultStage().controllers) {
+                controller.processMouseWheel(me);
+            }
+        }
+    }
+
+    /**
+     * This is a 'transfer' method - it 'redirects' the PApplet.keyPressed event to KTGUI components (controllers)
+     */
+    private void keyPressed() {
+        for (Controller controller : StageManager.getInstance().getActiveStage().controllers) {
+            controller.processKeyPressed();
+        }
+        if (StageManager.getInstance().getDefaultStage() != StageManager.getInstance().getActiveStage()) {
+            for (Controller controller : StageManager.getInstance().getDefaultStage().controllers) {
+                controller.processKeyPressed();
+            }
+        }
+    }
+
+    /**
+     * This is a 'transfer' method - it 'redirects' the PApplet.keyReleased event to KTGUI components (controllers)
+     */
+    private void keyReleased() {
+        for (Controller controller : StageManager.getInstance().getActiveStage().controllers) {
+            controller.processKeyReleased();
+        }
+        if (StageManager.getInstance().getDefaultStage() != StageManager.getInstance().getActiveStage()) {
+            for (Controller controller : StageManager.getInstance().getDefaultStage().controllers) {
+                controller.processKeyReleased();
+            }
+        }
+    }
 
 }

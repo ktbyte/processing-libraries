@@ -14,7 +14,9 @@ public abstract class KTGUIEventAdapter {
 
 	public void onMouseDragged() {}
 
-	public void onAnyKeyReleased() {}
+    public void onMouseWheel(int count) {}
+
+    public void onAnyKeyReleased() {}
 
 	public void onAnyKeyPressed() {}
 
@@ -26,5 +28,5 @@ public abstract class KTGUIEventAdapter {
 		PApplet.println(string);
 	}
 
-
+    
 }
