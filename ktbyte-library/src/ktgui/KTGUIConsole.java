@@ -32,7 +32,7 @@ public class KTGUIConsole extends Controller {
         textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
         textArea.addEventAdapter(new KTGUIEventAdapter() {
             public void onMouseWheel(int count) {
-                
+
             }
         });
         attachController(textArea);
@@ -45,11 +45,11 @@ public class KTGUIConsole extends Controller {
                 0, 100);
         scrollBar.addEventAdapter(new KTGUIEventAdapter() {
             public void onMouseDragged() {
-                
+
             }
-            
+
             public void onMousePressed() {
-                
+
             }
         });
         attachController(scrollBar);
@@ -111,7 +111,7 @@ public class KTGUIConsole extends Controller {
         inputBox.setText("");
         dict.put(lastVariableName, textInput);
         //updateScrollBar();
-        
+
         // notify listeners about onEnterKeyPressedEvent
         for (KTGUIEventAdapter adapter : adapters) {
             adapter.onConsoleInput(textInput, lastVariableName);
@@ -121,10 +121,10 @@ public class KTGUIConsole extends Controller {
     private void updateScrollBar() {
         //scrollBar.setRangeEnd(textArea.getLineNumbers());
         scrollBar.setRangeEnd(textArea.getMaximumAllowedPositionOfStartLine());
-        scrollBar.setValue((int)(scrollBar.getRangeEnd() - getStartLinePosition()));
+        scrollBar.setValue((int) (scrollBar.getRangeEnd() - getStartLinePosition()));
     }
 
-        public void setInputTextSize(int size) {
+    public void setInputTextSize(int size) {
         inputBox.setTextSize(size);
     }
 
@@ -144,7 +144,7 @@ public class KTGUIConsole extends Controller {
     public int getStartLinePosition() {
         return textArea.getStartLinePosition();
     }
-    
+
     public void setInputTextColor(int c) {
         inputTextColor = c;
     }
@@ -182,6 +182,5 @@ public class KTGUIConsole extends Controller {
             textBlock = getBlock(getBlockCount() - 1);
         return textBlock;
     }
-
 
 }
