@@ -1,8 +1,8 @@
 import ktbyte.wordcram.*;
 
 String inputTextFile = "Obama.txt";
-WordFrequency table;
-PFont tnr;	// The font to be used
+WordStorage storage;
+PFont font;	// The font to be used
 int N = 150;	// The number of words to be displayed
 
 void setup() {
@@ -20,27 +20,27 @@ void setup() {
   
   // display stuff
   size(800, 800);
-  tnr = createFont("Times New Roman", 120);
-  textFont(tnr);
+  font = createFont("Times New Roman", 120);
+  textFont(font);
   textSize(24);
   noLoop();  
 
-  // Create the word frequency table
-  table = new WordFrequency(this, tokens);
-  //println("Max frequency:" + table.maxFrequency());  
-  //table.arrange(N);
-  //table.sort();
-  //table.tabulate();
-  //table.counts();
+  // Create the word frequency storage
+  storage = new WordStorage(this, tokens);
+  //println("Max frequency:" + storage.maxFrequency());  
+  //storage.arrange(N);
+  //storage.sort();
+  //storage.counts();
+  
 } 
 
 void draw() {
   background(255);
-  //table.display(N);
-  //table.tabulate(N);
+  //storage.display(N);
+  //storage.tabulate(N);
 } 
 
 // The start of building interaction ...
 void mouseClicked() {
-  //table.interact(mouseX, mouseY);
+  //storage.interact(mouseX, mouseY);
 } 

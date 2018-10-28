@@ -28,7 +28,7 @@ public class Word implements Comparable<Word> {
     }
     
     public int compareTo(Word word) {
-        return word.getFrequency() - frequency;
+        return frequency - word.getFrequency();
     }
     
     public String toString() {
