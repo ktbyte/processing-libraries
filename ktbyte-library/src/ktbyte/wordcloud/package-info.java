@@ -5,4 +5,4 @@
  * @author Sam
  *
  */
-package ktbyte.wordcram;
+package ktbyte.wordcloud;

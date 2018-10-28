@@ -1,4 +1,4 @@
-package ktbyte.wordcram;
+package ktbyte.wordcloud;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +15,8 @@ public class WordStorage {
     ArrayList<Word> wordFrequencyTable;
     String[]        stopWords;
     PApplet         pa;
-    
+    int             maxFrequency = 1;
+
     // Constructor
     public WordStorage(PApplet pa) {
         this.pa = pa;
@@ -34,36 +35,38 @@ public class WordStorage {
         try {
             stopWords = pa.loadStrings(fileName);
         } catch (Exception e) {
-            System.out.println("Cannot open file [" + fileName + "]");    
+            System.out.println("Cannot open file [" + fileName + "]");
         }
     }
-    
+
     public void initStorage(String[] words) {
-        PApplet.println("Start importing words ....");
+        //PApplet.println("Start importing words ....");
         // Compute the wordFrequency table using tokens
         for (int i = 0; i < words.length; i++) {
             String word = words[i];
-            System.out.printf("[%-5d]:", i);
-            System.out.printf("[%20s]%-5s", word, ",");
+            //System.out.printf("[%-5d]:", i);
+            //System.out.printf("[%20s]%-5s", word, ",");
             if (!isStopWord(word)) {
                 // See if token t is already a known word
                 int index = search(word, wordFrequencyTable);
                 if (index >= 0) {
                     Word aWord = wordFrequencyTable.get(index);
                     aWord.incrementFrequency();
-                    PApplet.print(" " + aWord.getFrequency() + "th occurance ");
+                    if (aWord.getFrequency() > maxFrequency)
+                        maxFrequency = aWord.getFrequency();
+                    // PApplet.print(" " + aWord.getFrequency() + "th occurance ");
                 } else {
                     wordFrequencyTable.add(new Word(word));
-                    PApplet.print(" first occurance ");
+                    //PApplet.print(" first occurance ");
                 }
-                PApplet.println(" found, adding.");
+                //PApplet.println(" found, adding.");
             } else {
-                PApplet.println(" is stop word ... skipping.");
+                //PApplet.println(" is stop word ... skipping.");
             }
         }
-        PApplet.println("Stop importing words.");
+        //PApplet.println("Stop importing words.");
     }
-    
+
     public ArrayList<Word> getTable() {
         return wordFrequencyTable;
     }
@@ -75,29 +78,29 @@ public class WordStorage {
         }
     }
 
-//    public String[] getSamples() {
-////        String[] samples = new String[wordFrequencyTable.size()];
-////        
-////        for (int i = 0; i < wordFrequencyTable.size(); i++) {
-////            Word word = wordFrequencyTable.get(i);
-////            samples[i] = word.getText();
-////            i++;
-////        }
-//        return (String[]) wordFrequencyTable.toArray();
+    //    public String[] getSamples() {
+    ////        String[] samples = new String[wordFrequencyTable.size()];
+    ////        
+    ////        for (int i = 0; i < wordFrequencyTable.size(); i++) {
+    ////            Word word = wordFrequencyTable.get(i);
+    ////            samples[i] = word.getText();
+    ////            i++;
+    ////        }
+    //        return (String[]) wordFrequencyTable.toArray();
+    //    }
+
+//    public int[] counts() {
+//        int[] arr = new int[wordFrequencyTable.size()];
+//        for (int i = 0; i < arr.length; i++) {
+//            Word word = wordFrequencyTable.get(i);
+//            int freq = word.getFrequency();
+//            arr[i++] = freq;
+//        }
+//        return arr;
 //    }
 
-    public int[] counts() {
-        int[] arr = new int[wordFrequencyTable.size()];
-        for (int i = 0; i < arr.length; i++) {
-            Word word = wordFrequencyTable.get(i);
-            int freq = word.getFrequency();
-            arr[i++] = freq;
-        }
-        return arr;
-    }
-
-    public int maxFrequency() {
-        return PApplet.max(counts());
+    public int getMaxFrequency() {
+        return maxFrequency;
     }
 
     // search for word in wordList.
@@ -126,6 +129,15 @@ public class WordStorage {
             @Override
             public int compare(Word w1, Word w2) {
                 return w1.compareTo(w2);
+            }
+        });
+    }
+    
+    public void sortDescending() {
+        Collections.sort(wordFrequencyTable, new Comparator<Word>() {
+            @Override
+            public int compare(Word w1, Word w2) {
+                return w2.compareTo(w1);
             }
         });
     }

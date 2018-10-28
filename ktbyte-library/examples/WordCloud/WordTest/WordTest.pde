@@ -1,4 +1,4 @@
-import ktbyte.wordcram.*;
+import ktbyte.wordcloud.*;
 
 String inputTextFile = "Obama.txt";
 WordStorage storage;
@@ -27,10 +27,10 @@ void setup() {
 
   // Create the word frequency storage
   storage = new WordStorage(this, tokens);
-  //println("Max frequency:" + storage.maxFrequency());  
+  println("Max frequency:" + storage.getMaxFrequency());  
   //storage.arrange(N);
-  //storage.sort();
-  //storage.counts();
+  storage.sortDescending();
+  storage.printTable();
   
 } 
 
