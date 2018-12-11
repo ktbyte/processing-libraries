@@ -1,4 +1,4 @@
-package ktgui;
+package ktbyte.ktgui;
 
 public class Bar extends Controller {
 
