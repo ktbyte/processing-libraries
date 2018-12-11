@@ -699,9 +699,6 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 		if (isActive) {
 			if (isHovered) {
 
-				isPressed = true;
-				isFocused = true;
-
 				// transfer mousePressed event to child controllers
 				for (Controller child : controllers) {
 					child.processMousePressed();
@@ -711,6 +708,9 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				if (isAnyChildPressed()) {
 					isPressed = isFocused = isHovered = false;
 					return;
+				} else {
+					isPressed = true;
+					isFocused = true;
 				}
 
 				// process mousePressed event by own means
@@ -733,14 +733,17 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	@Override
 	public void processMouseReleased() {
 		if (isActive) {
-			if (isHovered) {
-				isPressed = false;
+			
+			isPressed = false;
+			isFocused = false;
 
-				// transfer mouseReleased event to child controllers
-				for (Controller child : controllers) {
-					child.processMouseReleased();
-				}
-				// process mouseReleased event by own means
+			// transfer mouseReleased event to child controllers
+			for (Controller child : controllers) {
+				child.processMouseReleased();
+			}
+			
+			// process mouseReleased event by own means
+			if (isHovered) {
 				for (KTGUIEventAdapter adapter : adapters) {
 					adapter.onMouseReleased();
 				}
