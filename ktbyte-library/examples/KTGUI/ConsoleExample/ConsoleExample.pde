@@ -1,4 +1,4 @@
-import ktgui.*;
+import ktbyte.gui.*;
 
 KTGUI ktgui;
 KTGUIConsole console;

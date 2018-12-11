@@ -1,4 +1,4 @@
-import ktgui.*;
+import ktbyte.gui.*;
 import java.util.*;
 
 KTGUI ktgui;
