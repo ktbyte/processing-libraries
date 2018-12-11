@@ -1,5 +1,4 @@
-import java.util.*;
-import ktgui.*;
+import ktbyte.gui.*;
 
 KTGUI ktgui;
 Button btn;

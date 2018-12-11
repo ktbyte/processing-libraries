@@ -1,4 +1,4 @@
-package ktgui;
+package ktbyte.gui;
 
 public class ScrollBar extends Controller {
 

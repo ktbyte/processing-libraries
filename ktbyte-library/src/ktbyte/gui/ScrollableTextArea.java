@@ -1,4 +1,4 @@
-package ktgui;
+package ktbyte.gui;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class ScrollableTextArea extends Controller {
         pg.beginDraw();
         pg.pushStyle();
 
-        if (isFocused) {
+        if (isSelected(this)) {
             pg.fill(bgPressedColor);
             pg.stroke(50);
             pg.strokeWeight(3f);
@@ -68,7 +68,7 @@ public class ScrollableTextArea extends Controller {
     }
 
     public void mouseScrolled(int mouseWheelDelta) {
-        if (isFocused) {
+        if (isSelected(this)) {
             if (mouseWheelDelta < 0) {
                 if (startLineNumber > 0) {
                     decrementStartLine();

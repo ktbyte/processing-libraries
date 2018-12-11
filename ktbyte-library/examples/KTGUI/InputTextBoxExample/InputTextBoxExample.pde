@@ -1,4 +1,4 @@
-import ktgui.*;
+import ktbyte.gui.*;
 
 InputTextBox textBox1, textBox2;
 KTGUI ktgui;

@@ -1,4 +1,4 @@
-package ktgui;
+package ktbyte.gui;
 
 public class ArrowButton extends Controller {
 
@@ -24,7 +24,7 @@ public class ArrowButton extends Controller {
 			pg.fill(fgPassiveColor);
 		}
 		// indicate whether the controller is currently selected
-		if(isFocused) {
+		if(isSelected(this)) {
 		    pg.strokeWeight(2f);
 		} else {
 		    pg.strokeWeight(1f);

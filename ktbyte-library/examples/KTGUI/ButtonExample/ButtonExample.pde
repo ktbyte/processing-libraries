@@ -1,4 +1,4 @@
-import ktgui.*;
+import ktbyte.gui.*;
 
 KTGUI ktgui;
 Button button, changeStateButton;
@@ -38,6 +38,7 @@ void setup() {
   changeStateButton.isDragable = false;
   changeStateButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
+      println("The changeStateButton is pressed!");
       button.isDragable = !button.isDragable;
       txt = "Try to drag again";
       button.setPassiveColor( button.isDragable ? color(50, 200, 50) : color(200, 100, 150) );
