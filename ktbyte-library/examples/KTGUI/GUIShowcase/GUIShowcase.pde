@@ -1,5 +1,5 @@
 import java.util.*;
-import ktbyte.ktgui.*;
+import ktbyte.gui.*;
 
 KTGUI ktgui;
 Button jumpButton, anotherButton, nextStageBtn;

@@ -1,4 +1,4 @@
-package ktbyte.ktgui;
+package ktbyte.gui;
 
 public class TitleBar extends Bar {
 

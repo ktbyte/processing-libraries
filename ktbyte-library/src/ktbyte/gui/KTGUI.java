@@ -1,4 +1,4 @@
-package ktbyte.ktgui;
+package ktbyte.gui;
 
 import java.util.ArrayList;
 import java.util.HashMap;

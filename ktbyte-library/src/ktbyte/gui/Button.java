@@ -1,4 +1,4 @@
-package ktbyte.ktgui;
+package ktbyte.gui;
 
 /**********************************************************************************************************************
  * This is a KTGUI component (controller).
