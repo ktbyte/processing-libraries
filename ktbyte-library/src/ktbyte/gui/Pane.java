@@ -14,9 +14,9 @@ public class Pane extends Controller {
         super.updateGraphics();
         pg.beginDraw();
         pg.background(200, 100);
-        if (isFocused) {
+        if (isSelected(this)) {
             pg.strokeWeight(2f);
-        } else if (!isFocused) {
+        } else {
             pg.strokeWeight(1f);
         }
         pg.rectMode(CORNER);

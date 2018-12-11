@@ -30,7 +30,7 @@ public class InputTextBox extends Controller {
     private void updateTextBox() {
         pg.beginDraw();
         pg.pushStyle();
-        if (isFocused) {
+        if (isSelected(this)) {
             pg.fill(bgPressedColor);
             pg.stroke(50);
             pg.strokeWeight(3f);
@@ -49,7 +49,7 @@ public class InputTextBox extends Controller {
     }
 
     private void updateBlinkingCursorGraphics() {
-        if (isFocused) {
+        if (isSelected(this)) {
             if (pa.frameCount % 60 < 30) {
                 // update the parent PApplet's textSize value in order to accurately calculate text width
                 pa.textSize(this.textSize);
@@ -69,23 +69,23 @@ public class InputTextBox extends Controller {
 
         if (isPressed) {
             // clear text only if this input box was not focused
-            if (!isFocused) {
+            if (!isSelected(this)) {
                 setText("");
             }
             // mark it as focused
-            isFocused = true;
+            //isFocused = true;
             // notify listeners
             for (KTGUIEventAdapter adapter : adapters) {
                 adapter.onMousePressed();
             }
         } else {
-            isFocused = false;
+            //isFocused = false;
         }
     }
 
     @Override
     public void processKeyPressed() {
-        if (!isFocused) {
+        if (!isSelected(this)) {
             return;
         }
 
@@ -104,7 +104,7 @@ public class InputTextBox extends Controller {
     }
 
     public void setFocused(boolean value) {
-        isFocused = value;
+        //isFocused = value;
     }
     
     /**

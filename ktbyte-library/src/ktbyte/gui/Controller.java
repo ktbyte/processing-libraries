@@ -24,6 +24,8 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	public Controller				parentController	= null;
 	public Stage					parentStage			= null;
 
+	public static Controller		selectedController	= null;
+
 	// This is the Image that holds controller's own 'internal' shape representation.
 	public PGraphics				pg;
 	// This is the Image that holds custom (additional), user-defined representation 
@@ -93,13 +95,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			child.draw();
 
 			pg.beginDraw();
-			ktgui.drawCallStack
-					.add("pg.image(" +
-							child.title + ").getGraphics: " + child.posx
-							+ ", " + child.posy + "-'  ");
-			ktgui.drawCallStack
-					.add("(" + child.title + ").apos:" + child.getAbsolutePosX()
-							+ ", " + child.getAbsolutePosY() + "-'    ");
+			ktgui.drawCallStack.add("pg.image(" + child.title + ").getGraphics: " + child.posx +
+					", " + child.posy + "-'  ");
+			ktgui.drawCallStack.add("(" + child.title + ").apos:" + child.getAbsolutePosX() +
+					", " + child.getAbsolutePosY() + "-'    ");
 			pg.image(child.getGraphics(), child.posx, child.posy);
 			pg.endDraw();
 		}
@@ -706,11 +705,13 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 				// prevent mouse event processing if any of the childs are pressed
 				if (isAnyChildPressed()) {
-					isPressed = isFocused = isHovered = false;
+					//isPressed = isFocused = isHovered = false;
+					isPressed = isHovered = false;
 					return;
 				} else {
 					isPressed = true;
-					isFocused = true;
+					//isFocused = true;
+					selectedController = this;
 				}
 
 				// process mousePressed event by own means
@@ -733,15 +734,15 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 	@Override
 	public void processMouseReleased() {
 		if (isActive) {
-			
+
 			isPressed = false;
-			isFocused = false;
+			//isFocused = false;
 
 			// transfer mouseReleased event to child controllers
 			for (Controller child : controllers) {
 				child.processMouseReleased();
 			}
-			
+
 			// process mouseReleased event by own means
 			if (isHovered) {
 				for (KTGUIEventAdapter adapter : adapters) {
@@ -805,6 +806,10 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				child.processKeyReleased();
 			}
 		}
+	}
+
+	public boolean isSelected(Controller controller) {
+		return selectedController == (Controller) controller;
 	}
 
 	@Override

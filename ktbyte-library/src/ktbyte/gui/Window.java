@@ -23,7 +23,7 @@ public class Window extends Controller {
 		pg.stroke(0);
 		pg.noFill();
 		pg.rectMode(CORNER);
-		if(isFocused) {
+		if(isSelected(this)) {
 		    pg.strokeWeight(3f);
 		} else {
 		    pg.strokeWeight(1f);
@@ -47,7 +47,8 @@ public class Window extends Controller {
             }
 
             // process mousePressed event by own means
-            isPressed = isFocused = isHovered;
+            //isPressed = isFocused = isHovered;
+            isPressed = isHovered;
             if (isPressed) {
                 for (KTGUIEventAdapter adapter : adapters) {
                     adapter.onMousePressed();

@@ -24,9 +24,9 @@ public class Button extends Controller {
 			pg.fill(fgPassiveColor);
 		}
 		// indicate whether the controller is currently selected
-		if (isFocused) {
+		if (isSelected(this)) {
 			pg.strokeWeight(2f);
-		} else if (!isFocused) {
+		} else {
 			pg.strokeWeight(1f);
 		}
 		pg.rect(0, 0, w, h, r1, r2, r3, r4);
