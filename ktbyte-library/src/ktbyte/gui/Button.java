@@ -6,7 +6,10 @@ package ktbyte.gui;
  * The object of this class can be 'Pressed', 'Hovered', 'Released' and 'Dragged'.
  *********************************************************************************************************************/
 public class Button extends Controller {
-
+	/**
+	 * FIX : all button emitting the 'mouseRelease' event ??? 
+	 * 
+	 */
     public Button(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
         super(ktgui, title, posx, posy, w, h);
     }
