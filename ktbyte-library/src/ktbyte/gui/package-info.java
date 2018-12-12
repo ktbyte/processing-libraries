@@ -1,4 +1,5 @@
 /**
- * Provides the classes necessary to create different GUI elements 
+ * The package <b>ktgui</b> contains classes that implements the event 'transferring' from PApplet to the controllers
+ *  
  */
 package ktbyte.gui;

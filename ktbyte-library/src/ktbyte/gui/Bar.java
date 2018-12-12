@@ -1,4 +1,4 @@
-package ktgui;
+package ktbyte.gui;
 
 public class Bar extends Controller {
 
@@ -16,7 +16,7 @@ public class Bar extends Controller {
 		pg.fill(bgPassiveColor);
         pg.stroke(0);
         pg.rectMode(CORNER);
-        if(isFocused) {
+        if(isSelected(this)) {
             pg.strokeWeight(3f);
         } else {
             pg.strokeWeight(1f);

@@ -1,5 +1,5 @@
 
-import ktgui.*;
+import ktbyte.gui.*;
 
 KTGUI ktgui;
 ScrollableTextArea sta;
