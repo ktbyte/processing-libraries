@@ -1,4 +1,4 @@
-package ktgui;
+package ktbyte.gui;
 
 class WindowPane extends Pane {
 	Window parentWindow;
