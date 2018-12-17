@@ -34,7 +34,6 @@ void draw() {
 	fill(0);
 	text("Click on text area to make it active.", width * 0.5, 30);
 	text("Use mouse wheel or '+'/'-' keys.", width * 0.5, 50);
-	surface.setTitle(mouseX + ":" + mouseY);
 }
 
 void keyPressed() {

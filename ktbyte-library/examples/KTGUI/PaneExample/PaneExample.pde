@@ -10,7 +10,6 @@ float p1y, p2x;
 void setup() {
   size(1000, 500);
   ktgui = new KTGUI(this);
-  ktgui.setDebugControllersFlag(false);
 
   pane1 = ktgui.createPane(0, 0, 300, 300);
   pane1.setBorderRoundings(10, 10, 10, 10);
@@ -52,7 +51,7 @@ void setup() {
   dbgBtn.alignAboutCanvas(CENTER, BOTTOM);
   dbgBtn.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      ktgui.setDebugControllersFlag(!ktgui.getDebugControllersFlag());
+
     }
   });
 
