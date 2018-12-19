@@ -374,9 +374,12 @@ ${line}
 			<include name="**/SliderHandleExample/**" />
 			<include name="**/WindowExample/**" />
 			<include name="**/KTSoundCipher_*/**" />
-			<include name="**/Console_*/**" />
 			<include name="**/SoundFile_*/**" />
+			<include name="**/SpriteBasic/**" />
+			<!-- 
+			<include name="**/Console_*/**" />
 			<include name="**/TextBox_*/**" />
+			-->
 		</dirset>
 		<property name="examples.list" refid="examples.contents" />
 		<foreach list="${examples.list}" target="addExamples" param="exampleDir" delimiter=";">

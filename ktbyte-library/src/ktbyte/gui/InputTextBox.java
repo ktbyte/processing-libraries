@@ -65,21 +65,10 @@ public class InputTextBox extends Controller {
 
     @Override
     public void processMousePressed() {
-        isPressed = isHovered;
-
-        if (isPressed) {
-            // clear text only if this input box was not focused
-            if (!isSelected(this)) {
-                setText("");
-            }
-            // mark it as focused
-            //isFocused = true;
-            // notify listeners
-            for (KTGUIEventAdapter adapter : adapters) {
-                adapter.onMousePressed();
-            }
-        } else {
-            //isFocused = false;
+    	super.processMousePressed();
+        // clear text only if this input box was not focused
+        if (isSelected(this)) {
+            setText("");
         }
     }
 
@@ -156,7 +145,18 @@ public class InputTextBox extends Controller {
             }
             sb.append(textInput.charAt(i));
         }
-        return sb.reverse().toString();
+        return reverse(sb.toString());
     }
-
+    
+    private String reverse(String input) {
+    	char[] inChars = new char[input.length()]; 
+    	input.getChars(0, input.length(), inChars, 0);
+    	
+    	char[] outChars = new char[inChars.length];
+    	for(int i = inChars.length; i > 0; i--) {
+    		outChars[i-1] = inChars[inChars.length - i];
+    	}
+    	
+    	return String.valueOf(outChars).toString();
+    }
 }

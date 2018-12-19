@@ -23,7 +23,7 @@ void setup() {
   dbgButton.alignAboutCanvas(CENTER, BOTTOM);
   dbgButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      ktgui.setDebugControllersFlag(!ktgui.getDebugControllersFlag());
+
     }
   }
   );
@@ -33,7 +33,6 @@ void setup() {
   nextStageBtn.alignAboutCanvas(RIGHT, BOTTOM);
   nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      msg("Callback message: The Next-Stage-Button was pressed!");
       StageManager.getInstance().goToNextStage();
     }
   }
@@ -44,7 +43,6 @@ void setup() {
   anotherButton.alignAboutCanvas(LEFT, BOTTOM);
   anotherButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      msg("Callback message: The anotherButton (goToStage(1)) was pressed!");
       StageManager.getInstance().goToStage(1);
     }
   }
@@ -66,7 +64,6 @@ void setup() {
   jumpButton = ktgui.createButton("Jump!", 50, 50, 100, 50);
   jumpButton.addEventAdapter(new KTGUIEventAdapter() {
     public void onMousePressed() {
-      msg("Callback message: The Jumping Button was pressed!");
       if (jumpButton.parentController == w3.getPane()) {
         //w2.attachController(jumpButton);
         //w2.addController(jumpButton, 0, TOP);
@@ -149,7 +146,6 @@ void setup() {
 
   StageManager.getInstance().goToStage(s3);
 
-  msg(w2.getPane().w + ":" + w2.getPane().h);
 }
 
 /**********************************************************************************************************************
@@ -220,9 +216,4 @@ void updateSecondWindowCanvas() {
   w2.getPane().updateUserDefinedGraphics(g);
 }
 
-void msg(String msg) {
-  if (ktgui.getDebugControllersFlag()) {
-    println(msg);
-  }
-}
 

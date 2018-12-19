@@ -6,7 +6,6 @@ Stage s1, s2;
 
 void setup() {
   size(1000, 800);
-  KTGUI.setDebugControllersFlag(true);
   ktgui = new KTGUI(this);
 
   console = new KTGUIConsole(ktgui, "A Console", 200, 200, 600, 400);
