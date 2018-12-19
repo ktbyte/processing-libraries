@@ -100,7 +100,7 @@ public class Sprite {
 
 	// adjust the direction of the PImage of the Sprite
 	// without changing the orientation of the Sprite
-	void frontAngle(float degrees) {
+	public void frontAngle(float degrees) {
 		float newFront = PApplet.radians(degrees);
 
 		// movement done from this direction from now on
@@ -112,7 +112,7 @@ public class Sprite {
 	// set rectangular hitbox of given size
 	// h is along the front-back axis
 	// w is along the perpendicular axis
-	void setRectHitbox(float w, float h) {
+	public void setRectHitbox(float w, float h) {
 		_hitbox = new PVector[] {
 				new PVector(-w / 2, h / 2),
 				new PVector(-w / 2, -h / 2),
@@ -122,33 +122,33 @@ public class Sprite {
 	}
 
 	// set rectangular hitbox of size based on image
-	void resetRectHitbox() {
+	public void resetRectHitbox() {
 		setRectHitbox(_w, _h);
 	}
 
 	// set circular hitbox of given size
-	void setRoundHitbox(float r) {
+	public void setRoundHitbox(float r) {
 		_hitbox = new PVector[] {
 				new PVector(r, r * 2)
 		};
 	}
 
 	// set circular hitbox based on image size
-	void resetRoundHitbox() {
+	public void resetRoundHitbox() {
 		setRoundHitbox((_w + _h) / 4);
 	}
 
 	// recenter hitbox relative to center of image
-	void setHitboxCenter(float x, float y) {
+	public void setHitboxCenter(float x, float y) {
 		_hitboxCenter = new PVector(x, y);
 	}
 
 	// recenter hitbox to exactly center of image
-	void resetHitboxCenter() {
+	public void resetHitboxCenter() {
 		_hitboxCenter = new PVector(0, 0);
 	}
 
-	void setHitboxPoints(PVector[] array) {
+	public void setHitboxPoints(PVector[] array) {
 		if (array.length > 0) {
 			boolean valid = true;
 			for (PVector pv : array)
@@ -165,8 +165,8 @@ public class Sprite {
 	}
 
 	// change the color of a Sprite created without an image
-	void setColor(float r, float g, float b) {
-		color c = pa.color(r, g, b);
+	public void setColor(float r, float g, float b) {
+		int c = pa.color(r, g, b);
 		for (int x = 0; x < _img.width; x++) {
 			for (int y = 0; y < _img.height; y++) {
 				_img.set(x, y, c);
@@ -175,201 +175,201 @@ public class Sprite {
 	}
 
 	// flips Sprite image across its X axis
-	void flip() {
+	public void flip() {
 		_flipped = !_flipped;
 	}
 
 	// turn the specified number of degrees
-	void turn(float degrees) {
-		_rotVector.rotate(radians(degrees));
+	public void turn(float degrees) {
+		_rotVector.rotate(PApplet.radians(degrees));
 	}
 
 	// turn to the specified (x, y) location
-	void turnToPoint(float x, float y) {
+	public void turnToPoint(float x, float y) {
 		_rotVector.set(x - _x, y - _y, 0);
 		_rotVector.setMag(1);
 	}
 
 	// turn to the specified angle
-	void turnToDir(float angle) {
-		float radian = radians(angle);
-		_rotVector.set(cos(radian), sin(radian));
+	public void turnToDir(float angle) {
+		float radian = PApplet.radians(angle);
+		_rotVector.set(PApplet.cos(radian), PApplet.sin(radian));
 		_rotVector.setMag(1);
 	}
 
 	// turn to the specified Sprite s
-	void turnToSprite(Sprite s) {
+	public void turnToSprite(Sprite s) {
 		turnToPoint(s._x, s._y);
 	}
 
 	// move sprite to location (x, y)
-	void moveToPoint(float x, float y) {
+	public void moveToPoint(float x, float y) {
 		_x = x;
 		_y = y;
 	}
 
 	// move sprite to location of Sprite s
-	void moveToSprite(Sprite s) {
+	public void moveToSprite(Sprite s) {
 		_x = s._x;
 		_y = s._y;
 	}
 
 	// move in the X direction by the specified amount 
-	void moveX(float x) {
+	public void moveX(float x) {
 		_x += x;
 	}
 
 	// move in the Y direction by the specified amount 
-	void moveY(float y) {
+	public void moveY(float y) {
 		_y += y;
 	}
 
-	void moveXY(float dx, float dy) {
+	public void moveXY(float dx, float dy) {
 		_x += dx;
 		_y += dy;
 	}
 
 	// move forward in the direction the sprite is facing
 	// by the specified number of steps (pixels)
-	void forward(float steps) {
+	public void forward(float steps) {
 		_x += _rotVector.x * steps;
 		_y += _rotVector.y * steps;
 	}
 
 	// move 90 degree clockwise from the direction
 	// the sprite is facing by the specified number of steps (pixels)
-	void sideStep(float steps) {
-		_rotVector.rotate(PI / 2);
+	public void sideStep(float steps) {
+		_rotVector.rotate(PApplet.PI / 2);
 		_x += _rotVector.x * steps;
 		_y += _rotVector.y * steps;
-		_rotVector.rotate(-PI / 2);
+		_rotVector.rotate(-PApplet.PI / 2);
 	}
 
 	// draw the Sprite. This function
 	// should be called in the void draw() function
 	void display() {
-		pushMatrix();
-		pushStyle();
+		pa.pushMatrix();
+		pa.pushStyle();
 
-		translate(_x, _y);
-		rotate(_rotVector.heading() - _front);
+		pa.translate(_x, _y);
+		pa.rotate(_rotVector.heading() - _front);
 		if (_flipped)
-			scale(-1, 1);
-		imageMode(CENTER);
-		image(_img, 0, 0, _w, _h);
+			pa.scale(-1, 1);
+		pa.imageMode(PApplet.CENTER);
+		pa.image(_img, 0, 0, _w, _h);
 
-		popStyle();
-		popMatrix();
+		pa.popStyle();
+		pa.popMatrix();
 	}
 
-	void displayHitbox() {
+	public void displayHitbox() {
 		PVector cen = _getCenter();
 
-		pushStyle();
-		stroke(255, 0, 0);
-		strokeWeight(5);
-		noFill();
+		pa.pushStyle();
+		pa.stroke(255, 0, 0);
+		pa.strokeWeight(5);
+		pa.noFill();
 
 		if (_hitbox.length == 1) {
-			ellipseMode(CENTER);
-			ellipse(cen.x, cen.y, _hitbox[0].y, _hitbox[0].y);
+			pa.ellipseMode(PApplet.CENTER);
+			pa.ellipse(cen.x, cen.y, _hitbox[0].y, _hitbox[0].y);
 		} else {
 			PVector[] corners = _getPoints();
 			for (int i = 0; i < corners.length; i++) {
 				PVector a = corners[i];
 				PVector b = corners[(i + 1) % corners.length];
-				line(a.x, a.y, b.x, b.y);
+				pa.line(a.x, a.y, b.x, b.y);
 			}
 		}
 
-		line(cen.x, cen.y, cen.x + _rotVector.x * 20, cen.y + _rotVector.y * 20);
+		pa.line(cen.x, cen.y, cen.x + _rotVector.x * 20, cen.y + _rotVector.y * 20);
 
-		fill(255, 0, 0);
-		noStroke();
-		ellipse(cen.x, cen.y, 15, 15);
+		pa.fill(255, 0, 0);
+		pa.noStroke();
+		pa.ellipse(cen.x, cen.y, 15, 15);
 
-		popStyle();
+		pa.popStyle();
 	}
 
 	// change the direction of the Sprite by flipping
 	// the x component of its direction
-	void flipX() {
+	public void flipX() {
 		_rotVector.x *= -1;
 	}
 
 	// change the direction of the Sprite by flipping
 	// the y component of its direction
-	void flipY() {
+	public void flipY() {
 		_rotVector.y *= -1;
 	}
 
 	// set the size of the Sprite
-	void setSize(float w, float h) {
+	public void setSize(float w, float h) {
 		_w = w;
 		_h = h;
 	}
 
-	void setCoor(float x, float y) {
+	public void setCoor(float x, float y) {
 		_x = x;
 		_y = y;
 	}
 
 	// set the x coordinate
-	void setX(float x) {
+	public void setX(float x) {
 		_x = x;
 	}
 
 	// set the y coordinate
-	void setY(float y) {
+	public void setY(float y) {
 		_y = y;
 	}
 
 	// change the image of the Sprite
-	void setImage(PImage img) {
+	public void setImage(PImage img) {
 		_img = img;
 	}
 
 	// get the x coordinate of the sprite 
-	float getX() {
+	public float getX() {
 		return _x;
 	}
 
 	// get the y coordinate of the sprite
-	float getY() {
+	public float getY() {
 		return _y;
 	}
 
 	// get the width of the sprite
-	float getW() {
+	public float getW() {
 		return _w;
 	}
 
 	// get the height of the sprite
-	float getH() {
+	public float getH() {
 		return _h;
 	}
 
 	// get the image of the sprite
-	PImage getImage() {
+	public PImage getImage() {
 		return _img;
 	}
 
 	// get the direction (in degrees) the Sprite is facing
-	float getDir() {
-		return degrees(_rotVector.heading());
+	public float getDir() {
+		return PApplet.degrees(_rotVector.heading());
 	}
 
 	// calculate the distance from this Sprite to Sprite s
-	float distTo(Sprite s) {
-		return dist(_x, _y, s._x, s._y);
+	public float distTo(Sprite s) {
+		return PApplet.dist(_x, _y, s._x, s._y);
 	}
 
-	float distToPoint(float x, float y) {
-		return dist(_x, _y, x, y);
+	public float distToPoint(float x, float y) {
+		return PApplet.dist(_x, _y, x, y);
 	}
 
 	// checks whether this Sprite is touching Sprite s
-	boolean touchingSprite(Sprite s) {
+	public boolean touchingSprite(Sprite s) {
 		if (s._hitbox.length == 1) {
 			if (_hitbox.length == 1) {
 				return PVector.dist(this._getCenter(), s._getCenter()) <= this._hitbox[0].x + s._hitbox[0].x;
@@ -400,7 +400,7 @@ public class Sprite {
 	}
 
 	//checks to see if this Sprite is fully inside another sprite
-	boolean insideSprite(Sprite s) {
+	public boolean insideSprite(Sprite s) {
 		if (s._hitbox.length == 1) {
 			if (_hitbox.length == 1) {
 				return PVector.dist(s._getCenter(), this._getCenter()) < s._hitbox[0].x - this._hitbox[0].x;
@@ -417,9 +417,9 @@ public class Sprite {
 	}
 
 	// checks whether this Sprite is touching the specified point
-	boolean touchingPoint(float x, float y) {
+	public boolean touchingPoint(float x, float y) {
 		if (_hitbox.length == 1)
-			return dist(x, y, _hitboxCenter.x, _hitboxCenter.y) < _hitbox[0].x;
+			return PApplet.dist(x, y, _hitboxCenter.x, _hitboxCenter.y) < _hitbox[0].x;
 		return _ptPoly(new PVector(x, y), _getPoints());
 	}
 
@@ -427,16 +427,16 @@ public class Sprite {
 	// TODO: technically this returns true even if circular Sprite is just outside
 	//   at the corners, and false if a tilted rectangular Sprite's edge crosses
 	//   a corner with endpoints outside
-	boolean isInsideScreen() {
+	public boolean isInsideScreen() {
 		if (_hitbox.length == 1) {
 			float r = _hitbox[0].x;
 			PVector c = _getCenter();
-			return 0 <= c.x + r && c.x - r < width && 0 <= c.y + r && c.y - r < height;
+			return 0 <= c.x + r && c.x - r < pa.width && 0 <= c.y + r && c.y - r < pa.height;
 		}
 
 		PVector[] points = this._getPoints();
 		for (PVector p : points) {
-			if (0 <= p.x && p.x < width && 0 <= p.y && p.y < height) {
+			if (0 <= p.x && p.x < pa.width && 0 <= p.y && p.y < pa.height) {
 				return true;
 			}
 		}
@@ -474,7 +474,7 @@ public class Sprite {
 
 		// circle encloses any corner
 		for (PVector corner : poly) {
-			if (dist(center.x, center.y, corner.x, corner.y) < r)
+			if (PApplet.dist(center.x, center.y, corner.x, corner.y) < r)
 				return true;
 		}
 
