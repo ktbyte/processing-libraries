@@ -20,9 +20,16 @@ public class Sprite {
 	PVector[]	_hitbox;
 
 	boolean		_flipped		= false;
-
+	
+	// single public constructor to avoid transpilation errors
 	public Sprite(PApplet pa) {
 		Sprite.pa = pa;
+	}
+	
+	// this method is intended to be called at the end of every frame of
+	// the parent PApplet instance
+	public void draw() {
+		display();
 	}
 	
 	// method to initialize the Sprite at (x, y) with size (w, h)
@@ -50,19 +57,6 @@ public class Sprite {
 		resetRectHitbox();
 	}
 
-	// constructor to create a Sprite at (x, y) with size (w, h)
-	// with a solid black color. The color of this Sprite can
-	// change using the setColor() function
-//	Sprite(float x, float y, float w, float h) {
-//		_img = createImage(1, 1, RGB);
-//		_x = x;
-//		_y = y;
-//		_w = w;
-//		_h = h;
-//		_rotVector = new PVector(1, 0, 0);
-//		resetRectHitbox();
-//	}
-	
 	// method to initialize the Sprite from a copy of another 
 	// Sprite instance
 	public void init(Sprite s) {
@@ -81,23 +75,6 @@ public class Sprite {
 		_flipped = s._flipped;
 	}
 	
-//	// constructor to create a copy of Sprite s
-//	Sprite(Sprite s) {
-//		_img = s._img;
-//		_x = s._x;
-//		_y = s._y;
-//		_w = s._w;
-//		_h = s._h;
-//		_rotVector = new PVector(s._rotVector.x, s._rotVector.y, 0);
-//		_front = s._front;
-//		_hitboxCenter = new PVector(s._hitboxCenter.x, s._hitboxCenter.y);
-//		_hitbox = new PVector[s._hitbox.length];
-//		for (int i = 0; i < _hitbox.length; i++) {
-//			_hitbox[i] = new PVector(s._hitbox[i].x, s._hitbox[i].y);
-//		}
-//		_flipped = s._flipped;
-//	}
-
 	// adjust the direction of the PImage of the Sprite
 	// without changing the orientation of the Sprite
 	public void frontAngle(float degrees) {
