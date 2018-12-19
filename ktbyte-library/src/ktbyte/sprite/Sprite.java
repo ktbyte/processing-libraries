@@ -6,32 +6,27 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 public class Sprite {
-	private static PApplet pa;
+	private static PApplet	pa;
 	// do not modify these except through the provided methods
-	PImage		_img;
-	float		_w;
-	float		_h;
-	float		_x;
-	float		_y;
-	PVector		_rotVector;						// for movement
-	float		_front			= 0;			// angle of front relative to right of image
+	private PImage			_img;
+	private float			_w;
+	private float			_h;
+	private float			_x;
+	private float			_y;
+	private PVector			_rotVector;										// for movement
+	private float			_front			= 0;							// angle of front relative to right of image
 
-	PVector		_hitboxCenter	= new PVector();
-	PVector[]	_hitbox;
+	private PVector			_hitboxCenter	= new PVector();
+	private PVector[]		_hitbox;
 
-	boolean		_flipped		= false;
-	
+	private boolean			_flipped		= false;
+	private PVector			out				= new PVector(-10000, -10000);	// any outside point
+
 	// single public constructor to avoid transpilation errors
 	public Sprite(PApplet pa) {
 		Sprite.pa = pa;
 	}
-	
-	// this method is intended to be called at the end of every frame of
-	// the parent PApplet instance
-	public void draw() {
-		display();
-	}
-	
+
 	// method to initialize the Sprite at (x, y) with size (w, h)
 	// using the image provided in the url
 	public void init(String url, float x, float y, float w, float h) {
@@ -43,7 +38,7 @@ public class Sprite {
 		_rotVector = new PVector(1, 0, 0);
 		resetRectHitbox();
 	}
-	 
+
 	// method to initialize the Sprite at (x, y) with size (w, h)
 	// with a solid black color. The color of this Sprite can
 	// change using the setColor() function
@@ -74,7 +69,7 @@ public class Sprite {
 		}
 		_flipped = s._flipped;
 	}
-	
+
 	// adjust the direction of the PImage of the Sprite
 	// without changing the orientation of the Sprite
 	public void frontAngle(float degrees) {
@@ -224,7 +219,7 @@ public class Sprite {
 
 	// draw the Sprite. This function
 	// should be called in the void draw() function
-	void display() {
+	public void display() {
 		pa.pushMatrix();
 		pa.pushStyle();
 
@@ -420,10 +415,8 @@ public class Sprite {
 		return false;
 	}
 
-	PVector out = new PVector(-10000, -10000); // any outside point
-
 	// (pseudo-static) checks whether pt touches polygon
-	boolean _ptPoly(PVector pt, PVector[] poly) {
+	private boolean _ptPoly(PVector pt, PVector[] poly) {
 		// count edges crossed by the line connecting the target point to "the outside"
 		int count = 0;
 
@@ -442,7 +435,7 @@ public class Sprite {
 
 	// (pseudo-static) checks whether circle is touching polygon
 	//   (including one inside the other)
-	boolean _circPoly(PVector center, float r, PVector[] poly) {
+	private boolean _circPoly(PVector center, float r, PVector[] poly) {
 		// center is in polygon
 		if (_ptPoly(center, poly))
 			return true;
@@ -470,7 +463,7 @@ public class Sprite {
 	//   (this should be checked separately if desired)
 	// aka, checks if center forms a perpendicular to any point on segment
 	//   with length <= r 
-	boolean _circSeg(PVector center, float r, PVector a, PVector b) {
+	private boolean _circSeg(PVector center, float r, PVector a, PVector b) {
 		PVector ab = PVector.sub(b, a);
 		PVector abPerp = (new PVector(-ab.y, ab.x)).normalize().mult(r);
 
@@ -486,7 +479,7 @@ public class Sprite {
 
 	// (pseudo-static) checks whether all inPts are completely within the outPts
 	//   TODO: does not check whether edges between inPts are within outPts!
-	boolean _insidePts(PVector[] inPts, PVector[] outPts) {
+	private boolean _insidePts(PVector[] inPts, PVector[] outPts) {
 
 		for (int i = 0; i < inPts.length; i++) {
 			// direction of angular relationship to any side must match
@@ -498,7 +491,7 @@ public class Sprite {
 	}
 
 	// (pseudo-static) checks whether all inPts are completely within circle
-	boolean _insideCirc(PVector[] inPts, PVector center, float r) {
+	private boolean _insideCirc(PVector[] inPts, PVector center, float r) {
 
 		for (int i = 0; i < inPts.length; i++) {
 			// direction of angular relationship to any side must match
@@ -510,7 +503,7 @@ public class Sprite {
 	}
 
 	// get hitbox absolute center based on image center, relative offset, rotation, and front
-	PVector _getCenter() {
+	private PVector _getCenter() {
 		PVector cen = new PVector(_hitboxCenter.x, _hitboxCenter.y);
 		cen.rotate(_rotVector.heading() - _front);
 		cen.x += _x;
@@ -519,7 +512,7 @@ public class Sprite {
 	}
 
 	// get points representing rectangular hitbox
-	PVector[] _getPoints() {
+	private PVector[] _getPoints() {
 		PVector cen = _getCenter();
 
 		PVector[] points = new PVector[_hitbox.length];
