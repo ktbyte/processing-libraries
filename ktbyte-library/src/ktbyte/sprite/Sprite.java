@@ -1,9 +1,12 @@
 package ktbyte.sprite;
 
+import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
 
 public class Sprite {
+	private static PApplet pa;
 	// do not modify these except through the provided methods
 	PImage		_img;
 	float		_w;
@@ -18,10 +21,27 @@ public class Sprite {
 
 	boolean		_flipped		= false;
 
-	// constructor to create a Sprite at (x, y) with size (w, h)
-	// using the image provided by the url
-	Sprite(String url, float x, float y, float w, float h) {
-		_img = loadImage(url);
+	public Sprite(PApplet pa) {
+		Sprite.pa = pa;
+	}
+	
+	// method to initialize the Sprite at (x, y) with size (w, h)
+	// using the image provided in the url
+	public void init(String url, float x, float y, float w, float h) {
+		_img = pa.loadImage(url);
+		_x = x;
+		_y = y;
+		_w = w;
+		_h = h;
+		_rotVector = new PVector(1, 0, 0);
+		resetRectHitbox();
+	}
+	 
+	// method to initialize the Sprite at (x, y) with size (w, h)
+	// with a solid black color. The color of this Sprite can
+	// change using the setColor() function
+	public void init(float x, float y, float w, float h) {
+		_img = pa.createImage(1, 1, PConstants.RGB);
 		_x = x;
 		_y = y;
 		_w = w;
@@ -33,18 +53,19 @@ public class Sprite {
 	// constructor to create a Sprite at (x, y) with size (w, h)
 	// with a solid black color. The color of this Sprite can
 	// change using the setColor() function
-	Sprite(float x, float y, float w, float h) {
-		_img = createImage(1, 1, RGB);
-		_x = x;
-		_y = y;
-		_w = w;
-		_h = h;
-		_rotVector = new PVector(1, 0, 0);
-		resetRectHitbox();
-	}
-
-	// constructor to create a copy of Sprite s
-	Sprite(Sprite s) {
+//	Sprite(float x, float y, float w, float h) {
+//		_img = createImage(1, 1, RGB);
+//		_x = x;
+//		_y = y;
+//		_w = w;
+//		_h = h;
+//		_rotVector = new PVector(1, 0, 0);
+//		resetRectHitbox();
+//	}
+	
+	// method to initialize the Sprite from a copy of another 
+	// Sprite instance
+	public void init(Sprite s) {
 		_img = s._img;
 		_x = s._x;
 		_y = s._y;
@@ -59,11 +80,28 @@ public class Sprite {
 		}
 		_flipped = s._flipped;
 	}
+	
+//	// constructor to create a copy of Sprite s
+//	Sprite(Sprite s) {
+//		_img = s._img;
+//		_x = s._x;
+//		_y = s._y;
+//		_w = s._w;
+//		_h = s._h;
+//		_rotVector = new PVector(s._rotVector.x, s._rotVector.y, 0);
+//		_front = s._front;
+//		_hitboxCenter = new PVector(s._hitboxCenter.x, s._hitboxCenter.y);
+//		_hitbox = new PVector[s._hitbox.length];
+//		for (int i = 0; i < _hitbox.length; i++) {
+//			_hitbox[i] = new PVector(s._hitbox[i].x, s._hitbox[i].y);
+//		}
+//		_flipped = s._flipped;
+//	}
 
 	// adjust the direction of the PImage of the Sprite
 	// without changing the orientation of the Sprite
 	void frontAngle(float degrees) {
-		float newFront = radians(degrees);
+		float newFront = PApplet.radians(degrees);
 
 		// movement done from this direction from now on
 		_rotVector.rotate(newFront - _front);
@@ -120,15 +158,15 @@ public class Sprite {
 			if (valid)
 				_hitbox = array;
 			else
-				println("invalid hitbox: " + java.util.Arrays.toString(array));
+				PApplet.println("invalid hitbox: " + java.util.Arrays.toString(array));
 		} else {
-			println("hitbox must have 3+ points: " + java.util.Arrays.toString(array));
+			PApplet.println("hitbox must have 3+ points: " + java.util.Arrays.toString(array));
 		}
 	}
 
 	// change the color of a Sprite created without an image
 	void setColor(float r, float g, float b) {
-		color c = color(r, g, b);
+		color c = pa.color(r, g, b);
 		for (int x = 0; x < _img.width; x++) {
 			for (int y = 0; y < _img.height; y++) {
 				_img.set(x, y, c);
