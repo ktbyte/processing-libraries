@@ -6,7 +6,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 public class Sprite {
-	private static PApplet	pa;
+	public PApplet	pa;
 	// do not modify these except through the provided methods
 	private PImage			_img;
 	private float			_w;
@@ -22,14 +22,11 @@ public class Sprite {
 	private boolean			_flipped		= false;
 	private PVector			out				= new PVector(-10000, -10000);	// any outside point
 
-	// single public constructor to avoid transpilation errors
-	public Sprite(PApplet pa) {
-		Sprite.pa = pa;
-	}
 
 	// method to initialize the Sprite at (x, y) with size (w, h)
 	// using the image provided in the url
-	public void init(String url, float x, float y, float w, float h) {
+	public Sprite(PApplet pa, String url, float x, float y, float w, float h) {
+		this.pa = pa;
 		_img = pa.loadImage(url);
 		_x = x;
 		_y = y;
@@ -42,7 +39,8 @@ public class Sprite {
 	// method to initialize the Sprite at (x, y) with size (w, h)
 	// with a solid black color. The color of this Sprite can
 	// change using the setColor() function
-	public void init(float x, float y, float w, float h) {
+	public Sprite(PApplet pa, float x, float y, float w, float h) {
+		this.pa = pa;
 		_img = pa.createImage(1, 1, PConstants.RGB);
 		_x = x;
 		_y = y;
@@ -54,7 +52,8 @@ public class Sprite {
 
 	// method to initialize the Sprite from a copy of another 
 	// Sprite instance
-	public void init(Sprite s) {
+	public Sprite(PApplet pa, Sprite s) {
+		this.pa = pa;
 		_img = s._img;
 		_x = s._x;
 		_y = s._y;
