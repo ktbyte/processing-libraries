@@ -20,7 +20,7 @@ void setup() {
   button.setPassiveColor(color(200, 100, 150));
   button.setHoveredColor(color(100, 150, 200));
   button.setPressedColor(color(100, 100, 150));
-  button.addEventAdapter(new KTGUIEventAdapter() {
+  button.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
       println("The Button is pressed!");
       counter++;
@@ -36,7 +36,7 @@ void setup() {
   changeStateButton = ktgui.createButton("isDragable", 0, 0, 150, 60);
   changeStateButton.alignAboutCanvas(LEFT, BOTTOM);
   changeStateButton.isDragable = false;
-  changeStateButton.addEventAdapter(new KTGUIEventAdapter() {
+  changeStateButton.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
       println("The changeStateButton is pressed!");
       button.isDragable = !button.isDragable;

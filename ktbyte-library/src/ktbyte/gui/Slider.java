@@ -123,7 +123,7 @@ public class Slider extends Controller {
         ///////////////////////////////////////////////////////////////////////
     }
 
-    public void addEventAdapter(KTGUIEventAdapter adapter) {
+    public void addEventAdapter(EventAdapter adapter) {
         adapters.add(adapter);
     }
 
@@ -306,7 +306,7 @@ public class Slider extends Controller {
         isHovered = isPointInside(pa.mouseX, pa.mouseY);
 
         // always notify the listeners
-        for (KTGUIEventAdapter adapter : adapters) {
+        for (EventAdapter adapter : adapters) {
             adapter.onMouseMoved();
         }
     }
@@ -321,7 +321,7 @@ public class Slider extends Controller {
         }
 
         // always notify the listeners
-        for (KTGUIEventAdapter adapter : adapters) {
+        for (EventAdapter adapter : adapters) {
             adapter.onMousePressed();
         }
     }
@@ -332,7 +332,7 @@ public class Slider extends Controller {
         isDragged = false;
 
         // always notify the listeners
-        for (KTGUIEventAdapter adapter : adapters) {
+        for (EventAdapter adapter : adapters) {
             adapter.onMouseReleased();
         }
     }
@@ -347,7 +347,7 @@ public class Slider extends Controller {
         }
 
         // always notify the listeners
-        for (KTGUIEventAdapter adapter : adapters) {
+        for (EventAdapter adapter : adapters) {
             adapter.onMouseDragged();
         }
     }

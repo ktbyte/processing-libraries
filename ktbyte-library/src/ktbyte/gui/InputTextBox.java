@@ -82,7 +82,7 @@ public class InputTextBox extends Controller {
             textInput = textInput.substring(0, textInput.length() - 1);
         }
         if ((int) pa.key == ENTER_ASCII_CODE) {
-            for (KTGUIEventAdapter adapter : adapters) {
+            for (EventAdapter adapter : adapters) {
                 adapter.onEnterKeyPressed();
             }
         } else if ((int) pa.key >= BASIC_ASCII_LOWER_LIMIT && (int) pa.key <= BASIC_ASCII_UPPER_LIMIT) {

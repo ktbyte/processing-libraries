@@ -26,7 +26,7 @@ void setup() {
   vsbar = ktgui.createScrollBar("vsBar", 20, 200, 40, 200, 0, 10);
   vsbar.setBorderRoundings(10, 10, 10, 10);
   vsbar.setIsValueVisible(true);
-  vsbar.addEventAdapter(new KTGUIEventAdapter(){
+  vsbar.addEventAdapter(new EventAdapter(){
     public void onMousePressed(){
       hsbar.setHandleStep(vsbar.getValue());
       println(str(hsbar.getHandleStep()));
@@ -42,7 +42,7 @@ void setup() {
 
   dbgBtn = ktgui.createButton("Debug", 0, 0, 100, 40);
   dbgBtn.alignAboutCanvas(CENTER, BOTTOM);
-  dbgBtn.addEventAdapter(new KTGUIEventAdapter() {
+  dbgBtn.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
     }
   });

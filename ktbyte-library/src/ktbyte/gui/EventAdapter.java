@@ -5,7 +5,7 @@ import processing.core.PApplet;
 /**********************************************************************************************************************
  * This abstract class should be extended by the KTGUI components (controllers)
  *********************************************************************************************************************/
-public abstract class KTGUIEventAdapter {
+public abstract class EventAdapter {
 	public void onMousePressed() {}
 
 	public void onMouseReleased() {}

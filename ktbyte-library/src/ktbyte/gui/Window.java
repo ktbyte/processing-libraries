@@ -50,7 +50,7 @@ public class Window extends Controller {
             //isPressed = isFocused = isHovered;
             isPressed = isHovered;
             if (isPressed) {
-                for (KTGUIEventAdapter adapter : adapters) {
+                for (EventAdapter adapter : adapters) {
                     adapter.onMousePressed();
                 }
             }

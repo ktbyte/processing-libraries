@@ -20,7 +20,7 @@ void setup() {
 
   Button debugButton = new Button(ktgui, "Debug On/Off", 200, 200, 120, 30);
   debugButton.setBorderRoundings(5, 5, 5, 5);
-  debugButton.addEventAdapter(new KTGUIEventAdapter(){
+  debugButton.addEventAdapter(new EventAdapter(){
     public void onMousePressed(){
       println("Button has been pressed!");
     }

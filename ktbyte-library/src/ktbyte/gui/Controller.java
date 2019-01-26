@@ -14,7 +14,7 @@ import processing.event.MouseEvent;
  * One should override only the 'needed' event methods. This allows to save time and decrease the amount of code.
  * One should always overridde the 'draw' method.
  *********************************************************************************************************************/
-public abstract class Controller extends KTGUIEventProcessor implements PConstants {
+public abstract class Controller extends EventProcessor implements PConstants {
 	public String					title;
 	public int						posx, posy, w, h, r1, r2, r3, r4;
 
@@ -678,7 +678,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 			 * would have.
 			 */
 			// if (isHovered) {
-			for (KTGUIEventAdapter adapter : adapters) {
+			for (EventAdapter adapter : adapters) {
 				adapter.onMouseMoved();
 			}
 			// }
@@ -716,7 +716,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 				// process mousePressed event by own means
 				//if (isPressed) {
-				for (KTGUIEventAdapter adapter : adapters) {
+				for (EventAdapter adapter : adapters) {
 					adapter.onMousePressed();
 				}
 				//}
@@ -745,7 +745,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 
 			// process mouseReleased event by own means
 			if (isHovered) {
-				for (KTGUIEventAdapter adapter : adapters) {
+				for (EventAdapter adapter : adapters) {
 					adapter.onMouseReleased();
 				}
 			}
@@ -770,7 +770,7 @@ public abstract class Controller extends KTGUIEventProcessor implements PConstan
 				if (isPressed) {
 					posx += pa.mouseX - pa.pmouseX;
 					posy += pa.mouseY - pa.pmouseY;
-					for (KTGUIEventAdapter adapter : adapters) {
+					for (EventAdapter adapter : adapters) {
 						adapter.onMouseDragged();
 					}
 				}

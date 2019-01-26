@@ -23,7 +23,7 @@ void setup() {
   slider.alignAboutCanvas(CENTER, CENTER, 0);
   slider.setTitle("The Slider");
   slider.setHandleType(Slider.HANDLE_TYPE_CENTERED);
-  slider.addEventAdapter(new KTGUIEventAdapter() {
+  slider.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
       textPosition = map(slider.getValue(), slider.getRangeStart(), slider.getRangeEnd(), 0, pane.w);
     }
@@ -35,7 +35,7 @@ void setup() {
   // create Slider component that controls the handle width
   // of the first slider
   otherSlider = ktgui.createSlider(0, 0, 200, 30, 10, 200);
-  otherSlider.addEventAdapter(new KTGUIEventAdapter() {
+  otherSlider.addEventAdapter(new EventAdapter() {
     public void onMouseDragged() {
       slider.setHandleSize((int) otherSlider.getValue());
     }

@@ -61,12 +61,12 @@ public class ScrollBar extends Controller {
             backwardButton = new ArrowButton(ktgui, "bckwrdBtn:" + title, 0, h - w, w, w, DOWN);
         }
 
-        backwardButton.addEventAdapter(new KTGUIEventAdapter() {
+        backwardButton.addEventAdapter(new EventAdapter() {
             public void onMousePressed() {
                 slider.decrementValue();
             }
         });
-        forwardButton.addEventAdapter(new KTGUIEventAdapter() {
+        forwardButton.addEventAdapter(new EventAdapter() {
             public void onMousePressed() {
                 slider.incrementValue();
             }
@@ -91,11 +91,11 @@ public class ScrollBar extends Controller {
         slider.setValue(0);
         slider.setRounding(0);
         slider.setIsValueVisible(false);
-        slider.addEventAdapter(new KTGUIEventAdapter() {
+        slider.addEventAdapter(new EventAdapter() {
             public void onMouseDragged() {
                 // !!! This line actually notifies the SCROLLBAR.mouseDragged 
                 // !!! event listeners, not SLIDER.mouseDragged event listeners
-                for (KTGUIEventAdapter adapter : adapters) {
+                for (EventAdapter adapter : adapters) {
                     adapter.onMouseDragged();
                 }
             }

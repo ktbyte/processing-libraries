@@ -14,7 +14,7 @@ void setup() {
   textBox1.alignAboutCanvas(CENTER, 0);
   textBox1.setTextSize(12);
   textBox1.setBorderRoundings(10, 10, 0, 0);
-  textBox1.addEventAdapter(new KTGUIEventAdapter() {
+  textBox1.addEventAdapter(new EventAdapter() {
       public void onEnterKeyPressed() {
           println(textBox1.getText());
           textBox2.setText(textBox1.getText());
@@ -27,7 +27,7 @@ void setup() {
   textBox2.alignAboutCanvas(CENTER, 0);
   textBox2.setText("Or here ...");
   textBox2.setTextSize(16);
-  textBox2.addEventAdapter(new KTGUIEventAdapter() {
+  textBox2.addEventAdapter(new EventAdapter() {
       public void onEnterKeyPressed() {
           println(textBox2.getText());
           textBox1.setText(textBox2.getText());

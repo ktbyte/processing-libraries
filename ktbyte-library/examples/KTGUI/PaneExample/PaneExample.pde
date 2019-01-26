@@ -28,7 +28,7 @@ void setup() {
   hsbar.setBorderRoundings(10, 10, 10, 10);
   hsbar.setHandleType(Slider.HANDLE_TYPE_CENTERED);
   hsbar.setIsValueVisible(true);
-  hsbar.addEventAdapter(new KTGUIEventAdapter(){
+  hsbar.addEventAdapter(new EventAdapter(){
     public void onMouseDragged(){
       pane2.setPosx((int) (p2x + hsbar.getValue() - (hsbar.getRangeStart() + hsbar.getRangeEnd()) * 0.5f));
     }
@@ -38,7 +38,7 @@ void setup() {
   vsbar.setValue(50);
   vsbar.setBorderRoundings(10, 10, 10, 10);
   vsbar.setIsValueVisible(true);
-  vsbar.addEventAdapter(new KTGUIEventAdapter(){
+  vsbar.addEventAdapter(new EventAdapter(){
     public void onMouseDragged(){
       pane1.setPosy((int) (p1y + vsbar.getValue() - (vsbar.getRangeStart() + vsbar.getRangeEnd()) * 0.5f));
     }
@@ -49,7 +49,7 @@ void setup() {
 
   dbgBtn = ktgui.createButton("Debug", 0, 0, 100, 40);
   dbgBtn.alignAboutCanvas(CENTER, BOTTOM);
-  dbgBtn.addEventAdapter(new KTGUIEventAdapter() {
+  dbgBtn.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
 
     }

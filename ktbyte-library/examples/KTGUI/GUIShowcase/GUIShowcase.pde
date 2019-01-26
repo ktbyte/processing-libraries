@@ -21,7 +21,7 @@ void setup() {
 
   dbgButton = ktgui.createButton("Debug", 0, 0, 100, 50);
   dbgButton.alignAboutCanvas(CENTER, BOTTOM);
-  dbgButton.addEventAdapter(new KTGUIEventAdapter() {
+  dbgButton.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
 
     }
@@ -31,7 +31,7 @@ void setup() {
   // this button will be visible always because it will be located on default stage
   nextStageBtn = ktgui.createButton("NextStage", width - 120, height - 70, 100, 50);
   nextStageBtn.alignAboutCanvas(RIGHT, BOTTOM);
-  nextStageBtn.addEventAdapter(new KTGUIEventAdapter() {
+  nextStageBtn.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
       StageManager.getInstance().goToNextStage();
     }
@@ -41,7 +41,7 @@ void setup() {
   s1 = StageManager.getInstance().createStage("stage_1");
   anotherButton = ktgui.createButton("Go To Stage_2", 50, height - 70, 150, 50);
   anotherButton.alignAboutCanvas(LEFT, BOTTOM);
-  anotherButton.addEventAdapter(new KTGUIEventAdapter() {
+  anotherButton.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
       StageManager.getInstance().goToStage(1);
     }
@@ -62,7 +62,7 @@ void setup() {
   // We can use 's2.attachController(Controller) though.
   s3 = StageManager.getInstance().createStage("stage_3");
   jumpButton = ktgui.createButton("Jump!", 50, 50, 100, 50);
-  jumpButton.addEventAdapter(new KTGUIEventAdapter() {
+  jumpButton.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
       if (jumpButton.parentController == w3.getPane()) {
         //w2.attachController(jumpButton);

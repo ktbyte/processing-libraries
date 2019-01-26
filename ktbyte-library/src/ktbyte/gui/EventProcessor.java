@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import processing.event.MouseEvent;
 
-public class KTGUIEventProcessor {
+public class EventProcessor {
 	public boolean						isActive	= true;
 	public boolean						isPressed;
 	public boolean						isHovered;  
@@ -14,7 +14,7 @@ public class KTGUIEventProcessor {
 	public boolean						isDragable; // can this controller be dragged? 
 	public boolean						handleFocus;
 
-	public ArrayList<KTGUIEventAdapter>	adapters	= new ArrayList<KTGUIEventAdapter>();
+	public ArrayList<EventAdapter>	adapters	= new ArrayList<EventAdapter>();
 
 	public void processMouseMoved() {}
 
@@ -34,7 +34,7 @@ public class KTGUIEventProcessor {
 		return false;
 	}
 
-	public void addEventAdapter(KTGUIEventAdapter adapter) {
+	public void addEventAdapter(EventAdapter adapter) {
 		adapters.add(adapter);
 	}
 }

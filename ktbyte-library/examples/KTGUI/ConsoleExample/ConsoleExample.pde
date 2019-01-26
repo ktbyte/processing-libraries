@@ -1,14 +1,14 @@
 import ktbyte.gui.*;
 
 KTGUI ktgui;
-KTGUIConsole console;
+Console console;
 Stage s1, s2;
 
 void setup() {
   size(1000, 800);
   ktgui = new KTGUI(this);
 
-  console = new KTGUIConsole(ktgui, "A Console", 200, 200, 600, 400);
+  console = new Console(ktgui, "A Console", 200, 200, 600, 400);
   console.alignAboutCanvas(CENTER, CENTER);
   console.setBorderRoundings(15, 15, 10, 10);
   //console.setInputTextColor(color(255, 10, 100));
@@ -52,7 +52,7 @@ void setup() {
   console.writeOutput("Ohhh... Hello there! What's your name?");
   console.setOutputTextColor(color(50, 200, 50));
   console.readInput("name");
-  console.addEventAdapter(new KTGUIEventAdapter() {
+  console.addEventAdapter(new EventAdapter() {
     public void onConsoleInput(String value, String variable) {
       if (variable.equals("name")) {
         console.writeOutput("Nice to meet you " + value + "!");
@@ -101,7 +101,7 @@ void setup() {
 
   Button firstStageBtn = ktgui.createButton("Stage1", 50, 50, 100, 50);
   firstStageBtn.alignAboutCanvas(LEFT, BOTTOM);
-  firstStageBtn.addEventAdapter(new KTGUIEventAdapter() {
+  firstStageBtn.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
       StageManager.getInstance().goToStage(s1);
     }
@@ -109,7 +109,7 @@ void setup() {
 
   Button secondStageBtn = ktgui.createButton("Stage2", 50, 50, 100, 50);
   secondStageBtn.alignAboutCanvas(RIGHT, BOTTOM);
-  secondStageBtn.addEventAdapter(new KTGUIEventAdapter() {
+  secondStageBtn.addEventAdapter(new EventAdapter() {
     public void onMousePressed() {
       StageManager.getInstance().goToStage(s2);
     }

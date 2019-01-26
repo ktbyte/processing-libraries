@@ -62,7 +62,7 @@ public class ScrollableTextArea extends Controller {
         // process mouse event by own means
         mouseScrolled(me.getCount());
         // notify listeners that ScrollableTextArea received the MouseWheel event
-        for (KTGUIEventAdapter adapter : adapters) {
+        for (EventAdapter adapter : adapters) {
             adapter.onMouseWheel(me.getCount());
         }
     }

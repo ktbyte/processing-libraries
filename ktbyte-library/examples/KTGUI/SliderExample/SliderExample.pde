@@ -19,7 +19,7 @@ void setup() {
   btn.alignAboutCanvas(CENTER, 0);
   btn.setPressedColor(color(200, 150, 150));
   btn.setTitle("The Button");
-  btn.addEventAdapter(new KTGUIEventAdapter() {
+  btn.addEventAdapter(new EventAdapter() {
     // we can override only those callback methods which we really need
     public void onMousePressed() {
       btn.setTitle(btn.isPressed ? "Pressed" : "The Button");
@@ -47,7 +47,7 @@ void setup() {
   slider = ktgui.createSlider(0, 0, 380, 40, 0, 1000);
   slider.alignAboutCanvas(CENTER, TOP);
   slider.setTitle("The Slider");
-  slider.addEventAdapter(new KTGUIEventAdapter() {
+  slider.addEventAdapter(new EventAdapter() {
     // we can override only those callback methods which we really need
     public void onMousePressed() {
       slider.setTitle(slider.isPressed ? "Pressed" : "The Slider");

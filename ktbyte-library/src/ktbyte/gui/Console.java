@@ -2,7 +2,7 @@ package ktbyte.gui;
 
 import java.util.HashMap;
 
-public class KTGUIConsole extends Controller {
+public class Console extends Controller {
     private final static int        BOX_ROUNDING                = 7;
     private final static float      INPUT_BOX_HEIGHT_PERCENTAGE = 0.1f;
 
@@ -17,7 +17,7 @@ public class KTGUIConsole extends Controller {
     private String                  lastVariableName;
     int                             inputBoxWidth               = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
 
-    public KTGUIConsole(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
+    public Console(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
         super(ktgui, title, posx, posy, w, h);
         this.dict = new HashMap<String, String>();
         createScrollableTextArea();
@@ -30,7 +30,7 @@ public class KTGUIConsole extends Controller {
                 0, 0,
                 w - inputBoxWidth, h - inputBoxWidth);
         textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
-        textArea.addEventAdapter(new KTGUIEventAdapter() {
+        textArea.addEventAdapter(new EventAdapter() {
             public void onMouseWheel(int count) {
 
             }
@@ -43,7 +43,7 @@ public class KTGUIConsole extends Controller {
                 w - inputBoxWidth, 0,
                 inputBoxWidth, h - inputBoxWidth,
                 0, 100);
-        scrollBar.addEventAdapter(new KTGUIEventAdapter() {
+        scrollBar.addEventAdapter(new EventAdapter() {
             public void onMouseDragged() {
 
             }
@@ -62,7 +62,7 @@ public class KTGUIConsole extends Controller {
         inputBox.setHandleFocus(true);
         inputBox.setTextSize(16);
         inputBox.setBorderRoundings(0, 0, BOX_ROUNDING, BOX_ROUNDING);
-        inputBox.addEventAdapter(new KTGUIEventAdapter() {
+        inputBox.addEventAdapter(new EventAdapter() {
             public void onEnterKeyPressed() {
                 KTGUI.debug("Processing input...");
                 handleConsoleInput();
@@ -113,7 +113,7 @@ public class KTGUIConsole extends Controller {
         //updateScrollBar();
 
         // notify listeners about onEnterKeyPressedEvent
-        for (KTGUIEventAdapter adapter : adapters) {
+        for (EventAdapter adapter : adapters) {
             adapter.onConsoleInput(textInput, lastVariableName);
         }
     }
