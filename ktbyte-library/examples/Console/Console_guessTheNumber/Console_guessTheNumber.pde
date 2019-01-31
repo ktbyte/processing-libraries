@@ -1,4 +1,4 @@
-import ktbyte.gui.*;
+import ktbyte.old.gui.*;
 
 Console console;
 int number;
