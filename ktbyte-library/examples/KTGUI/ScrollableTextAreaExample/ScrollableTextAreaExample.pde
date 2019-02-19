@@ -10,6 +10,7 @@ void setup() {
 
 	sta = new ScrollableTextArea(ktgui, "STA", 20, 20, 300, 150);
 	sta.setBorderRoundings(15, 0, 15, 0);
+	sta.isDragable = true;
 	sta.setPadding(20);
 	sta.setTextSize(14);
 	sta.alignAboutCanvas(CENTER, CENTER);

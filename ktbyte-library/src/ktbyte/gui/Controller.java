@@ -697,7 +697,6 @@ public abstract class Controller extends EventProcessor implements PConstants {
 	public void processMousePressed() {
 		if (isActive) {
 			if (isHovered) {
-
 				// transfer mousePressed event to child controllers
 				for (Controller child : controllers) {
 					child.processMousePressed();
@@ -706,7 +705,8 @@ public abstract class Controller extends EventProcessor implements PConstants {
 				// prevent mouse event processing if any of the childs are pressed
 				if (isAnyChildPressed()) {
 					//isPressed = isFocused = isHovered = false;
-					isPressed = isHovered = false;
+				    //isPressed = isHovered = false;
+					isPressed = false;
 					return;
 				} else {
 					isPressed = true;
@@ -715,6 +715,7 @@ public abstract class Controller extends EventProcessor implements PConstants {
 				}
 
 				// process mousePressed event by own means
+				// notify mouse-pressed-event listeners
 				//if (isPressed) {
 				for (EventAdapter adapter : adapters) {
 					adapter.onMousePressed();
@@ -734,7 +735,6 @@ public abstract class Controller extends EventProcessor implements PConstants {
 	@Override
 	public void processMouseReleased() {
 		if (isActive) {
-
 			isPressed = false;
 			//isFocused = false;
 
