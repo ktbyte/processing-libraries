@@ -68,7 +68,7 @@ public class InputTextBox extends Controller {
     	super.processMousePressed();
         // clear text only if this input box was not focused
         if (isSelected(this)) {
-            setText("");
+            //setText("");
         }
     }
 
