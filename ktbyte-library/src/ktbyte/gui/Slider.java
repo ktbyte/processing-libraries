@@ -97,10 +97,12 @@ public class Slider extends Controller {
         pg.rectMode(CENTER);
         int handleOffset = (int) (handleSize * 0.5f);
         if (w > h) {
-            int correctedHandlePos = (int) PApplet.constrain(handlePos, handleOffset, this.w - handleOffset);
+            int correctedHandlePos = (int) PApplet.constrain(handlePos, handleOffset,
+                    this.w - handleOffset);
             pg.rect(correctedHandlePos, this.h * 0.5f, handleSize, this.h);
         } else {
-            int correctedHandlePos = (int) PApplet.constrain(handlePos, handleOffset, this.h - handleOffset);
+            int correctedHandlePos = (int) PApplet.constrain(handlePos, handleOffset,
+                    this.h - handleOffset);
             pg.rect(this.w * 0.5f, this.h - correctedHandlePos, this.w, handleSize);
         }
 
@@ -123,21 +125,32 @@ public class Slider extends Controller {
         ///////////////////////////////////////////////////////////////////////
     }
 
-    public void addEventAdapter(EventAdapter adapter) {
-        adapters.add(adapter);
-    }
+    // public void addEventAdapter(EventAdapter adapter) {
+    // adapters.add(adapter);
+    // }
 
     public float getValue() {
         return value;
+    }
+
+    public float getNormalizedValue() {
+        return PApplet.map(value, rangeStart, rangeEnd, 0, 100f);
     }
 
     public void setValue(float val) {
         if (val >= rangeStart && val <= rangeEnd) {
             value = val;
             updateHandlePositionFromValue();
+            notifyAdapterOnValueChanged();
         } else {
-            System.out.println("You're trying to set the value of the slider "
-                    + "to be outside its range.");
+            System.out.println(
+                    "You're trying to set the value of the slider to be outside its range.");
+        }
+    }
+
+    private void notifyAdapterOnValueChanged() {
+        for (EventAdapter adapter : adapters) {
+            adapter.onValueChanged();
         }
     }
 
@@ -285,9 +298,11 @@ public class Slider extends Controller {
      */
     private void updateValueFromHandlePosition() {
         if (w > h) {
-            value = PApplet.map(handlePos, handleSize * 0.5f, this.w - handleSize * 0.5f, rangeStart, rangeEnd);
+            value = PApplet.map(handlePos, handleSize * 0.5f, this.w - handleSize * 0.5f,
+                    rangeStart, rangeEnd);
         } else {
-            value = PApplet.map(handlePos, handleSize * 0.5f, this.h - handleSize * 0.5f, rangeStart, rangeEnd);
+            value = PApplet.map(handlePos, handleSize * 0.5f, this.h - handleSize * 0.5f,
+                    rangeStart, rangeEnd);
         }
 
         value = PApplet.constrain(value, rangeStart, rangeEnd);
@@ -299,6 +314,8 @@ public class Slider extends Controller {
         } else {
             value = (float) Math.floor(value);
         }
+    
+        notifyAdapterOnValueChanged();
     }
 
     // process mouseMoved event received from PApplet
@@ -351,4 +368,5 @@ public class Slider extends Controller {
             adapter.onMouseDragged();
         }
     }
+
 }

@@ -55,11 +55,15 @@ void setup() {
         int sliderValue = (int)slider.getValue();
         int mappedPos = (int)map(sliderValue, slider.getRangeStart(), slider.getRangeEnd(), 0, width - btn.w);
         btn.posx = mappedPos;
+        println(sliderValue + ":" + mappedPos);
       }
     }
     // we can override only those callback methods which we really need
     public void onMouseReleased() {
       slider.setTitle(slider.isPressed ? "The Slider" : "Released");
+      int sliderValue = (int)slider.getValue();
+      int mappedPos = (int)map(sliderValue, slider.getRangeStart(), slider.getRangeEnd(), 0, width - btn.w);
+      println(sliderValue + ":" + mappedPos);
     }
     // we can override only those callback methods which we really need
     public void onMouseMoved() {
@@ -72,6 +76,7 @@ void setup() {
         int sliderValue = (int)slider.getValue();
         int mappedPos = (int)map(sliderValue, slider.getRangeStart(), slider.getRangeEnd(), 0, width - btn.w);
         btn.posx = mappedPos;
+        println(sliderValue + ":" + mappedPos);
       }
     }
   }

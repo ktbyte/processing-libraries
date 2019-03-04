@@ -66,6 +66,7 @@ public class ScrollBar extends Controller {
                 slider.decrementValue();
             }
         });
+
         forwardButton.addEventAdapter(new EventAdapter() {
             public void onMousePressed() {
                 slider.incrementValue();
@@ -99,12 +100,29 @@ public class ScrollBar extends Controller {
                     adapter.onMouseDragged();
                 }
             }
+            public void onMousePressed() {
+                // !!! This line actually notifies the SCROLLBAR.mousePressed 
+                // !!! event listeners, not SLIDER.mousePressed event listeners
+                for (EventAdapter adapter : adapters) {
+                    adapter.onMousePressed();
+                }
+            }
+            
+            public void onValueChanged() {
+                for (EventAdapter adapter : adapters) {
+                    adapter.onValueChanged();
+                }
+            }
         });
         attachController(slider);
     }
 
     public float getValue() {
         return slider.getValue();
+    }
+
+    public float getNormalizedValue() {
+        return slider.getNormalizedValue();
     }
 
     public void setValue(int val) {
@@ -158,4 +176,6 @@ public class ScrollBar extends Controller {
     public void setRounding(int n) {
         slider.setRounding(n);
     }
+
+
 }

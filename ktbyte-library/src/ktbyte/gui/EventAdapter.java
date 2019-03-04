@@ -22,6 +22,8 @@ public abstract class EventAdapter {
 
 	public void onEnterKeyPressed() {}
 
+	public void onValueChanged() {}
+	
 	public void onConsoleInput(String textInput, String lastVariableName) {}
 
 	public void println(String string) {

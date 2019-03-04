@@ -40,7 +40,8 @@ public class ScrollableTextArea extends Controller {
         }
         pg.rect(0, 0, w, h, r1, r2, r3, r4);
 
-        int calculatedEndLineNumber = PApplet.min(textLines.size() - 1, startLineNumber + getMaxLinesToDisplay());
+        int calculatedEndLineNumber = PApplet.min(textLines.size() - 1,
+                startLineNumber + getMaxLinesToDisplay());
         for (int i = 0; i <= calculatedEndLineNumber - startLineNumber; i++) {
             TextLine line = textLines.get(i + startLineNumber);
             pg.fill(line.textColor);
@@ -49,7 +50,8 @@ public class ScrollableTextArea extends Controller {
             pg.text(line.content, padding, (int) (padding * 0.5) + (i + 1) * getTextHeight());
             if (line.isHead && enableLineStartMarks) {
                 pg.strokeWeight(3);
-                pg.point(padding - 5, (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
+                pg.point(padding - 5,
+                        (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
             }
         }
 
@@ -111,7 +113,8 @@ public class ScrollableTextArea extends Controller {
 
     public void scrollToPosition(int lineNumber) {
         if (lineNumber < 0 || lineNumber >= getMaximumAllowedPositionOfStartLine()) {
-            KTGUI.debug("lineNumber[" + lineNumber + "] is out of range during 'scrollToLine' call.");
+            KTGUI.debug(
+                    "lineNumber[" + lineNumber + "] is out of range during 'scrollToLine' call.");
             return;
         }
         if (lineNumber > startLineNumber) {
@@ -185,11 +188,16 @@ public class ScrollableTextArea extends Controller {
     public int getStartLinePosition() {
         return startLineNumber;
     }
-    //
-    //	public void setStartLine(int lineNumber) {
-    //		//this.startLineNumber = (lineNumber > 0) ? lineNumber : 0;
-    //		this.startLineNumber = PApplet.constrain(lineNumber, 0, getLineNumbers());
-    //	}
+
+    public void setStartLinePosition(int pos) {
+        if (pos < 0 || pos > getLineCount()) return;
+        this.startLineNumber = PApplet.constrain(pos, 0, getLineCount());
+    }
+
+    public void setNormalizedLinePosition(float pos) {
+        int value = PApplet.floor(PApplet.map(pos, getLineCount(), 0, 0, 100f));
+        setStartLinePosition(value);
+    }
 
     public void enableTextBlockStartMarks(boolean val) {
         enableLineStartMarks = val;
@@ -239,7 +247,7 @@ public class ScrollableTextArea extends Controller {
 
     private class TextBlock {
         private String  content;
-        //private StringBuilder	sb;
+        // private StringBuilder sb;
         private boolean isHeadAlreadyMarked;
         private int     textColor = pa.color(0);
 
@@ -253,18 +261,18 @@ public class ScrollableTextArea extends Controller {
         }
 
         public void appendAsWrappedLines(float _textSize) {
-            // reset the flag and 'sb' after previous call to this method 
-            // in order to allow correct head marking in case the padding 
+            // reset the flag and 'sb' after previous call to this method
+            // in order to allow correct head marking in case the padding
             // or text size will change
             isHeadAlreadyMarked = false;
             StringBuilder sb = new StringBuilder();
             // calculate the wrapped width of the line as it will be shown
             int wrappedWidth = PApplet.floor(w - padding - padding);
             // update the PApplet's textSize value in order to accurately calculate text width
-            // !!! textSize variable belongs to ScrollableTextArea 
+            // !!! textSize variable belongs to ScrollableTextArea
             pa.textSize(_textSize);
             // go through all the characters in the text block splitting it
-            // by text chunks which has the width equals to the 'paddedWidth' 
+            // by text chunks which has the width equals to the 'paddedWidth'
             for (int i = 0; i < content.length(); i++) {
                 int chunkWidth = PApplet.ceil(pa.textWidth(sb.toString()));
                 if (chunkWidth >= wrappedWidth) {

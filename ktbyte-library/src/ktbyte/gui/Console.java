@@ -15,7 +15,8 @@ public class Console extends Controller {
 
     private HashMap<String, String> dict;
     private String                  lastVariableName;
-    int                             inputBoxWidth               = (int) (INPUT_BOX_HEIGHT_PERCENTAGE * h);
+    int                             inputBoxWidth               = (int) (INPUT_BOX_HEIGHT_PERCENTAGE
+            * h);
 
     public Console(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
         super(ktgui, title, posx, posy, w, h);
@@ -44,12 +45,8 @@ public class Console extends Controller {
                 inputBoxWidth, h - inputBoxWidth,
                 0, 100);
         scrollBar.addEventAdapter(new EventAdapter() {
-            public void onMouseDragged() {
-
-            }
-
-            public void onMousePressed() {
-
+            public void onValueChanged() {
+                textArea.setNormalizedLinePosition(scrollBar.getNormalizedValue());
             }
         });
         attachController(scrollBar);
@@ -110,7 +107,7 @@ public class Console extends Controller {
         textArea.scrollToBottom();
         inputBox.setText("");
         dict.put(lastVariableName, textInput);
-        //updateScrollBar();
+        // updateScrollBar();
 
         // notify listeners about onEnterKeyPressedEvent
         for (EventAdapter adapter : adapters) {
@@ -118,11 +115,11 @@ public class Console extends Controller {
         }
     }
 
-    private void updateScrollBar() {
-        //scrollBar.setRangeEnd(textArea.getLineNumbers());
-        scrollBar.setRangeEnd(textArea.getMaximumAllowedPositionOfStartLine());
-        scrollBar.setValue((int) (scrollBar.getRangeEnd() - getStartLinePosition()));
-    }
+    // private void updateScrollBar() {
+    // //scrollBar.setRangeEnd(textArea.getLineNumbers());
+    // scrollBar.setRangeEnd(textArea.getMaximumAllowedPositionOfStartLine());
+    // scrollBar.setValue((int) (scrollBar.getRangeEnd() - getStartLinePosition()));
+    // }
 
     public void setInputTextSize(int size) {
         inputBox.setTextSize(size);
