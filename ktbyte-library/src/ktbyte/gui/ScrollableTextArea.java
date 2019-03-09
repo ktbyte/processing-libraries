@@ -12,7 +12,8 @@ public class ScrollableTextArea extends Controller {
     private ArrayList<TextLine>  textLines       = new ArrayList<>();
     private ArrayList<TextBlock> textBlocks      = new ArrayList<>();
     private int                  startLineNumber = 0;
-    private boolean              enableLineStartMarks;
+    private boolean              enableBlockMarks;
+    private boolean              enableLineNumbers;
 
     public ScrollableTextArea(KTGUI ktgui, String title, int posx, int posy, int w, int h) {
         super(ktgui, title, posx, posy, w, h);
@@ -49,14 +50,16 @@ public class ScrollableTextArea extends Controller {
             pg.textAlign(LEFT, BOTTOM);
             pg.textSize(this.textSize);
             pg.text(line.content, padding, (int) (padding * 0.5) + (i + 1) * getTextHeight());
-            if (line.isHead && enableLineStartMarks) {
+            if (line.isHead && enableBlockMarks) {
                 pg.strokeWeight(3);
                 pg.point(padding - 5,
                         (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
             }
-            pg.textSize(this.textSize * 0.5f);
-            pg.text(i + startLineNumber, padding - 5,
-                    (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
+            if (enableLineNumbers) {
+                pg.textSize(this.textSize * 0.5f);
+                pg.text(i + startLineNumber, padding - 5,
+                        (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
+            }
         }
 
         pg.popStyle();
@@ -98,7 +101,7 @@ public class ScrollableTextArea extends Controller {
             startLineNumber--;
         }
     }
-    
+
     public int getMaximumAllowedPositionOfStartLine() {
         return textLines.size() - getMaxLinesToDisplay();
     }
@@ -204,8 +207,12 @@ public class ScrollableTextArea extends Controller {
         setStartLinePosition(value);
     }
 
-    public void enableTextBlockStartMarks(boolean val) {
-        enableLineStartMarks = val;
+    public void enableBlockMarks(boolean val) {
+        enableBlockMarks = val;
+    }
+
+    public void enableLineNumbers(boolean val) {
+        enableLineNumbers = val;
     }
 
     public String getTextLine(int index) {

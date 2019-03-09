@@ -97,7 +97,7 @@ public class Console extends Controller {
     }
 
     public void enableLineStartMarks(boolean val) {
-        textArea.enableTextBlockStartMarks(val);
+        textArea.enableBlockMarks(val);
     }
 
     private void handleConsoleInput() {
