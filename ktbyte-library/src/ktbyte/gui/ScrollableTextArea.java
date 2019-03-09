@@ -42,6 +42,7 @@ public class ScrollableTextArea extends Controller {
 
         int calculatedEndLineNumber = PApplet.min(textLines.size() - 1,
                 startLineNumber + getMaxLinesToDisplay());
+
         for (int i = 0; i <= calculatedEndLineNumber - startLineNumber; i++) {
             TextLine line = textLines.get(i + startLineNumber);
             pg.fill(line.textColor);
@@ -53,6 +54,9 @@ public class ScrollableTextArea extends Controller {
                 pg.point(padding - 5,
                         (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
             }
+            pg.textSize(this.textSize * 0.5f);
+            pg.text(i + startLineNumber, padding - 5,
+                    (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
         }
 
         pg.popStyle();
@@ -89,14 +93,14 @@ public class ScrollableTextArea extends Controller {
         }
     }
 
-    public int getMaximumAllowedPositionOfStartLine() {
-        return textLines.size() - getMaxLinesToDisplay();
-    }
-
     public void decrementStartLine() {
         if (startLineNumber > 0) {
             startLineNumber--;
         }
+    }
+    
+    public int getMaximumAllowedPositionOfStartLine() {
+        return textLines.size() - getMaxLinesToDisplay();
     }
 
     public void scrollToTop() {
@@ -190,8 +194,9 @@ public class ScrollableTextArea extends Controller {
     }
 
     public void setStartLinePosition(int pos) {
-        if (pos < 0 || pos > getLineCount()) return;
-        this.startLineNumber = PApplet.constrain(pos, 0, getLineCount());
+        if (pos < 0 || pos > getMaximumAllowedPositionOfStartLine())
+            return;
+        this.startLineNumber = PApplet.constrain(pos, 0, getMaximumAllowedPositionOfStartLine());
     }
 
     public void setNormalizedLinePosition(float pos) {
