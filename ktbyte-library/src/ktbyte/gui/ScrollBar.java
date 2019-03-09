@@ -89,6 +89,7 @@ public class ScrollBar extends Controller {
                     w, h - backwardButton.h - forwardButton.h, sr, er);
         }
         slider.isDragable = false;
+        slider.setHandleType(Slider.HANDLE_TYPE_CENTERED);
         slider.setValue(0);
         slider.setRounding(0);
         slider.setIsValueVisible(false);
@@ -107,7 +108,6 @@ public class ScrollBar extends Controller {
                     adapter.onMousePressed();
                 }
             }
-            
             public void onValueChanged() {
                 for (EventAdapter adapter : adapters) {
                     adapter.onValueChanged();
