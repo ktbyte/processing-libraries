@@ -17,30 +17,6 @@ public class ScrollBar extends Controller {
         super.updateGraphics();
     }
 
-    /*   
-     *  This method overrides the default Controller's implementation in order to 
-     *  prevent interrupting the processing of the mousePressed event if controller 
-     *  has the childs. (in default Controller's implementation this was done in order 
-     *  to prevent 'duplicate' pressing/dragging).
-     */
-    //    @Override
-    //    public void processMousePressed() {
-    //        if (isActive) {
-    //            // transfer mousePressed event to child controllers
-    //            for (Controller child : controllers) {
-    //                child.processMousePressed();
-    //            }
-    //
-    //            // process mousePressed event by own means
-    //            isPressed = isFocused = isHovered;
-    //            if (isPressed) {
-    //                for (KTGUIEventAdapter adapter : adapters) {
-    //                    adapter.onMousePressed();
-    //                }
-    //            }
-    //        }
-    //    }
-
     @Override
     public void setBorderRoundings(int r1, int r2, int r3, int r4) {
         if (w > h) {
@@ -121,12 +97,12 @@ public class ScrollBar extends Controller {
         return slider.getValue();
     }
 
-    public float getNormalizedValue() {
-        return slider.getNormalizedValue();
-    }
-
     public void setValue(int val) {
         slider.setValue(val);
+    }
+
+    public float getNormalizedValue() {
+        return slider.getNormalizedValue();
     }
 
     public float getHandlePos() {
@@ -176,6 +152,5 @@ public class ScrollBar extends Controller {
     public void setRounding(int n) {
         slider.setRounding(n);
     }
-
 
 }

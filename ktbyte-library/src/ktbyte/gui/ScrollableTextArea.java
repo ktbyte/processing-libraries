@@ -41,10 +41,12 @@ public class ScrollableTextArea extends Controller {
         }
         pg.rect(0, 0, w, h, r1, r2, r3, r4);
 
-        int calculatedEndLineNumber = PApplet.min(textLines.size() - 1,
-                startLineNumber + getMaxLinesToDisplay());
+        int correctedEndLineNumber = getCorrectedEndLineNumber();
 
-        for (int i = 0; i <= calculatedEndLineNumber - startLineNumber; i++) {
+        //////////////////////////////////////////////////////////////////////////////////////
+        ////// This method draws 'visible' text lines inside the ScrollableTextArea //////
+        //////////////////////////////////////////////////////////////////////////////////////
+        for (int i = 0; i <= correctedEndLineNumber - startLineNumber; i++) {
             TextLine line = textLines.get(i + startLineNumber);
             pg.fill(line.textColor);
             pg.textAlign(LEFT, BOTTOM);
@@ -62,9 +64,27 @@ public class ScrollableTextArea extends Controller {
                         (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
             }
         }
+        //////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////
+
+        // debug
+        pg.fill(200, 0, 0);
+        pg.textSize(this.textSize);
+        pg.textAlign(CENTER, CENTER);
+        pg.text("startLineNumber:" + startLineNumber, w * 0.5f, h * 0.45f);
+        pg.text("correctedEndLineNumber:" + correctedEndLineNumber, w * 0.5f, h * 0.5f);
+        pg.text("correctedEndLineNumber - startLineNumber:" +
+                (correctedEndLineNumber - startLineNumber), w * 0.5f, h * 0.55f);
+        // debug
 
         pg.popStyle();
         pg.endDraw();
+    }
+
+    int getCorrectedEndLineNumber() {
+        return PApplet.min(
+                textLines.size() - 1, startLineNumber + getMaxLinesToDisplay());
     }
 
     @Override
@@ -92,7 +112,7 @@ public class ScrollableTextArea extends Controller {
     }
 
     public void incrementStartLine() {
-        if (startLineNumber < getMaximumAllowedPositionOfStartLine()) {
+        if (startLineNumber < getMaximumAllowedPositionOfStartLine() - 1) {
             startLineNumber++;
         }
     }
@@ -105,6 +125,10 @@ public class ScrollableTextArea extends Controller {
 
     public int getMaximumAllowedPositionOfStartLine() {
         return textLines.size() - getMaxLinesToDisplay();
+    }
+
+    public int getMaxLinesToDisplay() {
+        return PApplet.floor((h - padding - padding) / getTextHeight());
     }
 
     public void scrollToTop() {
@@ -184,10 +208,6 @@ public class ScrollableTextArea extends Controller {
         }
     }
 
-    public int getMaxLinesToDisplay() {
-        return PApplet.floor((h - padding - padding) / getTextHeight());
-    }
-
     private float getTextHeight() {
         pa.textSize(textSize);
         return pa.textAscent() + pa.textDescent();
@@ -260,7 +280,6 @@ public class ScrollableTextArea extends Controller {
 
     private class TextBlock {
         private String  content;
-        // private StringBuilder sb;
         private boolean isHeadAlreadyMarked;
         private int     textColor = pa.color(0);
 

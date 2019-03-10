@@ -33,7 +33,13 @@ public class Console extends Controller {
         textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
         textArea.addEventAdapter(new EventAdapter() {
             public void onMouseWheel(int count) {
-
+//                int lineCount = textArea.getLineCount();
+//                int startLinePosition = textArea.getStartLinePosition();
+//                int maxLineToDisplay = textArea.getMaxLinesToDisplay();
+//                int calculatedEndLineNumber = PApplet.min(
+//                        lineCount, startLinePosition + maxLineToDisplay);
+                int correctedEndLineNumber = textArea.getCorrectedEndLineNumber();
+                // PApplet.map(pos, , stop1, start2, stop2)
             }
         });
         attachController(textArea);
@@ -155,9 +161,10 @@ public class Console extends Controller {
     }
 
     public void enableLineNumbers(boolean val) {
-        textArea.enableLineNumbers(val);;
+        textArea.enableLineNumbers(val);
+        ;
     }
-    
+
     public String getLine(int index) {
         return textArea.getTextLine(index);
     }

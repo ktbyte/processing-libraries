@@ -125,10 +125,6 @@ public class Slider extends Controller {
         ///////////////////////////////////////////////////////////////////////
     }
 
-    // public void addEventAdapter(EventAdapter adapter) {
-    // adapters.add(adapter);
-    // }
-
     public float getValue() {
         return value;
     }
@@ -314,7 +310,7 @@ public class Slider extends Controller {
         } else {
             value = (float) Math.floor(value);
         }
-    
+
         notifyAdapterOnValueChanged();
     }
 
