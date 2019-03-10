@@ -150,6 +150,14 @@ public class Console extends Controller {
         outputTextColor = c;
     }
 
+    public void enableBlockMarks(boolean val) {
+        textArea.enableBlockMarks(val);
+    }
+
+    public void enableLineNumbers(boolean val) {
+        textArea.enableLineNumbers(val);;
+    }
+    
     public String getLine(int index) {
         return textArea.getTextLine(index);
     }

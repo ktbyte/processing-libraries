@@ -51,8 +51,9 @@ public class ScrollableTextArea extends Controller {
             pg.textSize(this.textSize);
             pg.text(line.content, padding, (int) (padding * 0.5) + (i + 1) * getTextHeight());
             if (line.isHead && enableBlockMarks) {
-                pg.strokeWeight(3);
-                pg.point(padding - 5,
+                pg.strokeWeight(this.textSize * 0.33f);
+                pg.stroke(line.textColor, 127);
+                pg.point(w - padding + 6,
                         (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
             }
             if (enableLineNumbers) {

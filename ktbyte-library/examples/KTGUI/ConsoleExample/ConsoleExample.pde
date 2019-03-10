@@ -13,9 +13,10 @@ void setup() {
   console.setBorderRoundings(15, 15, 10, 10);
   //console.setInputTextColor(color(255, 10, 100));
   //console.setOutputTextColor(color(130, 90, 190));
+  console.enableBlockMarks(true);
+  console.enableLineNumbers(true);
   console.setOutputTextSize(16);
   console.setInputFocused(true);
-
 
   console.writeOutput("Well, Prince, so Genoa and Lucca are now just family estates of the " +
     "Buonapartes. But I warn you, if you don't tell me that this means war, " +
