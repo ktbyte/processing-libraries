@@ -157,4 +157,9 @@ public class ScrollBar extends Controller {
         slider.setRounding(n);
     }
 
+   
+    public Slider getSlider() {
+        return slider;
+    }
+
 }

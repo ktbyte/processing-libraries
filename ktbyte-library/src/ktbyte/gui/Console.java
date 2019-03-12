@@ -199,4 +199,15 @@ public class Console extends Controller {
         return textBlock;
     }
 
+    public InputTextBox getInputBox() {
+        return inputBox;
+    }
+
+    public ScrollableTextArea getTextArea() {
+        return textArea;
+    }
+
+    public ScrollBar getScrollBar() {
+        return scrollBar;
+    }
 }
