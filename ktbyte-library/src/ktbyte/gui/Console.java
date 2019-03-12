@@ -2,6 +2,8 @@ package ktbyte.gui;
 
 import java.util.HashMap;
 
+import processing.core.PApplet;
+
 public class Console extends Controller {
     private final static int        BOX_ROUNDING                = 7;
     private final static float      INPUT_BOX_HEIGHT_PERCENTAGE = 0.1f;
@@ -33,13 +35,15 @@ public class Console extends Controller {
         textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
         textArea.addEventAdapter(new EventAdapter() {
             public void onMouseWheel(int count) {
-//                int lineCount = textArea.getLineCount();
-//                int startLinePosition = textArea.getStartLinePosition();
-//                int maxLineToDisplay = textArea.getMaxLinesToDisplay();
-//                int calculatedEndLineNumber = PApplet.min(
-//                        lineCount, startLinePosition + maxLineToDisplay);
-                int correctedEndLineNumber = textArea.getCorrectedEndLineNumber();
-                // PApplet.map(pos, , stop1, start2, stop2)
+                // int lineCount = textArea.getLineCount();
+                // int startLinePosition = textArea.getStartLinePosition();
+                int maxLineToDisplay = textArea.getMaxLinesToDisplay();
+                // int calculatedEndLineNumber = PApplet.min(
+                // lineCount, startLinePosition + maxLineToDisplay);
+                int correctedEndLineNumber = textArea.getEndLinePosition();
+                float mappedScrollBarPos = PApplet.map(
+                        correctedEndLineNumber, 0, textArea.getLineCount() - maxLineToDisplay, 0, 100);
+                scrollBar.setNormalizedValue(mappedScrollBarPos);
             }
         });
         attachController(textArea);

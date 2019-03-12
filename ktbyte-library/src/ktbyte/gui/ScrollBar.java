@@ -101,6 +101,10 @@ public class ScrollBar extends Controller {
         slider.setValue(val);
     }
 
+    public void setNormalizedValue(float val) {
+        slider.setNormalizedValue(val);
+    }
+    
     public float getNormalizedValue() {
         return slider.getNormalizedValue();
     }

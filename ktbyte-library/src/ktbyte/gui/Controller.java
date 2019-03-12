@@ -809,7 +809,7 @@ public abstract class Controller extends EventProcessor implements PConstants {
 	}
 
 	public boolean isSelected(Controller controller) {
-		return selectedController == (Controller) controller;
+		return selectedController == controller;
 	}
 
 	@Override

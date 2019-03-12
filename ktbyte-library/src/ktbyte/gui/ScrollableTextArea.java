@@ -11,7 +11,7 @@ public class ScrollableTextArea extends Controller {
 
     private ArrayList<TextLine>  textLines       = new ArrayList<>();
     private ArrayList<TextBlock> textBlocks      = new ArrayList<>();
-    private int                  startLineNumber = 0;
+    private int                  startLinePosition = 0;
     private boolean              enableBlockMarks;
     private boolean              enableLineNumbers;
 
@@ -41,13 +41,13 @@ public class ScrollableTextArea extends Controller {
         }
         pg.rect(0, 0, w, h, r1, r2, r3, r4);
 
-        int correctedEndLineNumber = getCorrectedEndLineNumber();
+        int correctedEndLinePosition = getEndLinePosition();
 
         //////////////////////////////////////////////////////////////////////////////////////
         ////// This method draws 'visible' text lines inside the ScrollableTextArea //////
         //////////////////////////////////////////////////////////////////////////////////////
-        for (int i = 0; i <= correctedEndLineNumber - startLineNumber; i++) {
-            TextLine line = textLines.get(i + startLineNumber);
+        for (int i = 0; i <= correctedEndLinePosition - startLinePosition; i++) {
+            TextLine line = textLines.get(i + startLinePosition);
             pg.fill(line.textColor);
             pg.textAlign(LEFT, BOTTOM);
             pg.textSize(this.textSize);
@@ -60,7 +60,7 @@ public class ScrollableTextArea extends Controller {
             }
             if (enableLineNumbers) {
                 pg.textSize(this.textSize * 0.5f);
-                pg.text(i + startLineNumber, padding - 5,
+                pg.text(i + startLinePosition, padding - 5,
                         (int) (padding * 0.5 + (i + 1) * getTextHeight() - getTextHeight() * 0.5));
             }
         }
@@ -72,19 +72,20 @@ public class ScrollableTextArea extends Controller {
         pg.fill(200, 0, 0);
         pg.textSize(this.textSize);
         pg.textAlign(CENTER, CENTER);
-        pg.text("startLineNumber:" + startLineNumber, w * 0.5f, h * 0.45f);
-        pg.text("correctedEndLineNumber:" + correctedEndLineNumber, w * 0.5f, h * 0.5f);
+        pg.text("startLineNumber:" + startLinePosition, w * 0.5f, h * 0.45f);
+        pg.text("correctedEndLineNumber:" + correctedEndLinePosition, w * 0.5f, h * 0.5f);
         pg.text("correctedEndLineNumber - startLineNumber:" +
-                (correctedEndLineNumber - startLineNumber), w * 0.5f, h * 0.55f);
+                (correctedEndLinePosition - startLinePosition), w * 0.5f, h * 0.55f);
         // debug
 
         pg.popStyle();
         pg.endDraw();
     }
 
-    int getCorrectedEndLineNumber() {
+    public int getEndLinePosition() {
+        // this is a 'corrected' version
         return PApplet.min(
-                textLines.size() - 1, startLineNumber + getMaxLinesToDisplay());
+                textLines.size() - 1, startLinePosition + getMaxLinesToDisplay());
     }
 
     @Override
@@ -100,11 +101,11 @@ public class ScrollableTextArea extends Controller {
     public void mouseScrolled(int mouseWheelDelta) {
         if (isSelected(this)) {
             if (mouseWheelDelta < 0) {
-                if (startLineNumber > 0) {
+                if (startLinePosition > 0) {
                     decrementStartLine();
                 }
             } else if (mouseWheelDelta > 0) {
-                if (startLineNumber < getMaximumAllowedPositionOfStartLine()) {
+                if (startLinePosition < getMaximumAllowedPositionOfStartLine()) {
                     incrementStartLine();
                 }
             }
@@ -112,14 +113,14 @@ public class ScrollableTextArea extends Controller {
     }
 
     public void incrementStartLine() {
-        if (startLineNumber < getMaximumAllowedPositionOfStartLine() - 1) {
-            startLineNumber++;
+        if (startLinePosition < getMaximumAllowedPositionOfStartLine() - 1) {
+            startLinePosition++;
         }
     }
 
     public void decrementStartLine() {
-        if (startLineNumber > 0) {
-            startLineNumber--;
+        if (startLinePosition > 0) {
+            startLinePosition--;
         }
     }
 
@@ -132,14 +133,14 @@ public class ScrollableTextArea extends Controller {
     }
 
     public void scrollToTop() {
-        while (startLineNumber > 0) {
-            startLineNumber--;
+        while (startLinePosition > 0) {
+            startLinePosition--;
         }
     }
 
     public void scrollToBottom() {
-        while (startLineNumber < getMaximumAllowedPositionOfStartLine()) {
-            startLineNumber++;
+        while (startLinePosition < getMaximumAllowedPositionOfStartLine()) {
+            startLinePosition++;
         }
     }
 
@@ -149,14 +150,14 @@ public class ScrollableTextArea extends Controller {
                     "lineNumber[" + lineNumber + "] is out of range during 'scrollToLine' call.");
             return;
         }
-        if (lineNumber > startLineNumber) {
-            while (startLineNumber < lineNumber &&
-                    startLineNumber < getMaximumAllowedPositionOfStartLine()) {
-                startLineNumber++;
+        if (lineNumber > startLinePosition) {
+            while (startLinePosition < lineNumber &&
+                    startLinePosition < getMaximumAllowedPositionOfStartLine()) {
+                startLinePosition++;
             }
-        } else if (lineNumber < startLineNumber) {
-            while (startLineNumber > lineNumber && startLineNumber > 0) {
-                startLineNumber--;
+        } else if (lineNumber < startLinePosition) {
+            while (startLinePosition > lineNumber && startLinePosition > 0) {
+                startLinePosition--;
             }
         }
     }
@@ -214,13 +215,13 @@ public class ScrollableTextArea extends Controller {
     }
 
     public int getStartLinePosition() {
-        return startLineNumber;
+        return startLinePosition;
     }
 
     public void setStartLinePosition(int pos) {
         if (pos < 0 || pos > getMaximumAllowedPositionOfStartLine())
             return;
-        this.startLineNumber = PApplet.constrain(pos, 0, getMaximumAllowedPositionOfStartLine());
+        this.startLinePosition = PApplet.constrain(pos, 0, getMaximumAllowedPositionOfStartLine());
     }
 
     public void setNormalizedLinePosition(float pos) {
