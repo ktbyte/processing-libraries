@@ -115,10 +115,13 @@ public class Console extends Controller {
         String textInput = inputBox.getText();
         textArea.appendTextBlock(textInput, inputTextColor);
         textArea.scrollToBottom();
-        inputBox.setText("");
+        inputBox.setText(""); // clear input box after the Enter key was pressed
         dict.put(lastVariableName, textInput);
-        // updateScrollBar();
-
+        // change the value of the Console's ScrollBar handle step
+        int scrollableRange = textArea.getLineCount() - textArea.getMaxLinesToDisplay() - 1;
+        float scrollBarRange = scrollBar.getRangeEnd() - scrollBar.getRangeStart();
+        float step = scrollBarRange / scrollableRange;
+        scrollBar.setHandleStep(step);
         // notify listeners about onEnterKeyPressedEvent
         for (EventAdapter adapter : adapters) {
             adapter.onConsoleInput(textInput, lastVariableName);
@@ -136,6 +139,11 @@ public class Console extends Controller {
     public void writeOutput(String textBlock) {
         textArea.appendTextBlock(textBlock, outputTextColor);
         textArea.scrollToBottom();
+        // change the value of the Console's ScrollBar handle step
+        int scrollableRange = textArea.getLineCount() - textArea.getMaxLinesToDisplay() - 1;
+        float scrollBarRange = scrollBar.getRangeEnd() - scrollBar.getRangeStart();
+        float step = scrollBarRange / scrollableRange;
+        scrollBar.setHandleStep(step);
     }
 
     public void setInputFocused(boolean value) {

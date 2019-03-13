@@ -124,7 +124,7 @@ public class ScrollBar extends Controller {
     }
 
     public void setHandleStep(float step) {
-        slider.setHandleValue(step);
+        slider.setValueStep(step);
     }
 
     public float getHandleStep() {
@@ -158,7 +158,6 @@ public class ScrollBar extends Controller {
     public void setRounding(int n) {
         slider.setRounding(n);
     }
-
    
     public Slider getSlider() {
         return slider;

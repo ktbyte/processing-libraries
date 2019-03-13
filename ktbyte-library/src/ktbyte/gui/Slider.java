@@ -194,9 +194,9 @@ public class Slider extends Controller {
         return valueStep;
     }
 
-    public void setHandleValue(float valueStep) {
-        if (valueStep > 0) {
-            this.valueStep = valueStep;
+    public void setValueStep(float step) {
+        if (step > 0) {
+            this.valueStep = step;
         }
     }
 
