@@ -147,10 +147,12 @@ public class Slider extends Controller {
     public void setNormalizedValue(float val) {
         setValue(PApplet.map(val, 100f, 0f, rangeStart, rangeEnd));
     }
-    
+
     private void notifyAdapterOnValueChanged() {
-        for (EventAdapter adapter : adapters) {
-            adapter.onValueChanged();
+        if (isActive) {
+            for (EventAdapter adapter : adapters) {
+                adapter.onValueChanged();
+            }
         }
     }
 

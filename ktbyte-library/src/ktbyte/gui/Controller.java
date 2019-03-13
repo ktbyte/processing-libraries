@@ -15,12 +15,12 @@ import processing.event.MouseEvent;
  * One should always overridde the 'draw' method.
  *********************************************************************************************************************/
 public abstract class Controller extends EventProcessor implements PConstants {
+    public PApplet					pa;
 	public String					title;
 	public int						posx, posy, w, h, r1, r2, r3, r4;
 
-	public ArrayList<Controller>	controllers			= new ArrayList<Controller>();
-	public PApplet					pa;
 	public KTGUI					ktgui;
+	public ArrayList<Controller>	controllers			= new ArrayList<Controller>();
 	public Controller				parentController	= null;
 	public Stage					parentStage			= null;
 
@@ -28,6 +28,7 @@ public abstract class Controller extends EventProcessor implements PConstants {
 
 	// This is the Image that holds controller's own 'internal' shape representation.
 	public PGraphics				pg;
+	
 	// This is the Image that holds custom (additional), user-defined representation 
 	// that is layered over the 'internal' representation. This image is used to 'draw' 
 	// the dynamic shapes or text on the Pane's canvas, for example.

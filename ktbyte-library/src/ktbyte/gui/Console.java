@@ -35,15 +35,14 @@ public class Console extends Controller {
         textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
         textArea.addEventAdapter(new EventAdapter() {
             public void onMouseWheel(int count) {
-                // int lineCount = textArea.getLineCount();
-                // int startLinePosition = textArea.getStartLinePosition();
-                int maxLineToDisplay = textArea.getMaxLinesToDisplay();
-                // int calculatedEndLineNumber = PApplet.min(
-                // lineCount, startLinePosition + maxLineToDisplay);
-                int correctedEndLineNumber = textArea.getEndLinePosition();
+                int startLineNumberPosition = textArea.getStartLinePosition();
+                int endOfScrollableRange = textArea.getLineCount()
+                        - textArea.getMaxLinesToDisplay()  - 1;
                 float mappedScrollBarPos = PApplet.map(
-                        correctedEndLineNumber, 0, textArea.getLineCount() - maxLineToDisplay, 0, 100);
+                        startLineNumberPosition, 0, endOfScrollableRange, 0, 100);
+                scrollBar.isActive = false; // this prevents the scrollBar to notify listeners about the changed handle position
                 scrollBar.setNormalizedValue(mappedScrollBarPos);
+                scrollBar.isActive = true;
             }
         });
         attachController(textArea);

@@ -85,8 +85,10 @@ public class ScrollBar extends Controller {
                 }
             }
             public void onValueChanged() {
-                for (EventAdapter adapter : adapters) {
-                    adapter.onValueChanged();
+                if (isActive) {
+                    for (EventAdapter adapter : adapters) {
+                        adapter.onValueChanged();
+                    }
                 }
             }
         });
