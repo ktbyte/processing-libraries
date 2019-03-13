@@ -37,12 +37,13 @@ public class Console extends Controller {
             public void onMouseWheel(int count) {
                 int startLineNumberPosition = textArea.getStartLinePosition();
                 int endOfScrollableRange = textArea.getLineCount()
-                        - textArea.getMaxLinesToDisplay()  - 1;
-                float mappedScrollBarPos = PApplet.map(
-                        startLineNumberPosition, 0, endOfScrollableRange, 0, 100);
-                scrollBar.isActive = false; // this prevents the scrollBar to notify listeners about the changed handle position
+                        - textArea.getMaxLinesToDisplay() - 1;
+                float mappedScrollBarPos = PApplet.map(startLineNumberPosition,
+                        0, endOfScrollableRange,
+                        0, 100);
+                scrollBar.isActive = false; // prevent scrollBar to notify listeners about the changed handle position
                 scrollBar.setNormalizedValue(mappedScrollBarPos);
-                scrollBar.isActive = true;
+                scrollBar.isActive = true; // allow scrollBar to notify listeners about the changed handle position
             }
         });
         attachController(textArea);
@@ -123,12 +124,6 @@ public class Console extends Controller {
             adapter.onConsoleInput(textInput, lastVariableName);
         }
     }
-
-    // private void updateScrollBar() {
-    // //scrollBar.setRangeEnd(textArea.getLineNumbers());
-    // scrollBar.setRangeEnd(textArea.getMaximumAllowedPositionOfStartLine());
-    // scrollBar.setValue((int) (scrollBar.getRangeEnd() - getStartLinePosition()));
-    // }
 
     public void setInputTextSize(int size) {
         inputBox.setTextSize(size);

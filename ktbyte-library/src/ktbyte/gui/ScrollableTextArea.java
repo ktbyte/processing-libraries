@@ -6,11 +6,11 @@ import processing.core.PApplet;
 import processing.event.MouseEvent;
 
 public class ScrollableTextArea extends Controller {
-    private float                textSize        = 14;
-    private float                padding         = 6;
+    private float                textSize          = 14;
+    private float                padding           = 6;
 
-    private ArrayList<TextLine>  textLines       = new ArrayList<>();
-    private ArrayList<TextBlock> textBlocks      = new ArrayList<>();
+    private ArrayList<TextLine>  textLines         = new ArrayList<>();
+    private ArrayList<TextBlock> textBlocks        = new ArrayList<>();
     private int                  startLinePosition = 0;
     private boolean              enableBlockMarks;
     private boolean              enableLineNumbers;
@@ -68,16 +68,6 @@ public class ScrollableTextArea extends Controller {
         //////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////
 
-        // debug
-        pg.fill(200, 0, 0);
-        pg.textSize(this.textSize);
-        pg.textAlign(CENTER, CENTER);
-        pg.text("startLineNumber:" + startLinePosition, w * 0.5f, h * 0.45f);
-        pg.text("correctedEndLineNumber:" + correctedEndLinePosition, w * 0.5f, h * 0.5f);
-        pg.text("correctedEndLineNumber - startLineNumber:" +
-                (correctedEndLinePosition - startLinePosition), w * 0.5f, h * 0.55f);
-        // debug
-
         pg.popStyle();
         pg.endDraw();
     }
@@ -105,7 +95,7 @@ public class ScrollableTextArea extends Controller {
                     decrementStartLine();
                 }
             } else if (mouseWheelDelta > 0) {
-                if (startLinePosition < getMaximumAllowedPositionOfStartLine()) {
+                if (startLinePosition < getMaxAllowedStartLinePos()) {
                     incrementStartLine();
                 }
             }
@@ -113,7 +103,7 @@ public class ScrollableTextArea extends Controller {
     }
 
     public void incrementStartLine() {
-        if (startLinePosition < getMaximumAllowedPositionOfStartLine() - 1) {
+        if (startLinePosition < getMaxAllowedStartLinePos() - 1) {
             startLinePosition++;
         }
     }
@@ -124,7 +114,7 @@ public class ScrollableTextArea extends Controller {
         }
     }
 
-    public int getMaximumAllowedPositionOfStartLine() {
+    public int getMaxAllowedStartLinePos() {
         return textLines.size() - getMaxLinesToDisplay();
     }
 
@@ -139,20 +129,20 @@ public class ScrollableTextArea extends Controller {
     }
 
     public void scrollToBottom() {
-        while (startLinePosition < getMaximumAllowedPositionOfStartLine()) {
+        while (startLinePosition < getMaxAllowedStartLinePos()) {
             startLinePosition++;
         }
     }
 
     public void scrollToPosition(int lineNumber) {
-        if (lineNumber < 0 || lineNumber >= getMaximumAllowedPositionOfStartLine()) {
+        if (lineNumber < 0 || lineNumber >= getMaxAllowedStartLinePos()) {
             KTGUI.debug(
                     "lineNumber[" + lineNumber + "] is out of range during 'scrollToLine' call.");
             return;
         }
         if (lineNumber > startLinePosition) {
             while (startLinePosition < lineNumber &&
-                    startLinePosition < getMaximumAllowedPositionOfStartLine()) {
+                    startLinePosition < getMaxAllowedStartLinePos()) {
                 startLinePosition++;
             }
         } else if (lineNumber < startLinePosition) {
@@ -219,14 +209,16 @@ public class ScrollableTextArea extends Controller {
     }
 
     public void setStartLinePosition(int pos) {
-        if (pos < 0 || pos > getMaximumAllowedPositionOfStartLine())
+        if (pos < 0 || pos > getMaxAllowedStartLinePos()) {
             return;
-        this.startLinePosition = PApplet.constrain(pos, 0, getMaximumAllowedPositionOfStartLine());
+        }
+        this.startLinePosition = PApplet.constrain(pos, 0, getMaxAllowedStartLinePos());
     }
 
     public void setNormalizedLinePosition(float pos) {
-        int value = PApplet.floor(PApplet.map(pos, getLineCount(), 0, 0, 100f));
-        setStartLinePosition(value);
+        int endOfScrollableRange = getLineCount() - getMaxLinesToDisplay() - 1;
+        int normalizedPos = PApplet.floor(PApplet.map(pos, 0, 100f, endOfScrollableRange, 0));
+        setStartLinePosition(normalizedPos);
     }
 
     public void enableBlockMarks(boolean val) {

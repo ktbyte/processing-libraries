@@ -129,10 +129,6 @@ public class Slider extends Controller {
         return value;
     }
 
-    public float getNormalizedValue() {
-        return PApplet.map(value, rangeStart, rangeEnd, 0, 100f);
-    }
-
     public void setValue(float val) {
         if (val >= rangeStart && val <= rangeEnd) {
             value = val;
@@ -142,6 +138,10 @@ public class Slider extends Controller {
             System.out.println(
                     "You're trying to set the value of the slider to be outside its range.");
         }
+    }
+
+    public float getNormalizedValue() {
+        return PApplet.map(value, rangeStart, rangeEnd, 0, 100f);
     }
 
     public void setNormalizedValue(float val) {
