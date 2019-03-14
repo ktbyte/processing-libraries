@@ -29,18 +29,13 @@ public class Console extends Controller {
     }
 
     private void createScrollableTextArea() {
-        textArea = new ScrollableTextArea(ktgui, "sta:" + title,
-                0, 0,
-                w - inputBoxWidth, h - inputBoxWidth);
+        textArea = new ScrollableTextArea(ktgui, "sta:" + title, 0, 0, w - inputBoxWidth, h - inputBoxWidth);
         textArea.setBorderRoundings(BOX_ROUNDING, 0, 0, 0);
         textArea.addEventAdapter(new EventAdapter() {
             public void onMouseWheel(int count) {
                 int startLineNumberPosition = textArea.getStartLinePosition();
-                int endOfScrollableRange = textArea.getLineCount()
-                        - textArea.getMaxLinesToDisplay() - 1;
-                float mappedScrollBarPos = PApplet.map(startLineNumberPosition,
-                        0, endOfScrollableRange,
-                        0, 100);
+                int endOfScrollableRange = textArea.getLineCount() - textArea.getMaxLinesToDisplay() - 1;
+                float mappedScrollBarPos = PApplet.map(startLineNumberPosition, 0, endOfScrollableRange, 0, 100);
                 scrollBar.isActive = false; // prevent scrollBar to notify listeners about the changed handle position
                 scrollBar.setNormalizedValue(mappedScrollBarPos);
                 scrollBar.isActive = true; // allow scrollBar to notify listeners about the changed handle position
@@ -50,10 +45,7 @@ public class Console extends Controller {
     }
 
     private void createScrollBar() {
-        scrollBar = new ScrollBar(ktgui, "sb:" + title,
-                w - inputBoxWidth, 0,
-                inputBoxWidth, h - inputBoxWidth,
-                0, 100);
+        scrollBar = new ScrollBar(ktgui, "sb:" + title, w - inputBoxWidth, 0, inputBoxWidth, h - inputBoxWidth, 0, 100);
         scrollBar.addEventAdapter(new EventAdapter() {
             public void onValueChanged() {
                 textArea.setNormalizedLinePosition(scrollBar.getNormalizedValue());
@@ -63,9 +55,7 @@ public class Console extends Controller {
     }
 
     private void createInputBox() {
-        inputBox = new InputTextBox(ktgui, "ib:" + title,
-                0, h - inputBoxWidth,
-                w, inputBoxWidth);
+        inputBox = new InputTextBox(ktgui, "ib:" + title, 0, h - inputBoxWidth, w, inputBoxWidth);
         inputBox.setHandleFocus(true);
         inputBox.setTextSize(16);
         inputBox.setBorderRoundings(0, 0, BOX_ROUNDING, BOX_ROUNDING);

@@ -135,8 +135,7 @@ public class Slider extends Controller {
             updateHandlePositionFromValue();
             notifyAdapterOnValueChanged();
         } else {
-            System.out.println(
-                    "You're trying to set the value of the slider to be outside its range.");
+            //System.out.println("You're trying to set the value of the slider to be outside its range.");
         }
     }
 
